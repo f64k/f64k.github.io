@@ -1,0 +1,349 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <title>Touch Tracker Marker 2</title>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-type">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+
+<style type="text/css">
+	body { margin: 0px; overflow: hidden; }
+	#canvas1 { border: 5px solid darkred; }
+</style>
+
+
+<script type="text/javascript">
+var rad = Math.PI / 180.0; // Degree-to-Radian conversion
+
+var canvas;
+var ctx;
+var w = 0, h = 0;
+var ratio, screenOrientationRadians;
+
+
+var touches = [];
+
+//var alpha, beta, gamma, absolute;
+var deviceorientation;
+var devicemotion;
+
+var v1 = {x:0,y:0}, s1;
+
+
+function body_on_load() {
+	canvas = document.getElementById('canvas1');
+	ctx = canvas.getContext('2d');
+
+	devicePixelRatio = window.devicePixelRatio || 1;
+	backingStoreRatio = ctx.webkitBackingStorePixelRatio ||
+	                    ctx.mozBackingStorePixelRatio ||
+	                    ctx.msBackingStorePixelRatio ||
+	                    ctx.oBackingStorePixelRatio ||
+	                    ctx.backingStorePixelRatio || 1;
+	ratio = devicePixelRatio / backingStoreRatio;
+
+	canvas.addEventListener('touchstart', function(event) {
+	  event.preventDefault();
+	  touches = event.touches;
+	  //console.log('touchstart');
+	});
+
+	canvas.addEventListener('touchmove', function(event) {
+	  event.preventDefault();
+	  touches = event.touches;
+	});
+
+	canvas.addEventListener('touchend', function() {
+	  event.preventDefault();
+	  //console.log('touchend');
+	  //ctx.clearRect(0, 0, w, h);
+	  //touches = event.touches;
+	});
+
+	if(window.DeviceOrientationEvent)
+	{
+		window.addEventListener("deviceorientation", function(event) {
+			event.preventDefault();
+			deviceorientation = event;
+			//absolute = event.absolute;
+			//alpha    = event.alpha;
+			//beta     = event.beta; // -180 X +180
+			//gamma    = event.gamma; // -90 Y +90
+		}, true);
+	}
+
+	if(true)//(window.DeviceMotionEvent)
+	{
+		window.addEventListener('devicemotion', function(event) {
+			event.preventDefault();
+			devicemotion = event;
+			if(devicemotion.acceleration != undefined)
+			{
+				var a1 = toCanvas(devicemotion.acceleration.x/1000.0,devicemotion.acceleration.y/1000.0);
+				v1.x += a1.x; v1.y += a1.y;
+				if(s1)
+				{
+					s1.x += v1.x; s1.y += v1.y;
+					if(s1.x < 0) s1.x = 0;
+					if(s1.x > w) s1.x = w;
+					if(s1.y < 0) s1.y = 0;
+					if(s1.y > h) s1.y = h;
+				}
+				else
+				{ s1 = {x:w/2,y:h/2}; }
+			}
+
+		}, true);
+	}
+/*
+	window.addEventListener('orientationchange', function () {
+		event.preventDefault();
+		if (window.orientation == -90) {
+		    //document.getElementById('orient').className = 'orientright';
+		}
+		if (window.orientation == 90) {
+		    //document.getElementById('orient').className = 'orientleft';
+		}
+		if (window.orientation == 0) {
+		    //document.getElementById('orient').className = '';
+		}
+	}, true);
+*/
+    canvas.style.backgroundColor="#fdfefd";
+	ctx.fillStyle = "red"; // не влияет ?
+
+	render(); // запуск первого кадра
+}
+
+
+function PrepareCanvas(nw, nh)
+{
+	var nw = window.innerWidth - 2*5; //canvas.style.borderWidth;
+	var nh = window.innerHeight - 2*5; //canvas.style.borderHeight;
+
+	ctx.setTransform(1, 0, 0, 1, 0, 0);
+	if ((w != nw) || (h != nh)) 
+	{
+		w = nw;
+		h = nh;
+
+		canvas.width = w * ratio;
+		canvas.height = h * ratio;
+		
+		canvas.style.width = w + 'px';
+		canvas.style.height = h + 'px';
+	}
+	ctx.scale(ratio, ratio);
+
+	//if(window.orientation != undefined)
+	//{
+		//screenOrientationRadians = -1 * window.orientation * rad;
+		//ctx.translate(w/2,h/2);
+		//ctx.rotate(screenOrientationRadians);
+		//ctx.translate(-w/2,-h/2);
+	//}
+
+	ctx.clearRect(0, 0, w, h);
+	// рисуем рамку внутри canvas
+	ctx.beginPath(); ctx.rect(2,2,w-4,h-4); ctx.strokeStyle = "rgba(0, 0, 0, 0.2)"; ctx.lineWidth = 1.0; ctx.stroke(); ctx.closePath();
+}
+
+function toCanvas(screenX,screenY)
+{
+	if(window.orientation != undefined)
+	{
+		var screenRad = -1 * window.orientation * rad;
+		return { x: screenX*Math.cos(screenRad)-screenY*Math.sin(screenRad), y: screenX*Math.sin(screenRad)+screenY*Math.cos(screenRad) };
+	}
+	else
+	{
+		return {x:screenX, y:screenY};
+	}
+}
+
+
+</script>
+
+<script type="text/javascript">
+
+
+function render(time) {
+  try {
+	PrepareCanvas();
+	
+	if(touches != undefined)
+	{
+		var i, len = touches.length;
+		for (i=0; i<len; i++) {
+			var touch = touches[i];
+			var px = touch.pageX;
+			var py = touch.pageY;
+			
+			drawMarker(px, py, touch.identifier);
+		}
+	
+		if(len>1)
+		{
+			ctx.beginPath();
+			touch = touches[0];
+			ctx.moveTo(touch.pageX, touch.pageY);
+			for (i=1; i<len; i++) 
+			{
+				touch = touches[i];
+				ctx.lineTo(touch.pageX, touch.pageY);
+			}
+			ctx.lineWidth = 5.0;
+			ctx.strokeStyle = "rgba(50, 100, 90, 0.6)";
+			ctx.stroke();
+			ctx.closePath();
+		}
+	}
+
+	if(devicemotion != undefined)
+	{
+		if(devicemotion.acceleration != undefined)
+		{
+			ctx.fillStyle = "#a00";
+			ctx.fillRect(w/2,10,10*devicemotion.acceleration.x,3);
+			ctx.fillStyle = "#0b0";
+			ctx.fillRect(w/2,20,10*devicemotion.acceleration.y,3);
+			ctx.fillStyle = "#00c";
+			ctx.fillRect(w/2,30,10*devicemotion.acceleration.z,3);
+
+			ctx.beginPath();
+			ctx.lineWidth = 1.0;
+			ctx.strokeStyle = "rgba(150, 100, 90, 0.3)";
+			ctx.arc(s1.x, s1.y, 5, 0, 2*Math.PI, true);
+			ctx.stroke();
+		}
+		if(devicemotion.accelerationIncludingGravity != undefined)
+		{
+			for(i=10;i>1;i--)
+			{
+				mul = 0.5*i;
+				xm = -mul*devicemotion.accelerationIncludingGravity.x;
+				ym = mul*devicemotion.accelerationIncludingGravity.y;
+				ga = toCanvas(xm,ym);
+				ctx.beginPath();
+				ctx.arc(w/2+ga.x, 80+ga.y, 5+2*i, 0, 2*Math.PI, true);
+				ctx.lineWidth = 1.0; ctx.strokeStyle = "rgba(90, 200, 100, 0.2)"; ctx.stroke();
+				ctx.fillStyle = "rgba(90, 100, 200, 0.2)"; ctx.fill();
+			}
+		}
+		if(devicemotion.rotationRate != undefined)
+		{
+		}
+	}
+
+
+	if(deviceorientation != undefined)
+	{
+//		ctx.fillStyle = "#a00";
+//		ctx.fillRect(w/2,10,deviceorientation.alpha,3);
+//		ctx.fillStyle = "#0b0";
+//		ctx.fillRect(w/2,20,deviceorientation.beta,3);
+//		ctx.fillStyle = "#00c";
+//		ctx.fillRect(w/2,30,deviceorientation.gamma,3);
+
+		ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
+		ctx.font = "bold 15px sans-serif";
+		ctx.textAlign = "center";
+		ctx.textBaseline = "middle";
+		ctx.fillText(window.orientation, w/2, h/2);
+
+		ctx.beginPath();
+		ctx.moveTo(w/2, h/2);
+		xa = deviceorientation.gamma; // угол градусов вокруг оси Y (-90;+90)
+		ya = deviceorientation.beta; // угол градусов вокруг оси X (-180;+180)
+		angles = toCanvas(xa,ya);
+		ctx.lineTo(w/2+angles.x, h/2+angles.y);
+		ctx.lineWidth = 2.0;
+		ctx.strokeStyle = "rgba(150, 100, 90, 0.6)";
+		ctx.stroke();
+		ctx.closePath();
+
+		if(false)
+		{
+			ctx.beginPath();
+			ctx.moveTo(w/2, h/2);
+			aRad = -1 * (deviceorientation.alpha * 2.0 * Math.PI) / 360.0;
+			ctx.lineTo(w/2+50*Math.sin(aRad), h/2+50*Math.cos(aRad));
+			ctx.lineWidth = 2.0;
+			ctx.strokeStyle = "rgba(50, 10, 90, 0.5)";
+			ctx.stroke();
+			ctx.closePath();
+		}
+	}
+
+	drawFPS(time);
+	window.requestAnimationFrame(render, canvas);
+
+  } catch(err) {
+  	alert("name: " + err.name + "\nmessage: " + err.message + "\nstack: " + err.stack);
+  }
+}
+
+
+
+var cirRadius = 65;
+function drawMarker(px, py, idNum)
+{
+	//ctx.beginPath();
+	var grd = ctx.createRadialGradient(px,py,0,px,py,cirRadius);
+    grd.addColorStop(0,'#FFFFFF');
+    grd.addColorStop(0.3,'#000000'); // rgba(6,1,9,0)
+    grd.addColorStop(0.31,'#FFFFFF'); // rgba(255,255,255,0)
+    grd.addColorStop(0.33,'#D0A0E0'); // rgb(175,115,195)
+    grd.addColorStop(0.99,'#FFFFFF');
+    grd.addColorStop(1,'rgba(255,255,255,0)');
+	ctx.fillStyle = grd;
+	//ctx.arc(px, py, cirRadius, 0, 2*Math.PI, true);
+	//ctx.fill();
+	ctx.fillRect(px-cirRadius,py-cirRadius,2*cirRadius,2*cirRadius);
+	
+	ctx.lineWidth = 1.0;
+	ctx.strokeStyle = "rgba(90, 0, 200, 0.3)";
+	for(i=-1;i<idNum;i++)
+	{
+		ctx.beginPath();
+		ctx.arc(px, py, cirRadius+2*i, 0, 2*Math.PI, true);
+		ctx.stroke();
+	}
+	
+	ctx.fillStyle = "#000";
+	ctx.font = "bold 20px sans-serif";
+	ctx.textAlign = "center";
+	ctx.textBaseline = "middle";
+	ctx.fillText(idNum, px, py);	
+
+	//console.log('drawn circle '+idNum+' at '+px+','+py);
+}
+
+
+var prevtime = 0, sumfps = 0;
+function drawFPS(time)
+{
+	var SUMSCALE = 0.9, SUMCUMUL=1/(1-SUMSCALE); // засчет накопления предудущих значений происходит умножение на 10 = 1/(1-0.9)
+	var fps = 0;
+	var d = time-prevtime;
+	if(d > 0)
+	{
+		fps = 1000.0 / d;
+		sumfps = Math.round(fps/SUMCUMUL + sumfps*SUMSCALE);
+	}
+	ctx.fillStyle = "#000";
+	ctx.font = "bold 10px sans-serif";
+	ctx.textAlign = "center";
+	ctx.textBaseline = "middle";
+	ctx.fillText(sumfps, 10, 10);
+
+	prevtime = time;	
+}
+
+
+</script>
+
+</head>
+ <body onload="body_on_load()">
+  <canvas id="canvas1" width="300" height="300" style="top:0px; left:0px; width: 300px; height: 300px;">No Canvas !</canvas>
+ </body>
+</html>

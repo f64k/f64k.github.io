@@ -1,0 +1,319 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/> 
+    <style>
+		html,body {
+		    height: calc(100% - 8px);
+		}
+
+        .svgframe {
+            background: #ccc;
+            border-radius: 5px;
+			width: 100%;
+			height: 100%;
+        }
+
+        .svgdrag {
+			/*fill:hsl(25,50%,50%);*/
+			/*stroke:purple;*/
+			/*stroke-width:2;*/
+            position: absolute;
+        }
+
+        .touched {
+			fill:silver;
+			stroke:blue;
+			stroke-width:3;
+        }
+
+        .spark {
+        	fill:none;
+        	stroke:#7744FF; 
+        	stroke-width:1;        	
+        }
+
+    </style>
+</head>
+<body>
+	<svg id="svg1" class="svgframe">
+	  <defs>
+	    <radialGradient id="grad1" cx="50%" cy="50%" r="50%" fx="35%" fy="30%">
+	      <stop offset="0%" style="stop-color:hsl(15,10%,95%);stop-opacity:1" />
+	      <stop offset="90%" style="stop-color:hsl(15,45%,15%);stop-opacity:1" />
+	      <stop offset="100%" style="stop-color:hsl(0,5%,97%);stop-opacity:1" />
+	    </radialGradient>
+
+	    <filter id="blur1" x="-50%" y="-50%" width="300%" height="300%">
+	        <feGaussianBlur in="SourceGraphic" stdDeviation="0" />
+	    </filter>
+
+	    <filter id="f1" x="0" y="0">
+	        <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur" />
+	        <feMerge>
+               <feMergeNode in="blur"/>
+               <feMergeNode in="SourceGraphic"/>
+           </feMerge>	        
+	    </filter>    
+	  </defs>
+
+		<circle id="ball1" class="svgdrag" cx="160" cy="30" r="25" fill="url(#grad1)" />
+
+		<polyline id="accelLineX" class="spark" filter="url(#f1)" />
+
+		<!--
+		<ellipse id="block2" class="svgdrag" cx="200" cy="80" rx="100" ry="50">
+	    	<animate attributeType="CSS" attributeName="opacity" from="1" to="0" dur="5s" repeatCount="indefinite" />
+		</ellipse>
+		-->
+	</svg>
+	<!--
+	<div id="div1">Touch demo</div>
+	-->
+</body>
+
+<script>
+'use strict';
+
+function sgn(x) { return (x > 0) - (x < 0); }
+
+function GenerateRandomPoly(svgElement, svgPoly, numP, dx)
+{
+	var dAmp = 10;
+	if(!dx) { dx = 3; }
+	numP = ~~(+(numP || 0));
+
+	if(svgElement && svgElement.createSVGPoint)
+	{
+		if(svgPoly && svgPoly.points && svgPoly.points.length != undefined)
+		{
+			while(svgPoly.points.length > numP)
+			{
+				svgPoly.points.removeItem(0);
+			}
+			var aY = 0;
+			var pL = svgPoly.points.length;
+			for(var i=0; i < numP; i++)
+			{
+				var currPt;
+				if(i < pL)
+				{ currPt = svgPoly.points[i]; }
+				else
+				{
+					currPt = svgElement.createSVGPoint();
+					svgPoly.points.appendItem(currPt);
+				}
+				currPt.x = i * dx + 0*100; // смещение 100 было нужно при одладке, чтобы видеть линию на экране
+				aY = aY + dAmp*Math.random() - dAmp/2;
+				currPt.y = aY + 0*100; // смещение 100 было нужно при одладке, чтобы видеть линию на экране
+			}
+		}
+	}
+}
+
+function DrawSpark(fromP,toP,svgPoly)
+{
+	var sparkPointsLen = svgPoly.points.length;
+	if(sparkPointsLen > 0)
+	{
+		var sparkStartX = svgPoly.points[0].x;
+		var sparkStartY = svgPoly.points[0].y;
+		var sparkEndX = svgPoly.points[sparkPointsLen-1].x;
+		var sparkEndY = svgPoly.points[sparkPointsLen-1].y;
+		var angleSpark = Math.atan2(sparkEndY-sparkStartY, sparkEndX-sparkStartX);
+		var angleRad = Math.atan2(toP.y-fromP.y, toP.x-fromP.x);
+		var angleGr = (~~(10 * ((angleRad-angleSpark) * 180) / Math.PI)) / 10; 
+		var sparkLen = Math.sqrt((sparkEndX-sparkStartX)*(sparkEndX-sparkStartX)+(sparkEndY-sparkStartY)*(sparkEndY-sparkStartY));
+		var touchLen = Math.sqrt((toP.x-fromP.x)*(toP.x-fromP.x)+(toP.y-fromP.y)*(toP.y-fromP.y));
+		var scale = (~~(100*touchLen/sparkLen))/100;
+		svgPoly.setAttribute("transform","translate("+fromP.x+","+fromP.y+") rotate("+angleGr+") scale("+scale+") translate("+(-sparkStartX)+","+(-sparkStartY)+")");
+	}
+}
+
+function Spark(svgPoly, touchPoint)
+{
+	var toP={};
+	var svg1Rect = svg1.getBoundingClientRect();
+	toP.x = touchPoint.pageX - svg1Rect.left;
+	toP.y = touchPoint.pageY - svg1Rect.top;
+
+	var fromP={};
+	fromP.x = ball1.cx.baseVal.value;
+	fromP.y = ball1.cy.baseVal.value;
+	if(ball1.transform && ball1.transform.baseVal.length > 0)
+	{
+		var m = ball1.transform.baseVal[0].matrix;
+		fromP.x = fromP.x + m.e;
+		fromP.y = fromP.y + m.f;
+	}
+
+	var touchLen = Math.sqrt((toP.x-fromP.x)*(toP.x-fromP.x)+(toP.y-fromP.y)*(toP.y-fromP.y));
+	var sparkPoints = ~~(touchLen/3); // уменьшаем количество точек в искре
+
+	GenerateRandomPoly(svg1, svgPoly, sparkPoints, 3); // последний параметр - расстояние между точками по Х
+
+	DrawSpark(fromP, toP, svgPoly);	
+}
+
+window.addEventListener('DOMContentLoaded', function() 
+{
+
+	var div1 = document.getElementById('div1');
+
+	var svg1 = document.getElementById('svg1');
+
+	var ball1 = document.getElementById('ball1');
+
+	var svgPoly1 = svg1.getElementById('accelLineX');
+
+    svg1.addEventListener('touchstart', function(event) {
+		var t0 = event.targetTouches[0];
+		if(event.target.id != 'svg1' && event.target.className.baseVal == 'svgdrag')
+		{
+	        event.preventDefault();
+			var elem = event.target;
+	        elem.className.baseVal = 'touched'; //elem.setAttribute('className','touched'); // elem.className = 'touched';
+	
+	
+			var firstX = 0, firstY = 0;
+			var xforms = elem.transform.baseVal; // An SVGTransformList
+			if(xforms.length)
+			{
+				var firstXForm = xforms.getItem(0);       // An SVGTransform
+				if (firstXForm.type == SVGTransform.SVG_TRANSFORM_TRANSLATE)
+				{
+					firstX = firstXForm.matrix.e;
+					firstY = firstXForm.matrix.f;
+				}
+			}
+			elem.startX = t0.pageX - firstX;
+	        elem.startY = t0.pageY - firstY;
+		}
+		else
+		{
+	        event.preventDefault();
+
+			Spark(svgPoly1, t0);
+
+			if(div1)
+			{ div1.innerHTML = t0.pageX + ";" + t0.pageY; }
+		}
+    }, false);
+
+    svg1.addEventListener('touchmove', function(event) {
+		var t0 = event.targetTouches[0];
+		if(event.target.id != 'svg1' && event.target.className.baseVal == 'touched')
+		{
+	        event.preventDefault();
+			var elem = event.target;
+	        var x = t0.pageX - elem.startX; // startX - добавленное свойство для хранения позиции начала перемещения
+	        var y = t0.pageY - elem.startY; // startY - добавленное свойство для хранения позиции начала перемещения
+	        //elem.style.left = x;
+	        //elem.style.top = y;
+	        elem.setAttribute("transform","translate("+x+","+y+")");
+		}
+		else
+		{
+	        event.preventDefault();
+
+			Spark(svgPoly1, t0);
+
+			if(div1)
+			{ div1.innerHTML = t0.pageX + ";" + t0.pageY; }
+		}
+    }, false);
+
+    svg1.addEventListener('touchend', function(event) {
+		if(event.target.id != 'svg1' && event.target.className.baseVal == 'touched')
+		{
+	        event.preventDefault();
+			var elem = event.target;
+	        elem.className.baseVal = 'svgdrag'; // elem.setAttribute('className','');
+		}
+		else
+		{
+
+		}
+    }, false);
+
+	function updateOrientation() {
+	    event.preventDefault();
+	    var orientation = window.orientation;  
+	    switch(orientation) {  
+	      case 90: case -90:  
+	        orientation = 'landscape';  
+	      break;  
+	      default:  
+	        orientation = 'portrait';  
+	    }
+	    var h1 = document.getElementById('h1');
+		if(h1)
+	    {
+			h1.innerHTML = 'Touch demo ' + orientation;
+		}
+	}
+
+	window.addEventListener('orientationchange', updateOrientation, false);
+
+
+	window.addEventListener('devicemotion', function(event) {
+		event.preventDefault();
+		var devicemotion = event;
+		if(devicemotion.acceleration != undefined)
+		{
+			var accelLineX = document.getElementById('accelLineX');
+			var accelLineY = document.getElementById('accelLineY');
+			var velosVector = document.getElementById('velosVector');
+			if(accelLineX && accelLineX.points && accelLineX.points.length > 1)
+			if(accelLineY && accelLineY.points && accelLineY.points.length > 1)
+			{
+				var aX = -5 * devicemotion.acceleration.x || 0;
+				var aY = 5 * devicemotion.acceleration.y || 0;
+				var aL = accelLineX.points.length;
+				var dx = accelLineX.points[aL-1].x - accelLineX.points[aL-2].x;
+				var newPt = svg1.createSVGPoint();
+				newPt.x = accelLineX.points[aL-1].x + dx;
+				newPt.y = aX + 60;
+				accelLineX.points.appendItem(newPt);
+				if(aL > 64)
+				{
+					accelLineX.points.removeItem(0);
+					for(i=0;i<aL;i++)
+					{
+						accelLineX.points[i].x -= dx;
+					}
+				}
+				newPt = svg1.createSVGPoint();
+				newPt.x = accelLineY.points[aL-1].x + dx;
+				newPt.y = aY + 120;
+				accelLineY.points.appendItem(newPt);
+				if(aL > 64)
+				{
+					accelLineY.points.removeItem(0);
+					for(i=0;i<aL;i++)
+					{
+						accelLineY.points[i].x -= dx;
+					}
+				}
+				velosVector.points[1].x -= aX;
+				velosVector.points[1].y -= aY;
+				if(Math.abs(aX)<0.05 && Math.abs(aY)<0.05) // если покой, то ошибку скорости убирать
+				{
+					velosVector.points[1].x -= 0.1*(velosVector.points[1].x-velosVector.points[0].x); //0.1*sgn(velosVector.points[0].x-velosVector.points[1].x);
+					velosVector.points[1].y -= 0.1*(velosVector.points[1].y-velosVector.points[0].y);
+				}
+			}
+		}
+	}, true);
+
+
+	//var body = document.getElementById('body');
+
+
+}, false);
+
+
+</script>
+
+</html>
