@@ -1,0 +1,135 @@
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">-->
+<!DOCTYPE html>
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue Element UI</title>
+  <!-- import CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+</head>
+<body>
+  <div id="app">
+
+    <el-button @click="s.visibleD1 = true">открыть диалоговое окно</el-button>
+
+    <el-dialog :visible.sync="s.visibleD1" title="Таблица" width="80%">
+	  <el-table :data="d.gridData" border="">
+        <el-table-column type="expand">
+          <template slot-scope="props">
+            <p>Address: {{ props.row.address }}</p>
+            <el-tree :data="d.treeData.data" :props="d.treeData.defaultProps" @node-click="handleNodeClick"></el-tree>
+          </template>
+        </el-table-column>
+        <el-table-column type="selection"></el-table-column>
+        <el-table-column label="?">
+            <template slot-scope="scope">
+                <el-popover trigger="hover" placement="top">
+                    <p>Name: {{ scope.row.name }}</p>
+                    <p>Addr: {{ scope.row.address }}</p>
+                    <div slot="reference" class="name-wrapper">
+                        <el-tag size="medium">{{ scope.row.name }}</el-tag>
+                    </div>
+                </el-popover>
+            </template>
+        </el-table-column>
+        <el-table-column property="date" label="Дата" width="150"></el-table-column>
+        <el-table-column property="name" sortable label="Имя" width="200"></el-table-column>
+        <el-table-column property="address" label="Адрес"></el-table-column>
+	  </el-table>
+    </el-dialog>
+
+  </div>
+</body>
+  <!-- import Vue before Element -->
+  <script src="https://unpkg.com/vue"></script>   <!--<script src="https://unpkg.com/vue/dist/vue.js"></script>-->
+
+  <!-- import element-ui -->
+  <script src="https://unpkg.com/element-ui"></script> <!--<script src="https://unpkg.com/element-ui/lib/index.js"></script> -->
+
+  <!-- русский -->
+  <script src="https://unpkg.com/element-ui/lib/umd/locale/ru-RU.js"></script>
+
+  <script>
+    ELEMENT.locale(ELEMENT.lang.ruRU)
+  </script>
+
+  <script>
+      var testArrayAddresses = [{
+          date: new Date(),
+          name: 'Андрей Макаров',
+          address: 'No.1518,  Jinshajiang Road, Putuo District'
+      }, {
+          date: '2016-05-04',
+          name: 'John Smith',
+          address: 'No.1518,  Jinshajiang Road, Putuo District'
+      }, {
+          date: '2016-05-01',
+          name: 'John Smith',
+          address: 'No.1518,  Jinshajiang Road, Putuo District'
+      }, {
+          date: '2016-05-03',
+          name: 'John Smith',
+          address: 'No.1518,  Jinshajiang Road, Putuo District'
+      }]
+  </script>
+  <script>
+      var testTreeData = {
+          data: [{
+              label: 'Level one 1',
+              children: [{
+                  label: 'Level two 1-1',
+                  children: [{
+                      label: 'Level three 1-1-1'
+                  }]
+              }]
+          }, {
+              label: 'Level one 2',
+              children: [{
+                  label: 'Level two 2-1',
+                  children: [{
+                      label: 'Level three 2-1-1'
+                  }]
+              }, {
+                  label: 'Level two 2-2',
+                  children: [{
+                      label: 'Level three 2-2-1'
+                  }]
+              }]
+          }, {
+              label: 'Level one 3',
+              children: [{
+                  label: 'Level two 3-1',
+                  children: [{
+                      label: 'Level three 3-1-1'
+                  }]
+              }, {
+                  label: 'Level two 3-2',
+                  children: [{
+                      label: 'Level three 3-2-1'
+                  }]
+              }]
+          }],
+          defaultProps: {
+              children: 'children',
+              label: 'label'
+          }
+      };
+  </script>
+  <script>
+      new Vue({
+          el: '#app',
+          data: function () {
+              return {
+                  s: {
+                      visibleD1: false,
+                  },
+                  d: {
+                      gridData: testArrayAddresses,
+                      treeData: testTreeData,
+                  },
+              }
+          }
+      })
+  </script>
+</html>
+<!-- источник http://element.eleme.io/#/en-US/component/installation -->

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vuetify - эксперименты</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet" type="text/css" />
+    <link href="https://unpkg.com/vuetify/dist/vuetify.min.css" rel="stylesheet" type="text/css" />
+    <!--<link href="styles.css" rel="stylesheet" type="text/css" />-->
+    <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
+</head>
+<body>
+  <div id="app" style="visibility:visible;">
+    <v-app :dark="v.dark">
+
+      <v-navigation-drawer fixed :mini-variant="v.nav_drawer.miniVariant" :clipped="v.nav_drawer.clipped" v-model="v.nav_drawer.visible" app>
+        <v-btn icon @click.stop="v.nav_drawer.miniVariant = !v.nav_drawer.miniVariant">
+          <v-icon v-html="v.nav_drawer.miniVariant ? 'chevron_right' : 'chevron_left'"></v-icon>
+        </v-btn>
+        <v-btn icon @click.stop="v.nav_drawer.clipped = !v.nav_drawer.clipped">
+          <v-icon>web</v-icon>
+        </v-btn>
+        <v-list>
+          <v-list-tile :value="true" v-for="(item, i) in items" :key="item.title" @click="" ripple>
+            <v-list-tile-action>
+              <v-icon light v-html="item.icon"></v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title v-text="item.title"></v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+      </v-navigation-drawer>
+
+      <v-toolbar fixed app :clipped-left="v.nav_drawer.clipped">
+        <v-tooltip bottom>
+          <v-toolbar-side-icon @click.native.stop="v.nav_drawer.visible = !v.nav_drawer.visible" slot="activator"></v-toolbar-side-icon>
+          <span>Главное меню</span>
+        </v-tooltip>
+        <v-btn icon @click.native.stop="fixed = !fixed">
+          <v-icon>remove</v-icon>
+        </v-btn>
+        <v-toolbar-title v-text="title"></v-toolbar-title>
+        <v-spacer></v-spacer>
+
+        <!--<v-menu ref="menu" :close-on-content-click="false" v-model="menu" :nudge-right="40" :return-value.sync="date" lazy
+             transition="scale-transition" offset-y full-width min-width="290px">
+            <v-text-field slot="activator" v-model="date" label="Picker in menu" prepend-icon="event" readonly></v-text-field>
+            <v-date-picker v-model="date" no-title scrollable>
+              <v-spacer></v-spacer>
+              <v-btn flat color="primary" @click="menu = false">Cancel</v-btn>
+              <v-btn flat color="primary" @click="$refs.menu.save(date)">OK</v-btn>
+            </v-date-picker>
+        </v-menu>-->
+
+        <v-menu ref="menu2" :close-on-content-click="false" v-model="menu2" :nudge-right="40" :return-value.sync="date" lazy
+            transition="scale-transition" offset-y> <!-- full-width min-width="190px" -->
+          <v-text-field slot="activator" v-model="date" label="Дата для примера" outline append-icon="event"></v-text-field> <!-- readonly --> <!-- не работает: max-width="200px" -->
+          <v-date-picker v-model="date" @input="$refs.menu2.save(date)" locale="ru-ru" first-day-of-week="1" no-title></v-date-picker> <!-- scrollable -->
+        </v-menu>
+
+        <v-menu bottom left>
+            <v-btn slot="activator">Dropdown</v-btn>
+            <v-expansion-panel focusable>
+                <v-expansion-panel-content v-for="(item,i) in items" :key="item.title">
+                    <div slot="header">
+                        <v-icon light v-html="item.icon"></v-icon>
+                        {{item.title}}
+                    </div>
+                    <v-card>
+                      <v-card-text class="grey lighten-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-card-text>
+                    </v-card>
+                </v-expansion-panel-content>
+            </v-expansion-panel>
+       </v-menu>
+        <v-btn icon @click.native.stop="v.dark = !v.dark">
+          <v-icon>invert_colors</v-icon> <!-- tonality -->
+        </v-btn>
+        <v-btn icon @click.native.stop="v.right_drawer.visible = !v.right_drawer.visible">
+          <v-icon>settings</v-icon> <!-- reorder chrome_reader_mode -->
+        </v-btn>
+      </v-toolbar>
+
+      <main>
+        <v-content>
+          <v-container fluid>
+            <page></page>
+          </v-container>
+        </v-content>
+      </main>
+
+      <v-navigation-drawer fixed temporary :right="v.right_drawer.right" v-model="v.right_drawer.visible" app>
+        <v-list>
+          <v-list-tile @click.native="v.right_drawer.right = !v.right_drawer.right">
+            <v-list-tile-action>
+              <v-icon light>swap_horiz</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-title>swap_horiz drawer (click me)</v-list-tile-title>
+          </v-list-tile>
+         <v-list-tile>
+           <a href="https://material.io/tools/icons/" target="_blank">список icons</a>
+         </v-list-tile>
+         <v-list-tile>
+           <a href="https://vuetifyjs.com/ru/components/data-tables" target="_blank">пример редактируемой таблицы</a>
+         </v-list-tile>
+         <v-list-tile>
+           <a href="https://github.com/posva/vuexfire" target="_blank">vuexfire (github.com/posva)</a>
+         </v-list-tile>
+         <v-list-tile>
+           <a href="https://github.com/aofdev/vue-firebase-auth-vuex" target="_blank">vue-firebase-auth-vuex (github.com/aofdev)</a>
+         </v-list-tile>
+        </v-list>
+
+        <v-expansion-panel focusable>
+            <v-expansion-panel-content v-for="(item,i) in items" :key="item.title">
+                <div slot="header">
+                    <v-icon light v-html="item.icon"></v-icon>
+                    {{item.title}}
+                </div>
+                <v-card>
+                  <v-card-text class="grey lighten-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-card-text>
+                </v-card>
+            </v-expansion-panel-content>
+        </v-expansion-panel>
+
+      </v-navigation-drawer>
+
+      <v-footer :fixed="fixed" app>
+        <v-spacer></v-spacer>
+        
+        <v-badge>
+          <span slot="badge">{{bottomSheet}}</span>
+          <v-switch :label="`bottomSheet: ${bottomSheet}`" v-model="bottomSheet"></v-switch>
+          <!--<v-btn icon @click.native.stop="bottomSheet = !bottomSheet"><v-icon>remove</v-icon></v-btn>-->
+        </v-badge>
+
+        <v-dialog v-model="dialog1" persistent max-width="290">
+          <v-btn slot="activator" color="primary">Open Dialog</v-btn>
+          <v-card>
+            <v-card-title class="headline">Use Google's location service?</v-card-title>
+            <v-card-text>Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.</v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="green darken-1" flat @click.native="dialog1 = false">Disagree</v-btn>
+              <v-btn color="green darken-1" flat @click.native="dialog1 = false">Agree</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
+        <v-bottom-sheet inset>
+          <v-btn slot="activator">Show player</v-btn> <!-- color="red" dark -->
+          <v-card tile>
+            <v-progress-linear :value="50" class="my-0" height="3"></v-progress-linear>
+
+            <v-list>
+              <v-list-tile>
+                <v-list-tile-content>
+                  <v-list-tile-title>The Walker</v-list-tile-title>
+                  <v-list-tile-sub-title>Fitz & The Trantrums</v-list-tile-sub-title>
+                </v-list-tile-content>
+
+                <v-spacer></v-spacer>
+
+                <v-list-tile-action>
+                  <v-btn icon><v-icon>fast_rewind</v-icon></v-btn>
+                </v-list-tile-action>
+
+                <v-list-tile-action :class="{ 'mx-5': $vuetify.breakpoint.mdAndUp }">
+                  <v-btn icon><v-icon>pause</v-icon></v-btn>
+                </v-list-tile-action>
+
+                <v-list-tile-action :class="{ 'mr-3': $vuetify.breakpoint.mdAndUp }">
+                  <v-btn icon><v-icon>fast_forward</v-icon></v-btn>
+                </v-list-tile-action>
+              </v-list-tile>
+            </v-list>
+          </v-card>
+        </v-bottom-sheet>
+
+        <span>&copy; 2017</span>
+      </v-footer>
+
+
+    </v-app>
+  </div>
+
+    <script type="text/x-template" id="page">
+    <v-layout column align-center>
+      <hr/>
+      <div>
+        <img src="./v.png" alt="Vuetify.js" class="mb-5" height="100px" />
+      </div>
+      <blockquote>
+        &#8220;First, solve the problem. Then, write the code.&#8221;
+        <footer>
+          <small>
+            <em>&mdash;John Johnson</em>
+          </small>
+        </footer>
+      </blockquote>
+    </v-layout>
+    </script>
+
+    <!--<script src="https://unpkg.com/axios"></script>-->
+    <!--<script src="https://unpkg.com/lodash"></script>-->
+
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <!--<script src="https://unpkg.com/vue-i18n"></script>-->
+    <script src="https://unpkg.com/vuetify/dist/vuetify.js"></script>
+
+    <script>
+        Vue.component('page', {
+            template: '#page'
+        })
+        new Vue({
+            el: '#app',
+            data: {
+                items: [
+                  { icon: 'bubble_chart', title: 'bubble_chart' },
+                  { icon: 'view_headline', title: 'view_headline' },
+                  { icon: 'dialpad', title: 'dialpad' },
+                  { icon: 'waves', title: 'waves' },
+                  { icon: 'format_align_justify', title: 'format_align_justify' },
+                  { icon: 'blur_on', title: 'blur_on' },
+                  { icon: 'texture', title: 'texture' },
+                ],
+
+                title: 'Vuetify.js ТЕСТ',
+
+                dialog1: false,
+                bottomSheet: false,
+                fixed: false,
+
+                date: null,
+                menu: false,
+                modal: false,
+                menu2: false,
+
+                //right: true, rightDrawer: false,
+                //drawer: true, clipped: true, miniVariant: false,
+
+                v: {
+                    dark: false,
+                    nav_drawer: {
+                        visible: true,
+                        clipped: true,
+                        miniVariant: false,
+                    },
+                    right_drawer: {
+                        visible: true,
+                        right: true,
+                    },
+                },
+            }
+        })
+    </script>
+</body>
+</html>
+
+
+<!--
+<!DOCTYPE html>
+<html>
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+  <link href="https://unpkg.com/vuetify/dist/vuetify.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+<body>
+  <div id="app">
+    <v-app>
+      <v-content>
+        <v-container>Hello world</v-container>
+      </v-content>
+    </v-app>
+  </div>
+ 
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/vuetify/dist/vuetify.js"></script>
+  <script>
+    new Vue({ el: '#app' })
+  </script>
+</body>
+</html>
+-->
+
+<!-- источник https://vuetifyjs.com/ru/getting-started/quick-start -->
