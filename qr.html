@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Проверка справки COVID-19</title>
+    <script src="https://unpkg.com/qrcode-generator"></script>
+    <style>
+        /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
+        html {
+            line-height: 1.15;
+            -webkit-text-size-adjust: 100%
+        }
+
+        body {
+            margin: 0;
+            background: #fff;
+        }
+
+        main {
+            display: block
+        }
+
+        h1 {
+            font-size: 2em;
+            margin: .67em 0
+        }
+
+        hr {
+            box-sizing: content-box;
+            height: 0;
+            overflow: visible
+        }
+
+        pre {
+            font-family: monospace,monospace;
+            font-size: 1em
+        }
+
+        a {
+            background-color: transparent
+        }
+
+        abbr[title] {
+            border-bottom: none;
+            text-decoration: underline;
+            text-decoration: underline dotted
+        }
+
+        b,
+        strong {
+            font-weight: bolder
+        }
+
+        code,
+        kbd,
+        samp {
+            font-family: monospace,monospace;
+            font-size: 1em
+        }
+
+        small {
+            font-size: 80%
+        }
+
+        sub,
+        sup {
+            font-size: 75%;
+            line-height: 0;
+            position: relative;
+            vertical-align: baseline
+        }
+
+        sub {
+            bottom: -.25em
+        }
+
+        sup {
+            top: -.5em
+        }
+
+        img {
+            border-style: none
+        }
+
+        button,
+        input,
+        optgroup,
+        select,
+        textarea {
+            font-family: inherit;
+            font-size: 100%;
+            line-height: 1.15;
+            margin: 0
+        }
+
+        button,
+        input {
+            overflow: visible
+        }
+
+        button,
+        select {
+            text-transform: none
+        }
+
+        [type=button],
+        [type=reset],
+        [type=submit],
+        button {
+            -webkit-appearance: button
+        }
+
+            [type=button]::-moz-focus-inner,
+            [type=reset]::-moz-focus-inner,
+            [type=submit]::-moz-focus-inner,
+            button::-moz-focus-inner {
+                border-style: none;
+                padding: 0
+            }
+
+            [type=button]:-moz-focusring,
+            [type=reset]:-moz-focusring,
+            [type=submit]:-moz-focusring,
+            button:-moz-focusring {
+                outline: 1px dotted ButtonText
+            }
+
+        fieldset {
+            padding: .35em .75em .625em
+        }
+
+        legend {
+            box-sizing: border-box;
+            color: inherit;
+            display: table;
+            max-width: 100%;
+            padding: 0;
+            white-space: normal
+        }
+
+        progress {
+            vertical-align: baseline
+        }
+
+        textarea {
+            overflow: auto
+        }
+
+        [type=checkbox],
+        [type=radio] {
+            box-sizing: border-box;
+            padding: 0
+        }
+
+        [type=number]::-webkit-inner-spin-button,
+        [type=number]::-webkit-outer-spin-button {
+            height: auto
+        }
+
+        [type=search] {
+            -webkit-appearance: textfield;
+            outline-offset: -2px
+        }
+
+            [type=search]::-webkit-search-decoration {
+                -webkit-appearance: none
+            }
+
+        ::-webkit-file-upload-button {
+            -webkit-appearance: button;
+            font: inherit
+        }
+
+        details {
+            display: block
+        }
+
+        summary {
+            display: list-item
+        }
+
+        template {
+            display: none
+        }
+
+        [hidden] {
+            display: none
+        }
+
+        body,
+        html {
+            height: 100%
+        }
+
+        body {
+            font-family: Inter,sans-serif;
+            font-size: 16px;
+            line-height: 28px;
+            color: #292d3a
+        }
+
+        .wrapper {
+            width: 100%
+        }
+
+        .d-none {
+            display: none
+        }
+
+        .red {
+            color: #e27474
+        }
+
+        .green {
+            color: #007934
+        }
+
+        .yellow {
+            color: #F2C22F;
+        }
+
+        .container {
+            padding: 0 42px
+        }
+
+        .wrapper {
+            display: table;
+            height: 100%
+        }
+
+        #all {
+            display: table-row;
+            height: 100%
+        }
+
+        .header {
+            position: relative;
+            padding: 48px 0;
+            background-color: transparent
+        }
+
+            .header:after {
+                content: '';
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 0;
+                background: linear-gradient(90deg,#87c6cb 0,#e9c94d 50%,#35b275 100%);
+                opacity: .15
+            }
+
+            .header .container {
+                display: -moz-flex;
+                display: -ms-flex;
+                display: -o-flex;
+                display: -ms-flexbox;
+                display: flex;
+                -ms-flex-pack: justify;
+                justify-content: space-between;
+                -ms-flex-align: center;
+                align-items: center;
+                position: relative;
+                z-index: 1;
+                font-size: 12px;
+                line-height: 12px
+            }
+
+                .header .container a {
+                    color: #94969c;
+                    text-decoration: none
+                }
+
+        .content {
+            margin: 40px 0
+        }
+
+            .content .title {
+                font-weight: 800;
+                font-size: 24px;
+                line-height: 32px
+            }
+
+                .content .title + p {
+                    margin-top: 10px;
+                    font-size: 13px;
+                    line-height: 16px;
+                    margin-bottom: 32px
+                }
+
+            .content h2 {
+                font-weight: 800;
+                font-size: 18px;
+                line-height: 32px
+            }
+
+            .content .result {
+                border-top: 1px solid #dbdbde;
+                border-bottom: 1px solid #dbdbde;
+                display: -moz-flex;
+                display: -ms-flex;
+                display: -o-flex;
+                display: -ms-flexbox;
+                display: flex;
+                -ms-flex-pack: start;
+                justify-content: flex-start;
+                -ms-flex-align: center;
+                align-items: center;
+                padding: 24px 0;
+                margin: 32px 0 25px 0;
+                font-size: 14px;
+                line-height: 16px
+            }
+
+                .content .result svg {
+                    margin-right: 16px;
+                    height: 40px;
+                    width: 40px
+                }
+
+                .content .result p {
+                    margin: 0
+                }
+
+                .content .result strong {
+                    display: block;
+                    font-weight: 700
+                }
+
+                .content .result + .advansed {
+                    margin-bottom: 16px
+                }
+
+                .content .result.green + .advansed {
+                    padding-bottom: 16px;
+                    margin-bottom: 24px;
+                    border-bottom: 1px solid #dbdbde
+                }
+
+            .content .advansed p {
+                margin: 0
+            }
+
+            .content .advansed strong {
+                font-weight: 600
+            }
+
+            .content p {
+                font-size: 14px;
+                line-height: 24px
+            }
+
+            .content dl {
+                font-size: 12px;
+                line-height: 24px
+            }
+
+                .content dl dt {
+                    color: #94969c;
+                    display: block
+                }
+
+                .content dl dd {
+                    font-size: 14px;
+                    margin: 0 0 10px 0;
+                    color: #545761;
+                    font-weight: 600
+                }
+
+        .footer {
+            background: #292d3a;
+            color: #545761;
+            font-size: 12px;
+            line-height: 20px;
+            padding: 24px 0
+        }
+
+            .footer .title {
+                font-weight: 600;
+                font-size: 14px;
+                line-height: 20px;
+                color: #fff
+            }
+
+                .footer .title span {
+                    display: block;
+                    font-size: 12px;
+                    font-weight: 400;
+                    line-height: 20px
+                }
+
+            .footer .phonelist {
+                margin: 24px 0;
+                padding: 24px 0;
+                list-style-type: none;
+                border-top: 1px solid rgba(148,150,156,.1);
+                border-bottom: 1px solid rgba(148,150,156,.1);
+                display: -moz-flex;
+                display: -ms-flex;
+                display: -o-flex;
+                display: -ms-flexbox;
+                display: flex
+            }
+
+                .footer .phonelist li + li {
+                    margin-left: 32px
+                }
+
+                .footer .phonelist li a {
+                    font-weight: 600;
+                    font-size: 16px;
+                    line-height: 20px;
+                    color: #fff;
+                    text-decoration: none
+                }
+
+                .footer .phonelist li span {
+                    font-size: 11px;
+                    line-height: 18px;
+                    color: #94969c;
+                    display: block
+                }
+
+        @media (min-width:1921px) {
+            body {
+                background: #545761
+            }
+
+                body > .wrapper {
+                    max-width: 1920px;
+                    background: #fff
+                }
+        }
+
+        @media (max-width:480px) {
+            .d-sm-block {
+                display: block
+            }
+
+            .header {
+                padding: 27px 0
+            }
+
+                .header svg {
+                    height: 10px;
+                    width: auto
+                }
+
+            .container {
+                padding: 0 32px
+            }
+
+            .footer .phonelist {
+                -ms-flex-direction: column;
+                flex-direction: column
+            }
+
+                .footer .phonelist li + li {
+                    margin: 16px 0 0 0
+                }
+        }
+
+        input.q_text {
+            border-color: transparent; 
+            border-bottom-color: black;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper" id="div_show">
+        <div id="all">
+            <div class="header">
+                <div class="container">
+                    <div class="logo">
+                        <a href="/">
+                            <svg width="157" height="16" viewBox="0 0 157 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M140.133 0.18528V3.32752H146.605V16H150.308V3.32752H156.841V0.18528H140.133ZM131.603 12.8526H126.857C124.737 12.8526 123.865 12.3978 123.865 9.98512V6.0644C123.865 3.5804 124.379 3.1448 126.857 3.1448H131.603C133.752 3.1448 134.574 3.8544 134.574 5.51624H138.28C138.28 1.07184 135.983 0 132.319 0H126.165C121.609 0 120.162 1.30288 120.162 5.928V10.4162C120.162 14.654 121.523 16 125.807 16H132.701C137.268 16 138.28 14.7467 138.299 10.5301H134.574C134.574 12.4434 133.815 12.8526 131.603 12.8526ZM100.681 16H116.502V13.0141H104.384V9.38744H116.121V6.6312H104.384V3.16728H116.502V0.18528H100.681V16ZM81.2166 3.32752H87.6876V16H91.3922V3.32752H97.9294V0.18528H81.2166V3.32752ZM75.6829 5.97304C75.6829 3.66912 74.9276 3.1448 72.7189 3.1448H67.945C65.6231 3.1448 64.9688 3.73536 64.9688 5.99304V10.211C64.9688 12.2826 65.6231 12.8526 67.8736 12.8526H72.7851C75.1443 12.8526 75.6829 12.3334 75.6829 10.1866V5.97304ZM79.3874 5.62952V10.5963C79.3874 14.539 78.1187 16 73.7888 16H66.9832C62.827 16 61.2739 14.4282 61.2739 10.5963V5.62952C61.274 1.30288 62.7686 0 66.9833 0H73.7889C77.6201 0 79.3874 1.18448 79.3874 5.62952ZM47.0072 12.8526H46.9924L41.8648 0.18528H35.4883V16H39.1954V3.39896L44.475 16H49.5325L54.8178 3.3848V16H58.521V0.18528H52.1401L47.0072 12.8526ZM16.0129 16H31.8295V13.0141H19.7116V9.38744H31.4467V6.6312H19.7116V3.16728H31.8295V0.18528H16.0129V16ZM0 0.18528H13.2753V3.32752H3.69488V16H0V0.18528Z" fill="#007934"></path>
+                            </svg>
+                        </a>
+                    </div>
+                    <a href="/">gemotest.ru</a>
+                </div>
+            </div>
+
+            <div class="container content">
+                <div class="title">Проверка справки <br class="d-none d-sm-block">COVID-19</div>
+                <p>Verification of a COVID-19 document</p>
+
+                <div class="result green">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12.0964 23.9984C15.0982 23.9515 17.9752 22.7976 20.1677 20.7611C22.3603 18.7245 23.7116 15.951 23.9589 12.9799C24.2062 10.0089 23.3317 7.05268 21.5056 4.68636C19.6795 2.32004 17.0323 0.712784 14.0789 0.177203C13.4242 0.0632425 12.761 0.00397444 12.0964 2.07705e-05C8.9521 -0.00578712 5.92959 1.20662 3.67159 3.37941C1.4136 5.5522 0.0982543 8.51395 0.00528471 11.6348C-0.0876849 14.7557 1.04905 17.7895 3.17376 20.091C5.29847 22.3925 8.24352 23.7802 11.3826 23.959C11.619 23.9918 11.8578 24.0049 12.0964 23.9984ZM9.04319 16.6748L5.73229 13.3871C5.54646 13.2041 5.39897 12.9864 5.29832 12.7465C5.19766 12.5066 5.14584 12.2492 5.14584 11.9893C5.14584 11.7295 5.19766 11.4721 5.29832 11.2322C5.39897 10.9923 5.54646 10.7746 5.73229 10.5916C6.10375 10.2249 6.60623 10.0191 7.13 10.0191C7.65377 10.0191 8.15626 10.2249 8.52772 10.5916L10.5103 12.5603L13.0876 10.001L15.7046 7.38261C16.0761 7.01594 16.5786 6.81013 17.1024 6.81013C17.6261 6.81013 18.1286 7.01594 18.5001 7.38261C18.6859 7.56563 18.8334 7.78337 18.934 8.02327C19.0347 8.26317 19.0865 8.52049 19.0865 8.78038C19.0865 9.04027 19.0347 9.29759 18.934 9.5375C18.8334 9.7774 18.6859 9.99514 18.5001 10.1782L12.2748 16.2417L11.8386 16.6748C11.4672 17.0415 10.9647 17.2473 10.4409 17.2473C9.91714 17.2473 9.41465 17.0415 9.04319 16.6748Z" fill="#33945D"></path>
+                    </svg>
+                    <p>
+                        <strong>Справка действительна</strong>
+                        The document is valid
+                    </p>
+                </div>
+
+                <div class="advansed">
+                    <dl>
+                        <dt>Пациент</dt>
+                        <dd id="fio_ru">******* *. *.</dd>
+                        <dt>Год рождения</dt>
+                        <dd id="year1">19**</dd>
+                        <dt>Коронавирус, РНК (SARS-CoV-2, ПЦР) мазок, кач.</dt>
+                        <dd>РНК НЕ ОБНАРУЖЕНА (<span id="date1">22 окт 2021</span>)</dd>
+                    </dl>
+                </div>
+                <div class="advansed">
+                    <dl>
+                        <dt>Patient</dt>
+                        <dd id="fio_en">******* *.</dd>
+                        <dt>Year of birth</dt>
+                        <dd id="year2">19**</dd>
+                        <dt>Coronavirus, RNA (SARS-CoV-2, Real-time PCR) smear, qualitative</dt>
+                        <dd>NEGATIVE (<span id="date2">22 окт 2021</span>)</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="container">
+                <div class="title">
+                    Контакт-центр Гемотест
+                    <span>Gemotest Support</span>
+                </div>
+                <ul class="phonelist">
+                    <li>
+                        <a href="">8 (800) 550-13-13</a>
+                        <span>Справка 24/7 • 24/7 Help</span>
+                    </li>
+                    <li>
+                        <a href="">+7 (495) 532-13-13</a>
+                        <span>Центральный офис Гемотест • Gemotest HQ</span>
+                    </li>
+                </ul>
+                <div id="copy">© ООО «Лаборатория Гемотест», 2020.<br>Gemotest Laboratory Ltd.</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="make_qr" style="line-height:normal; max-width:400px">
+        <div style="background-color:#184"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIyLjEuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9ItCh0LvQvtC5XzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCA1NjQgMTMyLjgiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDU2NCAxMzIuODsiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLnN0MHtmaWxsOiNGRkZGRkY7fQo8L3N0eWxlPgo8Zz4KCTxnPgoJCTxnPgoJCQk8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMzQuOSwzMS43aDQxLjZ2OS43SDQ2LjV2MzguOUgzNC45VjMxLjd6IE04NS4xLDgwLjNoNDkuNnYtOS4yaC0zOFY2MGgzNi44di04LjVIOTYuN1Y0MC45aDM4di05LjJIODUuMQoJCQkJVjgwLjN6IE0xODIuNCw3MC42TDE4Mi40LDcwLjZsLTE2LjEtMzguOWgtMjB2NDguNmgxMS42VjQxLjZsMTYuNiwzOC43aDE1LjlsMTYuNi0zOC43djM4LjdoMTEuNlYzMS43aC0yMEwxODIuNCw3MC42egoJCQkJIE0yODQsNDguNXYxNS4zYzAsMTIuMS00LDE2LjYtMTcuNiwxNi42SDI0NWMtMTMsMC0xNy45LTQuOC0xNy45LTE2LjZWNDguNWMwLTEzLjMsNC43LTE3LjMsMTcuOS0xNy4zaDIxLjQKCQkJCUMyNzguNCwzMS4yLDI4NCwzNC44LDI4NCw0OC41eiBNMjcyLjMsNDkuNWMwLTcuMS0yLjQtOC43LTkuMy04LjdoLTE1Yy03LjMsMC05LjMsMS44LTkuMyw4Ljd2MTNjMCw2LjQsMi4xLDguMSw5LjEsOC4xaDE1LjQKCQkJCWM3LjQsMCw5LjEtMS42LDkuMS04LjJWNDkuNXogTTI4OS43LDQxLjRIMzEwdjM4LjloMTEuNlY0MS40aDIwLjV2LTkuN2gtNTIuNFY0MS40eiBNMzUwLjgsODAuM2g0OS42di05LjJoLTM4VjYwaDM2Ljh2LTguNQoJCQkJaC0zNi44VjQwLjloMzh2LTkuMmgtNDkuNlY4MC4zeiBNNDQ3LjgsNzAuNmgtMTQuOWMtNi43LDAtOS40LTEuNC05LjQtOC44di0xMmMwLTcuNiwxLjYtOSw5LjQtOWgxNC45YzYuNywwLDkuMywyLjIsOS4zLDcuMwoJCQkJaDExLjZjMC0xMy43LTcuMi0xNi45LTE4LjctMTYuOWgtMTkuM2MtMTQuMywwLTE4LjgsNC0xOC44LDE4LjJ2MTMuOGMwLDEzLDQuMywxNy4yLDE3LjcsMTcuMmgyMS42YzE0LjMsMCwxNy41LTMuOSwxNy42LTE2LjgKCQkJCWgtMTEuN0M0NTcuMSw2OS40LDQ1NC43LDcwLjYsNDQ3LjgsNzAuNnogTTQ3NC41LDMxLjd2OS43aDIwLjN2MzguOWgxMS42VjQxLjRoMjAuNXYtOS43SDQ3NC41eiIvPgoJCQk8cGF0aCBjbGFzcz0ic3QwIiBkPSJNNTAuOCw5MS43SDU3djEzLjloLTMuM1Y5NC40aC0wLjRsLTQuOCwxMS4xaC00LjdMMzksOTQuNGgtMC40djExLjFoLTMuM1Y5MS43aDYuMmw0LjYsMTEuMWgwLjJMNTAuOCw5MS43egoJCQkJIE02My4zLDEwNS42aDE0LjJ2LTIuNkg2Ni42di0zLjJoMTAuNXYtMi40SDY2LjZ2LTNoMTAuOXYtMi42SDYzLjNWMTA1LjZ6IE05OS40LDEwMi44aDEuNXY2LjFoLTN2LTMuM0g4NnYzLjNoLTN2LTYuMWgwLjkKCQkJCWMxLjItMS4yLDEuNy0yLjUsMS43LTQuNXYtNi42aDEzLjlWMTAyLjh6IE05Ni4xLDk0LjRoLTcuNFY5OWMwLDEuNS0wLjMsMi43LTEuMSwzLjhoOC41Vjk0LjR6IE0xMTAuNCwxMDIuOEgxMTBWOTEuN2gtMy4zdjEzLjkKCQkJCWg1LjdsOC4zLTExLjFoMC41djExLjFoMy4zVjkxLjdoLTUuNkwxMTAuNCwxMDIuOHogTTE0NS43LDkxLjdoLTMuM3YxMS4xaC04LjZWOTEuN2gtMy4zdjEzLjloMTMuN3YzLjNoM3YtNi4xaC0xLjZWOTEuN3oKCQkJCSBNMTU3LjIsMTAyLjhoLTAuNVY5MS43aC0zLjN2MTMuOWg1LjdsOC4zLTExLjFoMC41djExLjFoMy4zVjkxLjdoLTUuNkwxNTcuMiwxMDIuOHogTTE4OS4xLDk3aC04LjZ2LTUuM2gtMy4zdjEzLjloMy4zdi01LjgKCQkJCWg4LjZ2NS44aDMuM1Y5MS43aC0zLjNWOTd6IE0yMDguNSwxMDIuOGgtNC4zYy0xLjksMC0yLjctMC40LTIuNy0yLjV2LTMuNGMwLTIuMiwwLjUtMi42LDIuNy0yLjZoNC4zYzEuOSwwLDIuNywwLjYsMi43LDIuMWgzLjMKCQkJCWMwLTMuOS0yLjEtNC44LTUuMy00LjhoLTUuNWMtNC4xLDAtNS40LDEuMS01LjQsNS4ydjMuOWMwLDMuNywxLjIsNC45LDUuMSw0LjloNi4yYzQuMSwwLDUtMS4xLDUtNC44aC0zLjMKCQkJCUMyMTEuMSwxMDIuNCwyMTAuNCwxMDIuOCwyMDguNSwxMDIuOHogTTIzNi43LDkxLjdoLTVsLTYuMSw1LjJoLTJ2LTUuMmgtMy4zdjEzLjloMy4zdi01LjloMmw2LjQsNS45aDQuOWwtOC41LTcuNEwyMzYuNyw5MS43egoJCQkJIE0yNTMuNSw5MS43bDcuMywxMy45aC0zLjlsLTEuOC0zLjVoLTguMmwtMS44LDMuNWgtMy45bDcuMy0xMy45SDI1My41eiBNMjUzLjgsOTkuNGwtMi42LTUuMkgyNTFsLTIuNyw1LjJIMjUzLjh6IE0yNzAuOSw5MS43CgkJCQloMTAuNXYxMy45aC0zLjN2LTQuNGgtNS41bC0zLjMsNC40aC00LjNsNC4xLTQuOGMtMS42LTAuNC0zLjEtMi0zLjEtNC4yQzI2NS45LDkyLjYsMjY4LDkxLjcsMjcwLjksOTEuN3ogTTI3MS4xLDk0LjMKCQkJCWMtMS41LDAtMS45LDAuNy0xLjksMi4xYzAsMS41LDAuNiwyLjEsMiwyLjFoNi44di00LjJIMjcxLjF6IE0yOTkuMSwxMDAuMWMwLDItMC4zLDIuNy0yLDIuN3YyLjhoMS40YzIuNSwwLDMuOS0xLjUsMy45LTV2LTYuMQoJCQkJaDcuOHYxMS4xaDMuM1Y5MS43aC0xNC40VjEwMC4xeiBNMzMwLjcsOTEuN2w3LjMsMTMuOWgtMy45bC0xLjgtMy41aC04LjJsLTEuOCwzLjVoLTMuOWw3LjQtMTMuOUgzMzAuN3ogTTMzMSw5OS40bC0yLjYtNS4yCgkJCQloLTAuMmwtMi43LDUuMkgzMzF6IE0zNTcuMywxMDEuMmMwLDMuNS0xLjYsNC4zLTQuOSw0LjNIMzQzVjkxLjdoMTN2Mi42aC05Ljd2Mi42aDYuMUMzNTUuNiw5Ni45LDM1Ny4zLDk3LjcsMzU3LjMsMTAxLjJ6CgkJCQkgTTM1NCwxMDEuMmMwLTEuMS0wLjItMS42LTEuOS0xLjZoLTUuOXYzLjJoNS43QzM1My44LDEwMi44LDM1NCwxMDIuNCwzNTQsMTAxLjJ6IE0zNzkuNiw5Ni41djQuNGMwLDMuNS0xLjEsNC43LTUsNC43aC02LjEKCQkJCWMtMy43LDAtNS4xLTEuNC01LjEtNC43di00LjRjMC0zLjgsMS4zLTQuOSw1LjEtNC45aDYuMUMzNzgsOTEuNSwzNzkuNiw5Mi42LDM3OS42LDk2LjV6IE0zNzYuMyw5Ni44YzAtMi0wLjctMi41LTIuNy0yLjVoLTQuMwoJCQkJYy0yLjEsMC0yLjcsMC41LTIuNywyLjV2My43YzAsMS44LDAuNiwyLjMsMi42LDIuM2g0LjRjMi4xLDAsMi42LTAuNSwyLjYtMi4zVjk2Ljh6IE0zOTkuOCw5Ni41YzAsMy41LTEuNCw0LjktNC44LDQuOWgtNi4ydjQuMQoJCQkJaC0zLjNWOTEuN2g5LjRDMzk4LjQsOTEuNywzOTkuOCw5MywzOTkuOCw5Ni41eiBNMzk2LjUsOTYuNWMwLTEuNC0wLjQtMi4xLTIuMi0yLjFoLTUuNXY0LjNoNS41QzM5Niw5OC43LDM5Ni41LDk4LDM5Ni41LDk2LjV6CgkJCQkgTTQxNS41LDkxLjdsNy4zLDEzLjloLTMuOWwtMS44LTMuNWgtOC4ybC0xLjgsMy41aC0zLjlsNy40LTEzLjlINDE1LjV6IE00MTUuOCw5OS40bC0yLjYtNS4ySDQxM2wtMi43LDUuMkg0MTUuOHogTTQyNS43LDk0LjQKCQkJCWg1Ljh2MTEuMWgzLjNWOTQuNGg1Ljh2LTIuOGgtMTVWOTQuNHogTTQ2Mi4xLDk2LjV2NC40YzAsMy41LTEuMSw0LjctNSw0LjdoLTYuMWMtMy43LDAtNS4xLTEuNC01LjEtNC43di00LjQKCQkJCWMwLTMuOCwxLjMtNC45LDUuMS00LjloNi4xQzQ2MC41LDkxLjUsNDYyLjEsOTIuNiw0NjIuMSw5Ni41eiBNNDU4LjcsOTYuOGMwLTItMC43LTIuNS0yLjctMi41aC00LjNjLTIuMSwwLTIuNywwLjUtMi43LDIuNXYzLjcKCQkJCWMwLDEuOCwwLjYsMi4zLDIuNiwyLjNoNC40YzIuMSwwLDIuNi0wLjUsMi42LTIuM1Y5Ni44eiBNNDgyLjIsOTYuNWMwLDMuNS0xLjQsNC45LTQuOCw0LjloLTYuMnY0LjFoLTMuM1Y5MS43aDkuNQoJCQkJQzQ4MC44LDkxLjcsNDgyLjIsOTMsNDgyLjIsOTYuNXogTTQ3OC45LDk2LjVjMC0xLjQtMC40LTIuMS0yLjItMi4xaC01LjV2NC4zaDUuNUM0NzguNCw5OC43LDQ3OC45LDk4LDQ3OC45LDk2LjV6IE00OTEuNiwxMDIuOAoJCQkJaC0wLjVWOTEuN2gtMy4zdjEzLjloNS43bDguMy0xMS4xaDAuNXYxMS4xaDMuM1Y5MS43aC01LjZMNDkxLjYsMTAyLjh6IE01MjcuNiw5MS43djEzLjloLTMuM3YtNC40aC01LjVsLTMuMyw0LjRoLTQuM2w0LjEtNC44CgkJCQljLTEuNi0wLjQtMy4xLTItMy4xLTQuMmMwLTMuOSwyLjEtNC45LDQuOS00LjlINTI3LjZ6IE01MjQuMyw5NC4zaC02LjljLTEuNSwwLTEuOSwwLjctMS45LDIuMWMwLDEuNSwwLjYsMi4xLDIsMi4xaDYuOFY5NC4zeiIKCQkJCS8+CgkJPC9nPgoJPC9nPgo8L2c+Cjwvc3ZnPgo=" /></div>
+        <span style="font-size:medium;">Качественное определение РНК возбудителя COVID-19 (коронавируса SARS-CoV-2) методом ПЦР в режиме реального времени</span>
+        <table>
+            <tr>
+              <td>
+                <!--<div id="qrDiv1" style="width:246px;height:246px;background-color:#eee"></div>-->
+                <a id="qrDiv" href=""></a>
+              </td>
+                <td style="vertical-align:top;">
+                    <div style="font-size:small; font-weight:bolder;  white-space: pre-wrap; margin-top: 0;">
+                        Отсканируйте QR код для проверки подлинности сертификата
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <div style="font-size:x-large; margin-left:2em;margin-top:0;">СПРАВКА-СЕРТИФИКАТ</div>
+
+        <table>
+            <tr><td> ФИО : </td><td><input class="q_text" type="text" id="textFIO" value="********* ********* **********"></td></tr>
+            <tr><td> Дата рождения : </td><td><input class="q_text" type="text" id="textDR" value="**.**.****" /></td></tr>
+            <tr><td> Паспорт : </td><td><input class="q_text" type="text" id="textPass" value="**** ******" /></td></tr>
+        </table>
+
+        <table border="1" cellpadding="0" cellspacing="0" style="border-color:black; font-size:smaller;">
+            <tr>
+                <td>TECT</td>
+                <td>Дата взятия биоматериала</td>
+                <td>Дата выполнения</td>
+                <td>РЕЗУЛЬТАТ</td>
+            </tr>
+            <tr>
+                <td> Коронавирус, РНК(SARS-CoV-2, ПЦР) мазок, кач.</td>
+                <td><span id="date3">01.01.1900</span> 09:46</td>
+                <td><span id="date4">01.01.1900</span> 11:04</td>
+                <td style="font-weight:bold"> РНК не обраружена</td>
+            </tr>
+        </table>
+
+        <div style="font-size:xx-small; white-space: pre-wrap; background-color:#184; color:white;">
+            Полное наименование юридического лица
+            Общество с ограниченной ответственностью «Лаборатория Гемотест»
+            Фактический адрес
+            107045, Российская Федерация, город Москва, Рождественский бульвар, дом 21, корпус 2
+            Служба поддержки 24/7
+            8 (800) 550-13-13
+            Адрес электронной почты
+            client@gemotest.ru
+            Государственный регистрационный номер
+            1027709005642
+        </div>
+      </div>
+</body>
+
+<script>
+
+    function toHexString(byteArray) {
+        return Array.from(byteArray, function (byte) {
+            return ('0' + (byte & 0xFF).toString(16)).slice(-2);
+        }).join('');
+    }
+    // https://bitcoin.stackexchange.com/questions/52727/byte-array-to-hexadecimal-and-back-again-in-javascript
+    function toByteArray(hexString) {
+        var result = [];
+        for (var i = 0; i < hexString.length; i += 2) {
+            result.push(parseInt(hexString.substr(i, 2), 16));
+        }
+        return result;
+    }
+
+    var arrTranslit = { "Ё": "YO", "Й": "I", "Ц": "TS", "У": "U", "К": "K", "Е": "E", "Н": "N", "Г": "G", "Ш": "SH", "Щ": "SCH", "З": "Z", "Х": "H", "Ъ": "'", "ё": "yo", "й": "i", "ц": "ts", "у": "u", "к": "k", "е": "e", "н": "n", "г": "g", "ш": "sh", "щ": "sch", "з": "z", "х": "h", "ъ": "'", "Ф": "F", "Ы": "I", "В": "V", "А": "a", "П": "P", "Р": "R", "О": "O", "Л": "L", "Д": "D", "Ж": "ZH", "Э": "E", "ф": "f", "ы": "i", "в": "v", "а": "a", "п": "p", "р": "r", "о": "o", "л": "l", "д": "d", "ж": "zh", "э": "e", "Я": "Ya", "Ч": "CH", "С": "S", "М": "M", "И": "I", "Т": "T", "Ь": "'", "Б": "B", "Ю": "YU", "я": "ya", "ч": "ch", "с": "s", "м": "m", "и": "i", "т": "t", "ь": "'", "б": "b", "ю": "yu" };
+
+    function transliterate(word) {
+        return word.split('').map(function (char) {
+            return arrTranslit[char] || char;
+        }).join("");
+    }
+
+    function PrepareQrQueryString(fio, year2, pass) {
+        var divQR = document.getElementById('qrDiv');
+        if (year2.length == 2 && fio.length > 2 && pass.length > 3) {
+            let strKey = year2 + fio; // + "_" + pass;
+
+            var enc = new TextEncoder(); // always utf-8
+            var buff = enc.encode(strKey); // Uint8Array
+            strKey = toHexString(buff);
+
+            var path = self.location.href + "?q=" + strKey;
+            if (divQR.prevPath == path) {
+                console.log("уже есть QR");
+            } else {
+                divQR.prevPath = path;
+                var qrImported = self.qrcode || self.exports.qrcode;
+                if (qrImported) {
+                    //debugger;
+                    var imgTag = create_qrcode(6, qrImported, divQR.prevPath, 4);
+                    if (imgTag) {
+                        //var divQR = document.getElementById('qrDiv'); // уже выше есть
+                        divQR.innerHTML = imgTag;
+                        var imgQR = divQR.children[0];
+                        if (imgQR) {
+                            //imgQR.setAttribute("width", "246");
+                            //imgQR.setAttribute("height", "246");
+                            divQR.href = path;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    function create_qrcode(scale, qrcode, text, typeNumber, errorCorrectionLevel, mode, mb) {
+        if (qrcode.stringToBytesFuncs) {
+            mb = mb || "UTF-8";
+            qrcode.stringToBytes = qrcode.stringToBytesFuncs[mb];
+        }
+        scale = scale || 2;
+        typeNumber = typeNumber || 4;
+        var qr = qrcode(typeNumber, errorCorrectionLevel || 'M');
+        qr.addData(text, mode || "Byte");
+        try {
+            qr.make();
+        } catch (err) {
+            debugger;
+            console.log(err);
+            return "<span>" + err + "</span>";
+        }
+        //  return qr.createTableTag();
+        //  return qr.createSvgTag();
+        return qr.createImgTag(scale);
+    }
+
+    function funcTextInput(event) {
+        var textFIO = document.querySelector("#textFIO");
+        var textDR = document.querySelector("#textDR");
+        var textPass = document.querySelector("#textPass");
+        var year2, firstLetters, pass;
+        if (textFIO.value) {
+            localStorage.setItem("textFIO", textFIO.value);
+            var arrWords = textFIO.value.split(/(\s+)/).filter(function (e) { return e.trim().length > 0; });
+            if (arrWords.length > 0) {
+                firstLetters = arrWords.map(function (s) { return s.substr(0, 1); }).join("");
+                firstLetters = (arrWords[0].length % 10) + firstLetters.substr(0, 3);
+                //debugger;
+                console.log(firstLetters);
+            }
+        }
+        if (textDR.value != null && textDR.value.length > 2) {
+            year2 = textDR.value.substr(-2);
+            localStorage.setItem("textDR", textDR.value);
+        }
+        if (textPass.value != null && textPass.value.length > 5) {
+            pass = textPass.value.substr(0, 2) + textPass.value.substr(-3);
+            localStorage.setItem("textPass", textPass.value);
+        }
+        var qrPath = PrepareQrQueryString(firstLetters, year2, pass);
+    }
+
+    window.addEventListener("DOMContentLoaded", event => {
+        //debugger;
+        var formatterDateRu = new Intl.DateTimeFormat("ru", {
+            day: "numeric", month: "short", year: "numeric",
+        });
+        var formatterDateRuN = new Intl.DateTimeFormat("ru", {
+            day: "numeric", month: "numeric", year: "numeric",
+        });
+        var formatterDateEn = new Intl.DateTimeFormat("en", {
+            day: "numeric", month: "short", year: "numeric",
+        });
+        var span_date1 = document.querySelector("#date1");
+        var span_date2 = document.querySelector("#date2");
+        var span_date3 = document.querySelector("#date3");
+        var span_date4 = document.querySelector("#date4");
+        var datePrev = new Date();
+        datePrev.setDate(datePrev.getDate() - 1);
+        span_date1.innerHTML = formatterDateRu.format(datePrev);
+        span_date2.innerHTML = formatterDateEn.format(datePrev);
+        span_date3.innerHTML = formatterDateRuN.format(datePrev);
+        span_date4.innerHTML = formatterDateRuN.format(datePrev);
+        //debugger;
+        var div_show = document.querySelector("#div_show");
+        var div_make_qr = document.querySelector("#make_qr");
+
+        var urlSearchParams = new URLSearchParams(window.location.search || "");
+        var params = Object.fromEntries(urlSearchParams.entries());
+        //debugger;
+        var bShowQr = (window.location.search == null || window.location.search.trim() === '');
+
+        if (bShowQr) {
+            div_show.style.display = "none";
+            div_make_qr.style.display = "";
+
+            var textFIO = document.querySelector("#textFIO");
+            var textDR = document.querySelector("#textDR");
+            var textPass = document.querySelector("#textPass");
+            textFIO.value = localStorage.getItem("textFIO") || "Фамилия Имя Отчество";
+            textDR.value = localStorage.getItem("textDR") || "01.01.1900";
+            textPass.value = localStorage.getItem("textPass") || "4321 123456";
+
+            funcTextInput();
+
+            textFIO.addEventListener('input', funcTextInput);
+            textDR.addEventListener('input', funcTextInput);
+            textPass.addEventListener('input', funcTextInput);
+
+        } else {
+            div_show.style.display = "";
+            div_make_qr.style.display = "none";
+            //debugger;
+            var y,fio,fio1;
+            if (params.id || params.key || params.q) {
+                let key = params.id || params.key || params.q;
+                let bytesKey = toByteArray(key.toUpperCase()); // проверка
+                var dec = new TextDecoder(); // декодер текста
+                const strTxt = dec.decode(new Uint8Array(bytesKey));
+                y = strTxt.substr(0, 2);
+                if (y.length == 2) {
+                    if (y > 60) { y = "19" + y; } else { y = "20" + y; }
+                }
+                let arrFIO = strTxt.substr(2).split('');
+                //debugger;
+                fio1 = arrFIO[1] + "*".repeat(arrFIO[0]) + " " + arrFIO[2] + ".";
+                fio = fio1 + (arrFIO[3] ? " " + arrFIO[3] + "." : "");
+            }
+            if (y) {
+                var year1 = document.querySelector("#year1");
+                var year2 = document.querySelector("#year2");
+                year1.innerHTML = y;
+                year2.innerHTML = y;
+            }
+            if (fio) {
+                var fio_ru = document.querySelector("#fio_ru");
+                var fio_en = document.querySelector("#fio_en");
+                fio_ru.innerHTML = fio;
+                fio_en.innerHTML = transliterate(fio1).toUpperCase();
+            }
+        }
+    });
+
+</script>
+</html>
