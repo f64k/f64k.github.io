@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width" />
+  </head>
+  <style>
+    html,
+    body {
+      margin: 0;
+      border: 0;
+      min-height: 100% !important;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body1 {
+      background: repeating-linear-gradient(#fff, transparent 78px, #000 80px),
+        repeating-linear-gradient(0.25turn, #fff, transparent 78px, #000 80px);
+    }
+    body {
+      background: repeating-linear-gradient(
+          transparent,
+          transparent 20px,
+          yellowgreen 22px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 20px,
+          yellowgreen 22px
+        );
+    }
+
+    .frog {
+      position: absolute;
+      transition: transform 0.2s;
+    }
+    .moskit {
+      position: absolute;
+      transition: transform 0.6s;
+    }
+
+    div.frog {
+      visibility: hidden;
+      font-size: 3em;
+      /*background-color: #dfd;*/
+    }
+  </style>
+  <body>
+    <div class="frog" id="fr0">🐸</div>
+    <img
+      width="70px"
+      class="frog"
+      id="fr"
+      src="https://cdn.glitch.global/5101ddfe-87d6-478c-9706-34fe86d8ee00/frog1.gif?v=1710851517612"
+    />
+    <img
+      width="70px"
+      class="moskit"
+      id="fly"
+      src="https://cdn.glitch.global/5101ddfe-87d6-478c-9706-34fe86d8ee00/animated-mosc-rotating-02.gif?v=1710853305541"
+    />
+  </body>
+  <script>
+    const EL_frog = document.querySelector("#fr");
+    const EL_fly = document.querySelector("#fly");
+    const posFrog = { x: 0, y: 0 };
+    const posFly = { x: 100, y: 100 };
+
+    setInterval(function () {
+      rndX = Math.floor(Math.random() * document.body.clientWidth);
+      rndY = Math.floor(Math.random() * document.body.clientHeight);
+
+      posFly.x = rndX;
+      posFly.y = rndY;
+
+      posFly.x = posFly.x < 0 ? 0 : posFly.x;
+      posFly.y = posFly.y < 0 ? 0 : posFly.y;
+      bord1 = 70;
+      if (posFly.x > document.body.clientWidth - bord1) {
+        posFly.x = document.body.clientWidth - bord1;
+      }
+      if (posFly.y > document.body.clientHeight - bord1) {
+        posFly.y = document.body.clientHeight - bord1;
+      }
+
+      EL_fly.style.transform = `translate(${posFly.x}px, ${posFly.y}px)`;
+    }, 1000);
+
+    document.addEventListener("keydown", (ev) => {
+      const dir = (ev.key.match(/(?<=^Arrow)\w+/) || [])[0];
+      if (!dir) return; // Not an arrow key.
+
+      ev.preventDefault(); // Prevent Browser scroll if overflow
+
+      step = 30;
+
+      ({
+        Left: () => (posFrog.x -= step),
+        Right: () => (posFrog.x += step),
+        Up: () => (posFrog.y -= step),
+        Down: () => (posFrog.y += step),
+      })[dir]();
+
+      posFrog.x = posFrog.x < 0 ? 0 : posFrog.x;
+      posFrog.y = posFrog.y < 0 ? 0 : posFrog.y;
+      bord = 70;
+      if (posFrog.x > document.body.clientWidth - bord) {
+        posFrog.x = document.body.clientWidth - bord;
+      }
+      if (posFrog.y > document.body.clientHeight - bord) {
+        posFrog.y = document.body.clientHeight - bord;
+      }
+
+      EL_frog.style.transform = `translate(${posFrog.x}px, ${posFrog.y}px)`;
+    });
+  </script>
+</html>
