@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='UTF-8'/>
+    <style>
+      #cnv {
+	  background : black;
+      }
+      input {
+	  width : 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>Попрыгунья Мартина</h3>
+    <p>Меняйте параметры итерационной формулы.</p>
+    a: <input type='number' id="_a" step="0.1" value='3' onchange='restart()'/>
+    b: <input type='number' id="_b" step="0.1" value='1' onchange='restart()'/>
+    c: <input type='number' id="_c" step="0.1" value='0' onchange='restart()'/>
+    <p>Кликайте по картинке, задавая новые начальные точки для итерации.</p>
+    <br/><canvas id="cnv" width='500' height='500'></canvas>
+    <br/>Масштаб: <input type='number' id="_S" step="0.1" value='5' onchange='restart()'/>
+  </body>
+  
+  <script>
+    var a, b, c, S, x, y, col, n
+    const colors = ['white','yellow','red','orange',
+		    'blue','cyan','magenta','green']
+    const W = 500
+    const canvas = document.getElementById("cnv")
+    const rect = canvas.getBoundingClientRect()
+    const ctx = canvas.getContext("2d")
+    ctx.globalAlpha = 0.1
+    canvas.addEventListener('mousedown', getCursorPosition)
+    function getCursorPosition(e) {
+	x = ((e.clientX - rect.left)-W/2)/W*S
+	y = ((e.clientY - rect.top)-W/2)/W*S
+    }
+   
+    function restart() {
+	x = y = 1
+	col = n = 0
+	ctx.clearRect(0,0,W,W)
+	ctx.fillStyle = colors[col]
+	a = Number(_a.value)
+	b = Number(_b.value)
+	c = Number(_c.value)
+	S = Number(_S.value)
+    }
+        
+    function step() {
+	var pts = [[x,y]]
+	for (let i = 0; i < 10000; i++) {
+	    x0 = x
+	    x = y - Math.sign(x)*Math.sqrt(Math.abs(b*x+c))
+            y = a - x0
+	    if (n++ > 1000000) {
+		col = (col + 1) % 8
+		ctx.fillStyle = colors[col]
+		n = 0
+	    }
+	    pts.push([x,y])
+	}
+	pts.forEach(([x,y]) => ctx.fillRect(W/2+x*W/S,W/2+y*W/S,0.5,0.5))
+    }
+    restart()
+    window.setInterval(step,0)    
+  </script>
+</html>

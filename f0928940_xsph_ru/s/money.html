@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='UTF-8'/>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <!-- <script src='../lib/d3.js'></script> -->
+    <script src='../lib/analysis.js'></script>
+    <script src='../lib/functions.js'></script>
+    <script src='../lib/tools.js'></script>
+    <script src='../lib/statistics.js'></script>
+    <script src='../lib/graphics.js'></script>
+    <script src='../lib/signal.js'></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+      .B .line {
+	  stroke : navy;
+	  stroke-opacity : 0.5;
+      }
+      .label {
+	  font-size : 16px;
+      }
+    </style>
+
+    <body>
+      <button onclick='reset()'>Перезапустить</button>
+      <br/>N = <input type='number' id="_N" min="100" max="500" step="50" value='1000'/> — число участников обмена 
+      <br/>m = <input type='number' id="_M" min="0" max="100" value='100'/>  — общее число билетиков
+      <br/>dm = <input type='number' id="_dm" min="0" max="0.1" value='1'/>  — средняя единица обмена
+      <h4>Пространственная модель</h4>
+      <br/><div id="container"></div>
+      <br/><svg id='fig1' width='400' height='300'></svg>
+    </body>
+    <script>
+      const w = 400
+      var fig1 = d3.select("#fig1")
+      var N, m, M, dm, market, hist, run = true, steps = 5
+      
+      N = Number(_N.value)
+      m = Number(_M.value)
+      M = N*m
+
+      // Specify the dimensions of the chart.
+      const width = 300;
+      const height = width;
+      const margin = 1;
+           
+      function reset() {
+	  N = Number(_N.value)
+	  m = Number(_M.value)
+	  M = N*m
+	  dm = Number(_dm.value)
+	  market = range(N).map(() => M/N)
+      }
+      
+      function exchange(opts)
+      {
+	  var alpha = opts["alpha"] || 1
+      
+	  var beta = opts["beta"] || 0
+	  var minShare = opts["minShare"] || 0
+	  var bound = opts["bound"] || 0
+
+	  return function (data) {
+	      var i = randomInteger(data.length)()
+	      if (data[i] >= 1)
+	      {
+		  d = minShare + floor(data[i]*alpha)
+		  do {
+		      j = randomInteger(data.length)()
+		      df = min(d,minShare + floor(data[j]*beta))
+		      if (bound > 0 && data[j]>=bound-df) continue
+		      data[i]-=df
+		      data[j]+=df
+		      d-=df
+		  } while (d > 0)
+		  
+	      }
+	      return data
+	  }
+      }
+
+      function exchange1(n) {
+	  for (let k = 0; k < n; k++) {
+	      for (let i = 0; i < N; i++) {
+		  if (market[i] > 0) {
+		      market[i] = market[i] - 1
+		      let j = randomInteger(N)()
+		      market[j] = market[j] + 1
+		  }
+	      }
+	  }
+      }
+      
+      function updateMarket() {
+	  if (run && N > 100) {
+	      exchange1(steps)
+	      //market = market.filter(x => x < 7*m)
+	      //M = market.sum()
+	      //N = market.length
+	      //m = M/N
+	  }
+	  if (N > 100) {
+	      var d = market.sorted()
+	      var ds = [0,0,0,0,0], s = 0, md = m, fx = true
+	      for (let i = 0; i < N; i++) {
+		  s += d[i]
+		  ds[floor(2*s/(M+1))] += 1
+		  if (fx && 2*s > M) {
+		      md = d[i]
+		      fx = false
+		  }
+	      }
+	      showMarket(new Object ({children : market.sorted().reversed()}), ds, md)
+	  }
+      }
+
+
+      
+      ////////////////////////////////////////////////////////////
+      
+      var p1 = new Graphics(fig1)
+	  .xRange([0,7*m])
+	  .yRange([0,100])
+	  .axes({yLabel : 'плотность вероятности',
+		 xLabel : 'благосостояние'})
+      
+      function showMarket(data, ds, md) {
+	  
+	  // Create the pack layout.
+	  const pack = d3.pack()
+		.size([width - margin * 2, height - margin * 2])
+		.padding(2);
+	  
+	  // Compute the hierarchy from the (flat) data; expose the values
+	  // for each node; lastly apply the pack layout.
+	  const root = pack(d3.hierarchy(data).sum(id));
+
+	  // Create the SVG container.
+	  const svg = d3.create("svg")
+		.attr("width", width)
+		.attr("height", height)
+		.attr("viewBox", [-margin, -margin, width, height])
+		.attr("style", "max-width: 100%; height: auto; font: 10px sans-serif;")
+		.attr("text-anchor", "middle");
+	      
+	  // Place each (leaf) node according to the layout’s x and y values.
+	  const node = svg.append("g")
+		.selectAll()
+		.data(root.leaves())
+		.join("g")
+		.attr("transform", d => `translate(${d.x},${d.y})`);
+	  	  
+	  // Add a filled circle.
+	  node.append("circle")
+	      .attr("fill-opacity", d => (d.data <= md) ? 0.3 : 1)
+	      .attr("fill", d => (d.data <= md) ? "gray" : "gold")
+	      .attr("r", d => d.r);
+
+	  // svg.append("circle")
+	  //     .attr("fill", "none")
+	  //     .attr("stroke", "red")
+	  //     .attr("cx", width/2)
+	  //     .attr("cy", width/2)
+	  //     .attr("r", (width/2 - 15)/sqrt(2));
+	  if (run) {
+	      svg.append("text")
+		  .attr("x", width/2)
+		  .attr("y", width/2)
+		  .attr("class", "label")
+		  .attr("text-anchor", "middle")
+		  .text(ds[1])
+	      
+	      svg.append("text")
+		  .attr("x", width*9/10)
+		  .attr("y", width/2)
+		  .attr("class", "label")
+		  .attr("text-anchor", "middle")
+		  .text(ds[0])
+	  }
+
+	  container.innerHTML = "";
+	  container.append(svg.node());
+
+	  var h = new Histogram(10).fromList(market)
+
+	  p1.cleanPaper().histogram(h)
+	      .plot(x => Exponential(1/m).PDF(x)*N*10, {class:"B"})
+//	      .gridLines({x:[7*m]})
+      }
+      
+      ////////////////////////////////////////////////////////////
+
+      reset()
+      //exchange1(100000)
+      window.setInterval(updateMarket,0)
+      
+    </script>
+</html>
