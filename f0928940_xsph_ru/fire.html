@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='UTF-8'/>
+    <script src='../lib/d3.js'></script>
+    <script src='../lib/analysis.js'></script>
+    <script src='../lib/functions.js'></script>
+    <script src='../lib/tools.js'></script>
+    <script src='../lib/statistics.js'></script>
+    <script src='../lib/graphics.js'></script>
+    <script src='../lib/signal.js'></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+      .B .line {
+	  stroke : indianred;
+	  stroke-width : 0.5;
+      }
+    </style>
+
+    <body>
+      <button onclick='reset()'>Перезапустить</button>
+      <br/>N = <input type='number' id="_N" min="100" max="500" step="50" value='300'/> — размеры поля 
+      <br/>Pₜ = <input type='number' id="_newTree" min="0" max="100" value='1'/>/N  — вероятность появления дерева
+      <br/>Pᵢ = Pₜ×<input type='number' id="_newFire" min="0" max="0.1" value='0.001'/>  — вероятность появления пожара
+      <h4>Пространственная модель</h4> 
+      <canvas id="cnv" width='400' height='400'></canvas>
+      <br/>Анимация <input type='checkbox' id="showF" checked='true'/>
+      <h4>Временная последовательность катастроф</h4>
+      <svg id='fig3' width='400' height='300'></svg>
+      <h4>Временная последовательность функции состояния</h4>
+      <svg id='fig4' width='400' height='300'></svg>
+      <h4>Спектры</h4>
+      <svg id='fig2p' width='300' height='300'></svg>
+      <svg id='fig2' width='300' height='300'></svg>
+      <br/>
+      <button onclick='resetHist()'>Сброс статистики</button>
+      <h4>Распределение масштабов катастроф</h4>
+      <svg id='fig1' width='400' height='300'></svg><br/>
+      <button onclick='resetBet()'>Аппроксимация бета-распределением</button>
+      <h4>Распределение периодов между катастрофами</h4>
+      <input type='number' id="_psi" min="1" max="40" value='1' />
+      <br/>
+      <svg id='fig5' width='400' height='300'></svg>
+    </body>
+    <script>
+      const w = 400
+      const canvas = document.getElementById("cnv");
+      const ctx = canvas.getContext("2d");
+      const ps = 20
+      const wind = 2**10
+      var s = w/N
+      var fig1 = d3.select("#fig1")
+      var fig2 = d3.select("#fig2")
+      var fig2p = d3.select("#fig2p")
+      var fig3 = d3.select("#fig3")
+      var fig4 = d3.select("#fig4")
+      var fig5 = d3.select("#fig5")
+      var N = Number(_N.value)
+      var newTree = Number(_newTree.value)/N
+      var newFire = Number(_newFire.value)*newTree
+      var time = 0
+      var bet = Beta(0.1, 6)
+      var forest = []
+      var fires = []
+      var trees = []
+      var periods = {}
+      var pts
+      var spec = range(wind).map(() => 0)
+
+      for (let i = 0; i < N; i++) {
+	  forest.push([]);
+	  for (let j = 0; j < N; j++)
+	      forest[i].push(0);
+      }
+
+      function neigbours([i,j]){
+	  let res = [[i-1,j],[i,j-1],[i+1,j],[i,j+1]]
+	  return res.filter(([i,j]) => i >= 0 && i < N && j >= 0 && j < N)
+      }
+      
+      function burn([i,j], d) {  
+	  if (d > 0 && forest[i][j] == 1) {
+	      forest[i][j] = 2
+	      neigbours([i,j]).forEach(x => burn(x, d - 1) )
+	  } 
+      }
+      
+      function updateForest() {
+	  let population = 0
+	  let burned = 0
+	  let onFire = []
+  	  time += 1
+	  for (let i = 0; i < N; i++) {
+	      for (let j = 0; j < N; j++) {
+		  let r = Math.random()
+		  switch (forest[i][j]) {
+  		  case 0 :
+		      if (r < newTree) {
+  			  forest[i][j] = 1
+			  population += 1
+		      }
+		      break
+		  case 1 :
+		      population += 1
+		      if (r < newFire ||
+			  neigbours([i,j])
+			    .some(([i,j]) => forest[i][j] == 2))
+			  onFire.push([i,j])
+		      break
+		  case 2 :
+		      population += 1
+		      forest[i][j] = 0
+		      burned += 1
+		      break
+		  }
+	      }
+	  }
+	  onFire.forEach(x => burn(x,5000))
+		  
+	  if (burned > 1) {
+	      hist.add(burned/population)
+	      addPeriod(burned)
+	  }
+	  
+	  fires.push(burned/population)
+	  if (fires.length > wind)
+	      fires.shift()
+	  
+	  trees.push(population/N**2)	  
+	  if (trees.length > wind)
+	      trees.shift()
+	    
+	  showForest()
+      }
+
+      function addPeriod(b) {
+	  if (b > ps) {
+	      let p = floor(b/ps)*ps
+	      if (periods[p]) {
+		  periods[p].hst.add(time - periods[p].dt)
+		  periods[p].dt = time
+	      } else {
+		  periods[p] = {dt : 0, hst : new Histogram(ps)}
+	      }
+	  }
+      }
+
+      ////////////////////////////////////////////////////////////
+      
+      const col = { 0: "white",
+		    1 : "darkgreen",
+		    2 : "red" }
+
+      var p1 = new Graphics(fig1)
+	  .xRange([1e-6,0.1])
+	  .yRange([0,100])
+	  .axes({yLabel : 'плотность вероятности',
+		 xTickFormat : fmt.percent,
+		 xLabel : 'масштаб катастроф (доля популяции)'})
+
+      const axesRng = N => [1/N**2/1.1, 1/10]
+      
+      var p2 = new Graphics(fig2)
+	  .xRange(axesRng(N))
+	  .yRange(axesRng(N))
+	  .xAxisType('log').yAxisType('log')
+	  .axes({yLabel : 'масштаб катастроф',
+		 xLabel : 'частота',
+		 xTickValues : range(-5,-1).map(x => 10**x),
+		 yTickValues : range(-5,-1).map(x => 10**x),
+		 xTickFormat : fmt.pow10,
+		 yTickFormat : fmt.pow10,
+		 aspectRatio : 1
+		})
+
+      var p2p = new Graphics(fig2p)
+	  .xRange(axesRng(N))
+	  .yRange(axesRng(N))
+	  .xAxisType('log').yAxisType('log')
+	  .axes({xLabel : 'частота',
+		 yLabel : 'спектральная мощность',
+		 xTickValues : range(-5,-1).map(x => 10**x),
+		 xTickFormat : fmt.pow10,
+		 yTickValues : range(-50,-9,10).map(x => 10**(x/10)),
+		 yTickFormat : fmt.dB})
+	  .plot(x => 1/x/wind**2,{'class' : 'B'})
+
+      
+      var p3 = new Graphics(fig3)
+	  .xRange([0, wind])
+	  .yRange([0, 0.25])
+	  .axes({yLabel : 'масштаб катастроф',
+		 yTickFormat : fmt.percent,
+		 xLabel : 'время'})
+
+      var p4 = new Graphics(fig4)
+	  .xRange([0, wind])
+	  .yRange([0, 0.5])
+	  .axes({yLabel : 'N/S',
+		 yTickFormat : fmt.percent,
+		 xLabel : 'время'})
+
+      var p5 = new Graphics(fig5)
+	  .xRange([0, 1000])
+	  .yRange([0, 0.01])
+	  .axes({yLabel : 'плотность вероятности',
+		 xLabel : 'периоды времени'})
+
+      
+      function showForest() {
+	  if (showF.checked) {
+	      ctx.clearRect(0,0,w,w)
+	      
+	      for (let i = 0; i < N; i++) {
+		  for (let j = 0; j < N; j++) {
+		      let f = forest[i][j]
+		      if (f >= 0) {
+			  ctx.fillStyle = col[forest[i][j]];
+		          ctx.fillRect(i*s,j*s,s,s)
+		      } else
+		      {
+			  ctx.fillStyle = `rgb(0 0 0 / ${Math.floor(-100*f/succ)}%)`
+		          ctx.fillRect(i*s,j*s,s,s)
+		      }
+		  }
+	      }
+	  }
+  
+	  if (hist.number >= 10) {
+	      p1.cleanPaper()
+		.histogram(hist,{'type':'PDF'})
+		.gridLines({'x':[hist.mean]})
+		.plot(bet.PDF)
+	  }
+
+	  pts = []
+	  for (let i in periods) {
+	      if (periods[i].hst.number > 1)
+		  pts.push([1/periods[i].hst.mean, i/N**2/2])
+	  }
+	  
+  	  let ii = _psi.value
+	  p2.cleanPaper()
+              .listLinePlot(pts.filter(x => x[0] >= 1/N**2))
+  	      .plot(x => 1/x/N**2/10,{'class' : 'B'})
+	  p3.cleanPaper().listLinePlot(fires)
+	  p4.cleanPaper().listLinePlot(trees)
+
+	  if (periods[ii*ps] && periods[ii*ps].hst.number > 1) {
+	      let l = periods[ii*ps].hst.mean
+	      p5.cleanPaper()
+		.histogram(periods[ii*ps].hst,{'type':'PDF'})
+		.plot(Exponential(1/l).PDF)
+	  }
+
+	  if(fires.length >= wind) {
+	      psd = PSD(trees).map(Math.sqrt)
+	      spec = psd.map(x => x/psd.sum())
+		        .zipWith(spec, add)
+	      p2p.cleanPaper()
+		  .listLinePlot(range(1/wind,1,1/wind)
+				.zip(spec.map(x => x/time))
+				.tail()
+			        .map(([x,y]) => [x/100,y]))
+	      	  .plot(x => 1/x/wind**2,{'class' : 'B'})
+	  }
+
+      }
+      
+      function reset() {
+	  N = Number(_N.value)
+	  s = w/N
+	  newTree = Number(_newTree.value)/N
+	  newFire = Number(_newFire.value)*newTree
+	  hist = new Histogram(0.0025)
+	  time = 0
+	  forest = []
+	  fires = []
+	  trees = []
+	  periods = {}
+	  pts = []
+	  spec = range(wind).map(() => 0)
+	  
+	  for (let i = 0; i < N; i++) {
+	      forest.push([]);
+	      for (let j = 0; j < N; j++)
+		  forest[i].push(0);
+	  }
+	  ctx.clearRect(0,0,w,w)
+	  p2.xRange(axesRng(N))
+            .yRange(axesRng(N))
+	    .cleanPaper()
+	  p3.xRange([0,wind]).cleanPaper()
+	  p4.xRange([0,wind]).cleanPaper()
+	  p5.xRange([0, 1000])
+      }
+
+      function resetHist() {
+	  hist = new Histogram(0.0025)
+	  spec = range(wind).map(() => 0)
+	  periods = {}
+      }
+
+      function resetBet() {
+	  bet = Beta().fromHistogram(hist)
+      }
+      
+      ////////////////////////////////////////////////////////////
+
+      reset()
+      window.setInterval(updateForest,0)
+      
+    </script>
+</html>
