@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<!-- WARNING! Make sure that you match all Quasar related tags to the same version! (Below it's "@2.16.4") -->
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet"
+        type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/animate.css@^4.0.0/animate.min.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/quasar@2.16.4/dist/quasar.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <!-- example of injection point where you write your app template -->
+    <div id="q-app">
+
+        <q-layout view="hHr LpR lFf">
+
+            <q-header elevated class="bg-primary text-white" height-hint="98">
+                <q-toolbar>
+                    <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
+
+                    <q-toolbar-title>
+                        <q-avatar>
+                            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
+                        </q-avatar>
+                        Title
+                    </q-toolbar-title>
+
+                    <q-btn dense flat round icon="menu" @click="toggleRightDrawer" />
+                </q-toolbar>
+
+                <q-tabs align="left">
+                    <q-route-tab to="/page1" label="Page One" />
+                    <q-route-tab to="/page2" label="Page Two" />
+                    <q-route-tab to="/page3" label="Page Three" />
+                </q-tabs>
+            </q-header>
+
+            <q-drawer show-if-above v-model="leftDrawerOpen" side="left" elevated>
+                <!-- drawer content -->
+            </q-drawer>
+
+            <q-drawer v-model="rightDrawerOpen" side="right" overlay elevated>
+                <!-- drawer content -->
+            </q-drawer>
+
+            <q-page-container>
+                <router-view />
+            </q-page-container>
+
+            <q-footer reveal elevated class="bg-grey-8 text-white">
+                <q-toolbar>
+                    <q-toolbar-title>
+                        <q-avatar>
+                            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
+                        </q-avatar>
+                        <div>Title</div>
+                    </q-toolbar-title>
+                </q-toolbar>
+            </q-footer>
+
+        </q-layout>
+
+    </div>
+
+    <!-- Add the following at the end of your body tag. Отсюда https://quasar.dev/start/umd/ -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quasar@2.16.4/dist/quasar.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quasar@2.16.4/dist/lang/ru.umd.prod.js"></script>
+
+    <script>
+        /*
+        Example kicking off the UI. Obviously, adapt this to your specific needs.
+        Assumes you have a <div id="q-app"></div> in your <body> above
+        */
+        import { ref } from 'vue'
+
+        const app = Vue.createApp({
+
+            setup() {
+                const leftDrawerOpen = ref(false)
+                const rightDrawerOpen = ref(false)
+
+                return {
+                    leftDrawerOpen,
+                    toggleLeftDrawer() {
+                        leftDrawerOpen.value = !leftDrawerOpen.value
+                    },
+                    rightDrawerOpen,
+                    toggleRightDrawer() {
+                        rightDrawerOpen.value = !rightDrawerOpen.value
+                    }
+                }
+            }
+        })
+
+        app.use(Quasar, {
+            config: {
+                /*
+                brand: {
+                  // primary: '#e46262',
+                  // ... or all other brand colors
+                },
+                notify: {...}, // default set of options for Notify Quasar plugin
+                loading: {...}, // default set of options for Loading Quasar plugin
+                loadingBar: { ... }, // settings for LoadingBar Quasar plugin
+                // ..and many more (check Installation card on each Quasar component/directive/plugin)
+                */
+            }
+        })
+        Quasar.Lang.set(Quasar.Lang.ru)
+        app.mount('#q-app')
+    </script>
+</body>
+
+</html>
