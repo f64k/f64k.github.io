@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 <!-- WARNING! Make sure that you match all Quasar related tags to the same version! (Below it's "@2.16.4") -->
+
 <head>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons"
-        rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet"
+        type="text/css">
     <!--<link href="https://cdn.jsdelivr.net/npm/animate.css@^4.0.0/animate.min.css" rel="stylesheet" type="text/css">-->
     <link href="https://cdn.jsdelivr.net/npm/quasar@2.16.4/dist/quasar.css" rel="stylesheet" type="text/css">
 </head>
@@ -43,6 +44,14 @@
                 </q-tabs>
                 -->
                 <q-toolbar inset>
+                    <q-file outlined v-model="model">
+                        <template v-slot:prepend>
+                            <q-icon name="attach_file" />
+                        </template>
+                    </q-file>
+                    <q-space></q-space>
+                    <q-select filled v-model="model" :options="options" label="Filled" />
+                    <q-space></q-space>
                     <q-breadcrumbs active-color="white" style="font-size: 16px">
                         <q-breadcrumbs-el label="Home" icon="home" />
                         <q-breadcrumbs-el label="Components" icon="widgets" />
@@ -57,7 +66,7 @@
 
             <q-drawer v-model="rightDrawerOpen" side="right" overlay elevated>
                 <p> Правый drawer content </p>
-                <hr/>
+                <hr />
                 <p v-for="n in 99" :key="n">
                     {{n}} | Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 </p>
@@ -78,7 +87,7 @@
                 <q-toolbar>
                     <q-btn round dense icon="toc" @click="toggleLeftDrawer"></q-btn>
                     <q-toolbar-title>
-                        <!--<q-avatar><img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg"></q-avatar>-->
+                        <!-- ИКОНКИ https://fonts.google.com/icons?icon.set=Material+Icons -->
                         <div>Заголовок подвала</div>
                     </q-toolbar-title>
                     <q-btn dense flat round icon="reorder" @click="toggleRightDrawer"></q-btn>
@@ -108,6 +117,7 @@
                 const rightDrawerOpen = ref(false)
 
                 return {
+                    model: ref(null),
                     leftDrawerOpen,
                     toggleLeftDrawer() {
                         leftDrawerOpen.value = !leftDrawerOpen.value
@@ -115,7 +125,10 @@
                     rightDrawerOpen,
                     toggleRightDrawer() {
                         rightDrawerOpen.value = !rightDrawerOpen.value
-                    }
+                    },
+                    options: [
+                        'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
+                    ],                    
                 }
             }
         })
