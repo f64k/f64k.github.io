@@ -56,6 +56,7 @@
 
         .robot{
             font-size: xx-large;
+            position: absolute;
         }
     </style>
     <script type="text/javascript" src="emoji.js"></script>
@@ -90,11 +91,13 @@
             this.size = size;
             console.log(`added robot ${this.name}`);
             this.span = document.createElement('span');
-            //this.span.classList.add(`robot ${name}`);
             this.span.classList.add("robot");
             this.span.classList.add(name);
             this.span.textContent = this.w.oRobotTypes[name].s;
             this.w.worldplace.appendChild(this.span);
+        }
+        MoveStep() {
+            console.log(`step of ${this.name}`);
         }
     }
 
@@ -109,6 +112,7 @@
                 this.AddRobot(key,val);
                 if(Object.keys(this.robots).length > 3) { break; }
             }
+            this.bStarted = false;
         }
         ///
         AddRobot(name) {
@@ -117,8 +121,31 @@
             this.robots[robotKey] = new RobotEmo(this, name, 1);
         }
         ///
+        GameStep() {
+            for(const robot of this.robots)
+            {
+                robot.MoveStep();
+            }
+        }
+        ///
         RunGame() {
-            console.log(`game started ...`);
+            if (this.myInterval) {
+                debugger;
+                console.log(`game Already Started !`);
+            } else {
+                this.gameInterval = window.setInterval(this.GameStep, 0);
+                console.log(`game STARTED ...`);
+            }
+        }
+        ///
+        StopGame() {
+            if(this.myInterval) {
+                window.clearInterval(this.gameInterval)
+                console.log(`game OVER .`);
+            } else {
+                debugger;
+                console.log(`game Was not Started !`);
+            }
         }
     }
 
