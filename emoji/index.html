@@ -57,6 +57,15 @@
     <script type="text/javascript" src="emoji.js"></script>
 </head>
 
+<script>
+    console.log = (function (old_function, div_log) {
+        return function (text) {
+            old_function(text);
+            div_log.value += text;
+        };
+    }(console.log.bind(console), document.getElementById("error-log")));
+</script>
+
 <body>
     <div class="world" id="worldplace"></div>
     <div id="error-log"></div>
@@ -83,21 +92,12 @@
         ///
         addRobot(name) {
             const cntName = Object.values(this.robots).filter(r => r.name == name).length;
-            robotKey = `${name}.${cntName+1}`;
+            robotKey = `${name}.${cntName + 1}`;
             this.robots[robotKey] = new RobotEmo(this, name, 1);
         }
     }
 
     const w2d = new World2d(ObjEmoji);
-</script>
-
-<script>
-    console.log = (function (old_function, div_log) {
-        return function (text) {
-            old_function(text);
-            div_log.value += text;
-        };
-    }(console.log.bind(console), document.getElementById("error-log")));    
 </script>
 
 </html>
