@@ -54,7 +54,7 @@
             box-shadow: inset 0 0 9px #0005;
         }
 
-        .robot{
+        .robot {
             font-size: xx-large;
             position: absolute;
         }
@@ -108,11 +108,11 @@
             //this.worldplace.innerHTML = "<span id='slog'>started ...</span>"
             console.log(`constructor World2d: Object.keys(this.oRobotTypes).length=${Object.keys(this.oRobotTypes).length}`);
             this.robots = {};
-            for(const [key,val] of Object.entries(this.oRobotTypes)){
-                this.AddRobot(key,val);
-                if(Object.keys(this.robots).length > 3) { break; }
+            for (const [key, val] of Object.entries(this.oRobotTypes)) {
+                this.AddRobot(key, val);
+                if (Object.keys(this.robots).length > 3) { break; }
             }
-            this.bStarted = false;
+            this.gameInterval = null;
         }
         ///
         AddRobot(name) {
@@ -122,30 +122,19 @@
         }
         ///
         GameStep() {
-            for(const robot of this.robots)
-            {
+            for (const robot of this.robots) {
                 robot.MoveStep();
             }
         }
         ///
         RunGame() {
-            if (this.myInterval) {
-                debugger;
-                console.log(`game Already Started !`);
-            } else {
-                this.gameInterval = window.setInterval(this.GameStep, 0);
-                console.log(`game STARTED ...`);
-            }
+            if (this.myInterval) { debugger; console.log(`game Already Started !`); }
+            else { this.gameInterval = window.setInterval(this.GameStep, 0); console.log(`game STARTED ...`); }
         }
         ///
         StopGame() {
-            if(this.myInterval) {
-                window.clearInterval(this.gameInterval)
-                console.log(`game OVER .`);
-            } else {
-                debugger;
-                console.log(`game Was not Started !`);
-            }
+            if (this.myInterval) { window.clearInterval(this.gameInterval); console.log(`game OVER .`); }
+            else { debugger; console.log(`game Was not Started !`); }
         }
     }
 
