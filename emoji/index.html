@@ -90,14 +90,23 @@
             this.name = name;
             this.size = size;
             console.log(`added robot ${this.name}`);
-            this.span = document.createElement('span');
-            this.span.classList.add("robot");
-            this.span.classList.add(name);
-            this.span.textContent = this.w.oRobotTypes[name].s;
-            this.w.worldplace.appendChild(this.span);
+            this.domEl = document.createElement('div');
+            this.domEl.classList.add("robot");
+            this.domEl.classList.add(name);
+            this.domEl.textContent = this.w.oRobotTypes[name].s;
+            this.w.worldplace.appendChild(this.domEl);
+            this.x = Math.floor(Math.random() * document.body.clientWidth);
+            this.y = Math.floor(Math.random() * document.body.clientHeight);
+            this.phi = Math.floor(Math.random() * Math.PI * 2);
+            this.vx = Math.cos(this.phi);
+            this.vy = Math.sin(this.phi);
+            this.MoveStep();
         }
         MoveStep() {
-            console.log(`step of ${this.name}`);
+            //console.log(`step of ${this.name}`);
+            this.x += this.vx;
+            this.y += this.vy;
+            this.domEl.transform = `translate(${this.x|0}px, ${this.y|0}px)`;
         }
     }
 
@@ -129,7 +138,7 @@
         ///
         RunGame() {
             if (!this.myInterval) {
-                this.gameInterval = window.setInterval(() => this.GameStep(), 0);
+                this.gameInterval = window.setInterval(() => this.GameStep(), 100);
                 console.log(`game STARTED ...`);
             } else { debugger; console.log(`game Already Started !`); }
         }
