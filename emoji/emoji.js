@@ -17,11 +17,47 @@ const ObjEmoji = {
         "code": "",
         "code1": ""
     },
+    "spider": {
+        "s": "🕷️",
+        "dgrd": "0",
+        "code": "&#x1F577;",
+        "code1": "&#xFE0F;"
+    },
+    "silver-nib": {
+        "s": "✒️",
+        "dgrd": "135",
+        "code": "",
+        "code1": ""
+    },
     "pacif": {
         "s": "☮",
         "dgrd": "0",
         "code": "",
         "code1": ""
+    },
+    "dango": {
+        "s": "🍡",
+        "dgrd": "45",
+        "code": "",
+        "code1": ""
+    },
+    "pen5": {
+        "s": "🖍️",
+        "dgrd": "135",
+        "code": "",
+        "code1": ""
+    },
+    "arbalet": {
+        "s": "🏹",
+        "dgrd": "-45",
+        "code": "",
+        "code1": ""
+    },
+    "arrow_upper_right": {
+        "s": "↗️",
+        "dgrd": "-45",
+        "code": "&#x2197;",
+        "code1": "&#xFE0F;"
     },
     "sun2": {
         "s": "🌞",
@@ -53,18 +89,6 @@ const ObjEmoji = {
         "code": "&#x1F6E9;",
         "code1": "&#xFE0F;"
     },
-    "arbalet": {
-        "s": "🏹",
-        "dgrd": "-45",
-        "code": "",
-        "code1": ""
-    },
-    "arrow_upper_right": {
-        "s": "↗️",
-        "dgrd": "-45",
-        "code": "&#x2197;",
-        "code1": "&#xFE0F;"
-    },
     "mouse": {
         "s": "🐭",
         "dgrd": "180",
@@ -76,12 +100,6 @@ const ObjEmoji = {
         "dgrd": "0",
         "code": "&#x1F98B;",
         "code1": ""
-    },
-    "spider": {
-        "s": "🕷️",
-        "dgrd": "0",
-        "code": "&#x1F577;",
-        "code1": "&#xFE0F;"
     },
     "bat": {
         "s": "🦇",
@@ -179,12 +197,6 @@ const ObjEmoji = {
         "code": "",
         "code1": ""
     },
-    "silver-nib": {
-        "s": "✒️",
-        "dgrd": "135",
-        "code": "",
-        "code1": ""
-    },
     "pin": {
         "s": "📌",
         "dgrd": "135",
@@ -271,13 +283,7 @@ const ObjEmoji = {
     },
     "pen4": {
         "s": "🖌️",
-        "dgrd": "135",
-        "code": "",
-        "code1": ""
-    },
-    "dango": {
-        "s": "🍡",
-        "dgrd": "45",
+        "dgrd": "-45",
         "code": "",
         "code1": ""
     },
@@ -296,12 +302,6 @@ const ObjEmoji = {
     "T": {
         "s": "T",
         "dgrd": "180",
-        "code": "",
-        "code1": ""
-    },
-    "pen5": {
-        "s": "🖍️",
-        "dgrd": "135",
         "code": "",
         "code1": ""
     },
