@@ -161,7 +161,7 @@
                 this.AddRobot(key, val);
                 if (Object.keys(this.robots).length > 12) { break; }
             }
-            this.gameInterval = null;
+            this.animId = null;
         }
         ///
         GetClientRect() {
@@ -206,14 +206,16 @@
         ///
         RunGame() {
             if (!this.myInterval) {
-                this.gameInterval = window.setInterval(() => this.GameStep(), 10);
+                //this.animId = window.setInterval(() => this.GameStep(), 100);
+                this.animId = window.requestAnimationFrame(() => this.GameStep());
                 console.log(`game STARTED ...`);
             } else { debugger; console.log(`game Already Started !`); }
         }
         ///
         StopGame() {
             if (this.myInterval) {
-                window.clearInterval(this.gameInterval);
+                //window.clearInterval(this.animId);
+                window.cancelAnimationFrame(this.animId);
                 console.log(`game OVER .`);
             }
             else { debugger; console.log(`game Was not Started !`); }
