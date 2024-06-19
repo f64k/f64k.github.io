@@ -1,10 +1,4 @@
 const ObjEmoji = {
-    "cross1": {
-        "s": "🕈",
-        "dgrd": "180",
-        "code": "",
-        "code1": ""
-    },
     "zodiak0": {
         "s": "⛢",
         "dgrd": "0",
@@ -83,6 +77,12 @@ const ObjEmoji = {
         "code": "",
         "code1": ""
     },
+    "ladybug": {
+        "s": "🐞",
+        "dgrd": "0",
+        "code": "&#x1F41E;",
+        "code1": ""
+    },
     "sun2": {
         "s": "🌞",
         "dgrd": "0",
@@ -123,12 +123,6 @@ const ObjEmoji = {
         "s": "🐺",
         "dgrd": "180",
         "code": "&#x1F43A;",
-        "code1": ""
-    },
-    "ladybug": {
-        "s": "🐞",
-        "dgrd": "0",
-        "code": "&#x1F41E;",
         "code1": ""
     },
     "hatched_chick": {
@@ -289,6 +283,12 @@ const ObjEmoji = {
     },
     "T": {
         "s": "T",
+        "dgrd": "180",
+        "code": "",
+        "code1": ""
+    },
+    "cross1": {
+        "s": "🕈",
         "dgrd": "180",
         "code": "",
         "code1": ""
