@@ -43,13 +43,13 @@ const ObjEmoji = {
     },
     "sun3": {
         "s": "🌞︎︎",
-        "dgrd": "0",
+        "dgrd": "180",
         "code": "",
         "code1": ""
     },
     "firecracker": {
         "s": "🧨",
-        "dgrd": "225",
+        "dgrd": "135",
         "code": "&#x1F9E8;",
         "code1": ""
     },
@@ -61,7 +61,7 @@ const ObjEmoji = {
     },
     "small_airplane": {
         "s": "🛩️",
-        "dgrd": "45",
+        "dgrd": "-45",
         "code": "&#x1F6E9;",
         "code1": "&#xFE0F;"
     },
@@ -73,7 +73,7 @@ const ObjEmoji = {
     },
     "arrow_upper_right": {
         "s": "↗️",
-        "dgrd": "45",
+        "dgrd": "-45",
         "code": "&#x2197;",
         "code1": "&#xFE0F;"
     },
