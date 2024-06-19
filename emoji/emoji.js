@@ -241,7 +241,7 @@ const ObjEmoji = {
     },
     "plain": {
         "s": "✈︎",
-        "dgrd": "90",
+        "dgrd": "-90",
         "code": "",
         "code1": ""
     },
