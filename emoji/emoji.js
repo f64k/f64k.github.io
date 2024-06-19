@@ -55,7 +55,7 @@ const ObjEmoji = {
     },
     "airplane": {
         "s": "✈️",
-        "dgrd": "45",
+        "dgrd": "-45",
         "code": "&#x2708;",
         "code1": "&#xFE0F;"
     },
@@ -67,7 +67,7 @@ const ObjEmoji = {
     },
     "arbalet": {
         "s": "🏹",
-        "dgrd": "45",
+        "dgrd": "-45",
         "code": "",
         "code1": ""
     },
