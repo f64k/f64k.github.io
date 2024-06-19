@@ -181,13 +181,13 @@ const ObjEmoji = {
     },
     "silver-nib": {
         "s": "✒️",
-        "dgrd": "225",
+        "dgrd": "135",
         "code": "",
         "code1": ""
     },
     "pin": {
         "s": "📌",
-        "dgrd": "0",
+        "dgrd": "135",
         "code": "",
         "code1": ""
     },
@@ -199,13 +199,13 @@ const ObjEmoji = {
     },
     "dango": {
         "s": "🍡",
-        "dgrd": "135",
+        "dgrd": "45",
         "code": "",
         "code1": ""
     },
     "oden": {
         "s": "🍢",
-        "dgrd": "0",
+        "dgrd": "45",
         "code": "",
         "code1": ""
     },
@@ -253,7 +253,7 @@ const ObjEmoji = {
     },
     "plain": {
         "s": "✈︎",
-        "dgrd": "0",
+        "dgrd": "90",
         "code": "",
         "code1": ""
     },
@@ -271,7 +271,7 @@ const ObjEmoji = {
     },
     "pen2": {
         "s": "🖋️",
-        "dgrd": "0",
+        "dgrd": "135",
         "code": "",
         "code1": ""
     },
