@@ -17,18 +17,6 @@ const ObjEmoji = {
         "code": "",
         "code1": ""
     },
-    "spider": {
-        "s": "🕷️",
-        "dgrd": "0",
-        "code": "&#x1F577;",
-        "code1": "&#xFE0F;"
-    },
-    "silver-nib": {
-        "s": "✒️",
-        "dgrd": "135",
-        "code": "",
-        "code1": ""
-    },
     "pacif": {
         "s": "☮",
         "dgrd": "0",
@@ -77,6 +65,24 @@ const ObjEmoji = {
         "code": "&#x1F98B;",
         "code1": ""
     },
+    "bat": {
+        "s": "🦇",
+        "dgrd": "0",
+        "code": "&#x1F987;",
+        "code1": ""
+    },
+    "Fleur-de-lis": {
+        "s": "⚜️",
+        "dgrd": "0",
+        "code": "",
+        "code1": ""
+    },
+    "gemstone": {
+        "s": "💎",
+        "dgrd": "180",
+        "code": "",
+        "code1": ""
+    },
     "sun2": {
         "s": "🌞",
         "dgrd": "0",
@@ -101,26 +107,8 @@ const ObjEmoji = {
         "code": "&#x1F42D;",
         "code1": ""
     },
-    "bat": {
-        "s": "🦇",
-        "dgrd": "0",
-        "code": "&#x1F987;",
-        "code1": ""
-    },
-    "Fleur-de-lis": {
-        "s": "⚜️",
-        "dgrd": "0",
-        "code": "",
-        "code1": ""
-    },
     "heart-excl": {
         "s": "❣️",
-        "dgrd": "0",
-        "code": "",
-        "code1": ""
-    },
-    "gemstone": {
-        "s": "💎",
         "dgrd": "0",
         "code": "",
         "code1": ""
@@ -302,6 +290,19 @@ const ObjEmoji = {
     "T": {
         "s": "T",
         "dgrd": "180",
+        "code": "",
+        "code1": ""
+    },
+    // разная ориентация в разных системах
+    "spider": {
+        "s": "🕷️",
+        "dgrd": "0",
+        "code": "&#x1F577;",
+        "code1": "&#xFE0F;"
+    },
+    "silver-nib": {
+        "s": "✒️",
+        "dgrd": "135",
         "code": "",
         "code1": ""
     },
