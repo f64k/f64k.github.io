@@ -5,6 +5,12 @@ const ObjEmoji = {
         "code": "",
         "code1": ""
     },
+    "zodiak0": {
+        "s": "⛢",
+        "dgrd": "0",
+        "code": "",
+        "code1": ""
+    },
     "cross2": {
         "s": "⛨",
         "dgrd": "180",
@@ -14,12 +20,6 @@ const ObjEmoji = {
     "cross3": {
         "s": "⛒",
         "dgrd": "45",
-        "code": "",
-        "code1": ""
-    },
-    "zodiak0": {
-        "s": "⛢",
-        "dgrd": "0",
         "code": "",
         "code1": ""
     },

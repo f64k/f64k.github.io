@@ -89,18 +89,20 @@
             this.w = w;
             this.name = name;
             this.size = size;
-            console.log(`added robot ${this.name}`);
+            const rType = this.w.oRobotTypes[name];
             this.domEl = document.createElement('div');
             this.domEl.classList.add("robot");
             this.domEl.classList.add(name);
-            this.domEl.textContent = this.w.oRobotTypes[name].s;
+            this.domEl.textContent = rType.s;
             this.w.worldplace.appendChild(this.domEl);
+            this.phi = (int(rType.dgrd) / 180 - 90) * Math.PI;
             this.x = Math.floor(Math.random() * this.w.worldplace.clientWidth);
             this.y = Math.floor(Math.random() * this.w.worldplace.clientHeight);
             this.vx = 0.0; this.vy = 0.0;
-            this.phi = 2 * Math.PI * Math.random();
+            //this.phi += 2 * Math.PI * Math.random();
             this.MoveStep();
             this.vx = Math.cos(this.phi); this.vy = Math.sin(this.phi);
+            console.log(`added robot ${this.name}`);
         }
         MoveStep() {
             //console.log(`step of ${this.name}`);
