@@ -17,20 +17,8 @@ const ObjEmoji = {
         "code": "",
         "code1": ""
     },
-    "cross3": {
-        "s": "⛒",
-        "dgrd": "45",
-        "code": "",
-        "code1": ""
-    },
     "pacif": {
         "s": "☮",
-        "dgrd": "0",
-        "code": "",
-        "code1": ""
-    },
-    "sun1": {
-        "s": "🔆",
         "dgrd": "0",
         "code": "",
         "code1": ""
@@ -101,6 +89,24 @@ const ObjEmoji = {
         "code": "&#x1F987;",
         "code1": ""
     },
+    "Fleur-de-lis": {
+        "s": "⚜️",
+        "dgrd": "0",
+        "code": "",
+        "code1": ""
+    },
+    "heart-excl": {
+        "s": "❣️",
+        "dgrd": "0",
+        "code": "",
+        "code1": ""
+    },
+    "gemstone": {
+        "s": "💎",
+        "dgrd": "0",
+        "code": "",
+        "code1": ""
+    },
     "fox_face": {
         "s": "🦊",
         "dgrd": "180",
@@ -143,20 +149,14 @@ const ObjEmoji = {
         "code": "",
         "code1": ""
     },
-    "Fleur-de-lis": {
-        "s": "⚜️",
-        "dgrd": "0",
+    "cross3": {
+        "s": "⛒",
+        "dgrd": "45",
         "code": "",
         "code1": ""
     },
-    "heart-excl": {
-        "s": "❣️",
-        "dgrd": "0",
-        "code": "",
-        "code1": ""
-    },
-    "gemstone": {
-        "s": "💎",
+    "sun1": {
+        "s": "🔆",
         "dgrd": "0",
         "code": "",
         "code1": ""
