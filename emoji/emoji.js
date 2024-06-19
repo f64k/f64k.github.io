@@ -59,6 +59,24 @@ const ObjEmoji = {
         "code": "&#x2197;",
         "code1": "&#xFE0F;"
     },
+    "airplane": {
+        "s": "✈️",
+        "dgrd": "-45",
+        "code": "&#x2708;",
+        "code1": "&#xFE0F;"
+    },
+    "small_airplane": {
+        "s": "🛩️",
+        "dgrd": "-45",
+        "code": "&#x1F6E9;",
+        "code1": "&#xFE0F;"
+    },
+    "butterfly": {
+        "s": "🦋",
+        "dgrd": "0",
+        "code": "&#x1F98B;",
+        "code1": ""
+    },
     "sun2": {
         "s": "🌞",
         "dgrd": "0",
@@ -77,28 +95,10 @@ const ObjEmoji = {
         "code": "&#x1F9E8;",
         "code1": ""
     },
-    "airplane": {
-        "s": "✈️",
-        "dgrd": "-45",
-        "code": "&#x2708;",
-        "code1": "&#xFE0F;"
-    },
-    "small_airplane": {
-        "s": "🛩️",
-        "dgrd": "-45",
-        "code": "&#x1F6E9;",
-        "code1": "&#xFE0F;"
-    },
     "mouse": {
         "s": "🐭",
         "dgrd": "180",
         "code": "&#x1F42D;",
-        "code1": ""
-    },
-    "butterfly": {
-        "s": "🦋",
-        "dgrd": "0",
-        "code": "&#x1F98B;",
         "code1": ""
     },
     "bat": {
