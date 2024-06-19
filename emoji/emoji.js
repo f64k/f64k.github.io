@@ -139,7 +139,7 @@ const ObjEmoji = {
     },
     "male_sign": {
         "s": "♂️",
-        "dgrd": "45",
+        "dgrd": "-45",
         "code": "&#x2642;",
         "code1": "&#xFE0F;"
     },
