@@ -53,9 +53,16 @@
             height: 5em;
             box-shadow: inset 0 0 9px #0005;
         }
-        
-        .bLft { grid-row: 1; grid-column: 1;}
-        .bRgt { grid-row: 1; grid-column: 3;}
+
+        .bLft {
+            grid-row: 1;
+            grid-column: 1;
+        }
+
+        .bRgt {
+            grid-row: 1;
+            grid-column: 3;
+        }
 
         .robot {
             font-size: xx-large;
@@ -89,6 +96,7 @@
 </script>
 
 <script>
+    ///
     class RobotEmo {
         constructor(w, name, size) {
             this.w = w;
@@ -103,21 +111,24 @@
             this.ang = (Number(rType.dgrd) + 90) * (Math.PI / 180);
             this.phi = 0; // в радианах
             const bounds = this.w.GetClientRect();
-            //this.x = Math.floor(Math.random() * this.w.worldplace.clientWidth);
-            //this.y = Math.floor(Math.random() * this.w.worldplace.clientHeight);
-            this.x = Math.floor(0.5 * bounds.width);
-            this.y = Math.floor(0.5 * bounds.height);
+            if (true) {
+                this.x = Math.floor(Math.random() * bounds.width) + bounds.xMin;
+                this.y = Math.floor(Math.random() * bounds.width) + bounds.yMin;
+            } else {
+                this.x = Math.floor(0.5 * bounds.width);
+                this.y = Math.floor(0.5 * bounds.height);
+            }
             this.vx = 0.0; this.vy = 0.0;
             this.phi += 2 * Math.PI * Math.random();
             this.MoveStep();
             console.log(`added robot ${this.name}`);
         }
         DriveStep() {
-            const period = Math.sin(Date.now()/1500); // повремённая синусоида
-            this.phi -= 0.003* period; // радианы
+            const period = Math.sin(Date.now() / 1500); // повремённая синусоида
+            //this.phi -= 0.003* period; // радианы
             this.vx = Math.cos(this.phi); this.vy = Math.sin(this.phi);
             const bounds = this.w.GetClientRect();
-            if(bounds.xMin > this.x || this.x > bounds.xMax) {
+            if (bounds.xMin > this.x || this.x > bounds.xMax) {
                 this.vx = - this.vx;
             }
             if (bounds.yMin > this.y || this.y > bounds.yMax) {
@@ -151,14 +162,24 @@
         }
         ///
         GetClientRect() {
+            const r0 = this.worldplace.getClientRect();
+            const r = this.worldplace.getBoundingClientRect();
             return {
+                xMin: r.left,
+                xMax: r.right,
+                width: r.width,
+                yMin: r.top,
+                yMax: r.bottom,
+                height: r.height,
+            }
+            /* return {
                 xMin: this.worldplace.clientLeft,
                 xMax: this.worldplace.clientWidth + this.worldplace.clientLeft,
                 width: this.worldplace.clientWidth,
                 yMin: this.worldplace.clientTop,
                 yMax: this.worldplace.clientHeight + this.worldplace.clientTop,
                 height: this.worldplace.clientHeight,
-            }
+            } */
         }
         ///
         AddRobot(name) {
