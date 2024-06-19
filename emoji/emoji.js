@@ -197,18 +197,6 @@ const ObjEmoji = {
         "code": "",
         "code1": ""
     },
-    "dango": {
-        "s": "🍡",
-        "dgrd": "45",
-        "code": "",
-        "code1": ""
-    },
-    "oden": {
-        "s": "🍢",
-        "dgrd": "45",
-        "code": "",
-        "code1": ""
-    },
     "red-lantern": {
         "s": "🏮",
         "dgrd": "0",
@@ -223,7 +211,7 @@ const ObjEmoji = {
     },
     "magnet": {
         "s": "🧲",
-        "dgrd": "90",
+        "dgrd": "-90",
         "code": "",
         "code1": ""
     },
@@ -259,7 +247,7 @@ const ObjEmoji = {
     },
     "queen": {
         "s": "♛",
-        "dgrd": "0",
+        "dgrd": "180",
         "code": "",
         "code1": ""
     },
@@ -277,13 +265,25 @@ const ObjEmoji = {
     },
     "pen3": {
         "s": "🖊️",
-        "dgrd": "0",
+        "dgrd": "135",
         "code": "",
         "code1": ""
     },
     "pen4": {
         "s": "🖌️",
-        "dgrd": "0",
+        "dgrd": "135",
+        "code": "",
+        "code1": ""
+    },
+    "dango": {
+        "s": "🍡",
+        "dgrd": "45",
+        "code": "",
+        "code1": ""
+    },
+    "oden": {
+        "s": "🍢",
+        "dgrd": "225",
         "code": "",
         "code1": ""
     },
@@ -293,15 +293,15 @@ const ObjEmoji = {
         "code": "",
         "code1": ""
     },
-    "-": {
-        "s": "-",
-        "dgrd": "0",
+    "T": {
+        "s": "T",
+        "dgrd": "180",
         "code": "",
         "code1": ""
     },
     "pen5": {
         "s": "🖍️",
-        "dgrd": "0",
+        "dgrd": "135",
         "code": "",
         "code1": ""
     },
