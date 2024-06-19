@@ -202,6 +202,10 @@
             for (const [key_robot, robot] of Object.entries(this.robots)) {
                 robot.MoveStep();
             }
+            if (this.animId) {
+                // it's important to update the requestId each time you're calling requestAnimationFrame
+                this.animId = requestAnimationFrame(() => this.GameStep());
+            }            
         }
         ///
         RunGame() {
@@ -216,6 +220,7 @@
             if (this.myInterval) {
                 //window.clearInterval(this.animId);
                 window.cancelAnimationFrame(this.animId);
+                this.animId = null;
                 console.log(`game OVER .`);
             }
             else { debugger; console.log(`game Was not Started !`); }
