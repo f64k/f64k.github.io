@@ -5,6 +5,12 @@ const ObjEmoji = {
         "code": "",
         "code1": ""
     },
+    "film": {
+        "s": "🎞️",
+        "dgrd": "90",
+        "code": "",
+        "code1": ""
+    },
     "cross2": {
         "s": "⛨",
         "dgrd": "180",
