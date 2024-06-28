@@ -23,12 +23,6 @@ const ObjEmoji = {
         "code": "",
         "code1": ""
     },
-    "dango": {
-        "s": "🍡",
-        "dgrd": "45",
-        "code": "",
-        "code1": ""
-    },
     "pen5": {
         "s": "🖍️",
         "dgrd": "135",
@@ -80,6 +74,15 @@ const ObjEmoji = {
     "gemstone": {
         "s": "💎",
         "dgrd": "180",
+        "code": "",
+        "code1": ""
+    },
+
+
+
+    "dango": {
+        "s": "🍡",
+        "dgrd": "45",
         "code": "",
         "code1": ""
     },
