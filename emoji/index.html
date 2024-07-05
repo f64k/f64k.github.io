@@ -103,8 +103,8 @@
 <script>
     ///
     class RobotEmo {
-        constructor(w, name, size) {
-            this.w = w;
+        constructor(world, name, size) {
+            this.w = world;
             this.name = name;
             this.size = size;
             const rType = this.w.oRobotTypes[name];
@@ -126,6 +126,7 @@
                 this.y = Math.floor(0.5 * bounds.height);
             }
             this.vx = 0.0; this.vy = 0.0;
+            this.va = 3.0;
             this.phi += 2 * Math.PI * Math.random();
             this.MoveStep();
             console.log(`added robot ${this.name}`);
@@ -133,7 +134,8 @@
         DriveStep() {
             const period = Math.sin(Date.now() / 1500); // повремённая синусоида
             //this.phi -= 0.003* period; // радианы
-            this.vx = Math.cos(this.phi); this.vy = Math.sin(this.phi);
+            this.vx = this.va * Math.cos(this.phi);
+            this.vy = this.va * Math.sin(this.phi);
             const bounds = this.w.GetClientRect();
             if (bounds.xMin > this.x || this.x > bounds.xMax) {
                 this.vx = - this.vx;
