@@ -47,11 +47,11 @@ const ObjEmoji = {
         "code": "&#x2708;",
         "code1": "&#xFE0F;"
     },
-    "small_airplane": {
-        "s": "🛩️",
-        "dgrd": "-45",
-        "code": "&#x1F6E9;",
-        "code1": "&#xFE0F;"
+    "level-slider": {
+        "s": "🎚️",
+        "dgrd": "0",
+        "code": "",
+        "code1": ""
     },
     "butterfly": {
         "s": "🦋",
@@ -80,6 +80,12 @@ const ObjEmoji = {
 
 
 
+    "small_airplane": {
+        "s": "🛩️",
+        "dgrd": "-45",
+        "code": "&#x1F6E9;",
+        "code1": "&#xFE0F;"
+    },
     "dango": {
         "s": "🍡",
         "dgrd": "45",
@@ -178,12 +184,6 @@ const ObjEmoji = {
     },
     "name-badge": {
         "s": "📛",
-        "dgrd": "0",
-        "code": "",
-        "code1": ""
-    },
-    "level-slider": {
-        "s": "🎚️",
         "dgrd": "0",
         "code": "",
         "code1": ""
