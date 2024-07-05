@@ -79,13 +79,6 @@ const ObjEmoji = {
     },
 
 
-
-    "small_airplane": {
-        "s": "🛩️",
-        "dgrd": "-45",
-        "code": "&#x1F6E9;",
-        "code1": "&#xFE0F;"
-    },
     "dango": {
         "s": "🍡",
         "dgrd": "45",
@@ -302,6 +295,7 @@ const ObjEmoji = {
         "code": "",
         "code1": ""
     },
+    
     // разная ориентация в разных системах
     "spider": {
         "s": "🕷️",
@@ -315,4 +309,11 @@ const ObjEmoji = {
         "code": "",
         "code1": ""
     },
+    "small_airplane": {
+        "s": "🛩️",
+        "dgrd": "-45",
+        "code": "&#x1F6E9;",
+        "code1": "&#xFE0F;"
+    },
+
 }
