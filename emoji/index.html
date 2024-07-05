@@ -62,6 +62,9 @@
         .bRgt {
             grid-row: 3;
             grid-column: 3;
+            button {
+                padding: 1em;
+            }
         }
 
         .robot {
@@ -81,7 +84,11 @@
     <div class="world" id="worldplace"></div>
     <div id="error-log"></div>
     <!--<div class="bLft"></div>-->
-    <div class="bRgt"><button>🦋</button><br /><button>💎</button></div>
+    <div class="bRgt">
+        <button id="btnStart">🦋</button>
+        <br/>
+        <button id="btnStop">💎</button>
+    </div>
 </body>
 
 <script>
@@ -172,22 +179,6 @@
         ///
         GetClientRect() {
             //const r = this.worldplace.getBoundingClientRect();
-            /* return {
-                xMin: 0,
-                xMax: r.width,
-                width: r.width,
-                yMin: 0,
-                yMax: r.height,
-                height: r.height,
-            } */
-            /* return {
-                xMin: r.left,
-                xMax: r.right,
-                width: r.width,
-                yMin: r.top,
-                yMax: r.bottom,
-                height: r.height,
-            } */
             return {
                 xMin: 0,
                 xMax: this.worldplace.clientWidth,
@@ -215,7 +206,7 @@
         }
         ///
         RunGame() {
-            if (!this.myInterval) {
+            if (!this.animId) {
                 //this.animId = window.setInterval(() => this.GameStep(), 100);
                 this.animId = window.requestAnimationFrame(() => this.GameStep());
                 console.log(`game STARTED ...`);
@@ -223,7 +214,7 @@
         }
         ///
         StopGame() {
-            if (this.myInterval) {
+            if (this.animId) {
                 //window.clearInterval(this.animId);
                 window.cancelAnimationFrame(this.animId);
                 this.animId = null;
@@ -235,6 +226,10 @@
 
     const w2d = new World2d(ObjEmoji);
     w2d.RunGame();
+
+    document.getElementById("btnStart").onclick = e => w2d.RunGame();
+    document.getElementById("btnStop").onclick = e => w2d.StopGame();
+
 </script>
 
 </html>
