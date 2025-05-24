@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>summ3 | XML Viewer</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui;
+      font-size: large;
+    }
+
+    #output {
+      margin: 1em;
+      padding: 1em;
+      border-radius: 1em;
+      /*border-color: #888;*/
+      /*border-style: inset;*/
+      border-style: outset;
+      /*border-style: ridge;*/
+      /*border-style: groove;*/
+      /*box-shadow:
+        0 0 0 1px #CCC,
+        0 0 0 2px #888,
+        0 0 0 3px #444,
+        0 0 0 4px #000;*/
+      box-shadow: inset 1px 1px 1em #888;
+      /*width: calc(100% - 90px);*/
+      /*width: 100%;*/
+    }
+
+    #output {
+      padding-right: 5em;
+    }
+  </style>
+  <style>
+
+    td.xml-value-cell, td.xml-value-td-cell, td.xml-attr-cell { max-width: 20em; overflow-x: hidden; text-overflow: ellipsis; }
+
+    .twister {
+      background-color: #0003;
+      margin: 0;
+      padding: 0 1px;
+      /* display: inline-flex; */
+      /* display: inline-block; */
+      /* vertical-align: top; */
+      /* text-align: center; */
+      /* line-height: 0px; */
+      /* line-height: 1px; */
+    }
+    /*border: 1px solid #AAA;*/
+    /*:not(.span-leaf-node)>.twister {
+      box-shadow: inset 0 0 3px #FFF;
+      border-radius: 8px;
+      padding: 0px 1px;
+    }*/
+
+    .div-annotation-elem, .div-annotation-type, .div-restriction-type {
+      max-width: 20rem;
+      font-size: small;
+      white-space: normal;
+      margin: 1px;
+      padding-left: 2px;
+      /*border: solid 0.5px #AAA;*/
+      box-shadow: inset 0 0 3px #333;
+      border-radius: 3px;
+    }
+
+    .span-leaf-node {
+      background-image: linear-gradient(0deg, #FFF, #EEE);
+    }
+    .node-is-open .node-text1 {
+      margin-left: 0.1px;
+      background-image: linear-gradient(0deg, #EEE, #DDD);
+    }
+    .node-is-closed {
+      background-image: linear-gradient(180deg, #EEE, #DDD);
+    }
+
+    .left_xml_table td {
+      background-color: #0000;
+    }
+
+    td.xml-name-tree-cell {
+      white-space: nowrap;
+      position: relative; /* для абсолютного позиционирования внутри */
+      vertical-align: top;
+    }
+    .left-shift {
+      background: repeating-linear-gradient(45deg, #0001, #0002 5px);
+      /*background: repeating-linear-gradient(135deg, #F8B4, #F8B9 2px, #B8F9 2px, #B8F4 4px);*/
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+    }
+
+    .previous-comment-summary {
+      font-size: xx-small;
+      position: relative;
+      top: -1em;
+      background-color: #CCCC;
+      border-radius: 3px;
+    }
+
+    .div-previous-comment-0 {
+      position: absolute;
+      font-size: xx-small;
+      background-color: #DDDD;
+      padding: 1px 3px 3px 3px;
+      border-radius: 4px;
+      top: -1em;
+      left: 11em;
+    }
+
+    .parent-width-1 { width: 0.99em; }
+    .parent-width-2 { width: 1.99em; }
+    .parent-width-3 { width: 2.99em; }
+    .parent-width-4 { width: 3.99em; }
+    .parent-width-5 { width: 4.99em; }
+    .parent-width-6 { width: 5.99em; }
+    .parent-width-7 { width: 6.99em; }
+    .parent-width-8 { width: 7.99em; }
+    .parent-width-9 { width: 8.99em; }
+    .parent-width-10 { width: 9.99em; }
+    .parent-width-11 { width: 10.99em; }
+    .parent-width-12 { width: 11.99em; }
+    .parent-width-13 { width: 12.99em; }
+    .parent-width-14 { width: 13.99em; }
+    .parent-width-15 { width: 14.99em; }
+    .parent-width-16 { width: 15.99em; }
+    .parent-width-17 { width: 16.99em; }
+    .parent-width-18 { width: 17.99em; }
+    .parent-width-19 { width: 18.99em; }
+    .parent-width-20 { width: 19.99em; }
+    .parent-shift-1 { margin-left: 1em; }
+    .parent-shift-2 { margin-left: 2em; }
+    .parent-shift-3 { margin-left: 3em; }
+    .parent-shift-4 { margin-left: 4em; }
+    .parent-shift-5 { margin-left: 5em; }
+    .parent-shift-6 { margin-left: 6em; }
+    .parent-shift-7 { margin-left: 7em; }
+    .parent-shift-8 { margin-left: 8em; }
+    .parent-shift-9 { margin-left: 9em; }
+    .parent-shift-10 { margin-left: 10em; }
+    .parent-shift-11 { margin-left: 11em; }
+    .parent-shift-12 { margin-left: 12em; }
+    .parent-shift-13 { margin-left: 13em; }
+    .parent-shift-14 { margin-left: 14em; }
+    .parent-shift-15 { margin-left: 15em; }
+    .parent-shift-16 { margin-left: 16em; }
+    .parent-shift-17 { margin-left: 17em; }
+    .parent-shift-18 { margin-left: 18em; }
+    .parent-shift-19 { margin-left: 19em; }
+    .parent-shift-20 { margin-left: 20em; }
+
+    /*
+    .parent-width-1 { width: 0.99em; }
+    .parent-width-2 { width: 1.99em; }
+    .parent-width-3 { width: 2.99em; }
+    .parent-width-4 { width: 3.99em; }
+    .parent-width-5 { width: 4.99em; }
+    .parent-width-6 { width: 5.99em; }
+    .parent-width-7 { width: 6.99em; }
+    .parent-width-8 { width: 7.99em; }
+    .parent-width-9 { width: 8.99em; }
+    .parent-width-10 { width: 9.99em; }
+    .parent-width-11 { width: 10.99em; }
+    .parent-width-12 { width: 11.99em; }
+    .parent-width-13 { width: 12.99em; }
+    .parent-width-14 { width: 13.99em; }
+    .parent-width-15 { width: 14.99em; }
+    .parent-width-16 { width: 15.99em; }
+    .parent-width-17 { width: 16.99em; }
+    .parent-width-18 { width: 17.99em; }
+    .parent-width-19 { width: 18.99em; }
+    .parent-width-20 { width: 19.99em; }
+    .parent-shift-1 { margin-left: 1em; }
+    .parent-shift-2 { margin-left: 2em; }
+    .parent-shift-3 { margin-left: 3em; }
+    .parent-shift-4 { margin-left: 4em; }
+    .parent-shift-5 { margin-left: 5em; }
+    .parent-shift-6 { margin-left: 6em; }
+    .parent-shift-7 { margin-left: 7em; }
+    .parent-shift-8 { margin-left: 8em; }
+    .parent-shift-9 { margin-left: 9em; }
+    .parent-shift-10 { margin-left: 10em; }
+    .parent-shift-11 { margin-left: 11em; }
+    .parent-shift-12 { margin-left: 12em; }
+    .parent-shift-13 { margin-left: 13em; }
+    .parent-shift-14 { margin-left: 14em; }
+    .parent-shift-15 { margin-left: 15em; }
+    .parent-shift-16 { margin-left: 16em; }
+    .parent-shift-17 { margin-left: 17em; }
+    .parent-shift-18 { margin-left: 18em; }
+    .parent-shift-19 { margin-left: 19em; }
+    .parent-shift-20 { margin-left: 20em; }
+    */
+  </style>
+</head>
+
+<body>
+  <button popovertarget="mypopover">Toggle the popover</button>
+  <div id="mypopover" popover>Popover content</div>
+  <input type="file" id="fileInput" accept=".xml, .xsd" title="xml | xsd" /><hr/>
+
+  <table border="2">
+    <tr>
+      <td>
+
+        <table class="left_xml_table" id="xmlTable" border="1" cellspacing="0" cellpadding="0">
+          <thead>
+            <tr>
+              <th>Tag</th>
+              <th>Value</th>
+              <th>Prefix</th>
+              <th>Attributes</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+
+      </td>
+      <td>
+
+        <div id="output"></div>
+
+      </td>
+    </tr>
+  </table>
+
+  <script src="/XSD_Schs/xml-manager.js"></script>
+  <script src="/XSD_Schs/xsd-manager.js"></script>
+
+  <script>
+    const objXMLParser = new XMLParser_3();
+    const objXsdManager = new XsdManager_1();
+    objXMLParser.insertStylesInHead();
+
+    document.getElementById("fileInput").addEventListener("change", function (e) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = async function (e) {
+        const xmlText = e.target.result;
+        await renderXml_TwoPanels(xmlText);
+      };
+      reader.readAsText(file);
+    });
+
+    function renderXml_Details(xmlString) {
+      const output = document.getElementById("output");
+      try {
+        objXMLParser.setLastXML(xmlString);
+        output.innerHTML = "";
+        objXMLParser.buildTreeRecursively(objXMLParser.rootTreeObject, output);
+      } catch (e) {
+        output.textContent = "Ошибка парсинга XML : " + e.message;
+      }
+    }
+
+    function renderXML_Table(xmlText) {
+      const tableBody = document.getElementById("tableBody");
+      try {
+        objXMLParser.setLastXML(xmlText);
+        tableBody.innerHTML = "";
+        objXMLParser.appendNodeRecursively(objXMLParser.rootTreeObject, tableBody);
+      } catch (e) {
+        tableBody.textContent = "Ошибка парсинга XML : " + e.message;
+      }
+    }
+
+    async function renderXml_TwoPanels(xmlText) {
+      const output = document.getElementById("output");
+      const tableBody = document.getElementById("tableBody");
+      try {
+        await objXMLParser.setLastXMLAsync(xmlText, objXsdManager); // ОДИН ОБЪЕКТ на два контрола
+        tableBody.innerHTML = "";
+        objXMLParser.appendNodeRecursively(objXMLParser.rootTreeObject, tableBody);
+        output.innerHTML = "";
+        objXMLParser.buildTreeRecursively(objXMLParser.rootTreeObject, output);
+      } catch (e) {
+        tableBody.textContent = "Ошибка парсинга XML : " + e.message;
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", async function () {
+      //const xsd = await objXMLParser.getXsd("AbodeInfoRequest");
+      await renderXml_TwoPanels();
+    });
+
+    //renderXml_Details();
+    //renderXML_Table();
+    //renderXml_TwoPanels();
+  </script>
+</body>
+
+</html>
