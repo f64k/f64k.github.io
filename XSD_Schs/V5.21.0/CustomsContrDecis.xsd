@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:ccd="urn:customs.ru:Information:ELSDocuments:CustomsContrDecis:5.21.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:ELSDocuments:CustomsContrDecis:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Решение по результатам таможенного контроля, выявлена задолженность, при наличии одного или нескольких фактов декларирования</xs:documentation>
+  </xs:annotation>
+  <xs:element name="CustomsContrDecis" type="ccd:CustomsContrDecisType">
+    <xs:annotation>
+      <xs:documentation>Решение по результатам таможенного контроля, выявлена задолженность, при наличии одного или нескольких фактов декларирования </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="CustomsContrDecisType">
+    <xs:annotation>
+      <xs:documentation>Решение по результатам таможенного контроля, выявлена задолженность, при наличии одного или нескольких фактов декларирования</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="ContrDecisReqs" type="cat_ru:DocumentBaseType">
+            <xs:annotation>
+              <xs:documentation>Реквизиты решения по таможенному контролю</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DecisionType" type="clt_ru:Numeric1Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Источник решения: 0 – КПС «Постконтроль», 1 – АС «КТТ-2» , 2 - КПС «Карнет АТА», 3 - АИС "АИСТ-М", 4 - КПС "Тарифы-1"</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ValidDocReqs" type="cat_ru:DocumentBaseType">
+            <xs:annotation>
+              <xs:documentation>Реквизиты акта по таможенному контролю</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocchargeInfo" type="ccd:DocchargeInfoType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о документе начислений и номере его корректировки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PersonPerformingControl" type="ccd:PersonType">
+            <xs:annotation>
+              <xs:documentation>Лицо, проводившее таможенный контроль</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="HeadCustomsDepartment" type="ccd:PersonType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Начальник (заместитель) таможенного органа, принявшего решение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PersonTookDecision" type="ccd:PersonType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Лицо, принявшее решение (должностное лицо отдела контроля за транзитом товара)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ViolationInfo" type="ccd:ViolationInfoType">
+            <xs:annotation>
+              <xs:documentation>Сведения о нарушении </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Violator" type="ccd:ViolatorType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о нарушителе таможенной процедуры </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AttachedDocument" type="ccd:AttachedDocumentType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о прилагаемых документах</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="LiableTrader" type="ccd:LiableTraderType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о лицах, несущих солидарную ответственность</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Status" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Статус решения : 0 - создан, 1- подписан, 2 - направлен, 3 - отменен, 4 - восстановлен, 5 - приостановлен</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DateStatus" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата  статуса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1040043E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AEODeclarantType">
+    <xs:annotation>
+      <xs:documentation>Сведения об уполномоченном экономическом операторе</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:OrganizationType">
+        <xs:sequence>
+          <xs:element name="AEORegistryIdDetails" type="RUScat_ru:AEORegistryIdDetailsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер свидетельства о включении в реестр уполномоченных экономических операторов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AttachedDocumentType">
+    <xs:annotation>
+      <xs:documentation>Прилагаемый документ</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="DocLists" type="clt_ru:SheetNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Количество листов в документе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocCopies" type="clt_ru:Count3Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Количество экземпляров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CarrierType">
+    <xs:annotation>
+      <xs:documentation>Лицо, осуществляющее перевозку товаров</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:OrganizationType">
+        <xs:sequence>
+          <xs:element name="CarrierAddress" type="cat_ru:AddressType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Место нахождения перевозчика в соответствии с транспортными (перевозочными) документами</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CarrierSertificate" type="cat_ru:DocumentBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер свидетельства таможенного перевозчика</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DocchargeInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о документе начислений</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="CHNumber" type="clt_ru:Count3Type">
+            <xs:annotation>
+              <xs:documentation>Порядковый номер корректировки документа начислений (КДТ/РТП/РТП-Ф)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="LiableTraderType">
+    <xs:annotation>
+      <xs:documentation>Сведения о лицах, несущих солидарную ответственность</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:OrganizationType">
+        <xs:sequence>
+          <xs:element name="Status" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Статус лица: 1 - гарант; 2 - поручитель; 3 - АСМАП; 4 - иное лицо, предоставившее обеспечение за декларанта процедуры транзита</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PersonType">
+    <xs:annotation>
+      <xs:documentation>Лицо, проводившее таможенный контроль./принявшее решение</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:CustomsPersonType">
+        <xs:sequence>
+          <xs:element name="PersonPost" type="clt_ru:PostType">
+            <xs:annotation>
+              <xs:documentation>Должность</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DepartmentCode" type="cat_ru:CustomsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Структурное подразделение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ExtDepartmentCode" type="clt_ru:CodeVariable3Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код структурного подразделения таможенного контроля</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ViolationInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о нарушении </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DayExecuteObligationsPay" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>День исполнения обязанности по уплате таможенных платежей</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FZArticlesNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номера статей Федерального закона от 27.11.2010 №311-ФЗ "О таможенном регулировании в РФ"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KodeksArticlesNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номера статей Таможенного Кодекса Таможенного союза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateViolationConventionATA" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата нарушения положений Конвенции АТА</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Comments" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Комментарии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ViolatorType">
+    <xs:annotation>
+      <xs:documentation>Сведения о нарушителе таможенной процедуры ТТ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Carrier" type="ccd:CarrierType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о перевозчике</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DeclarantAEO" type="ccd:AEODeclarantType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения об УЭО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OtherViolator" type="RUScat_ru:SubjectDetailsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения об ином нарушителе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

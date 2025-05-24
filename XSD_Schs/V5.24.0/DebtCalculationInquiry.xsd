@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:debt_inq="urn:customs.ru:Information:GuaranteeDocuments:DebtCalculationInquiry:5.24.0" targetNamespace="urn:customs.ru:Information:GuaranteeDocuments:DebtCalculationInquiry:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос на расчет расчета сумм задолженности по неуплаченным таможенным пошлинам, налогам за незадекларированные товары / Запрос на расчет обеспечения по заявлению о выпуске до подачи/ запрос на расчет размера обеспечения в отношении товаров, помещаемых на временное хранение на складе получателя</xs:documentation>
+  </xs:annotation>
+  <xs:element name="DebtCalculationInquiry" type="debt_inq:DebtCalculationInquiryType">
+    <xs:annotation>
+      <xs:documentation>Запрос на расчет расчета сумм задолженности по неуплаченным таможенным пошлинам, налогам за незадекларированные товары / Запрос на расчет обеспечения по заявлению о выпуске до подачи/ Запрос на расчет размера обеспечения в отношении товаров, помещаемых на временное хранение на складе получателя</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DebtCalculationInquiryType">
+    <xs:annotation>
+      <xs:documentation>Запрос на расчет сумм задолженности по неуплаченным таможенным пошлинам, налогам за незадекларированные товары / Запрос на расчет обеспечения по заявлению о выпуске до подачи/ запрос на расчет размера обеспечения в отношении товаров, помещаемых на временное хранение на складе получателя</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocType" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Тип документа: 0 - запрос на расчет задолженности, 1 - запрос на расчет обеспечения по заявлению о выпуске до подачи; 2 - запрос на расчет размера обеспечения в отношении товаров, помещаемых на временное хранение на складе получателя</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocumentDateTime" type="clt_ru:DateTimeCustType">
+            <xs:annotation>
+              <xs:documentation>Дата и время формирования электронного документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocNumber" type="debt_inq:DocNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер исходного документа для расчета</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsOffice" type="cat_ru:CustomsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код таможенного органа, сформировавшего запрос</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsOfficial" type="cat_ru:CustomsPersonType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Должностное лицо таможенного органа, сформировавшее запрос</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsDirection" type="clt_ru:CUCustomsProcedureType">
+            <xs:annotation>
+              <xs:documentation>Направление перемещения товаров (ИМ, ЭК)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CalcSign" type="clt_ru:DigitalIndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Признак рачета: 0 - (по умолчанию) без особенностей, только выбранные варианты (с максимальной суммой платежей); 1 - физ. лица, только выбранные; 2 - без особенностей, выбранные и отвергнутые варианты; 3 - физ.лица, выбранные и отвергнутые варианты</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CheckDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата, на которую в расчете производится выбор ставок и курсов валют (если одна для всех товаров)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsInfo" type="debt_inq:GoodsInfoType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Информация по товарам</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1050018E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DocNumberType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер исходного документа</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:GTDIDType">
+        <xs:sequence>
+          <xs:element name="AddNumber" type="clt_ru:CodeVariable2Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дополнительная составляющая 3ей части номера (ЗВ)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GoodsInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о товаре для расчета/расчет</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Numeric" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Номер товара по порядку</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TNVEDCode" type="clt_ru:GoodsNomenclatureCodeType">
+        <xs:annotation>
+          <xs:documentation>Ориентировочный код товара по ТН ВЭД ЕАЭС (указывается от 4 до 10 знаков)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsDescription" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OriginCountry" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код страны происхождения товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WeightQuantity" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вес товара, нетто (кг)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NetWeightQuantity2" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вес товара, нетто без учета всех видов упаковки (кг)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GrossWeightQuantity" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вес товара, брутто (кг)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SupplementaryQuantity" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество товара в дополнительной единице измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AddSupplementaryQuantity" type="cat_ru:SupplementaryQuantityType" minOccurs="0" maxOccurs="3">
+        <xs:annotation>
+          <xs:documentation>Количество товара в единице измерения, отличной от основной и дополнительной</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsCost" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Таможенная стоимость товара (руб)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TobaccoCost" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Максимальная розничная цена табачных изделий (для зависящих от неё ставок платежей)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CheckDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата, на которую в расчете производится выбор ставок и курсов валют (для данного товара)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

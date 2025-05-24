@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" elementFormDefault="qualified" targetNamespace="urn:customs.ru:Information:CommercialFinanceDocuments:ServiceInvoice:5.21.0" version="5.21.0.0" xmlns:catComFin_ru="urn:customs.ru:Information:CommercialFinanceDocuments:CommercialFinanceCommonAgregateTypesCust:5.21.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:s_inv="urn:customs.ru:Information:CommercialFinanceDocuments:ServiceInvoice:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:CommercialFinanceDocuments:CommercialFinanceCommonAgregateTypesCust:5.21.0" schemaLocation="CommercialFinanceCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Счет-фактура на оплату услуг по перевозке, погрузке перегрузке/разгрузке товаров и по страхованию товаров</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ServiceInvoice" type="s_inv:ServiceInvoiceType" />
+  <xs:complexType name="ServiceInvoiceType">
+    <xs:annotation>
+      <xs:documentation>Счет-фактура на оплату услуг по перевозке, погрузке перегрузке/разгрузке товаров и по страхованию товаров</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocumentSign" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Признак документа (Счет-фактура на оплату услуг: 0 -  по страхованию товаров; 1 - по перевозке (транспортировке) погрузке перегрузке/разгрузке товаров)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TotalServiceCost" type="clt_ru:AmountType">
+            <xs:annotation>
+              <xs:documentation>Всего к оплате</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Currency" type="clt_ru:CurrencyA3CodeType">
+            <xs:annotation>
+              <xs:documentation>Код валюты</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ServiceProvider" type="s_inv:ServiceProviderType">
+            <xs:annotation>
+              <xs:documentation>Поставщик услуг (страховщик/экспедитор/перевозчик)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Consignor" type="RUScat_ru:SubjectDetailsType">
+            <xs:annotation>
+              <xs:documentation>Грузоотправитель</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Consignee" type="RUScat_ru:SubjectDetailsType">
+            <xs:annotation>
+              <xs:documentation>Грузополучатель</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" name="PaymentDocument" type="cat_ru:DocumentBaseType">
+            <xs:annotation>
+              <xs:documentation>Платежно-расчетный документ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ContractDetails" type="cat_ru:DocumentBaseType">
+            <xs:annotation>
+              <xs:documentation>Реквизиты договора</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Insurance" type="cat_ru:DocumentBaseType">
+            <xs:annotation>
+              <xs:documentation>Страховой полис</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ServiceConsumer" type="RUScat_ru:SubjectDetailsType">
+            <xs:annotation>
+              <xs:documentation>Клиент (страхователь/заказчик)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" name="ServiceDescription" type="s_inv:ServiceDescriptionType">
+            <xs:annotation>
+              <xs:documentation>Описание выполненных работ, оказанных услуг</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:annotation>
+              <xs:documentation>Подпись</xs:documentation>
+            </xs:annotation>
+            <xs:element name="IndividualEntrepreneur" type="cat_ru:PersonSignatureType">
+              <xs:annotation>
+                <xs:documentation>Индивидуальный предприниматель</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="SignatureDirectorChiefAccountant" type="s_inv:SignatureDirectorChiefAccountantType">
+              <xs:annotation>
+                <xs:documentation>Подпись руководителя организации и главного бухгалтера.</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+          <xs:element name="Registration" type="cat_ru:DocumentBaseType">
+            <xs:annotation>
+              <xs:documentation>Регистрационные данные счета-фактуры</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute fixed="1002027E" name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="PaymentDetailsType">
+    <xs:annotation>
+      <xs:documentation>Параметры оплаты услуг</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Amount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Currency" type="clt_ru:CurrencyA3CodeType">
+        <xs:annotation>
+          <xs:documentation>Код валюты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ServiceDescriptionType">
+    <xs:annotation>
+      <xs:documentation>Описание выполненных работ, оказанных услуг</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element maxOccurs="4" minOccurs="0" name="GoodsDescription" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Описание товара текстовое</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="GCost" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Cтоимость товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CurrencyCode" type="clt_ru:CurrencyA3CodeType">
+        <xs:annotation>
+          <xs:documentation>Код валюты контракта (цены)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ServiceName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование выполненных работ, оказанных услуг</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="InsuranceRate" type="clt_ru:ProcentNumericType">
+        <xs:annotation>
+          <xs:documentation>Тариф страхового взноса (%)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TaxRate" type="clt_ru:ProcentNumericType">
+        <xs:annotation>
+          <xs:documentation>Налоговая ставка (%)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TaxSum" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма налога</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="GoodsQuantity" type="cat_ru:SupplementaryQuantityType">
+        <xs:annotation>
+          <xs:documentation>Количество товара в единицах измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="InsuranceSum" type="s_inv:PaymentDetailsType">
+        <xs:annotation>
+          <xs:documentation>Страховая сумма</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ServicePrice" type="s_inv:PaymentDetailsType">
+        <xs:annotation>
+          <xs:documentation>Цена (тариф) работ, услуг за единицу измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="TransportCost" type="s_inv:PaymentDetailsType">
+        <xs:annotation>
+          <xs:documentation>Стоимость услуг по перевозке (транспортировке) товаров, всего без налога</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="LoadingCost" type="s_inv:PaymentDetailsType">
+        <xs:annotation>
+          <xs:documentation>Стоимость работ по погрузке перегрузке/разгрузке товаров, всего без налога</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ServiceCost" type="s_inv:PaymentDetailsType">
+        <xs:annotation>
+          <xs:documentation>Стоимость работ, услуг/страховой взнос, всего с учетом налога</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ServiceProviderType">
+    <xs:annotation>
+      <xs:documentation>Поставщик услуг (страховщик/экспедитор/перевозчик)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="catComFin_ru:InvoiceParticipantType">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" name="PaymentRequisitions" type="catComFin_ru:PaymentRequisitionsType">
+            <xs:annotation>
+              <xs:documentation>Банковские реквизиты</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="PostalAddress" type="cat_ru:AddressType">
+            <xs:annotation>
+              <xs:documentation>Адрес поставщика услуг</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SignatureDirectorChiefAccountantType">
+    <xs:annotation>
+      <xs:documentation>Подпись руководителя организации и главного бухгалтера</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Director" type="cat_ru:PersonSignatureType">
+        <xs:annotation>
+          <xs:documentation>Руководитель организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ChiefAccountant" type="cat_ru:PersonSignatureType">
+        <xs:annotation>
+          <xs:documentation>Главный бухгалтер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

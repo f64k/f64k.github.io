@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XML Viewer with AG-Grid</title>
+    <!-- AG-Grid CSS -->
+    <!-- не работает на версии 33.2.4 -->
+    <!--
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community@33.2.4/styles/ag-grid.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community@33.2.4/styles/ag-theme-alpine.css">
+    -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community@30.0.5/styles/ag-grid.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community@30.0.5/styles/ag-theme-alpine.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #gridContainer {
+            height: 500px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-label {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>XML Viewer</h1>
+        <div>
+            <input type="file" id="fileInput" class="file-input" accept=".xml, .xsd">
+            <label for="fileInput" class="file-label">Open XML File</label>
+        </div>
+    </div>
+    <div id="gridContainer" class="ag-theme-alpine"></div>
+
+    <!-- AG-Grid and dependencies -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/ag-grid-community@30.0.5/dist/ag-grid-community.min.js"></script> -->
+    <!-- не работает на версии 33.2.4 -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/ag-grid-enterprise@33.2.4/dist/ag-grid-enterprise.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/ag-grid-enterprise@30.0.5/dist/ag-grid-enterprise.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const gridOptions = {
+                columnDefs: [
+                    //{ field: 'name', headerName: 'Node Name', cellRenderer: 'agGroupCellRenderer' },
+                    { field: 'name', headerName: 'Node Name' },
+                    { field: 'value', headerName: 'Value' },
+                    { field: 'attributes', headerName: 'Attributes', valueFormatter: formatAttributes }
+                ],
+                defaultColDef: {
+                    flex: 1,
+                    resizable: true,
+                    filter: true
+                },
+                autoGroupColumnDef: {
+                    headerName: 'Node Name',
+                    field: 'name',
+                    cellRendererParams: {
+                        suppressCount: true
+                    }
+                },
+                treeData: true,
+                animateRows: true,
+                groupDefaultExpanded: -1,
+                getDataPath: function (data) {
+                    return data.path;
+                }
+            };
+
+            function formatAttributes(params) {
+                if (!params.value) return '';
+                return Object.entries(params.value).map(([key, val]) => `${key}="${val}"`).join(' ');
+            }
+
+            const gridDiv = document.querySelector('#gridContainer');
+            //const oAgGrid = agGrid.Grid ?? agGrid.createGrid; // в разных версиях
+            if (agGrid.Grid) {
+                const grid = new agGrid.Grid(gridDiv, gridOptions);
+            }
+            if (agGrid.createGrid) {
+                const grid = agGrid.createGrid(gridDiv, gridOptions);
+            }
+
+            document.getElementById('fileInput').addEventListener('change', function (e) {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const xmlString = e.target.result;
+                    const parser = new DOMParser();
+                    const xmlDoc = parser.parseFromString(xmlString, "text/xml");
+
+                    const rowData = parseXmlNode(xmlDoc.documentElement);
+                    gridOptions.api.setRowData(rowData);
+                };
+                reader.readAsText(file);
+            });
+
+            function parseXmlNode(node, path = []) {
+                const result = [];
+                const nodeName = node.nodeName;
+                const currentPath = [...path, nodeName];
+
+                // Create entry for current node
+                const nodeEntry = {
+                    name: nodeName,
+                    path: currentPath,
+                    attributes: node.attributes ?
+                        Object.fromEntries(
+                            Array.from(node.attributes).map(attr => [attr.name, attr.value])
+                        ) : null,
+                    value: node.childNodes.length === 1 && node.childNodes[0].nodeType === Node.TEXT_NODE ?
+                        node.childNodes[0].nodeValue.trim() : null
+                };
+
+                result.push(nodeEntry);
+
+                // Process child nodes
+                Array.from(node.childNodes).forEach(child => {
+                    if (child.nodeType === Node.ELEMENT_NODE) {
+                        result.push(...parseXmlNode(child, currentPath));
+                    }
+                });
+
+                return result;
+            }
+        });
+    </script>
+</body>
+
+</html>

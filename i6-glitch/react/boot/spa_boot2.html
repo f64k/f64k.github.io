@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Advanced Layout</title>
+    <!-- React и ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Material-UI -->
+    <script src="https://unpkg.com/@mui/material@5.11.10/umd/material-ui.production.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<body>
+    <div id="root"></div>
+
+    <script>
+        const { createElement, useState, useEffect, useCallback } = React;
+        const { 
+            Box, 
+            AppBar, 
+            Toolbar, 
+            IconButton, 
+            Typography, 
+            Drawer, 
+            CssBaseline,
+            styled
+        } = MaterialUI;
+
+        const defaultConfig = {
+            leftPanel: { width: 240, open: true },
+            rightPanel: { width: 300, open: true },
+            header: 'My App',
+            footer: '© 2023'
+        };
+
+        const ResizableBox = styled('div')({
+            position: 'relative',
+            '&:hover .resize-handle': {
+                background: '#2196f3'
+            }
+        });
+
+        const ResizeHandle = styled('div')({
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            width: '4px',
+            height: '100%',
+            cursor: 'col-resize',
+            zIndex: 100,
+            '&:active': {
+                background: '#2196f3'
+            }
+        });
+
+        function App() {
+            const [config, setConfig] = useState(() => {
+                const saved = localStorage.getItem('layout-config');
+                return saved ? JSON.parse(saved) : defaultConfig;
+            });
+
+            const [isDragging, setIsDragging] = useState(false);
+            const [currentPanel, setCurrentPanel] = useState(null);
+
+            useEffect(() => {
+                localStorage.setItem('layout-config', JSON.stringify(config));
+            }, [config]);
+
+            const handleMouseDown = (panel) => (e) => {
+                setIsDragging(true);
+                setCurrentPanel(panel);
+                document.addEventListener('mousemove', handleMouseMove);
+                document.addEventListener('mouseup', handleMouseUp);
+            };
+
+            const handleMouseMove = useCallback((e) => {
+                if (!isDragging || !currentPanel) return;
+                
+                setConfig(prev => {
+                    const newWidth = Math.max(100, Math.min(500, 
+                        currentPanel === 'left' 
+                            ? e.clientX 
+                            : document.body.clientWidth - e.clientX
+                    ));
+                    
+                    return {
+                        ...prev,
+                        [`${currentPanel}Panel`]: {
+                            ...prev[`${currentPanel}Panel`],
+                            width: newWidth
+                        }
+                    };
+                });
+            }, [isDragging, currentPanel]);
+
+            const handleMouseUp = () => {
+                setIsDragging(false);
+                setCurrentPanel(null);
+                document.removeEventListener('mousemove', handleMouseMove);
+                document.removeEventListener('mouseup', handleMouseUp);
+            };
+
+            const togglePanel = (panel) => () => {
+                setConfig(prev => ({
+                    ...prev,
+                    [panel]: { ...prev[panel], open: !prev[panel].open }
+                }));
+            };
+
+            return createElement(Box, { sx: { display: 'flex', minHeight: '100vh' } },
+                createElement(CssBaseline),
+                
+                // Header
+                createElement(AppBar, { position: 'fixed' },
+                    createElement(Toolbar, {},
+                        createElement(IconButton, {
+                            edge: 'start',
+                            color: 'inherit',
+                            onClick: togglePanel('leftPanel')
+                        }, '☰'),
+                        createElement(Typography, 
+                            { variant: 'h6', sx: { flexGrow: 1 } },
+                            config.header
+                        ),
+                        createElement(IconButton, {
+                            edge: 'end',
+                            color: 'inherit',
+                            onClick: togglePanel('rightPanel')
+                        }, '⚙️')
+                    )
+                ),
+
+                // Left Panel
+                createElement(Drawer, {
+                    variant: 'persistent',
+                    open: config.leftPanel.open,
+                    sx: { 
+                        width: config.leftPanel.width,
+                        flexShrink: 0,
+                        '& .MuiDrawer-paper': { 
+                            width: config.leftPanel.width,
+                            boxSizing: 'border-box'
+                        }
+                    }
+                },
+                    createElement(ResizableBox, { sx: { height: '100%' } },
+                        createElement(Box, { sx: { p: 2 } },
+                            'Left Panel Content'
+                        ),
+                        createElement(ResizeHandle, {
+                            className: 'resize-handle',
+                            onMouseDown: handleMouseDown('left')
+                        })
+                    )
+                ),
+
+                // Main Content
+                createElement(Box, {
+                    component: 'main',
+                    sx: { 
+                        flexGrow: 1,
+                        p: 3,
+                        marginTop: '64px',
+                        marginLeft: config.leftPanel.open ? `${config.leftPanel.width}px` : 0,
+                        marginRight: config.rightPanel.open ? `${config.rightPanel.width}px` : 0,
+                        transition: 'margin 0.3s'
+                    }
+                }, 'Main Content'),
+
+                // Right Panel
+                createElement(Drawer, {
+                    variant: 'persistent',
+                    anchor: 'right',
+                    open: config.rightPanel.open,
+                    sx: {
+                        width: config.rightPanel.width,
+                        flexShrink: 0,
+                        '& .MuiDrawer-paper': { 
+                            width: config.rightPanel.width,
+                            boxSizing: 'border-box'
+                        }
+                    }
+                },
+                    createElement(ResizableBox, { sx: { height: '100%' } },
+                        createElement(ResizeHandle, {
+                            className: 'resize-handle',
+                            onMouseDown: handleMouseDown('right'),
+                            style: { left: 0, right: 'auto' }
+                        }),
+                        createElement(Box, { sx: { p: 2 } },
+                            'Right Panel Content'
+                        )
+                    )
+                ),
+
+                // Footer
+                createElement(Box, {
+                    component: 'footer',
+                    sx: {
+                        position: 'fixed',
+                        bottom: 0,
+                        width: '100%',
+                        bgcolor: 'background.paper',
+                        p: 2,
+                        textAlign: 'center'
+                    }
+                }, config.footer)
+            );
+        }
+
+        ReactDOM.createRoot(document.getElementById('root'))
+            .render(createElement(App));
+    </script>
+</body>
+</html>

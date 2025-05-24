@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:mlq="urn:customs.ru:Information:SQDocuments:MilitaryLicQuantity:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:MilitaryLicQuantity:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Перечень продукции военного назначения, выпуск которой осуществляется по согласованию с таможенным постом фактического контроля</xs:documentation>
+  </xs:annotation>
+  <xs:element name="MilitaryLicQuantity" type="mlq:MilitaryLicQuantityType">
+    <xs:annotation>
+      <xs:documentation>Перечень продукции военного назначения, выпуск которой осуществляется по согласованию с таможенным постом фактического контроля</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="MilitaryLicQuantityType">
+    <xs:annotation>
+      <xs:documentation>Перечень продукции военного назначения, выпуск которой осуществляется по согласованию с таможенным постом фактического контроля</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocType" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Тип документа: 1 - Перечень продукции военного назначения, заявленный в ДТ, 2 - Информация о ркзервировании в ТПФК , 3 - Информация о выпуске продукции военного назначения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocNumber" type="RUScat_ru:DocBaseV4Type">
+            <xs:annotation>
+              <xs:documentation>Номер и дата документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ActionEnd" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Срок действия</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Direction" type="clt_ru:CUCustomsProcedureType">
+            <xs:annotation>
+              <xs:documentation>Направление перемещения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CountryCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код страны отправителя / получателя</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CountryName" type="clt_ru:CountryNameType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Наименование страны отправителя / получателя</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DT" type="cat_ru:GTDIDType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Goods" type="mlq:GoodsType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Товары ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsPost" type="cat_ru:CustomsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Таможенный пост, который осуществляет учет количества продукции военного назначения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009404E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="GoodsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товаре</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Position" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Номер позиции товара в перечне </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsNumeric" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер декларируемого товара </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsName" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="4">
+        <xs:annotation>
+          <xs:documentation>Наименование товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DTQuantityDEI" type="cat_ru:SupplementaryQuantityType" minOccurs="0" maxOccurs="2">
+        <xs:annotation>
+          <xs:documentation>Количество в ДТ в единицах измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BalanceQuantityDEI" type="cat_ru:SupplementaryQuantityType" minOccurs="0" maxOccurs="2">
+        <xs:annotation>
+          <xs:documentation>Количество, допустимое к выпуску</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Comments" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Комментарии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DecisionCode" type="clt_ru:Code2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код решения в соответствии с классификатором решений,  принимаемых таможенными органами</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

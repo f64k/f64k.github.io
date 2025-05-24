@@ -1,0 +1,573 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:rapcrq="urn:customs.ru:Information:SQDocuments:ResultAPCasesRequest:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:ResultAPCasesRequest:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос. Результат рассмотрения дел об АП</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ResultAPCasesRequest" type="rapcrq:ResultAPCasesRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос. Результат рассмотрения дел об АП</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ResultAPCasesRequestType">
+    <xs:annotation>
+      <xs:documentation>Результат рассмотрения дел об АП</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="RequestID" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Уникальный идентификатор документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SenderID" type="rapcrq:String15Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код отправителя </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SenderDepartmentCode" type="clt_ru:CodeVariable10Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код подразделения отправителя</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReceiverID" type="rapcrq:String15Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код получателя</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReceiverDepartmentCode" type="clt_ru:CodeVariable10Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код подразделения получателя</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:element name="ResultAPCases" type="rapcrq:ResultAPCasesType" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>Результат рассмотрения дел об АП</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="ConfirmResultAPCases" type="rapcrq:ConfirmResultAPCasesType" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>Квитанция об обработке полученных результатов рассмотрения дел об АП
+                                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="RequestConfirmResultAPCases" type="rapcrq:RequestConfirmResultAPCasesType" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>Запрос квитанции об обработке полученных результатов рассмотрения дел об АП
+                                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009352E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ConfirmResultAPCasesType">
+    <xs:annotation>
+      <xs:documentation>Квитанция об обработке полученных результатов рассмотрения дел об АП</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ElementId" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор квитанции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DecisionDateCourt" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата квитанции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocNumber" type="rapcrq:String60Type">
+        <xs:annotation>
+          <xs:documentation>Номер исходящего документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CaseJudicialNumber" type="RUSclt_ru:Id25Type">
+        <xs:annotation>
+          <xs:documentation>Номер дела об АП в суде</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CaseJudicialUid" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>УИД  дела в суде</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProcessResult" type="rapcrq:DProcessResultType">
+        <xs:annotation>
+          <xs:documentation>Результат обработки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MessageText" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Cообщение о результатах обработки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CourtResultEssentionType">
+    <xs:annotation>
+      <xs:documentation>Результат рассмотрения дела в суде</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CodeCourtResult" type="clt_ru:CodeVariable8Type">
+        <xs:annotation>
+          <xs:documentation>Код рассмотрения дела в суде</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NameCourtResult" type="RUSclt_ru:FreeText1000Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание результата рассмотрения дела в суде</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CodeCourtResultReason" type="clt_ru:CodeVariable8Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код уточнения результата рассмотрения дела в суде</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NameCourtResultReason" type="RUSclt_ru:FreeText1000Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание уточнения результата рассмотрения дела в суде</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CaseResultCourt" type="RUSclt_ru:FreeText4000Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Резолютивная часть решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="IPType">
+    <xs:annotation>
+      <xs:documentation>Сведения о субъекте правонарушения</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:PersonBaseType">
+        <xs:sequence>
+          <xs:element name="INN" type="clt_ru:INNIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>ИНН</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="MeasurePunishmentAPType">
+    <xs:annotation>
+      <xs:documentation>Измерения административного наказания</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CodeMeasurePunishment" type="clt_ru:CodeVariable2Type">
+        <xs:annotation>
+          <xs:documentation>Код измерения административного наказания</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NameMeasurePunishment" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование измерения административного наказания</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ValueMeasurePunishment" type="clt_ru:CodeVariable20Type">
+        <xs:annotation>
+          <xs:documentation>Значение измерения административного наказания</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="NpaActType">
+    <xs:annotation>
+      <xs:documentation>Информация об НПА</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="NPAType" type="rapcrq:DNpaSdvsType">
+        <xs:annotation>
+          <xs:documentation>Тип нормативного правового акта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NpaCaption" type="clt_ru:Text150Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование нормативного правового акта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NpaArticleParts" type="rapcrq:NpaArticlePartsType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Структурная единица нормативно правового акта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="NpaArticlePartsType">
+    <xs:annotation>
+      <xs:documentation>Структурная единица НПА</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="NpaArticle" type="clt_ru:CodeVariable10Type">
+        <xs:annotation>
+          <xs:documentation>Номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NpaArticleVariety" type="rapcrq:DNpaArticleType">
+        <xs:annotation>
+          <xs:documentation>Вид структурной единицы НПА</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IsMain" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Основная структурная единица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PunishmentAPType">
+    <xs:annotation>
+      <xs:documentation>Административное наказание</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CodeTypePunishment" type="clt_ru:CodeVariable2Type">
+        <xs:annotation>
+          <xs:documentation>Код вида административного наказания</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NameTypePunishment" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование вида административного наказания</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeasurePunishmentAP" type="rapcrq:MeasurePunishmentAPType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Измерения административного наказания</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TypePunishment" type="rapcrq:DPunishmentSdvsType">
+        <xs:annotation>
+          <xs:documentation>Тип наказания</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RequestConfirmResultAPCasesType">
+    <xs:annotation>
+      <xs:documentation>Запрос квитанции об обработке полученных результатов рассмотрения дел об АП</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocNumber" type="rapcrq:String60Type">
+        <xs:annotation>
+          <xs:documentation>Номер исходящего документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CaseJudicialNumber" type="RUSclt_ru:Id25Type">
+        <xs:annotation>
+          <xs:documentation>Номер дела об АП в суде</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CaseJudicialUid" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>УИД  дела в суде</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ResultAPCasesType">
+    <xs:annotation>
+      <xs:documentation>Результат рассмотрения дел об АП</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ProtNumberAppl" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер протокола об АП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="UinCodeAppl" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>УИН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:choice>
+        <xs:element name="OffencePerson" type="rapcrq:IPType" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>Сведения о субъекте правонарушения  - физическом лице</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="OffenceIP" type="rapcrq:IPType" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>Сведения о субъекте правонарушения  - индивидуальном предпринимателе</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="OffenceUL" type="cat_ru:OrganizationBaseType">
+          <xs:annotation>
+            <xs:documentation>Сведения о субъекте правонарушения  - юридическом лице</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+      <xs:element name="DocNumber" type="clt_ru:Text150Type">
+        <xs:annotation>
+          <xs:documentation>Номер исходящего документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CaseJudicialNumber" type="RUSclt_ru:Id25Type">
+        <xs:annotation>
+          <xs:documentation>Номер дела об АП в суде</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CaseJudicialUid" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>УИД  дела в суде</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DecisionDateJudicial" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата вынесения постановления об АП в суде</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AktDateJudicial" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата вступления постановления в силу</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CodeJudicial" type="clt_ru:CodeVariable8Type">
+        <xs:annotation>
+          <xs:documentation>Код суда</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NameJudicial" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Наименование суда</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MagistrateFio" type="cat_ru:PersonBaseType">
+        <xs:annotation>
+          <xs:documentation>Судья, которым вынесено постановление</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CourtResultEssention" type="rapcrq:CourtResultEssentionType">
+        <xs:annotation>
+          <xs:documentation>Результат рассмотрения дела в суде</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KoAPArticle" type="rapcrq:NpaActType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>НПА</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PunishmentAP" type="rapcrq:PunishmentAPType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Административное наказание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные простые прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="String15Type">
+    <xs:annotation>
+      <xs:documentation>Строка длиной до 15 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="15" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="String60Type">
+    <xs:annotation>
+      <xs:documentation>Строка длиной до 60 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="60" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DNpaSdvsType">
+    <xs:annotation>
+      <xs:documentation>Тип НПА</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:maxLength value="2" />
+      <xs:enumeration value="1">
+        <xs:annotation>
+          <xs:documentation>Кодекс Российской Федерации об административных правонарушениях</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="2">
+        <xs:annotation>
+          <xs:documentation>Уголовный кодекс Российской Федерации</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="3">
+        <xs:annotation>
+          <xs:documentation>Нормативный правовой акт субъекта Российской Федерации</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="4">
+        <xs:annotation>
+          <xs:documentation>Федеральный закон "Об исполнительном производстве"</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="5">
+        <xs:annotation>
+          <xs:documentation>Федеральный закон "О судебных приставах"</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="6">
+        <xs:annotation>
+          <xs:documentation>Другие федеральные законы</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="7">
+        <xs:annotation>
+          <xs:documentation>Гражданский процессуальный кодекс Российской Федерации</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="8">
+        <xs:annotation>
+          <xs:documentation>Арбитражный процессуальный кодекс Российской Федерации</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="9">
+        <xs:annotation>
+          <xs:documentation>Кодекс административного судопроизводства Российской Федерации</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="10">
+        <xs:annotation>
+          <xs:documentation>Уголовно-процессуальный кодекс Российской Федерации</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="11">
+        <xs:annotation>
+          <xs:documentation>Трудовой кодекс Российской Федерации</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="12">
+        <xs:annotation>
+          <xs:documentation>Семейный кодекс Российской Федерации</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="13">
+        <xs:annotation>
+          <xs:documentation>Налоговый кодекс Российской Федерации</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="14">
+        <xs:annotation>
+          <xs:documentation>Бюджетный кодекс Российской Федерации</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DPunishmentSdvsType">
+    <xs:annotation>
+      <xs:documentation>Тип наказания</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:maxLength value="1" />
+      <xs:enumeration value="1">
+        <xs:annotation>
+          <xs:documentation>Основное</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="2">
+        <xs:annotation>
+          <xs:documentation>Дополнительное</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DNpaArticleType">
+    <xs:annotation>
+      <xs:documentation>Вид структурной единицы НПА</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:maxLength value="2" />
+      <xs:enumeration value="1">
+        <xs:annotation>
+          <xs:documentation>Раздел</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="2">
+        <xs:annotation>
+          <xs:documentation>Глава</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="3">
+        <xs:annotation>
+          <xs:documentation>Статья</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="4">
+        <xs:annotation>
+          <xs:documentation>Параграф</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="5">
+        <xs:annotation>
+          <xs:documentation>Пункт</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="6">
+        <xs:annotation>
+          <xs:documentation>Подпункт</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="7">
+        <xs:annotation>
+          <xs:documentation>Часть</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="8">
+        <xs:annotation>
+          <xs:documentation>Абзац</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="9">
+        <xs:annotation>
+          <xs:documentation>Приложение</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="10">
+        <xs:annotation>
+          <xs:documentation>Примечание</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DProcessResultType">
+    <xs:annotation>
+      <xs:documentation>Результат обработки</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:maxLength value="1" />
+      <xs:enumeration value="1">
+        <xs:annotation>
+          <xs:documentation>Успешно принято</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="2">
+        <xs:annotation>
+          <xs:documentation>Ошибка формато-логического контроля</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="3">
+        <xs:annotation>
+          <xs:documentation>Не получено дело с указанным номером</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="4">
+        <xs:annotation>
+          <xs:documentation>Дубликат</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

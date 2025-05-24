@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:erqst="urn:customs.ru:Information:CustomsDocuments:EBVRRequest:5.24.0" xmlns:cltESAD_cu="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:EBVRRequest:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" schemaLocation="CUESADCommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Информация КПС "Постконтроль" для проведения поиска в ЕБВР</xs:documentation>
+  </xs:annotation>
+  <xs:element name="EBVRRequest" type="erqst:EBVRRequestType">
+    <xs:annotation>
+      <xs:documentation>Информация КПС "Постконтроль" для проведения поиска в ЕБВР</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="EBVRRequestType">
+    <xs:annotation>
+      <xs:documentation>Тип, описывающий запрос в ЕБВР</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DateRequest" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата формирования запроса в ЕБВР</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RequestInfo" type="erqst:RequestInfoType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Параметры поиска по товару.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006218E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="RequestInfoType">
+    <xs:annotation>
+      <xs:documentation>Тип, описывающий параметры поиска в ЕБВР</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TNVEDCode" type="clt_ru:CUGoodsNomenclatuerCodeType">
+        <xs:annotation>
+          <xs:documentation>Код ТН ВЭД ЕАЭС товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AddTNVEDCode" type="clt_ru:GoodsNomenclatuerAddCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Заявленный код товара в соответствии с Классификатором дополнительной таможенной информации для РФ и РК</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OriginCountryCode" type="clt_ru:CountryA2CodeType">
+        <xs:annotation>
+          <xs:documentation>Код страны происхождения товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INN" type="clt_ru:INNIDType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>ИНН налогоплательщика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsInformation" type="erqst:GoodsInformationType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация о товаре</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GoodsInformationType">
+    <xs:annotation>
+      <xs:documentation>Тип, описывающий характеристики товара</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Manufacturer" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Производитель товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Marking" type="cltESAD_cu:GoodsArticulType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Артикул товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Model" type="cltESAD_cu:GoodsArticulType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Модель товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TradeMark" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Товарный знак</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

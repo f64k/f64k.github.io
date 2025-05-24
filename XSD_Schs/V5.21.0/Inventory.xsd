@@ -1,0 +1,318 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:ivt="urn:customs.ru:Information:CustomsDocuments:Inventory:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:Inventory:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Опись документов.</xs:documentation>
+  </xs:annotation>
+  <xs:element name="Inventory" type="ivt:InventoryType" />
+  <xs:complexType name="InventoryType">
+    <xs:annotation>
+      <xs:documentation>Опись документов</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="NumberOfInvent" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Количество описей к ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RefPackageDocID" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Ссылка на идентификатор документа в пакете</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GTDDocumentID" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Уникальный идентификатор ДТ / Уникальный идентификатор пакета информации </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GTDPerson" type="ivt:GtdPersonType">
+            <xs:annotation>
+              <xs:documentation>Сведения о лице, подающем документ(ы)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="InventoryInstance" type="ivt:InventoryInstanceType">
+            <xs:annotation>
+              <xs:documentation>Экземпляр описи</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GTDNumber" type="cat_ru:GTDIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Справочный номер ДТ Заполняется при  предоставлении документов после регистрации ДТ / УИН</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PrevMPO" type="ivt:MPOPrevType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Предшествующие МПО в адрес лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SumCheck" type="clt_ru:AmountType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сумма уплаты по чеку</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CheckCurrency" type="clt_ru:CurrencyA3CodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код валюты чека</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentIDType" use="required" fixed="1006003E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AddControlDescriptionType">
+    <xs:annotation>
+      <xs:documentation>Описание решения о проведении дополнительной проверки, по которому предоставляется документ.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AddControlNumber" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер решения о проведении дополнительной проверки </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AddControlDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата решения о проведении дополнительной проверки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GoodsPresentDateType">
+    <xs:annotation>
+      <xs:documentation>Дата представления товарной партии</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PresentDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата представления товара/товарной партии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GtdPersonType">
+    <xs:annotation>
+      <xs:documentation>Сведения о лице, подающем документ(ы)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:OrganizationBaseType">
+        <xs:sequence>
+          <xs:element name="BranchOrganizationName" type="clt_ru:NameType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Наименование обособленного подразделения.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="InventDocumentType">
+    <xs:annotation>
+      <xs:documentation>Документ из описи</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="InvDocCode" type="clt_ru:CustomsDocumentCodeType">
+        <xs:annotation>
+          <xs:documentation>Код вида представляемого документа. Заполняется согласно Классификатору видов документов, используемых при заявлении сведений в графе 44 ДТ. </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InvDocName" type="clt_ru:DocumentNameType">
+        <xs:annotation>
+          <xs:documentation>Вид документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InvDocNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InvDocDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InvDocLists" type="clt_ru:SheetNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество листов в документе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InvDocCopies" type="clt_ru:Count3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество экземпляров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Note" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Примечание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ArchID" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор электронного архива декларанта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ArchDocID" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор документа в электронном архиве декларанта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InventDocumentID" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор документа, представленного в описи. Заполняется при использовании в системах электронного декларирования в случае наличия на момент составления описи указанного документа в электронном виде.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InventLineID" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор строки в описи. GUID. Обязателен для заполнения при использовании в системах электронного декларирования.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentFormSign" type="clt_ru:DigitalIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак формы представления документа. 0 - в электронной форме, 1 - в виде бумажного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Reason" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Причины, по которым невозможно предоставить документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SerialNumber" type="clt_ru:Count3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер ЭПДТ в последовательности ЭПДТ, подаваемых на одну ЭВДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SerialNumberSign" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак того, что данный документ (ЭПДТ) является последним в последовательности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RequestDescription" type="ivt:RequestDescriptionType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание запроса, по которому предоставляется документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsPresentDate" type="ivt:GoodsPresentDateType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата представления товарной партии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PrevGTDNumber" type="cat_ru:GTDIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер предшествующей ДТ, к которой ранее был приложен документ.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AddControlDescription" type="ivt:AddControlDescriptionType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание решения о проведении дополнительной проверки, по которому предоставляется документ.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PI_RegID" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор предварительной информации </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InventoryInstancePersonType">
+    <xs:annotation>
+      <xs:documentation>Сведения о лице, составившем опись</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:PersonBaseType">
+        <xs:sequence>
+          <xs:element name="IdentityCard" type="RUScat_ru:RUIdentityCardType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Документ, удостоверяющий личность.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AuthoritesDocument" type="cat_ru:AuthoritesDocumentType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Документ, подтверждающий полномочия. </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="InventoryInstanceType">
+    <xs:annotation>
+      <xs:documentation>Экземпляр описи</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="InstanceNumber" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер описи по ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InventoryInstanceDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата предоставления описи.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InventoryInstancePerson" type="ivt:InventoryInstancePersonType">
+        <xs:annotation>
+          <xs:documentation>Сведения о лице, составившем опись</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InventDocument" type="ivt:InventDocumentType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Документ из описи</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RequestDescriptionType">
+    <xs:annotation>
+      <xs:documentation>Описание запроса, по которому предоставляется документ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RequestNumber" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер запроса по ДТ о предоставлении дополнительных документов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RequestDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата формирования запроса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MPOPrevType">
+    <xs:annotation>
+      <xs:documentation>Предшествующие МПО в адрес лица</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="MPONumber" type="clt_ru:Code13Type">
+        <xs:annotation>
+          <xs:documentation>Номер МПО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Cost" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Стоимость МПО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CurrencyCode" type="clt_ru:CurrencyA3CodeType">
+        <xs:annotation>
+          <xs:documentation>Код валюты стоимости</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LimitWeight" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Вес МПО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

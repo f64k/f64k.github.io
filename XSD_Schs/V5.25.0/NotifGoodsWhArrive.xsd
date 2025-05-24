@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:catESAD_cu="urn:customs.ru:CUESADCommonAggregateTypesCust:5.24.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:ngwa="urn:customs.ru:Information:CustomsDocuments:NotifGoodsWhArrive:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:NotifGoodsWhArrive:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CUESADCommonAggregateTypesCust:5.24.0" schemaLocation="CUESADCommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Уведомление о поступлении товаров на СВХ/ прибытии товаров в ПП</xs:documentation>
+  </xs:annotation>
+  <xs:element name="NotifGoodsWhArrive" type="ngwa:NotifGoodsWhArriveType">
+    <xs:annotation>
+      <xs:documentation>Уведомление о поступлении товаров на СВХ/ прибытии товаров в ПП</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="NotifGoodsWhArriveType">
+    <xs:annotation>
+      <xs:documentation>Уведомление о поступлении товаров на СВХ/ прибытии товаров в ПП</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocType" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Тип документа: 0 - Уведомление о поступлении товаров на СВХ, 
+1 -Прибытие товаров в ПП</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NotifDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата формирования уведомления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NotifTime" type="clt_ru:TimeCustType">
+            <xs:annotation>
+              <xs:documentation>Время формирования уведомления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Customs" type="cat_ru:CustomsType">
+            <xs:annotation>
+              <xs:documentation>Код и наименование таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsPerson" type="cat_ru:CustomsPersonType">
+            <xs:annotation>
+              <xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GTDID" type="cat_ru:GTDIDType">
+            <xs:annotation>
+              <xs:documentation>Номер ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsLocation" type="ngwa:GoodsLocationType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Местонахождение товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006131E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="GoodsLocationType">
+    <xs:annotation>
+      <xs:documentation>Местонахождение товара</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsOffice" type="clt_ru:CustomsCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsCountryCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код страны таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:choice minOccurs="0">
+        <xs:element name="GoodsLocationWarehouse" type="ngwa:GoodsLocationWarehouseType">
+          <xs:annotation>
+            <xs:documentation>Сведения о местонахождении товаров: таможенный склад, склад временного хранения, свободный склад, склад получателя, иные</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="CUGoodsLocationPlace" type="catESAD_cu:CUGoodsLocationPlaceType">
+          <xs:annotation>
+            <xs:documentation>Сведения о местонахождении товара.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="CUTransport" type="catESAD_cu:CUTransportType">
+          <xs:annotation>
+            <xs:documentation>Сведения о местонахождении товаров - транспортное средство</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+      <xs:element name="Address" type="cat_ru:AddressType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Точный адрес местонахождения товаров.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GoodsLocationWarehouseType">
+    <xs:annotation>
+      <xs:documentation>Сведения о местонахождении товаров: таможенный склад, склад временного хранения, свободный склад, склад получателя, иные</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="DocumentModeCode" type="clt_ru:LetterIndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Тип документа:1-Лицензия 2-Свидетельство</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

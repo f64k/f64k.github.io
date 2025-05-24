@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:sem_cat="urn:customs.ru:Information:SEMDocuments:SEMCommonAggregateTypes:5.21.0" xmlns:kt_req="urn:customs.ru:Information:SEMDocuments:SEM_KTRequest:5.21.0" targetNamespace="urn:customs.ru:Information:SEMDocuments:SEM_KTRequest:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:SEMDocuments:SEMCommonAggregateTypes:5.21.0" schemaLocation="SEMCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сервис КТ - входные данные.</xs:documentation>
+  </xs:annotation>
+  <xs:element name="SEM_KTRequest" type="kt_req:SEM_KTRequestType" />
+  <xs:complexType name="SEM_KTRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос по наличию категорий товаров включенных во внутрисистемный список товаров, запрещенных или ограниченных к перемещению через таможенную границу РФ</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="sem_cat:BaseServiceRequestType">
+        <xs:sequence>
+          <xs:element name="Goods" type="sem_cat:GoodsType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Информация о товарах</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1030001E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

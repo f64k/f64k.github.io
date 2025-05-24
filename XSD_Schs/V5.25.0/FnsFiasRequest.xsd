@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:fias_req="urn:customs.ru:Information:SQDocuments:FnsFiasRequest:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:FnsFiasRequest:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос на предоставление адресных сведений, содержащихся в Федеральной информационной системе (ФИАС)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="FnsFiasRequest" type="fias_req:FnsFiasRequestType" />
+  <xs:complexType name="FnsFiasRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос на предоставление адресных сведений, содержащихся в Федеральной информационной системе (ФИАС)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="ULInfo" type="fias_req:UlInfoType">
+            <xs:annotation>
+              <xs:documentation>Сведения о юридическом лице - органе государственной власти, осуществляющем запрос</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:element name="StrictSearch" type="fias_req:StrictSearchType">
+              <xs:annotation>
+                <xs:documentation>Запрос сведений из ФИАС способом строгого поиска</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="ExpandedSearch" type="fias_req:ExpandedSearchType">
+              <xs:annotation>
+                <xs:documentation>Запрос сведений из ФИАС способом расширенного поиска</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009166E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="UlInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о юридическом лице - органе государственной власти, осуществляющем запрос</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OKOGU" type="clt_ru:Code5Type">
+        <xs:annotation>
+          <xs:documentation>Код органа государственной власти по  общероссийскому классификатору ОКОГУ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ULName" type="clt_ru:FreeText500Type" maxOccurs="2">
+        <xs:annotation>
+          <xs:documentation>Наименование юридического лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INNUL" type="clt_ru:INNIDType">
+        <xs:annotation>
+          <xs:documentation>ИНН юридического лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OGRN" type="clt_ru:OGRNIDType">
+        <xs:annotation>
+          <xs:documentation>Основной государственный регистрационный номер юридического лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="StrictSearchType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений из ФИАС способом строгого поиска</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Request" type="fias_req:StrictSearchRequestType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Запрос</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="StrictSearchRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос для строгого поиска</xs:documentation>
+    </xs:annotation>
+    <xs:choice>
+      <xs:element name="AddressRF" type="clt_ru:FreeText500Type" maxOccurs="2">
+        <xs:annotation>
+          <xs:documentation>Адресные сведения в формате 9 запятых</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FiasId" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор адресного объекта ФИАС(GUID)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="ExpandedSearchType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений из ФИАС способом расширенного поиска</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Request" type="fias_req:ExpandedSearchRequestType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Запрос</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ExpandedSearchRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос для расширенного поиска</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SubjectRF" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Субъект Российской Федерации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="District" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Округ - административно-территориальное образование с особым статусом внутри субъекта РФ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:choice minOccurs="0">
+        <xs:element name="AdminDistrict" type="fias_req:Text60Type">
+          <xs:annotation>
+            <xs:documentation>Административный район в составе субъекта РФ или округа</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:sequence>
+          <xs:element name="MunicipalityDistrict" type="clt_ru:Text50Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Муниципальный район или городской округ, внутригородская</xs:documentation>
+              <xs:documentation>территория городов федерального значения Москвы и Санкт-Петербурга</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MunicipalityCity" type="clt_ru:Text50Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сельское или городское поселение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:choice>
+      <xs:element name="City" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Города, населённые пункты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="UrbanDistrict" type="fias_req:Text60Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Внутригородской район, округ города республиканского, краевого, областного подчинения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Locality" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Населённые пункты регионального, окружного, районного или городского подчинения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Street" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Элементы планировочной структуры или улично-дорожной сети городов, населенных пунктов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OKTMO" type="clt_ru:Code8Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код ОКТМО муниципального образования по принадлежности  объекта адресации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OKATO" type="clt_ru:OKATOCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код по ОКАТО административно-территориального образования объекта адресации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AddressElements" type="fias_req:AddressElementsType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Дополнительные адресные элементы, номерная часть адреса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocAddress" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Адрес по  документу-источнике адресной информации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Location" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="2">
+        <xs:annotation>
+          <xs:documentation>Текстовое описание местоположения объекта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AddressElementsType">
+    <xs:annotation>
+      <xs:documentation>Дополнительные адресные элементы, номерная часть адреса</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Type" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Тип адресного элемента</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Value" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Значение адресного  элемента</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NumberType" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Тип адресуемого объекта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NumberValue" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номера адресуемого объекта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="Text60Type">
+    <xs:annotation>
+      <xs:documentation>Текстовое описание. До 60 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="60" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

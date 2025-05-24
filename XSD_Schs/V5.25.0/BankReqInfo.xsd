@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:BnkReqInf="urn:customs.ru:Information:GuaranteeDocuments:BankReqInfo:5.24.0" targetNamespace="urn:customs.ru:Information:GuaranteeDocuments:BankReqInfo:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос на получение сведений о кредитной организации/Запрос на получение сведений о принятых банковских гарантиях/Запрос о наличии обеспечения уплаты таможенных пошлин, налогов у участника ВЭД</xs:documentation>
+  </xs:annotation>
+  <xs:element name="BankReqInfo" type="BnkReqInf:BankReqInfoType">
+    <xs:annotation>
+      <xs:documentation>Запрос на получение сведений о кредитной организации/Запрос на получение сведений о принятых банковских гарантиях</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="BankReqInfoType">
+    <xs:annotation>
+      <xs:documentation>Запрос на получение сведений о кредитной организации/Запрос на получение сведений о принятых банковских гарантиях/Запрос о наличии обеспечения уплаты таможенных пошлин, налогов у участника ВЭД </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocumentSign" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Вид запроса: 0 - Запрос на получение сведений о кредитной организации;  1 - Запрос на получение сведений о принятых банковских гарантиях;  2 - Запрос о наличии обеспечения уплаты таможенных пошлин, налогов у участника ВЭД</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BankInfo" type="BnkReqInf:BankInformationType">
+            <xs:annotation>
+              <xs:documentation>Сведения о кредитной организации/об участнике ВЭД</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PeriodAcceptedGuarantee" type="BnkReqInf:PeriodAcceptedGuaranteeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Период, в который приняты гарантии</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1050010E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="BankInformationType">
+    <xs:annotation>
+      <xs:documentation>Сведения о банке</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="BankINN" type="clt_ru:INNIDType">
+        <xs:annotation>
+          <xs:documentation>ИНН банка/участника ВЭД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BankName" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сокращенное наименование банка (филиала банка), учреждения Банка России</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PeriodAcceptedGuaranteeType">
+    <xs:annotation>
+      <xs:documentation>Период, в который приняты гарантии</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="BeginDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата начала периода</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EndDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата окончания периода</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Сведения из системы ФГИАС ЕСУГИ Росимущества Передача  Росимуществом скан-образа акта приема-передачи и фото Имущества/Товаров (WhoSendsDocs = 1)
+Сведения из системы ЕАИС таможенных органов Передача  ФТС России  скан-образа акта приема-передачи и фото Имущества/Товаров (WhoSendsDocs = 2)
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" xmlns:ri_tsa="urn:customs.ru:Information:SQDocuments:RosImTransferScanAct:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:RosImTransferScanAct:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Передача Росимуществом или ФТС России скан-образа акта приема-передачи и фото Имущества/Товаров</xs:documentation>
+  </xs:annotation>
+  <xs:element name="RosImTransferScanAct" type="ri_tsa:RosImTransferScanActType">
+    <xs:annotation>
+      <xs:documentation>Передача Росимуществом или ФТС России скан-образа акта приема-передачи и фото Имущества/Товаров</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RosImTransferScanActType">
+    <xs:annotation>
+      <xs:documentation>Передача Росимуществом или ФТС России скан-образа акта приема-передачи и фото Имущества/Товаров</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="WhoSendsDocs" type="clt_ru:LetterIndicatorType">
+            <xs:annotation>
+              <xs:documentation>Кто передает: 1 - Росимущество; 2 - ФТС России</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NotifPIBIRegNumber" type="RUSclt_ru:Text100Type">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер ПИБИ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NumberCaseAcc" type="RUSclt_ru:Text100Type">
+            <xs:annotation>
+              <xs:documentation>Номер дела учета Имущества / Товара в таможенном органе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ActDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата акта приема-передачи </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ActNumber" type="RUSclt_ru:Text100Type">
+            <xs:annotation>
+              <xs:documentation>Номер акта приема-передачи Имущества / Товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AttachmentInfo" type="ri_tsa:AttachmentInfoType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Электронный образ (копии) сканированного акта приема-передачи и фото Имущества/Товара, прикрепленных к документу "Акт приема-передачи"</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009247E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AttachmentInfoType">
+    <xs:annotation>
+      <xs:documentation>Электронный образ (копии) сканированного акта приема-передачи и фото Имущества/Товара, прикрепленных к документу "Акт приема-передачи"</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AttachmentLink" type="clt_ru:Text3MB">
+        <xs:annotation>
+          <xs:documentation>Ссылка на приложенный документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AttachmentDescr" type="clt_ru:Text3MB">
+        <xs:annotation>
+          <xs:documentation>Описание приложенного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Письмо ГУТКПВТ от 10.12.2018 № 23-20/76951 -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:adt_cat="urn:customs.ru:Information:CustomsAuditDocuments:AuditCommonAggregateTypesCust:5.21.0" xmlns:oaac="urn:customs.ru:Information:CustomsAuditDocuments:ObjectionToActAuditCameral:5.21.0" targetNamespace="urn:customs.ru:Information:CustomsAuditDocuments:ObjectionToActAuditCameral:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:CustomsAuditDocuments:AuditCommonAggregateTypesCust:5.21.0" schemaLocation="AuditCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Возражения проверяемого лица на акт таможенной проверки/информация об отсутствии возражений проверяемого лица на акт таможенной проверки</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ObjectionToActAuditCameral" type="oaac:ObjectionToActAuditCameralType">
+    <xs:annotation>
+      <xs:documentation>Возражения проверяемого лица на акт таможенной проверки/информация об отсутствии возражений проверяемого лица на акт таможенной проверки</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ObjectionToActAuditCameralType">
+    <xs:annotation>
+      <xs:documentation>Возражения проверяемого лица на акт таможенной проверки/информация об отсутствии возражений проверяемого лица на акт таможенной проверки</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocKind" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Вид документа: 1-Возражения проверяемого лица на акт таможенной проверки; 2-Информация об отсутствии возражений проверяемого лица 
+на акт таможенной проверки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocPlace" type="clt_ru:NameType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Место составления документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ObjectionNumber" type="adt_cat:NumberType">
+            <xs:annotation>
+              <xs:documentation>Дата и номер документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IdentKindAudit" type="clt_ru:LetterIndicatorType">
+            <xs:annotation>
+              <xs:documentation>Вид таможенной проверки: 1-выездная; 2-камеральная</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ActNumber" type="adt_cat:NumberType">
+            <xs:annotation>
+              <xs:documentation>Номер акта таможенной проверки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AuditOrganization" type="oaac:AuditOrganizationType">
+            <xs:annotation>
+              <xs:documentation>Сведения об юридическом/физическом лице, в отношении которого проведена проверка</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Objections" type="oaac:ObjectionsType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Возражения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006925E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AuditOrganizationType">
+    <xs:annotation>
+      <xs:documentation>Сведения об юридическом/физическом лице, в отношении которого проведена проверка</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="adt_cat:AuditOrganizationType">
+        <xs:sequence>
+          <xs:element name="ReasonDisparityInfo" type="oaac:ReasonDisparityInfoType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Причина несоответствия сведений о проверяемом лице сведениям из ЕГРЮЛ/ЕГРИП</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ReasonDisparityInfoType">
+    <xs:annotation>
+      <xs:documentation>Причина несоответствия сведений о проверяемом лице сведениям из ЕГРЮЛ/ЕГРИП</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ReasonDisparityText" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Причина несоответствия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentBase" type="cat_ru:DocumentBaseType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Документ-основание, подтверждающий правомерность внесенных изменений</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OtherInfo" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Другие сведения, являющиеся основанием несоответсвия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ObjectionsType">
+    <xs:annotation>
+      <xs:documentation>Возражения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="NameStructuralUnitAct" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Наименование структурной единицы акта таможенной проверки, в отношении положений которой проверяемым лицом представлены возражения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegulationAct" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Положение акта таможенной проверки, в отношении которого проверяемым лицом представлены возражения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ObjectionsToAct" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Возражение по акту таможенной проверки  проверяемого лица, обоснование</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

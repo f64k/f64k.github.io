@@ -1,0 +1,324 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:eact="urn:customs.ru:Information:CustomsDocuments:Energy_Act:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:Energy_Act:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Акт перемещения энергоресурсов</xs:documentation>
+  </xs:annotation>
+  <xs:element name="Energy_Act" type="eact:Energy_ActType">
+    <xs:annotation>
+      <xs:documentation>Акт перемещения энергоресурсов</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="Energy_ActType">
+    <xs:annotation>
+      <xs:documentation>Акт перемещения энергоресурсов</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:choice>
+            <xs:element name="Electric_Power_Act" type="eact:Electric_Power_ActType" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>Акты учета экспорта электричества</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="Oil_Act" type="eact:Oil_ActType" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>Акты учета экспорта нефти</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="Gas_Act" type="eact:Gas_ActType" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>Акты учета экспорта газа</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="Oil_Product_Act" type="eact:Oil_Product_ActType" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>Акты учета экспорта нефтепродуктов</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006286E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CountryType">
+    <xs:annotation>
+      <xs:documentation>Сведения о стране</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Code" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код страны</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Name" type="clt_ru:CountryNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Краткое название страны</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Electric_Power_ActType">
+    <xs:annotation>
+      <xs:documentation>Акт учета экспорта электричества</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Current_Meter_Value" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Тек. показания - показания счетчика последнего дня текущего месяца</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Prev_Meter_Value" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Ист. показания - показания счетчика последнего дня предыдущего месяца</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Meter_Factor" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Коэффициент умножения счетчика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Meter_Number" type="clt_ru:Text40Type">
+        <xs:annotation>
+          <xs:documentation>Номер счетчика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Direction" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Прием/Отдача - направление движения электроэнергии (0 - Прием; 1 - Отдача)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Note" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Примечание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Power_Lines" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>ЛЭП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Kod_MTK" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код места таможенного контроля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Kod_RP" type="clt_ru:Text40Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код потребителя электроэнергии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Gas_ActType">
+    <xs:annotation>
+      <xs:documentation>Акты учета экспорта газа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Act_Date" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата акта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Country" type="eact:CountryType">
+        <xs:annotation>
+          <xs:documentation>Страна происхождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Direction" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Прием/Отдача - направление движения газа (0 - Прием; 1 - Отдача)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Is_Rus_Consumers" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Российские потребители (1- да; 0 - нет)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Metering_Thread_Number" type="clt_ru:Text40Type">
+        <xs:annotation>
+          <xs:documentation>№ замерной нитки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Note" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Примечание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Pipeline" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Трубопровод</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Volume" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Объем перемещенного газа в тыс. куб. м.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Kod_GIS" type="clt_ru:Text40Type">
+        <xs:annotation>
+          <xs:documentation>Код ГИС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Oil_ActType">
+    <xs:annotation>
+      <xs:documentation>Акт учета экспорта нефти</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Act_Date" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата акта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Act_Number" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер акта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Decl_Number" type="cat_ru:GTDIDType">
+        <xs:annotation>
+          <xs:documentation>Номер декларации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GOST_Name" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Обозначение нефти по ГОСТ, ТУ </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Gross_Weight" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Вес брутто</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Manufacturer" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Производитель</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Net_Weight" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Вес нетто</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Note" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Примечание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Route_Telegram_Date" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата маршрутной телеграммы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Route_Telegram_Number" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер маршрутной телеграммы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Customs_ID" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможни</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Kod_LPDS" type="clt_ru:Text40Type">
+        <xs:annotation>
+          <xs:documentation>Код ЛПДС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Oil_Product_ActType">
+    <xs:annotation>
+      <xs:documentation>Акты учета экспорта нефтепродуктов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Act_Date" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата акта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Act_Number" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер акта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Decl_Number" type="cat_ru:GTDIDType">
+        <xs:annotation>
+          <xs:documentation>Номер декларации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Gross_Weight" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Вес брутто</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Manufacturer" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Производитель</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Mark" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Марка нефтепродуктов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Note" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Puming_Station" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Перекачивающая станция</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Route" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Маршрут</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Route_Telegram_Date" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата маршрутной телеграммы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Route_Telegram_Number" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер маршрутной телеграммы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Customs_ID" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможни</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Kod_LPDS" type="clt_ru:Text40Type">
+        <xs:annotation>
+          <xs:documentation>Код ЛПДС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Kod_Psnp" type="clt_ru:Text40Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код нефтебазы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Kod_Org" type="clt_ru:Text40Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

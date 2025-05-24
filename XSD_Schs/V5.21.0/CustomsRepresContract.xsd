@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:crc="urn:customs.ru:Information:CustomsDocuments:CustomsRepresContract:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:CustomsRepresContract:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+	<xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Договор таможенного представителя с декларантом</xs:documentation>
+	</xs:annotation>
+	<xs:element name="CustomsRepresContract" type="crc:CustomsRepresContractType">
+		<xs:annotation>
+			<xs:documentation>Договор таможенного представителя с декларантом</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="CustomsRepresContractType">
+		<xs:annotation>
+			<xs:documentation>Договор таможенного представителя с декларантом</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="PaymentFactSign" type="clt_ru:IndicatorType">
+						<xs:annotation>
+							<xs:documentation>Признак возможности оплаты таможенных платежей таможенным представителем за декларанта</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="AdditionalInformation" type="clt_ru:Text3MB" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дополнительная информация</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomsRepresentative" type="crc:CustomsRepresentativType">
+						<xs:annotation>
+							<xs:documentation>Таможенный представитель</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Declarant" type="crc:DeclarantType">
+						<xs:annotation>
+							<xs:documentation>Декларант</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ContractDetails" type="crc:ContractDetailsType">
+						<xs:annotation>
+							<xs:documentation>Реквизиты договора декларанта с таможенным представителем</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RepresentativeDetails" type="crc:RepresentativeDetailsType">
+						<xs:annotation>
+							<xs:documentation>Полномочия таможенного представителя</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006196E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="CustomsRepresentativType">
+		<xs:annotation>
+			<xs:documentation>Информация о таможенном представителе</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="RUScat_ru:SubjectDetailsType">
+				<xs:sequence>
+					<xs:element name="CustomsRepresCertificate" type="cat_ru:DocumentBaseType">
+						<xs:annotation>
+							<xs:documentation>Регистрационный номер в реестре таможенных представителей</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ContractDetailsType">
+		<xs:annotation>
+			<xs:documentation>Тип реквизитов договора декларанта с таможенным представителем</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:DocumentBaseType">
+				<xs:sequence>
+					<xs:element name="StartDate" type="clt_ru:DateCustType">
+						<xs:annotation>
+							<xs:documentation>Дата начала срока действия договора</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ExpiryDate" type="clt_ru:DateCustType">
+						<xs:annotation>
+							<xs:documentation>Дата окончания срока действия договора</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RepresentativeDetailsType">
+		<xs:annotation>
+			<xs:documentation>Полномочия таможенного представителя</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RepresentativeIndicator" type="clt_ru:DigitalIndicatorType">
+				<xs:annotation>
+					<xs:documentation>Признак полномочия лица на подачу  ДТ в отношении всех товаров, поступающих в адрес декларанта (1-все товары, 0 - в отношении товаров, поступающих по документам в PresentedDocuments)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PresentedDocuments" type="crc:PresentedDocumentsType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Сведения о документах к товарам ДТ,  полномочия по которым подтверждены</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PresentedDocumentsType">
+		<xs:annotation>
+			<xs:documentation>Сведения о документах к товарам ДТ,  полномочия по которым подтверждены</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:DocumentBaseType">
+				<xs:sequence>
+					<xs:element name="PresentedDocumentModeCode" type="clt_ru:CustomsDocumentCodeType">
+						<xs:annotation>
+							<xs:documentation>Код вида представляемого документа в соответствии с классификатором видов документов и сведений, используемых при таможенном декларировании</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DeclarantType">
+		<xs:annotation>
+			<xs:documentation>Тип данных декларанта</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="RUScat_ru:SubjectDetailsType">
+				<xs:sequence>
+					<xs:element name="DeclarantModeCode" type="clt_ru:LetterIndicatorType">
+						<xs:annotation>
+							<xs:documentation>Тип лица (юрид.-"Ю",физич.-"Ф", "И" - индивидуальный предприниматель)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ResidentFlag" type="clt_ru:IndicatorType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Признак резидента РФ</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

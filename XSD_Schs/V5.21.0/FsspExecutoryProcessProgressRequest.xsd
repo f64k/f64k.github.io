@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:fssp_epp_req="urn:customs.ru:Information:SQDocuments:FsspExecutoryProcessProgressRequest:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:FsspExecutoryProcessProgressRequest:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сведения из системы (ФССП) о ходе исполнительного производства</xs:documentation>
+  </xs:annotation>
+  <xs:element name="FsspExecutoryProcessProgressRequest" type="fssp_epp_req:FsspExecutoryProcessProgressRequestType" />
+  <xs:complexType name="FsspExecutoryProcessProgressRequestType">
+    <xs:annotation>
+      <xs:documentation>Сведения из системы (ФССП) о ходе исполнительного производства</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="ConversationId" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Сведения о цепочке обмена сообщениями</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ResponseKey" type="clt_ru:DocumentNumberType">
+            <xs:annotation>
+              <xs:documentation>Ключ ответа ФССП России</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SPIRequisites" type="fssp_epp_req:SPIRequisitesType">
+            <xs:annotation>
+              <xs:documentation>Реквизиты СПИ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="EnforcementDocument" type="fssp_epp_req:EnforcementDocumentType">
+            <xs:annotation>
+              <xs:documentation>Документ принудительного исполнения в электронном виде</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009099E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="SPIRequisitesType">
+    <xs:annotation>
+      <xs:documentation>Реквизиты СПИ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Code" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Код СПИ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NameFull" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>ФИО СПИ (одной строкой)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Name" type="cat_ru:PersonBaseType">
+        <xs:annotation>
+          <xs:documentation>ФИО и должность СПИ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Phone" type="clt_ru:PhoneNumberType">
+        <xs:annotation>
+          <xs:documentation>Телефон СПИ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EnforcementDocumentType">
+    <xs:annotation>
+      <xs:documentation>Документ принудительного исполнения в электронном виде</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Creditor" type="fssp_epp_req:CreditorType">
+        <xs:annotation>
+          <xs:documentation>Взыскатель</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentType" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Тип документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DebtorName" type="cat_ru:OrganizationBaseType">
+        <xs:annotation>
+          <xs:documentation>Должник</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Debtor" type="cat_ru:PersonBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ФИО должника</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentData" type="fssp_epp_req:DocumentDataType">
+        <xs:annotation>
+          <xs:documentation>Данные документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OverallDebtSum" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Взысканная сумма по задолженности (при наличии) всего</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KBKDebtSum" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Взысканная сумма по задолженности (по КБК)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CreditorType">
+    <xs:annotation>
+      <xs:documentation>Взыскатель</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Name" type="clt_ru:CustomsOfficeNameType">
+        <xs:annotation>
+          <xs:documentation>Взыскатель</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Code" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код взыскателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocumentDataType">
+    <xs:annotation>
+      <xs:documentation>Исполнительный документ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocumentData" type="clt_ru:Text3MB">
+        <xs:annotation>
+          <xs:documentation>Данные документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentDataSign" type="clt_ru:Text3MB">
+        <xs:annotation>
+          <xs:documentation>ЭП документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

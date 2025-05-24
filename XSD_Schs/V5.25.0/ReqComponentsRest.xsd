@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:rcr="urn:customs.ru:Information:CustomsDocuments:ReqComponentsRest:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:ReqComponentsRest:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос остаточного количества компонентов товаров в несобранном виде</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ReqComponentsRest" type="rcr:ReqComponentsRestType">
+    <xs:annotation>
+      <xs:documentation>Запрос остаточного количества компонентов товаров в несобранном виде</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ReqComponentsRestType">
+    <xs:annotation>
+      <xs:documentation>Запрос остаточного количества компонентов товаров в несобранном виде</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="ReqDateTime" type="clt_ru:DateTimeCustType">
+            <xs:annotation>
+              <xs:documentation>Дата и время формирования запроса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DecisionRegistryNumber" type="rcr:RegistryNumberType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер решения о классификации товара в несобранном или разобранном виде</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Applicant" type="rcr:ApplicantType">
+            <xs:annotation>
+              <xs:documentation>Сведения о заявителе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Comments" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Примечания</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1051030E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="RegistryNumberType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер и дата документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="IDDoc" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Идентификатор вида документа: КР - решение о классификации товара; ОЗ - решение об отказе в рассмотрении заявления о принятии решения о классификации; ОЕ - решение об отказе в принятии решения о классификации товара; ИЗ - решение о внесении изменений в решение о классификации; ОИ - решение об отказе в рассмотрении заявления о внесении изменений в решение о классификации товара; ПД - решение о прекращении действия решения о классификации.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryCode" type="clt_ru:CountryA2CodeType">
+        <xs:annotation>
+          <xs:documentation>Буквенный код государства-члена Евразийского экономического союза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Date" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата принятия документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SerialNumber" type="clt_ru:Code4Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый исходящий номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ApplicantType">
+    <xs:annotation>
+      <xs:documentation>Сведения о заявителе</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:OrganizationType">
+        <xs:sequence>
+          <xs:element name="Chief" type="cat_ru:PersonBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Руководитель (заместитель руководителя)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

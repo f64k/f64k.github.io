@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:cltExch_ru="urn:customs.ru:Information:ExchangeDocuments:ExchangeCommonLeafTypes:5.0.8" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:eir="urn:customs.ru:Information:ExchangeDocuments:EPS_InfoRequest:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:ExchangeDocuments:EPS_InfoRequest:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:ExchangeDocuments:ExchangeCommonLeafTypes:5.0.8" schemaLocation="ExchangeCommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос информации об электронном документе, процедуре/процессе.</xs:documentation>
+  </xs:annotation>
+  <xs:element name="EPS_InfoRequest" type="eir:EPS_InfoRequestType" />
+  <xs:complexType name="EPS_InfoRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос статуса электронного документа / процедуры / процесса.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:choice>
+            <xs:annotation>
+              <xs:documentation>Данные запроса</xs:documentation>
+            </xs:annotation>
+            <xs:element name="ArchRequest" type="eir:ArchRequestType">
+              <xs:annotation>
+                <xs:documentation>Запрос к архиву декларанта</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="ProcessRequest" type="eir:ProcessRequestType">
+              <xs:annotation>
+                <xs:documentation>Запрос к процедуре / процессу</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="EnvRequest" type="eir:EnvRequestType">
+              <xs:annotation>
+                <xs:documentation>Запрос на передачу сообщения</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1004080E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ArchRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос к архиву декларанта</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ArchDeclID" type="clt_ru:ArchiveDeclarantIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор декларанта в архиве</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ArchID" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор архива декларанта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ArchDocID" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Архивный идентификатор документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ArchDocumentID" type="clt_ru:ArchiveDocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EnvRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос на передачу сообщения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="EnvelopeID" type="cltExch_ru:ProcessIDType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор сообщения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ProcessRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос к процедуре/процессу</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ProcessID" type="cltExch_ru:ProcessIDType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор процесса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

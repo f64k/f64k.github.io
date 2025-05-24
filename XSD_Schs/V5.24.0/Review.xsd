@@ -1,0 +1,407 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:rev="urn:customs.ru:Information:CustomsDocuments:Review:5.24.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:Review:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Рецензия на заключение таможенного эксперта (эксперта)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="Review" type="rev:ReviewType">
+    <xs:annotation>
+      <xs:documentation>Рецензия на заключение таможенного эксперта (эксперта)</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ReviewType">
+    <xs:annotation>
+      <xs:documentation>Рецензия на заключение таможенного эксперта (эксперта)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="ReviewContent" type="rev:ReviewContentType">
+            <xs:annotation>
+              <xs:documentation>Содержание Рецензии на заключение таможенного эксперта (эксперта)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SMSHead" type="rev:SMSHeadType">
+            <xs:annotation>
+              <xs:documentation>Резолюция председателя НМС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentIDType" use="required" fixed="1051041E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="BaseExType">
+    <xs:annotation>
+      <xs:documentation>Базовый тип (расширенный)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Sign" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак: 1 - в наличии/ соответсвует/ правильно/ обосновано/ раскрыт полностью; 0 - отсутствует/ не соответствует/ не правильно/ не обосновано/ не раскрыт полностью</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Sign2" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак: 1 -  достаточно; 0 - не достаточно</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Comments" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Комментарии рецензента</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="BaseType">
+    <xs:annotation>
+      <xs:documentation>Базовый тип</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Sign" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак: 1 - в наличии/ соответсвует/ правильно/ обосновано/ достаточно/ раскрыт полностью; 0 - отсутствует/ не соответствует/ не правильно/ не обосновано/ не достаточно/ не раскрыт полностью</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Comments" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Комментарии рецензента</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ConclusionsType">
+    <xs:annotation>
+      <xs:documentation>Выводы в заключении</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Part_3_1" type="rev:BaseType">
+        <xs:annotation>
+          <xs:documentation>Соответствие выводов вопросам, поставленным на разрешение таможенному(ым) эксперту(ам) (эксперту(ам), последовательность выводов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Part_3_2" type="rev:BaseType">
+        <xs:annotation>
+          <xs:documentation>Объективность, всесторонность и достоверность выводов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Part_3_3" type="rev:BaseType">
+        <xs:annotation>
+          <xs:documentation>Соответствие выводов экспертной практике ЦЭКТУ (соответствие расширенным регламентам проведения экспертных исследований, методическим пояснениям, методическим рекомендациям, результатам исследований и т.д.)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Part_3_4" type="rev:BaseType">
+        <xs:annotation>
+          <xs:documentation>Полнота раскрытия исследованием таможенного(ых) эксперта(ов) (эксперта(ов) предмета экспертизы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeadlinesType">
+    <xs:annotation>
+      <xs:documentation>Соблюдение сроков</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DeadlinesSign" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак соблюдения сроков: 1 - сроки соблюдены; 0 - сроки не соблюдены</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InitialDeadline" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Первоначально установленный срок </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SuspensionDate" type="rev:SuspensionDateType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Срок приостановления таможенной экспертизы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateRenewal" type="clt_ru:DateTimeCustType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Дата, до которой  продлено проведение таможенной экспертизы </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ConclusionDate" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата заключения таможенного эксперта (эксперта) </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Comments" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Комментарии рецензента</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ExpertSubdivisionType">
+    <xs:annotation>
+      <xs:documentation>Экспертное подразделение</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="cat_ru:CustomsType">
+        <xs:annotation>
+          <xs:documentation>Таможенный орган</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StructuralSubdivision" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование экспертного  подразделения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ExpertSummaryType">
+    <xs:annotation>
+      <xs:documentation>Заключение эксперта</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ExpertSummaryNumber" type="clt_ru:Text40Type">
+        <xs:annotation>
+          <xs:documentation>Номер заключения эксперта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExpertSummaryDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата заключения эксперта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ExpertType">
+    <xs:annotation>
+      <xs:documentation>Эксперт</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:PersonBaseType">
+        <xs:sequence>
+          <xs:element name="CustomsCode" type="cat_ru:CustomsType">
+            <xs:annotation>
+              <xs:documentation>Таможенный орган</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ExpertSign" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Признак Главного/Основного эксперта: 1 - основной (главный); 0 - рядовой эксперт</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ResearchPartType">
+    <xs:annotation>
+      <xs:documentation>Исследовательская часть заключения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Part_2_1" type="rev:BaseType">
+        <xs:annotation>
+          <xs:documentation>Наличие данных о внешнем осмотре проб и (или) образцов товаров, изъятых документов или средств идентификации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Part_2_2" type="rev:BaseExType">
+        <xs:annotation>
+          <xs:documentation>Правильность и достаточность выбора метода(ов) исследования, последовательность исследования</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Part_2_3" type="rev:BaseType">
+        <xs:annotation>
+          <xs:documentation>Правильность выбора оборудования, приборов, средств измерений и иных вспомогательных средства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Part_2_4" type="rev:BaseType">
+        <xs:annotation>
+          <xs:documentation>Наличие перечня использованных справочных материалов (литературы)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Part_2_5" type="rev:BaseType">
+        <xs:annotation>
+          <xs:documentation>Наличие разъяснений использованных специальных терминов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Part_2_6" type="rev:BaseType">
+        <xs:annotation>
+          <xs:documentation>Полнота, последовательность и всесторонность исследования</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Part_2_7" type="rev:BaseType">
+        <xs:annotation>
+          <xs:documentation>Наличие приложений к заключению таможенного эксперта (эксперта), иллюстрирующих заключение таможенного эксперта (эксперта) (фотографии, схемы, таблицы, графики, рисунки и т.п.) и являющихся составной частью такого заключения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReviewContentType">
+    <xs:annotation>
+      <xs:documentation>Содержание Рецензии на заключение таможенного эксперта (эксперта)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ReviewNumber" type="rev:ReviewNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер Рецензии на заключение таможенного эксперта (эксперта)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Reviewer" type="rev:ReviewPersonType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Рецензент</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExpertSummary" type="rev:ExpertSummaryType">
+        <xs:annotation>
+          <xs:documentation>Заключение эксперта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Expert" type="rev:ExpertType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Эксперт</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExpertSubdivision" type="rev:ExpertSubdivisionType">
+        <xs:annotation>
+          <xs:documentation>Экспертное подразделение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExpertiseType" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Вид экспертизы: 1 - первичная; 2 - дополнительная; 3 - повторная</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Deadlines" type="rev:DeadlinesType">
+        <xs:annotation>
+          <xs:documentation>Соблюдение сроков проведения, приостановления, продления таможенной экспертизы (экспертизы)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ComplianceCompetence" type="rev:BaseType">
+        <xs:annotation>
+          <xs:documentation>Соответствие поставленных перед таможенным(ыми) экспертом(ами) (экспертом(ами) вопросов его(их) специальным и (или) научным знаниям и компетенции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ResearchPart" type="rev:ResearchPartType">
+        <xs:annotation>
+          <xs:documentation>Исследовательская часть заключения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Conclusions" type="rev:ConclusionsType">
+        <xs:annotation>
+          <xs:documentation>Выводы в заключении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReviewerOfConclusions" type="rev:ReviewerOfConclusionsType">
+        <xs:annotation>
+          <xs:documentation>Заключение рецензента(ов)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReviewerOfConclusionsType">
+    <xs:annotation>
+      <xs:documentation>Заключение рецензента(ов)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Sign" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак: 1 - вывод(ы) таможенного эксперта (эксперта) по поставленному(ым) вопросу(ам) обоснованы; 0 - вывод(ы) таможенного эксперта (эксперта) по поставленному(ым) вопросу(ам) необоснован(ы)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EstablishedFacts" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Установленные факты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReviewNumberType">
+    <xs:annotation>
+      <xs:documentation>Номер документа по рецензированию</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Letter" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Буквенный признак документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SMSCode" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Код НМС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Date" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Number" type="clt_ru:Code5Type">
+        <xs:annotation>
+          <xs:documentation>Номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReviewPersonType">
+    <xs:annotation>
+      <xs:documentation>Рецензент/ Председатель НМС</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:PersonBaseType">
+        <xs:sequence>
+          <xs:element name="CustomsCode" type="cat_ru:CustomsType">
+            <xs:annotation>
+              <xs:documentation>Таможенный орган</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="StructuralSubdivision" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Структурное подразделение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SMSHeadType">
+    <xs:annotation>
+      <xs:documentation>Председатель НМС</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:PersonBaseType">
+        <xs:sequence>
+          <xs:element name="CustomsCode" type="cat_ru:CustomsType">
+            <xs:annotation>
+              <xs:documentation>Таможенный орган</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="StructuralSubdivision" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Структурное подразделение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SuspensionDateType">
+    <xs:annotation>
+      <xs:documentation>Срок приостановления таможенной экспертизы</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="StartDateSuspension" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата начала приостановления таможенной экспертизы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EndDateSuspension" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата окончания приостановления таможенной экспертизы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:rocp="urn:customs.ru:Information:CustomsDocuments:ResolutionOrigCountryPreference:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:ResolutionOrigCountryPreference:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Информация о контроле страны происхождения товаров и (или) предоставлении (отказе в предоставлении) тарифных преференций</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ResolutionOrigCountryPreference" type="rocp:ResolutionOrigCountryPreferenceType" />
+  <xs:complexType name="ResolutionOrigCountryPreferenceType">
+    <xs:annotation>
+      <xs:documentation>Информация о контроле страны происхождения товаров и (или) предоставлении (отказе в предоставлении) тарифных преференций</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="ResolutionDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата решения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OrganizationName" type="clt_ru:NameType">
+            <xs:annotation>
+              <xs:documentation>Наименование декларанта (таможенного представителя)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ResolutionNumber" type="rocp:ResolutionNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер решения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GTDID" type="cat_ru:GTDIDType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Customs" type="cat_ru:CustomsType">
+            <xs:annotation>
+              <xs:documentation>Код и наименование таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Person" type="cat_ru:PersonBaseType">
+            <xs:annotation>
+              <xs:documentation>Должностное лицо </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ResolutionDescription" type="rocp:ResolutionDescriptionType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Решение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006148E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="InfoCountryCodeType">
+    <xs:annotation>
+      <xs:documentation>Сведения о СП</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsNumber" type="clt_ru:Count3Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Номер товара по ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DeclCountryCode" type="clt_ru:CountryA2CodeType">
+        <xs:annotation>
+          <xs:documentation>Заявленный код СП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AdjCountryCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Скорректированный код СП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RationaleDecision" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Обоснование принятого решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentCountryCode" type="cat_ru:DocumentBaseType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Реквизиты документа, подтверждающего заявленную СП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ResolutionDescriptionType">
+    <xs:annotation>
+      <xs:documentation>Решение</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DecisionSign" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Признак решения (1 - о стране происхождения, 0 - о предоставлении тарифных преференций)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DecisionMeaning" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Значение решения (1 - заявленные сведения о СП приняты, 2 - заявленные сведения о СП скорректированы, 3 - тарифная преференция предоставлена, 4 - тарифная преференция не предоставлена)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InfoCountryCode" type="rocp:InfoCountryCodeType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о СП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ResolutionNumberType">
+    <xs:annotation>
+      <xs:documentation>Номер решения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного поста</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NomenclatureNumber" type="clt_ru:CodeVariable10Type">
+        <xs:annotation>
+          <xs:documentation>Номер дела по номенклатуре</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SerialNumber" type="clt_ru:Count5Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

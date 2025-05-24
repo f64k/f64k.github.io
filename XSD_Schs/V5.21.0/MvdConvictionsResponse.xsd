@@ -1,0 +1,489 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:mcres="urn:customs.ru:Information:SQDocuments:MvdConvictionsResponse:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:MvdConvictionsResponse:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Ответ на запрос сведений о наличии (отсутствии) судимости и (или) факта уголовного преследования либо о прекращении уголовного преследования, сведения о нахождении в розыске</xs:documentation>
+  </xs:annotation>
+  <xs:element name="MvdConvictionsResponse" type="mcres:MvdConvictionsResponseType" />
+  <xs:complexType name="MvdConvictionsResponseType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос сведений о наличии (отсутствии) судимости и (или) факта уголовного преследования либо о прекращении уголовного преследования, сведения о нахождении в розыске</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="ID" type="clt_ru:Text50Type">
+            <xs:annotation>
+              <xs:documentation>Идентификатор элемента</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RequestedPerson" type="cat_ru:PersonBaseType">
+            <xs:annotation>
+              <xs:documentation>ФИО лица, по которому запрашивались сведения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BirthDate" type="mcres:BirthDateType">
+            <xs:annotation>
+              <xs:documentation>Дата рождения лица, по которому запрашивались сведения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DataFound" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Признак наличия сведений по запросу</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Records" type="mcres:RecordsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Найденные сведения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009197E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="BirthDateType">
+    <xs:annotation>
+      <xs:documentation>Дата рождения лица (неполная дата)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Year" type="clt_ru:Code4Type">
+        <xs:annotation>
+          <xs:documentation>Год</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Month" type="clt_ru:CodeVariable2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Месяц</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Day" type="clt_ru:CodeVariable2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>День</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ClassifierValueType">
+    <xs:annotation>
+      <xs:documentation>Значение классификатора</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Code" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Код</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Value" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Значение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ChangingTermType">
+    <xs:annotation>
+      <xs:documentation>Изменение срока</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Date" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Enforcer" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Орган</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Period" type="mcres:PeriodType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Период</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ConvictionType">
+    <xs:annotation>
+      <xs:documentation>Судимость</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonalInfo" type="mcres:PersonalInfoType">
+        <xs:annotation>
+          <xs:documentation>Персональные данные</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Condemnation" type="mcres:LegalInfoType">
+        <xs:annotation>
+          <xs:documentation>Осуждение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Judgement" type="mcres:JudgementType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Наказание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReQualification" type="mcres:ReQualificationType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Переквалификация</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ChangingTerm" type="mcres:ChangingTermType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Изменение срока</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Release" type="mcres:ReleaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Освобождение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RemoveConvictionReasons" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Основания для снятия судимости</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AdditionalInfo" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Дополнительные данные</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DecisionType">
+    <xs:annotation>
+      <xs:documentation>Решение</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Description" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LegalInfo" type="mcres:LegalInfoType">
+        <xs:annotation>
+          <xs:documentation>Юридическая информация</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ExemptionMaterialType">
+    <xs:annotation>
+      <xs:documentation>Отказной материал</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonalInfo" type="mcres:PersonalInfoType">
+        <xs:annotation>
+          <xs:documentation>Персональные данные</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Denial" type="mcres:LegalInfoType">
+        <xs:annotation>
+          <xs:documentation>Отказ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Reason" type="mcres:ReasonType">
+        <xs:annotation>
+          <xs:documentation>Причина</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AdditionalInfo" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Дополнительные данные</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ImpeachmentType">
+    <xs:annotation>
+      <xs:documentation>Привлечение</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonalInfo" type="mcres:PersonalInfoType">
+        <xs:annotation>
+          <xs:documentation>Персональные данные</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ImpeachmentInfo" type="mcres:LegalInfoType">
+        <xs:annotation>
+          <xs:documentation>Данные по привлечению</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Judgment" type="mcres:DecisionType">
+        <xs:annotation>
+          <xs:documentation>Решение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AdditionalInfo" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Дополнительные данные</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="JudgementType">
+    <xs:annotation>
+      <xs:documentation>Наказание</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Type" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Вид наказания</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Fine" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Штраф</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Limit" type="mcres:TimeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Временные показатели</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LegalInfoType">
+    <xs:annotation>
+      <xs:documentation>Юридическая информация</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Date" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Enforcer" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Орган</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Cause" type="mcres:LegislationType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Основание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LegislationType">
+    <xs:annotation>
+      <xs:documentation>Закон</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Code" type="mcres:ClassifierValueType">
+        <xs:annotation>
+          <xs:documentation>Кодекс</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Article" type="clt_ru:Text150Type">
+        <xs:annotation>
+          <xs:documentation>Статья</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Part" type="clt_ru:Text150Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Часть</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Paragraph" type="clt_ru:Text150Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Пункт</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PeriodType">
+    <xs:annotation>
+      <xs:documentation>Период</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Years" type="clt_ru:CodeVariable5Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Годы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Months" type="clt_ru:CodeVariable5Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Месяцы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Days" type="clt_ru:CodeVariable5Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дни</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Hours" type="clt_ru:CodeVariable5Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Часы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PersonalInfoType">
+    <xs:annotation>
+      <xs:documentation>Персональные данные</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonFIO" type="cat_ru:PersonBaseType">
+        <xs:annotation>
+          <xs:documentation>ФИО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BirthDate" type="mcres:BirthDateType">
+        <xs:annotation>
+          <xs:documentation>Дата рождения лица (неполная дата)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BirthPlace" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Место рождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InfoCenter" type="mcres:ClassifierValueType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>ИЦ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReasonType">
+    <xs:annotation>
+      <xs:documentation>Причина</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Description" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание причины</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Cause" type="mcres:LegislationType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Основание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RecordsType">
+    <xs:annotation>
+      <xs:documentation>Найденные сведения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Conviction" type="mcres:ConvictionType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Судимость</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Impeachment" type="mcres:ImpeachmentType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Привлечение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Search" type="mcres:SearchType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Розыск</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExemptionMaterial" type="mcres:ExemptionMaterialType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Отказной материал</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AdditionalInfo" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Дополнительные данные</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReQualificationType">
+    <xs:annotation>
+      <xs:documentation>Переквалификация</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Date" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата переквалификации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Enforcer" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Орган</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RequalificationFrom" type="mcres:LegislationType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Переквалификация с</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RequalificationTo" type="mcres:LegislationType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Переквалификация на</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReleaseType">
+    <xs:annotation>
+      <xs:documentation>Освобождение</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Date" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Cause" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Основание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SearchType">
+    <xs:annotation>
+      <xs:documentation>Розыск</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonalInfo" type="mcres:PersonalInfoType">
+        <xs:annotation>
+          <xs:documentation>Персональные данные</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SearchInfo" type="mcres:LegalInfoType">
+        <xs:annotation>
+          <xs:documentation>Данные по розыску</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AdditionalInfo" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Дополнительные данные</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TimeType">
+    <xs:annotation>
+      <xs:documentation>Временные показатели</xs:documentation>
+    </xs:annotation>
+    <xs:choice>
+      <xs:element name="Period" type="mcres:PeriodType">
+        <xs:annotation>
+          <xs:documentation>Период</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Forever" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак неограниченности срока действия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--SQ.00251, СМЭВ - ftsAdditionalInformationImportGoods-root.xsd (Предоставление дополнительных сведений о ввозе товаров, режим «по требованию»)-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:aig_res="urn:customs.ru:Information:SQDocuments:FtsAdditionalInformationImportGoodsRes:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:FtsAdditionalInformationImportGoodsRes:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Ответ на запрос на предоставление дополнительных сведений о ввозе товаров, режим «по требованию»</xs:documentation>
+  </xs:annotation>
+  <xs:element name="FtsAdditionalInformationImportGoodsRes" type="aig_res:FtsAdditionalInformationImportGoodsResType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос на предоставление дополнительных сведений о ввозе товаров, режим «по требованию»</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="FtsAdditionalInformationImportGoodsResType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос на предоставление дополнительных сведений о ввозе товаров, режим «по требованию»</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="description" type="clt_ru:FreeText500Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дополнительное описание сведений</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Row" type="aig_res:RowType">
+            <xs:annotation>
+              <xs:documentation>Сведения о товарах, конфискованных или обращенных в собственность (доход) государства или товарах, на которые по решению суда обращено взыскание в счет уплаты таможенных пошлин, налогов, через СМЭВ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1060013E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор электронного документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="IDPartType">
+    <xs:annotation>
+      <xs:documentation>Id партии товара </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:GTDIDType">
+        <xs:sequence>
+          <xs:element name="GoodsNumeric" type="clt_ru:Count3Type">
+            <xs:annotation>
+              <xs:documentation>Порядковый номер позиции</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RowType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товарах, конфискованных или обращенных в собственность (доход) государства или товарах, на которые по решению суда обращено взыскание в счет уплаты таможенных пошлин, налогов, через СМЭВ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodName" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Наименование товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodCountry" type="clt_ru:CountryA2CodeType">
+        <xs:annotation>
+          <xs:documentation>Страна происхождения товара (при наличии сведений)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodCode" type="clt_ru:CUGoodsNomenclatuerCodeType">
+        <xs:annotation>
+          <xs:documentation>Код товара по ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodCount" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Количество товара в единицах измерения, установленных перечнем</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodUnit" type="clt_ru:MeasureUnitQualifierCodeType">
+        <xs:annotation>
+          <xs:documentation>Код единицы измерения товара (в соответствии с перечнем)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AktNum" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер акта приема-передачи товара в Росимущество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AktDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата акта приема-передачи товара в Росимущество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdPart" type="aig_res:IDPartType">
+        <xs:annotation>
+          <xs:documentation>ID партии при передаче прослеживаемого товара в Росимущество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

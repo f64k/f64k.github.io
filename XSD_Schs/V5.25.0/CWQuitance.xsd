@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:catWH_ru="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonAggregateTypesCust:5.24.0" xmlns:cwq="urn:customs.ru:Information:WarehouseDocuments:CWQuitance:5.24.0" targetNamespace="urn:customs.ru:Information:WarehouseDocuments:CWQuitance:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonAggregateTypesCust:5.24.0" schemaLocation="WarehouseCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Квитанция об успешном получении информации</xs:documentation>
+  </xs:annotation>
+  <xs:element name="CWQuitance" type="cwq:CWQuitanceType" />
+  <xs:complexType name="CWQuitanceType">
+    <xs:annotation>
+      <xs:documentation>Квитанция об успешном получении информации</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="catWH_ru:CWDocType">
+        <xs:sequence>
+          <xs:choice>
+            <xs:annotation>
+              <xs:documentation>Информация об электронных копиях документов</xs:documentation>
+            </xs:annotation>
+            <xs:element name="Quitance" type="cwq:QuitanceType">
+              <xs:annotation>
+                <xs:documentation>Квитанция</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="DocumentWithErrors" type="cwq:DocumentWithErrorsType">
+              <xs:annotation>
+                <xs:documentation>Документ,содержащий ошибки</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1008004E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CommonDocumentType">
+    <xs:annotation>
+      <xs:documentation>Класс документа, характеризующий его номер и версию</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocumentNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер подтверждаемого/ошибочного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrderNumberOfEdition" type="clt_ru:Count2Type">
+        <xs:annotation>
+          <xs:documentation>Номер версии подтверждаемого/ошибочного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CorrectDocumentType">
+    <xs:annotation>
+      <xs:documentation>Подтверждаемый документ</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cwq:CommonDocumentType" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DocumentWithErrorsType">
+    <xs:annotation>
+      <xs:documentation>Документ,содержащий ошибки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocumentNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер подтверждаемого/ошибочного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrderNumberOfEdition" type="clt_ru:Count2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер версии подтверждаемого/ошибочного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Errors" type="cwq:ErrorsType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Ошибки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ErrorsType">
+    <xs:annotation>
+      <xs:documentation>Ошибки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CommandErrorText" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Общее описание возникшей ошибки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CommandErrorCode" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Код ошибки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ErrorText" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Текст ошибки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="QuitanceType">
+    <xs:annotation>
+      <xs:documentation>Квитанция</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocumentModeID" type="clt_ru:DocumentModeIDType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор вида документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CorrectDocument" type="cwq:CorrectDocumentType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Подтверждаемый документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

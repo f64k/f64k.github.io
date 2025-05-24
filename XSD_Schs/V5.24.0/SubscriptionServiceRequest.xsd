@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:ssrq="urn:customs.ru:Information:SQDocuments:SubscriptionServiceRequest:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" targetNamespace="urn:customs.ru:Information:SQDocuments:SubscriptionServiceRequest:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос подписки на предоставление уведомлений</xs:documentation>
+  </xs:annotation>
+  <xs:element name="SubscriptionServiceRequest" type="ssrq:SubscriptionServiceRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос подписки на предоставление уведомлений</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="SubscriptionServiceRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос подписки на предоставление уведомлений</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="MessageId" type="clt_ru:Text50Type">
+            <xs:annotation>
+              <xs:documentation>Идентификатор запроса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MessageTime" type="clt_ru:DateTimeCustType">
+            <xs:annotation>
+              <xs:documentation>Дата и время формирования сообщения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SenderIdentifier" type="ssrq:URNType">
+            <xs:annotation>
+              <xs:documentation>УРН участника-отправителя сообщения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SenderRole" type="ssrq:Text1-10TypePattern">
+            <xs:annotation>
+              <xs:documentation>Полномочие участника-отправителя сообщения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:element name="ExportSubscriptions" type="clt_ru:IndicatorType" fixed="true">
+              <xs:annotation>
+                <xs:documentation>Запрос на предоставление перечня доступных участнику вариантов уведомлений</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="CreateSubscription" type="ssrq:CreateSubscriptionType">
+              <xs:annotation>
+                <xs:documentation>Запрос на оформление подписки на предоставление уведомлений (или изменение, удаление подписки) с указанием значений параметров при необходимости</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="ChangeSubscription" type="ssrq:ChangeSubscriptionType">
+              <xs:annotation>
+                <xs:documentation>Запрос на изменение версии форматов направляемых уведомлений</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009374E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CreateSubscriptionType">
+    <xs:annotation>
+      <xs:documentation>Запрос на оформление подписки на предоставление уведомлений (или изменение, удаление подписки) с указанием значений параметров при необходимости</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SubscriptionStatus" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Cтатус подписки к варианту уведомлений.
+Возможные значения:
+1 - новая подписка,
+2 - изменение подписки,
+3 - удаление подписки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RoutingCode" type="ssrq:Text200Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код маршрутизации участника в ВС "Предоставление уведомлений по рассылке"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:choice>
+        <xs:element name="SubscriptionCode" type="ssrq:SubscriptionCodeType">
+          <xs:annotation>
+            <xs:documentation>Код варианта уведомления. Указывается для новой подписки (для статуса подписки "1")</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="SubscriptionIdentifier" type="ssrq:SubscriptionIdType">
+          <xs:annotation>
+            <xs:documentation>Идентификатор подписки, присвоенный в ГИС ГМП. Указывается при изменении или удалении подписки (статус подписки "2" или "3")</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+      <xs:element name="SubscriptionParameters" type="ssrq:SubscriptionParametersType" minOccurs="0" maxOccurs="250">
+        <xs:annotation>
+          <xs:documentation>Значения параметра (группы параметров) подписки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ChangeSubscriptionType">
+    <xs:annotation>
+      <xs:documentation>Запрос на изменение версии форматов направляемых уведомлений</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SubscriptionIdentifier" type="ssrq:SubscriptionIdType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор подписки участника</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NoticeUri" type="ssrq:NoticeUriType">
+        <xs:annotation>
+          <xs:documentation>Код маршрутизации участника в ВС "Предоставление уведомлений по рассылке</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ParameterValueType">
+    <xs:annotation>
+      <xs:documentation>Значение параметра</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ParameterCode" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Код параметра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ParameterValueValue" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Значение параметра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SubscriptionParametersType">
+    <xs:annotation>
+      <xs:documentation>Перечень критериев к запрашиваемой бухгалтерской финансовой отчетности</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Status" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Cтатус для обработки значения параметра (группы параметров) Возможные значения:
+1 - новое значение,
+2 - удаление значения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ParameterId" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Идентификатор значения параметра (группы параметров)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ParameterValue" type="ssrq:ParameterValueType" maxOccurs="10">
+        <xs:annotation>
+          <xs:documentation>Значение параметра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные простые прикланые типы</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="SubscriptionCodeType">
+    <xs:annotation>
+      <xs:documentation>Код варианта уведомлений</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:pattern value="N[A-Z][0-9]{4}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SubscriptionIdType">
+    <xs:annotation>
+      <xs:documentation>Идентификатор подписки участника</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:IdentifierCategoriesCust">
+      <xs:length value="12" />
+      <xs:pattern value="([0-9a-fA-F]{6})N[A-Z][0-9]{4}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="URNType">
+    <xs:annotation>
+      <xs:documentation>УРН</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:IdentifierCategoriesCust">
+      <xs:pattern value="[0-9a-fA-F]{6}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NoticeUriType">
+    <xs:annotation>
+      <xs:documentation>Uri</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:pattern value="0" />
+      <xs:pattern value="urn://roskazna.ru/gisgmp/xsd/services/ExportNotice/[0-9].[0-9].[0-9]" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text1-10TypePattern">
+    <xs:annotation>
+      <xs:documentation>Строковое максимум 10 символов, паттерн</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="10" />
+      <xs:pattern value="\w{1,10}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text200Type">
+    <xs:annotation>
+      <xs:documentation>Строковое максимум 200 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="200" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

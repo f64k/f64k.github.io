@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="urn:customs.ru:Information:CustomsDocuments:GoodsDeclaration:5.21.0" version="5.21.0.0" xmlns:catESAD_cu="urn:customs.ru:CUESADCommonAggregateTypesCust:5.21.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:gode="urn:customs.ru:Information:CustomsDocuments:GoodsDeclaration:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="urn:customs.ru:CUESADCommonAggregateTypesCust:5.21.0" schemaLocation="CUESADCommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Данные декларации на товары</xs:documentation>
+  </xs:annotation>
+  <xs:element name="GoodsDeclaration" type="gode:GoodsDeclarationType" />
+  <xs:complexType name="GoodsDeclarationType">
+    <xs:annotation>
+      <xs:documentation>Данные декларации на товары</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="GTDID" type="cat_ru:GTDIDType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Consignee" type="gode:OrganizationType">
+            <xs:annotation>
+              <xs:documentation>Грузополучатель</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Consigner" type="gode:OrganizationType">
+            <xs:annotation>
+              <xs:documentation>Грузоотправитель</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" name="GoodsList" type="gode:GoodsListType">
+            <xs:annotation>
+              <xs:documentation>Сведения о товаре</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Customs" type="cat_ru:CUCustomsType">
+            <xs:annotation>
+              <xs:documentation>Сведения о таможенном органе  убытия</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DepartureStation" type="gode:RailwayStationType">
+            <xs:annotation>
+              <xs:documentation>Станция отправления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DestinationStation" type="gode:RailwayStationType">
+            <xs:annotation>
+              <xs:documentation>Станция назначения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="BorderStation" type="gode:RailwayStationType">
+            <xs:annotation>
+              <xs:documentation>Пограничная станция</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute fixed="1006152E" name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="GoodsListType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товаре</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element maxOccurs="4" name="GoodsDescription" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование (торговое, коммерческое или иное традиционное наименование) товаров.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="GoodsTNVEDCode" type="clt_ru:CUGoodsNomenclatuerCodeType">
+        <xs:annotation>
+          <xs:documentation>Код товара по ТН ВЭД ЕАЭС.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="GrossWeightQuantity" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Вес товара, брутто (кг). </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SupplementaryQuantity" type="cat_ru:SupplementaryQuantityType">
+        <xs:annotation>
+          <xs:documentation>Количество в дополнительной единице измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="GoodsPackaging" type="catESAD_cu:ESADGoodsPackagingType">
+        <xs:annotation>
+          <xs:documentation>Сведения о грузовых местах, поддонах и упаковке товаров.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Container" type="catESAD_cu:ESADContainerType">
+        <xs:annotation>
+          <xs:documentation>Сведения о контейнерах.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OrganizationType">
+    <xs:annotation>
+      <xs:documentation>Сведения о грузоотправителе/грузополучателе</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:OrganizationBaseType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Code" type="clt_ru:Code4Type">
+            <xs:annotation>
+              <xs:documentation>Код грузоотправителя/грузополучателя</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Address" type="cat_ru:AddressType">
+            <xs:annotation>
+              <xs:documentation>Адрес организации / физического лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RailwayStationType">
+    <xs:annotation>
+      <xs:documentation>Сведения о ж.д. станции</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RailwayStationName" type="clt_ru:PlaceNameType">
+        <xs:annotation>
+          <xs:documentation>Наименование станции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RailwayStationCode" type="clt_ru:RailwayStationCodeType">
+        <xs:annotation>
+          <xs:documentation>Код станции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="RailwayCode" type="clt_ru:Count4Type">
+        <xs:annotation>
+          <xs:documentation>Код железнодорожной дороги </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

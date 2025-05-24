@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:els_agr="urn:customs.ru:Information:ELSDocuments:ELSAggregateTypes:5.21.0" xmlns:elspr="urn:customs.ru:Informational:ELSDocuments:ELSDclPaymentRequest:5.21.0" targetNamespace="urn:customs.ru:Informational:ELSDocuments:ELSDclPaymentRequest:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:Information:ELSDocuments:ELSAggregateTypes:5.21.0" schemaLocation="ELSAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос списания  платежей</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ELSDclPaymentRequest" type="elspr:ELSDclPaymentRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос списания  платежей</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ELSDclPaymentRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос списания  платежей</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocChargeInfo" type="elspr:DocChargeInfoType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о документе-основании начисления/списания</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1040010E" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DocChargeInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о документе-основании начисления/списания</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="els_agr:DocChargeInfoType">
+        <xs:sequence>
+          <xs:element name="PayerInfo" type="elspr:PayerInfoType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о плательщике</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocRelease" type="clt_ru:DateTimeCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата и время выпуска документа начисления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PayerInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о плательщике</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OrganizationName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Наименование организации / ФИО физического лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ShortName" type="clt_ru:ShortNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Краткое наименование организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrganizationLanguage" type="clt_ru:LanguageCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код языка для заполнения наименования</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OKSM" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Буквенный код страны в соответствии с классификатором стран мира</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Classification" type="clt_ru:Numeric1Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Классификация лицевого счета: "0" - "юридическое лицо"; "1" - "физическое лицо"; "2" - "ИП". </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INN" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН - Индивидуальный номер налогоплательщика.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KPP" type="clt_ru:KPPCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>КПП - Код причины постановки на учет</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TaxpayerId" type="RUSclt_ru:UITNCode40Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор иностранного лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OKTMO" type="clt_ru:OKATOCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код ОКТМО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Birthdate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата рождения физического лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Address" type="cat_ru:AddressType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Адрес организации / физического лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdentityCard" type="RUScat_ru:RUIdentityCardType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Документ, удостоверяющий личность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:enrs="urn:customs.ru:Information:SQDocuments:ExportNoticeResponse:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" targetNamespace="urn:customs.ru:Information:SQDocuments:ExportNoticeResponse:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Ответ на предоставление из ГИС ГМП уведомлений по подписке</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ExportNoticeResponse" type="enrs:ExportNoticeResponseType">
+    <xs:annotation>
+      <xs:documentation>Ответ на предоставление из ГИС ГМП уведомлений по подписке</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ExportNoticeResponseType">
+    <xs:annotation>
+      <xs:documentation>Ответ на предоставление из ГИС ГМП уведомлений по подписке</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="MessageId" type="clt_ru:Text50Type">
+            <xs:annotation>
+              <xs:documentation>Идентификатор ответа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RgId" type="clt_ru:Text50Type">
+            <xs:annotation>
+              <xs:documentation>Идентификатор запроса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RecipientIdentifier" type="enrs:URNType">
+            <xs:annotation>
+              <xs:documentation>УРН участника получателя</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MessageTime" type="clt_ru:DateTimeCustType">
+            <xs:annotation>
+              <xs:documentation>Дата и время формирования сообщения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RoutingCode" type="enrs:RoutingCodeType">
+            <xs:annotation>
+              <xs:documentation>Код маршрутизации участника для предоставления информации по ВС с табличной маршрутизацией</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ExportNoticeConfirmation" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Подтверждение приема сообщения с рассылкой уведомлений по подписке. Возможные значения:
+true - сообщение принято;
+false - отказ в приеме сообщения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009333E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="RoutingCodeType">
+    <xs:annotation>
+      <xs:documentation>Код маршрутизации участника для предоставления информации по ВС с табличной маршрутизацией
+            </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="200" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="URNType">
+    <xs:annotation>
+      <xs:documentation>УРН</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:IdentifierCategoriesCust">
+      <xs:pattern value="[0-9a-fA-F]{6}" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Обмен сведениями между ЛК и АПС «Задолженность» -->
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:dbireq="urn:customs.ru:Information:SQDocuments:DebtInfoReq:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:SQDocuments:DebtInfoReq:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос сведений об изменениях задолженности по уплате таможенных и иных платежей</xs:documentation>
+  </xs:annotation>
+  <xs:element name="DebtInfoReq" type="dbireq:DebtInfoReqType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений об изменениях задолженности по уплате таможенных и иных платежей</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DebtInfoReqType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений об изменениях задолженности по уплате таможенных и иных платежей</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="ReqDate" type="clt_ru:DateCustType" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>Дата направления запроса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReqTime" type="clt_ru:TimeCustType" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>Время направления запроса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DebtInfoType" type="clt_ru:DigitalIndicatorType" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>Тип запрашиваемых сведений о задолженности (0 - изменение состояния задолженностей за период, 1 - полные сведения о дебиторской задолженности участника ВЭД, 2 - изменение состояния задолженностей за период для участника ВЭД)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DebtPeriodBegin" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Начало запрашиваемого периода</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DebtPeriodEnd" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Конец запрашиваемого периода</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReqOrganization" type="cat_ru:OrganizationType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения об организации, сформировавшей запрос</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsOffice" type="clt_ru:CustomsCodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DebtPassport" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер паспорта задолженности</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1040021E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

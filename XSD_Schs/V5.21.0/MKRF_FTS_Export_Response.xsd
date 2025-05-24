@@ -1,0 +1,701 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" xmlns:MKRF_Res="urn:customs.ru:Information:CustomsDocuments:MKRF_FTS_Export_Response:5.21.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:MKRF_FTS_Export_Response:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+	<xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Ответ на запрос на предоставление сведений: Экспертного заключения, Заключения (разрешительного документа) на вывоз или временный вывоз культурных ценностей / Отчет о приеме фактов вывоза или временного вывоза культурных ценностей / Запрашиваемый документ отсутствует в реестре</xs:documentation>
+	</xs:annotation>
+	<xs:element name="MKRF_FTS_Export_Response" type="MKRF_Res:MKRF_FTS_Export_ResponseType">
+		<xs:annotation>
+			<xs:documentation>Ответ на запрос на предоставление сведений: Экспертного заключения, Заключения (разрешительного документа) на вывоз или временный вывоз культурных ценностей / Отчет о приеме фактов вывоза или временного вывоза культурных ценностей / Запрашиваемый документ отсутствует в реестре</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="MKRF_FTS_Export_ResponseType">
+		<xs:annotation>
+			<xs:documentation>Ответ на запрос на предоставление сведений: Экспертного заключения, Заключения (разрешительного документа) на вывоз или временный вывоз культурных ценностей / Отчет о приеме фактов вывоза или временного вывоза культурных ценностей / Запрашиваемый документ отсутствует в реестре</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:choice>
+						<xs:element name="ResponseExport" type="MKRF_Res:ResponseExportType">
+							<xs:annotation>
+								<xs:documentation>Ответ на запрос на предоставление сведений: Экспертного заключения, Заключения (разрешительного документа) на вывоз или временный вывоз культурных ценностей</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="CheckReportExport" type="MKRF_Res:CheckReportExportType" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Отчет о приеме фактов вывоза или временного вывоза культурных ценностей</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1050033E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы.</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="FreeText2000Type">
+		<xs:annotation>
+			<xs:documentation>Строка до 2000 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="RUSclt_ru:FreeText4000Type">
+			<xs:maxLength value="2000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Text100Type">
+		<xs:annotation>
+			<xs:documentation>Символьные данные. До 100 символов. Текстовый</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:TextCategoriesCust">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Text20Type">
+		<xs:annotation>
+			<xs:documentation>Символьные данные. До 20 символов. Текстовый</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:TextCategoriesCust">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="AttachmentRefType">
+		<xs:annotation>
+			<xs:documentation>Фотографии предмета</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Description" type="clt_ru:Text150Type">
+				<xs:annotation>
+					<xs:documentation>Ракурс</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MimeType" type="clt_ru:Text150Type">
+				<xs:annotation>
+					<xs:documentation>Тип подражания</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AttachmentId" type="clt_ru:Text150Type">
+				<xs:annotation>
+					<xs:documentation>Идентификатор вложения, на которое ссылаемся. Должен быть равен значению
+//{urn://x-artefacts-smev-gov-ru/smev-core/client-interaction/basic/1.0}AttachedFile[n]/Id/text()
+того вложения, на которое нужно сослаться.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Content" type="CategoryCust:BinaryDataCategoriesCust">
+				<xs:annotation>
+					<xs:documentation>Контент в кодировке Base64</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BowType">
+		<xs:annotation>
+			<xs:documentation>Смычок</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Size1" type="clt_ru:QuantityBasis0Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Длина (мм) смычка с винтом </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Size2" type="clt_ru:QuantityBasis0Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Длина (мм) смычка без винта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ImageBow1" type="MKRF_Res:AttachmentRefType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Фото части трости с головкой</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ImageBow2" type="MKRF_Res:AttachmentRefType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Фото части трости с колодкой и винтом сбоку</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ImageBow3" type="MKRF_Res:AttachmentRefType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Фото части трости с колодкой и винтом снизу</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CheckReportExportType">
+		<xs:annotation>
+			<xs:documentation>Отчет о приеме фактов вывоза или временного вывоза культурных ценностей</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="MKRF_Res:ReqInfoExpType">
+				<xs:sequence>
+					<xs:element name="Success" type="clt_ru:IndicatorType">
+						<xs:annotation>
+							<xs:documentation>Результат: 0 - Сведения приняты ведомством; 1 - Запрашиваемый документ отсутствует в реестре. Уточните номер экспертного заключения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="CulturalValueInfoType">
+		<xs:annotation>
+			<xs:documentation>Описание вывозимой культурной ценности</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Order" type="clt_ru:Count5Type">
+				<xs:annotation>
+					<xs:documentation>Позиция в списке</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Expertise" type="MKRF_Res:ExpertiseInfoType">
+				<xs:annotation>
+					<xs:documentation>Экспертное заключение</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Passport" type="MKRF_Res:PassportInfoType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Паспорт музыкального инструмента</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ExpertiseInfoType">
+		<xs:annotation>
+			<xs:documentation>Экспертное заключение</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:DocumentBaseType">
+				<xs:sequence>
+					<xs:element name="Status" type="MKRF_Res:Text20Type">
+						<xs:annotation>
+							<xs:documentation>Статус экспертного заключения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CulturalValueName" type="RUSclt_ru:FreeText1000Type" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Наименование объекта</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Description" type="RUSclt_ru:FreeText1000Type" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Описание объекта</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Foto" type="MKRF_Res:AttachmentRefType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Фото объекта</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CulturalValue" type="clt_ru:IndicatorType">
+						<xs:annotation>
+							<xs:documentation>Предмет (объект экспертизы) отнесен к культурной ценности: 0 - нет; 1 - да</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CulturalValueExportProcedure" type="clt_ru:IndicatorType">
+						<xs:annotation>
+							<xs:documentation>Предмет (объект экспертизы) отнесен к культурной ценности в отношении которых правом Евразийского экономического союза установлен разрешительный порядок вывоза: 0 - нет; 1 - да</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CulturalValueSpecialMeaning" type="clt_ru:IndicatorType">
+						<xs:annotation>
+							<xs:documentation>Предмет (объект экспертизы) относится к культурным ценностям, имеющим особо значение: 0 - нет; 1 - да</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ExportDocument" type="MKRF_Res:ExportInfoType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Заключение (разрешение) на вывоз</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="StateMuseumFund" type="clt_ru:IndicatorType">
+						<xs:annotation>
+							<xs:documentation>Предмет включен в Состав государственной части Музейного фонда Российской Федерации: 0 - нет; 1 - да</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="IDMarks" type="MKRF_Res:IDMarksType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Идентификационные метки предмета</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Result" type="MKRF_Res:FreeText2000Type" maxOccurs="2">
+						<xs:annotation>
+							<xs:documentation>Выводы экспертного заключения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ExpertFIO" type="cat_ru:PersonBaseType">
+						<xs:annotation>
+							<xs:documentation>ФИО эксперта</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="IDExpertNumber" type="clt_ru:CodeVariable20Type">
+						<xs:annotation>
+							<xs:documentation>Номер удостоверения эксперта</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ExportInfoType">
+		<xs:annotation>
+			<xs:documentation>Заключение (разрешение) на вывоз (краткие данные)</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:DocumentBaseType">
+				<xs:sequence>
+					<xs:element name="ExportType" type="clt_ru:FreeText250Type">
+						<xs:annotation>
+							<xs:documentation>Тип вывоза (перемещения)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ExportPurpose" type="clt_ru:FreeText250Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Цель вывоза</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ExportCountry" type="clt_ru:CountryNameType">
+						<xs:annotation>
+							<xs:documentation>Страна вывоза</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TemporaryDateFrom" type="clt_ru:DateCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дата начала срока вывоза</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TemporaryDateFor" type="clt_ru:DateCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дата окончания срока вывоза</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Owner" type="clt_ru:FreeText250Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Держатель заключения (разрешительного документа)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ExportPermissionType">
+		<xs:annotation>
+			<xs:documentation>Заключение (разрешение) на вывоз</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="MKRF_Res:ExportInfoType">
+				<xs:sequence>
+					<xs:element name="Quantity" type="clt_ru:Quantity5Type">
+						<xs:annotation>
+							<xs:documentation>Количество культурных ценностей</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CulturalValue" type="MKRF_Res:CulturalValueInfoType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Перечень культурных ценностей</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="StateMuseumFundType">
+		<xs:annotation>
+			<xs:documentation>Предмет включен в Состав государственной части Музейного фонда Российской Федерации</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="No" type="clt_ru:Text10Type">
+				<xs:annotation>
+					<xs:documentation>Номер</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:sequence>
+				<xs:element name="Number" type="RUSclt_ru:Text100Type">
+					<xs:annotation>
+						<xs:documentation>Номер</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Name" type="MKRF_Res:FreeText2000Type">
+					<xs:annotation>
+						<xs:documentation>Наименование</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="IdentificationMarks">
+		<xs:annotation>
+			<xs:documentation>Идентификационные метки предмета</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TID" type="MKRF_Res:Text100Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TID радиочастотной метки (RFID)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ChemicalLabel" type="MKRF_Res:AttachmentRefType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Значение химической метки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LowerBout">
+		<xs:annotation>
+			<xs:documentation>Размеры (мм) нижней деки по своду (+/- 0,2)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Size1" type="clt_ru:QuantityBasis0Type">
+				<xs:annotation>
+					<xs:documentation>Ширина верхнего овала</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Size2" type="clt_ru:QuantityBasis0Type">
+				<xs:annotation>
+					<xs:documentation>Ширина минимальная</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Size3" type="clt_ru:QuantityBasis0Type">
+				<xs:annotation>
+					<xs:documentation>Ширина максимальная</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Size4" type="clt_ru:QuantityBasis0Type">
+				<xs:annotation>
+					<xs:documentation>Длина без пятки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MusicalInstrumentType">
+		<xs:annotation>
+			<xs:documentation>Клавишные, ударные, духовые, механические музыкальные инструменты</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="FormFactor" type="MKRF_Res:FreeText2000Type" minOccurs="0" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation>Форма корпуса</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Keyboard" type="MKRF_Res:FreeText2000Type" minOccurs="0" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation>Диапазон клавиатуры (при наличии)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Strings" type="MKRF_Res:FreeText2000Type" minOccurs="0" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation>Расположение струн (при наличии)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SoundType" type="MKRF_Res:FreeText2000Type" minOccurs="0" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation>Тип звукоизвлечения (для механических музыкальных инструментов)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SoundingElements" type="MKRF_Res:FreeText2000Type" minOccurs="0" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation>Количество звучащих элементов, диапазон клавиатуры (при наличии)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Size" type="clt_ru:CodeVariable10Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Размеры (ШхВхД)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Image" type="MKRF_Res:AttachmentRefType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Фото музыкального инструмента</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PassportInfoType">
+		<xs:annotation>
+			<xs:documentation>Паспорт музыкального инструмента</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:DocumentBaseType">
+				<xs:sequence>
+					<xs:element name="Name" type="MKRF_Res:FreeText2000Type" maxOccurs="2">
+						<xs:annotation>
+							<xs:documentation>Наименование</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ManufacturePlace" type="clt_ru:FreeText500Type">
+						<xs:annotation>
+							<xs:documentation>Место изготовления (мастер, фабрика, при наличии - этикет, марка, торговый знак)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ManufactureDate" type="clt_ru:FreeText250Type">
+						<xs:annotation>
+							<xs:documentation>Время (период) изготовления</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Owner" type="MKRF_Res:FreeText2000Type" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Собственник</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Tenant" type="MKRF_Res:FreeText2000Type" minOccurs="0" maxOccurs="2">
+						<xs:annotation>
+							<xs:documentation>Арендатор</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TenantDoc" type="cat_ru:DocumentBaseType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Документ, подтверждающий право владения арендатора</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Department" type="clt_ru:FreeText500Type">
+						<xs:annotation>
+							<xs:documentation>Наименование государственного органа, выдавшего паспорт</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Position" type="clt_ru:FreeText500Type">
+						<xs:annotation>
+							<xs:documentation>Должность лица, выдавшего паспорт</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Employe" type="clt_ru:FreeText500Type">
+						<xs:annotation>
+							<xs:documentation>Должностное лицо, выдавшее паспорт</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Type" type="clt_ru:LetterIndicatorType">
+						<xs:annotation>
+							<xs:documentation>Тип предмета: 1 - струнные смычковые музыкальные инструменты; 2 - смычок; 3 - клавишные, ударные, духовые, механические музыкальные инструменты</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:choice>
+						<xs:element name="Violin" type="MKRF_Res:ViolinType">
+							<xs:annotation>
+								<xs:documentation>Струнно смычковый музыкальный инструмент</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Bow" type="MKRF_Res:BowType">
+							<xs:annotation>
+								<xs:documentation>Смычки</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="MusicalInstrument" type="MKRF_Res:MusicalInstrumentType">
+							<xs:annotation>
+								<xs:documentation>Музыкальный инструмент</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+					<xs:element name="IdentificationMarks" type="MKRF_Res:IdentificationMarks" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Сведения о маркировке</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CulturalValue" type="clt_ru:IndicatorType">
+						<xs:annotation>
+							<xs:documentation>Предмет (объект экспертизы) отнесен к культурной ценности: 0 - нет; 1 - да</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CulturalValueExportProcedure" type="clt_ru:IndicatorType">
+						<xs:annotation>
+							<xs:documentation>Предмет (объект экспертизы) отнесен к культурной ценности в отношении которых правом Евразийского экономического союза установлен разрешительный порядок вывоза: 0 - нет; 1 - да</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CulturalValueSpecialMeaning" type="clt_ru:IndicatorType">
+						<xs:annotation>
+							<xs:documentation>Предмет (объект экспертизы) относится к культурным ценностям, имеющим особо значение: 0 - нет; 1 - да</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ExportDocument" type="MKRF_Res:ExportInfoType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Заключение (разрешение) на вывоз</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="StateMuseumFund" type="MKRF_Res:StateMuseumFundType">
+						<xs:annotation>
+							<xs:documentation>Предмет включен в Состав государственной части Музейного фонда Российской Федерации: 0 - нет; 1 - да</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="IDMarks" type="MKRF_Res:IDMarksType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Идентификационные метки предмета</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PegBox">
+		<xs:annotation>
+			<xs:documentation>Размеры (мм) головки (+/- 0,2)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Size11" type="clt_ru:QuantityBasis0Type">
+				<xs:annotation>
+					<xs:documentation>Минимальная ширина</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Size12" type="clt_ru:QuantityBasis0Type">
+				<xs:annotation>
+					<xs:documentation>Максимальная ширина</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Size13" type="clt_ru:QuantityBasis0Type">
+				<xs:annotation>
+					<xs:documentation>Ширина пятки головки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReqInfoExpType">
+		<xs:annotation>
+			<xs:documentation>Запрос для передачи сведений о факте вывоза или временного вывоза культурных ценностей</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ExpertiseNumber" type="cat_ru:DocumentBaseType">
+				<xs:annotation>
+					<xs:documentation>Номер экспертного заключения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Declaration" type="cat_ru:GTDIDType">
+				<xs:annotation>
+					<xs:documentation>Таможенная декларация</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Date" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата вывоза объекта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ResponseExportType">
+		<xs:annotation>
+			<xs:documentation>Ответ на запрос на предоставление сведений: Экспертного заключения, Заключения (разрешительного документа) на вывоз или временный вывоз культурных ценностей</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ExportDocument" type="MKRF_Res:ExportPermissionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Заключение (разрешение) на вывоз</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Expertise" type="MKRF_Res:ExpertiseInfoType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Экспертное заключение</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Passport" type="MKRF_Res:PassportInfoType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Паспорт музыкального инструмента</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Rib">
+		<xs:annotation>
+			<xs:documentation>Размеры (мм) обечаек (+/- 0,2)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Size7" type="clt_ru:QuantityBasis0Type">
+				<xs:annotation>
+					<xs:documentation>Высота у пуговки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Size8" type="clt_ru:QuantityBasis0Type">
+				<xs:annotation>
+					<xs:documentation>Высота у правого нижнего угла</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Size9" type="clt_ru:QuantityBasis0Type">
+				<xs:annotation>
+					<xs:documentation>Высота у правого верхнего угла</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Size10" type="clt_ru:QuantityBasis0Type">
+				<xs:annotation>
+					<xs:documentation>Высота у корешка шейки справа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IDMarksType">
+		<xs:annotation>
+			<xs:documentation>Идентификационные метки предмета</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Number" type="MKRF_Res:Text100Type">
+				<xs:annotation>
+					<xs:documentation>Номер по Государственному каталогу Музейного фонда Российской Федерации, номер по книге поступлений музейных предметов, инвентарный номер, номер по книгам специального учета (для музыкальных инструментов, содержащих драгоценные камни и (или) драгоценный металл)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Name" type="RUSclt_ru:FreeText1000Type" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation>Наименование музея или иной организации, которая обеспечивает хранение музыкального инструмента</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UpperBout">
+		<xs:annotation>
+			<xs:documentation>Размеры (мм) верхней деки по своду (+/- 0,2)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Size5" type="clt_ru:QuantityBasis0Type">
+				<xs:annotation>
+					<xs:documentation>Минимальное расстояние между эфами</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Size6" type="clt_ru:QuantityBasis0Type">
+				<xs:annotation>
+					<xs:documentation>Расстояние от верхнего края до нижних зарубок эфов</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ViolinType">
+		<xs:annotation>
+			<xs:documentation>Струнные смычковые музыкальные инструменты</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="LowerBout" type="MKRF_Res:LowerBout" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Размеры (мм) нижней деки по своду (+/- 0,2)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UpperBout" type="MKRF_Res:UpperBout" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Размеры (мм) верхней деки по своду (+/- 0,2)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Rib" type="MKRF_Res:Rib" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Размеры (мм) обечаек (+/- 0,2)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PegBox" type="MKRF_Res:PegBox" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Размеры (мм) головки (+/- 0,2)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ImageUpperBout" type="MKRF_Res:AttachmentRefType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Фото верхней деки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ImageLowerBout" type="MKRF_Res:AttachmentRefType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Фото нижней деки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ImageRib" type="MKRF_Res:AttachmentRefType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Фото обечайки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

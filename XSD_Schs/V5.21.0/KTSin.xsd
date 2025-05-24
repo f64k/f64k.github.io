@@ -1,0 +1,289 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="urn:customs.ru:Information:CustomsDocuments:KTSin:5.21.0" version="5.21.0.0" xmlns:KTSin="urn:customs.ru:Information:CustomsDocuments:KTSin:5.21.0" xmlns:catEKTS_cu="urn:customs.ru:CUEKTSCommonAggregateTypes:5.21.0" xmlns:catESAD_cu="urn:customs.ru:CUESADCommonAggregateTypesCust:5.21.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:cltESAD_cu="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" schemaLocation="CUESADCommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonAggregateTypesCust:5.21.0" schemaLocation="CUESADCommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUEKTSCommonAggregateTypes:5.21.0" schemaLocation="CUESADKTSCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Корректировка таможенной стоимости и таможенных платежей. Внутренний формат.</xs:documentation>
+  </xs:annotation>
+  <xs:element name="KTSin" type="KTSin:KTSinType" />
+  <xs:complexType name="KTSinType">
+    <xs:annotation>
+      <xs:documentation>Корректировка таможенной стоимости и таможенных платежей. Внутренний формат</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="GTDDocumentID" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Уникальный идентификатор ДТ.  Используется для привязки к ДТ при представлении КТС отдельно от ДТ.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="KTSPresentDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата представления документов декларантом, срок корректировки.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="DecisionCode" type="clt_ru:Code2Type">
+            <xs:annotation>
+              <xs:documentation>Код решения об аннулировании или отзыве КТС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="DeadLineDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата истечения срока предоставления дополнительных документов и сведений в соответствии с запросом таможенного органа.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="KTSNumber" type="clt_ru:Count2Type">
+            <xs:annotation>
+              <xs:documentation>Номер КТС по порядку</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Adjustment" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Тип корректировки. 1- тип корректировки совпадает для всех товаров, 0 - не совпадает</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="DeclarationKind" type="cltESAD_cu:CustomsDeclarationKindType">
+            <xs:annotation>
+              <xs:documentation>Код особенности декларирования товаров по Классификатору особенностей таможенного декларирования товаров. Гр.7 </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CurrencyCode" type="clt_ru:CurrencyA3CodeType">
+            <xs:annotation>
+              <xs:documentation>Буквенный код национальной валюты в соответствии с Классификатором валют.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ElectronicDocumentSign" type="clt_ru:Code2Type">
+            <xs:annotation>
+              <xs:documentation>Признак использования КТС в форме электронного документа. ЭД.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ExecutionDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата составления (представления)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="KTSinGoodsShipment" type="KTSin:KTSinGoodsShipmentType">
+            <xs:annotation>
+              <xs:documentation>КТС. Внутренний формат. Сведения о товарной партии.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="KTSinFilledPerson" type="catESAD_cu:ESADFilledPersonType">
+            <xs:annotation>
+              <xs:documentation>КТС. Внутренний формат. Сведения о лице, заполнившем КТС.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="KTSinTechMarks" type="KTSin:KTSinTechMarksType">
+            <xs:annotation>
+              <xs:documentation>КТС. Внутренний формат. Технологические отметки.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="KTSPaymentsReCalc" type="catEKTS_cu:KTSPaymentsReCalcType">
+            <xs:annotation>
+              <xs:documentation>Перерасчет платежей</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="GTDNumber" type="cat_ru:GTDIDType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер ДТ. Используется для привязки к ДТ при представлении КТС отдельно от ДТ.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="CustomsRepresentative" type="catESAD_cu:CUESADCustomsRepresentativeType">
+            <xs:annotation>
+              <xs:documentation>Таможенный представитель</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute fixed="1006002E" name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="KTSinCommonOfficialMarkType">
+    <xs:annotation>
+      <xs:documentation>КТС. Внутренний формат. Служебные отметки общие.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RecordSerialNumber" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер записи </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ColumnCode" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Номер графы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="OfficialRecord" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Служебная запись </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ReserveMarkIdentifier" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Резерв - Идентификатор проставленной технологической отметки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>ФИО инспектора, заверившего запись</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LNP" type="clt_ru:LNPIDType">
+        <xs:annotation>
+          <xs:documentation>Номер ЛНП инспектора, заверившего запись</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateInf" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата подписи / внесения служебной отметки.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TimeInf" type="clt_ru:TimeCustType">
+        <xs:annotation>
+          <xs:documentation>Время подписи / внесения служебной отметки.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="KTSinGoodsItemType">
+    <xs:annotation>
+      <xs:documentation>КТС. Внутренний формат. Сведения о товарах.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="catEKTS_cu:KTSGoodsItemType">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="KTSinPresentedDocuments" type="catESAD_cu:CUESADPresentedDocumentsType">
+            <xs:annotation>
+              <xs:documentation>КТС. Внутренний формат. Представленные документы.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="KTSinCustomsPaymentCalculation" type="catEKTS_cu:CUKTSCustomsPaymentCalculationType">
+            <xs:annotation>
+              <xs:documentation>КТС. Внутренний формат. Исчисление таможенных платежей</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="KTSinGoodsOfficialMark" type="KTSin:KTSinGoodsOfficialMarkType">
+            <xs:annotation>
+              <xs:documentation>КТС. Внутренний формат. Служебные отметки по товарам.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="GoodsAutomobile" type="catESAD_cu:AutomobileType">
+            <xs:annotation>
+              <xs:documentation>Сведения об автомобилях. Гр. 31.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="KTSinGoodsOfficialMarkType">
+    <xs:annotation>
+      <xs:documentation>КТС. Внутренний формат. Служебные отметки по товарам.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RecordSerialNumber" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер записи </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ReserveMarkIdentifier" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Резерв - Идентификатор проставленной технологической отметки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="OfficialRecord" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Служебная запись </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="PaymentEnsuringTypeCode" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Вид обеспечения уплаты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>ФИО инспектора, заверившего запись</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LNP" type="clt_ru:LNPIDType">
+        <xs:annotation>
+          <xs:documentation>Номер ЛНП инспектора, заверившего запись</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateInf" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата внесения служебной отметки.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TimeInf" type="clt_ru:TimeCustType">
+        <xs:annotation>
+          <xs:documentation>Время внесения служебной отметки.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DocumentNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DocumentDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата документа.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="KTSinGoodsShipmentType">
+    <xs:annotation>
+      <xs:documentation>КТС. Внутренний формат. Сведения о товарной партии.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="catEKTS_cu:KTSGoodsShipmentType">
+        <xs:sequence>
+          <xs:element name="KTSContractTerms" type="catEKTS_cu:KTSContractTermsType">
+            <xs:annotation>
+              <xs:documentation>КТС - Сведения об  условиях поставки, валюте и общей стоимости. (гр. 12, 20, 22,23)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" name="KTSinGoodsItem" type="KTSin:KTSinGoodsItemType">
+            <xs:annotation>
+              <xs:documentation>КТС. Внутренний формат. Сведения о товарах.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="KTSinCommonOfficialMark" type="KTSin:KTSinCommonOfficialMarkType">
+            <xs:annotation>
+              <xs:documentation>КТС. Внутренний формат. Служебные отметки общие.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="KTSinTechMarksType">
+    <xs:annotation>
+      <xs:documentation>КТС. Внутренний формат. Технологические отметки.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ModificationDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата последнего внесения изменений в документ.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ModificationTime" type="clt_ru:TimeCustType">
+        <xs:annotation>
+          <xs:documentation>Время последнего внесения изменений в ДТС.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Приказ ФТС России от 28.06.2023 № 557 -->
+<!-- Приказ ФТС России от 06.12.2023 № 1155 -->
+<!-- Приказ ФТС России от 11.12.2023 № 1183 -->
+<!-- Приказ ФТС России от 13.12.2023 № 1195 -->
+<!-- Приказ ФТС России от 13.12.2023 № 1196 -->
+<!-- Приказ ФТС России от 13.12.2023 № 1197 -->
+<!-- Приказ ФТС России от 13.12.2023 № 1198 -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:stz_asres="urn:customs.ru:Information:CustomsDocuments:STZ_AccSystemResponse:5.25.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:STZ_AccSystemResponse:5.25.0" elementFormDefault="qualified" version="5.25.0.0">
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Сообщение ответ из АСУ</xs:documentation>
+	</xs:annotation>
+	<xs:element name="STZ_AccSystemResponse" type="stz_asres:STZ_AccSystemResponseType">
+		<xs:annotation>
+			<xs:documentation>Сообщение ответ из АСУ</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="STZ_AccSystemResponseType">
+		<xs:annotation>
+			<xs:documentation>Сообщение ответ из АСУ</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="Customs" type="cat_ru:CustomsType">
+						<xs:annotation>
+							<xs:documentation>Сведения о таможенном органе</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Date" type="clt_ru:DateCustType">
+						<xs:annotation>
+							<xs:documentation>Дата сообщения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Resident" type="stz_asres:ResidentType">
+						<xs:annotation>
+							<xs:documentation>Сведения о резиденте СТЗ</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="EAD" type="stz_asres:EADType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Перечень ЭУД</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="NotSendingReasons" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Причины не направления ЭУД</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Person" type="cat_ru:PersonSignatureType">
+						<xs:annotation>
+							<xs:documentation>Лицо, уполномоченное участником ОЭЗ</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1060042E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы.</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="AddEADType">
+		<xs:annotation>
+			<xs:documentation>Сведения о дополнении к ЭУД</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="EAD_Number" type="stz_asres:EAD_NumberType">
+				<xs:annotation>
+					<xs:documentation>Номер ЭУД</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AddEAD_Number" type="clt_ru:Count5Type">
+				<xs:annotation>
+					<xs:documentation>Номер дополнения к ЭУД по порядку </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocLink" type="cat_ru:DocLinkType">
+				<xs:annotation>
+					<xs:documentation>Идентификаторы, присвоенные документу при размещении в ЭАД</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EAD_NumberType">
+		<xs:annotation>
+			<xs:documentation>Номер ЭУД</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="INN" type="clt_ru:INNIDType">
+				<xs:annotation>
+					<xs:documentation>ИНН плательшика</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EAD_Date" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата составления</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Number" type="clt_ru:Count10Type">
+				<xs:annotation>
+					<xs:documentation>Порядковый номер документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsKind" type="clt_ru:CodeVariable3Type">
+				<xs:annotation>
+					<xs:documentation>Признак товара, на который формируется ЭУД: СТЗ - товары помещенные, под процедуру СТЗ; ПП - товары, изготовленные (полученные) с использованием товаров, помещенных под процедуру СТЗ </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NumPP" type="clt_ru:Quantity2Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Порядковый номер версии ЭУД</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EADType">
+		<xs:annotation>
+			<xs:documentation>Сведения о ЭУД</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="EAD_Number" type="stz_asres:EAD_NumberType">
+				<xs:annotation>
+					<xs:documentation>Номер ЭУД</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocLink" type="cat_ru:DocLinkType">
+				<xs:annotation>
+					<xs:documentation>Идентификаторы, присвоенные документу при размещении в ЭАД</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AddEAD" type="stz_asres:AddEADType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Сведения о дополнительных ЭУД</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ResidentType">
+		<xs:annotation>
+			<xs:documentation>Сведения о резиденте СТЗ</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="RUScat_ru:SubjectDetailsType">
+				<xs:sequence>
+					<xs:element name="ResidentCertificate" type="stz_asres:ResidentCertificateType">
+						<xs:annotation>
+							<xs:documentation>Cвидетельство о включении в реестр резидентов</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ResidentCertificateType">
+		<xs:annotation>
+			<xs:documentation>Сведения о включении в реестр резидентов</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CertificateNumber" type="clt_ru:DocumentNumberType">
+				<xs:annotation>
+					<xs:documentation>Номер свидетельства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CertificateDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата выдачи свидетельства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CertificateValidity" type="clt_ru:DateCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Срок действия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CertificateAgency" type="clt_ru:NameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование органа, выдавшего свидетельство</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

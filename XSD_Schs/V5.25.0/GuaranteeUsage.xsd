@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:grn_cat="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeCommonAggregateTypesCust:5.24.0" xmlns:grn_cl="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeUsage:5.24.0" targetNamespace="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeUsage:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeCommonAggregateTypesCust:5.24.0" schemaLocation="GuaranteeCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос на резервирование денежных средств/Сведения по использованию гарантии</xs:documentation>
+  </xs:annotation>
+  <xs:element name="GuaranteeUsage" type="grn_cl:GuaranteeUsageType">
+    <xs:annotation>
+      <xs:documentation>Запрос на резервирование денежных средств/Сведения по использованию гарантии</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GuaranteeUsageType">
+    <xs:annotation>
+      <xs:documentation>Запрос на резервирование денежных средств/Сведения по использованию гарантии</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocumentDateTime" type="clt_ru:DateTimeCustType">
+            <xs:annotation>
+              <xs:documentation>Дата и время формирования электронного документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocumentSign" type="clt_ru:CodeVariable2Type">
+            <xs:annotation>
+              <xs:documentation>Признак документа: 1 - запрос на резервирование; 2 - уведомление об использовании; 3 - продление срока; 4 - завершение использования; 5 - прекращение обеспеченного обязательства; 6 - уведомление о внесении сведений о банковских гарантиях; 7 - Уведомление о завершении ТТ; 8 - Прекращение использования обеспечения; 9 - Зачет в счет авансовых платежей, 10 - Временное решение о предоставлении отсрочки/рассрочки; 11 - Регистрационный номер решения о предоставлении отсрочки/рассрочки; 12 - не требуется резервирование по условиям; 13 - информирование о завершении контроля по несостоявшемуся резервированию</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Number" type="clt_ru:Count5Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Порядковый номер резервирования по документу</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DateLimit" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Планируемый срок завершения использования обеспечения.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsOffice" type="cat_ru:CustomsType">
+            <xs:annotation>
+              <xs:documentation>Таможенный орган оформления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BorderCustoms" type="cat_ru:CUCustomsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Таможенный орган отправления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DeliveryCustoms" type="cat_ru:CUCustomsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Таможенный орган назначения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsOfficial" type="cat_ru:CustomsPersonType">
+            <xs:annotation>
+              <xs:documentation>Должностное лицо ТО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsDocument" type="grn_cat:CustomsGuaranteeDocType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Идентификатор таможенной процедуры, в рамках которой осуществляется резервирование/использование обеспечения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GuaranteeDocument" type="grn_cat:CustomsGuaranteeDocType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Информация о документе обеспечения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsResAmount" type="grn_cl:GoodsResAmountType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Резервируемая сумма денежных средств по товарам</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReservationAmount" type="grn_cat:AmountType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Общая резервируемая сумма денежных средств</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="LiableTrader" type="RUScat_ru:SubjectDetailsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Участник ВЭД, несущий обязательства по обеспечению</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AEORegistryId" type="grn_cl:AEORegistryIdType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения из реестра уполномоченных экономических операторов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Reason" type="grn_cl:ReasonType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Причина, по которой завершено использование обеспечения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ObligationInfo" type="grn_cl:ObligationInfoType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Информация о видах обязательств</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TransitDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата оформления транзита</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TransitDateLimit" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Срок таможенного транзита</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SertifDateLimit" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Cрок действия сертификата</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TransitCloseState" type="clt_ru:Numeric1Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код типа завершения транзита  : 1 - штатное завершение, 2 - завершение с оговорками, 3 – «недоставка товара», 4 – «аннулирование транзитной декларации», 5 – «корректировка ТД», 6 – «отказ в выпуске»</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TransitCloseDateTime" type="clt_ru:DateTimeCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата и время завершения транзита</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TempImExPV" type="clt_ru:IndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Признак временного ввоза (вывоза) ТСЛП</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1050003E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AEORegistryIdType">
+    <xs:annotation>
+      <xs:documentation>Сведения из реестра уполномоченных экономических операторов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AEORegistryNum" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер лица, присвоенный ему в реестре уполномоченных экономических операторов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AEORegistryKindCode" type="clt_ru:LetterIndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код типа свидетельства уполномоченного экономического оператора</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GoodsResAmountType">
+    <xs:annotation>
+      <xs:documentation>Резервируемая сумма денежных средств по товарам</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsNumber" type="clt_ru:Count5Type">
+        <xs:annotation>
+          <xs:documentation>Номер товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Amount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DecisionCode" type="clt_ru:Code2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код решения по товару ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReasonType">
+    <xs:annotation>
+      <xs:documentation>Причина изменения статусного состояния документа обеспечения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Name" type="clt_ru:CityNameType">
+        <xs:annotation>
+          <xs:documentation>Наименование причины</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Comment" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Комментарий</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DecisionCode" type="clt_ru:Code2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код решения в соответствии с классификатором решений, принимаемых таможенными органами</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateClose" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата завершения использования обеспечения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReasonClose" type="clt_ru:Numeric1Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Причина закрытия  сертификата: 1 -  Завершение транзита, 2 - Погашение сертификата в связи с его неиспользованием, 3 - Погашение сертификата в связи с недоставкой товара, 4 - Прочее, 5 -  Аннулирование в связи с технической ошибкой</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ObligationInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о видах обязательств</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ObligationCode" type="clt_ru:CodeVariable6Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Код вида обязательства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

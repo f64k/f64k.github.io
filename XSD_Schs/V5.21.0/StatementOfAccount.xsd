@@ -1,0 +1,332 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--Приказ ФТС России от 11.06.2019 г. № 949 "Об утверждении форм и порядка представления банками и иными кредитными организациями документов и сведений по запросам (требованиям) Таможенных органов"-->
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:soa="urn:customs.ru:Information:CommercialFinanceDocuments:StatementOfAccount:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CommercialFinanceDocuments:StatementOfAccount:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Выписка по операциям на счете организации (индивидуального предпринимателя)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="StatementOfAccount" type="soa:StatementOfAccountType">
+    <xs:annotation>
+      <xs:documentation>Выписка по операциям на счете организации (индивидуального предпринимателя)</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="StatementOfAccountType">
+    <xs:annotation>
+      <xs:documentation>Выписка по операциям на счете организации (индивидуального предпринимателя)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Bank" type="soa:BanktInfoType">
+            <xs:annotation>
+              <xs:documentation>Реквизиты банка (кредитной организации)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsName" type="cat_ru:CustomsType">
+            <xs:annotation>
+              <xs:documentation>Наименование таможенного органа, направившего запрос (требование)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsLetter" type="cat_ru:DocumentBaseType">
+            <xs:annotation>
+              <xs:documentation>Реквизиты письма таможенного органа о направлении запроса (требования), во исполнение которого представляется выписка</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AccountHolder" type="soa:SubjectType">
+            <xs:annotation>
+              <xs:documentation>Информация о субъекте, в отношении которого предоставляется выписка</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Account" type="clt_ru:AccountType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер счета организации (индивидуального предпринимателя), по операциям на котором представляется выписка</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AccountCurrency" type="clt_ru:CurrencyN3CodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Цифровой код валюты счета</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Term" type="soa:TermType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Период времени, за который представляется выписка</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TransInfo" type="soa:TransInfoType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Информация об операциях по счету</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Sheets" type="clt_ru:Quantity5Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Общее количество листов заверенных копий платежных документов, подтверждающих совершение операций на счетах организации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RepresentativeBankPerson" type="cat_ru:PersonSignatureType">
+            <xs:annotation>
+              <xs:documentation>Представитель банка (кредитной организации)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1002013E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="BanktInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о банке</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OrganizationName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Наименование банка (кредитной организации)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ShortName" type="clt_ru:ShortNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Краткое наименование банка (кредитной организации)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INN" type="clt_ru:INNIDType">
+        <xs:annotation>
+          <xs:documentation>ИНН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KPP" type="clt_ru:KPPCodeType">
+        <xs:annotation>
+          <xs:documentation>КПП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BIC" type="clt_ru:BICIDType">
+        <xs:annotation>
+          <xs:documentation>БИК</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CounterpartyBankType">
+    <xs:annotation>
+      <xs:documentation>Информация о банке (кредитной организации) плательщика/ получателя денежных средств</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="BankOrganizationName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Наименование банка (кредитной организации) плательщика/получателя денежных средств</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BICCorr" type="clt_ru:BICIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>БИК банка (кредитной организации) плательщика/получателя денежных средств</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SWIFT" type="clt_ru:SWIFTIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>SWIFT иностранного банка (банка посредника)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryCode" type="clt_ru:CountryN3CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Цифровой код страны места нахождения иностранного банка (банка посредника). При отсутствии информации о стране места нахождения иностранного банка-посредника указывается код "999"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Sign" type="clt_ru:LetterIndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак информации об иностранном банке: 1- при указании SWIFT; 2 - при указании цифрового кода страны места нахождения иностранного банка; 3 - при указании SWIFT иностранного банка-посредника; 4 - при указании кода страны места нахождения иностранного банка-посредника; 5 - при указании кода "999"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CorrAccBrf" type="clt_ru:ForeignAccountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер корреспондентского счета кредитной организации плательщика/получателя денежных средств</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CounterpartyType">
+    <xs:annotation>
+      <xs:documentation>Информация о плательщике/ получателе денежных средств</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="soa:SubjectType">
+        <xs:sequence>
+          <xs:element name="PersonalAccount" type="clt_ru:ForeignAccountType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер счета плательщика/получателя денежных средств</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SubjectType">
+    <xs:annotation>
+      <xs:documentation>Информация о субъекте, в отношении которого предоставляется выписка</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="VerifiedPersonYUL" type="soa:VerifiedPersonYULType">
+          <xs:annotation>
+            <xs:documentation>Наименование юридического лица</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="VerifiedPersonFL" type="soa:VerifiedPersonFLType">
+          <xs:annotation>
+            <xs:documentation>ФИО физического лица (ИП)</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+      <xs:element name="INN" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KPP" type="clt_ru:KPPCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>КПП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ForeignOrgCode_Kind" type="clt_ru:LetterIndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вид идентификатора иностранной организации (иностранного предпринимателя):1 - КИО, 2 - TIN, 3 - LEI, 4 - SWIFT, 5 - NUM</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ForeignOrganizationCode" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Значение идентификатора иностранной организации (иностранного предпринимателя)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TermType">
+    <xs:annotation>
+      <xs:documentation>Период, за который требуются выписка </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="BeginDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата начала периода</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EndDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата окончания периода</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TransDocType">
+    <xs:annotation>
+      <xs:documentation>Документ, на основании которого кредитной организацией была совершена операция по счету</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PrDocumentKind" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Вид (шифр) документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PrDocumentNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PrDocumentDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TransInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация об одной операции по лицевому счету в выписке. Не заполняется для свернутой выписки и выписки, содержащей текущий остаток на счете</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TransNumber" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Номер операции по порядку</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата совершения операции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AccDocNo" type="soa:TransDocType">
+        <xs:annotation>
+          <xs:documentation>Реквизиты документа, на основании которого была совершена операция по счету</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CounterpartyBank" type="soa:CounterpartyBankType">
+        <xs:annotation>
+          <xs:documentation>Сведения о банке (кредитной организации) плательщика/получателя денежных средств</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Counterparty" type="soa:CounterpartyType">
+        <xs:annotation>
+          <xs:documentation>Реквизиты  плательщика/получателя денежных средств</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DC" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Признак дебета/кредита счета клиента (1 - дебет, 2 - кредит)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Amount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма операции по счету (по дебету/кредиту счета)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentPurpose" type="clt_ru:Text150Type">
+        <xs:annotation>
+          <xs:documentation>Назначение платежа </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="VerifiedPersonFLType">
+    <xs:annotation>
+      <xs:documentation>Сведения о физическом лице, в отношении которого предоставляется выписка</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonSurname" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Фамилия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Имя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonMiddleName" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="VerifiedPersonYULType">
+    <xs:annotation>
+      <xs:documentation>Сведения о юридическом лице, в отношении которого предоставляется выписка</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OrganizationName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Наименование организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ShortName" type="clt_ru:ShortNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Краткое наименование организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

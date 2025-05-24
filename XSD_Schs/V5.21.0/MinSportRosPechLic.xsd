@@ -1,0 +1,269 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:sq_clt="urn:customs.ru:Information:SQDocuments:SQCommonLeafTypesCust:5.0.10" xmlns:mnspch="urn:customs.ru:Information:SQDocuments:MinSportRosPechLic:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:MinSportRosPechLic:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:SQDocuments:SQCommonLeafTypesCust:5.0.10" schemaLocation="SQCommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Ответ на запрос документов о подтверждении целевого назначения материалов</xs:documentation>
+  </xs:annotation>
+  <xs:element name="MinSportRosPechLic" type="mnspch:MinSportRosPechLicType" />
+  <xs:complexType name="MinSportRosPechLicType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос документов о подтверждении целевого назначения материалов</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocSign" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Признак документа: 1 - ответ на запрос справки (Роспечать); 2 - ответ на запрос письма (Минспорттуризм России); 3 - ответ на запрос на получение изменений</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Document" type="mnspch:DocumentType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Документ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="StampNum" type="clt_ru:CodeVariable20Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер операции</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="StampDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата операции</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="StampAction" type="clt_ru:Numeric1Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Вид операции (1 – NEW – создание нового подтверждения, 2 – MODIFIED – изменение существующего подтверждения, 3 – CANCELED – отмена существующего подтверждения)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009023E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AuthorisedPersonType">
+    <xs:annotation>
+      <xs:documentation>Уполномоченное лицо</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:PersonBaseType">
+        <xs:sequence>
+          <xs:element name="ID" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Идентификатор</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ConfirmationStatusType">
+    <xs:annotation>
+      <xs:documentation>Информация о статусе подтверждения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Code" type="clt_ru:Text10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Name" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ConfirmationType">
+    <xs:annotation>
+      <xs:documentation>Подтверждение</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="DueDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Срок действия подтверждения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ConfirmationId" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Идентификатор подтверждения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="LastChangeDate" type="clt_ru:DateTimeCustType">
+            <xs:annotation>
+              <xs:documentation>Информация о дате и времени последнего изменения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ConfirmationStatus" type="mnspch:ConfirmationStatusType">
+            <xs:annotation>
+              <xs:documentation>Информация о статусе подтверждения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DocumentType">
+    <xs:annotation>
+      <xs:documentation>Документ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="IsCanceled" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак прекращения действия документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BDRDID" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор документа по БД РД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AdditionalInfo" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дополнительная информация</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Paragraph" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Пункт приложения к протоколу (соглашению)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ContractDetails" type="cat_ru:DocumentBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Реквизиты контракта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Person" type="mnspch:PersonType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о лице, которому выдано подтверждение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Recipient" type="mnspch:PersonType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о получателе товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsDescription" type="mnspch:GoodsDescriptionType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AuthorisedPerson" type="mnspch:AuthorisedPersonType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Уполномоченное лицо</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Confirmation" type="mnspch:ConfirmationType">
+        <xs:annotation>
+          <xs:documentation>Подтверждение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentNum" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер обязательства о целевом использовании</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата обязательства о целевом использовании</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GoodsDescriptionType">
+    <xs:annotation>
+      <xs:documentation>Описание товара</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CommodityName" type="sq_clt:FreeText4000Type">
+        <xs:annotation>
+          <xs:documentation>Описание товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OriginCountry" type="clt_ru:CountryNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Страна происхождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OriginCountryCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код страны происхождения (двузначный буквенный альфа-2 код)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsQuantity" type="cat_ru:SupplementaryQuantityType">
+        <xs:annotation>
+          <xs:documentation>Количество товара в основной единице измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SupplementaryGoodsQuantity" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество товара в дополнительной единице измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Manufacturer" type="mnspch:ManufacturerType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о производителе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsSign" type="clt_ru:Numeric1Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Тип товара (1 – СМИ, 2 – книги, 3 – другое)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CategoryCode" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код категории книжной продукции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Category" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Категория книжной продукции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ManufacturerType">
+    <xs:annotation>
+      <xs:documentation>Сведения о производителе</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:OrganizationBaseType">
+        <xs:sequence>
+          <xs:element name="ManufacturerAddress" type="cat_ru:AddressType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Адрес производителя</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PersonType">
+    <xs:annotation>
+      <xs:documentation>Сведения о получателе</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:OrganizationBaseType">
+        <xs:sequence>
+          <xs:element name="PersonStatus" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Статус получателя Ю/Ф (0 - юридическое лицо; 1 - физическое лицо)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

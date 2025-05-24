@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:areqv="urn:customs.ru:Information:SQDocuments:AirReqVeterin:5.24.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" xmlns:cltTrans_ru="urn:customs.ru:Information:TransportDocuments:TransportCommonLeafTypesCust:5.14.3" targetNamespace="urn:customs.ru:Information:SQDocuments:AirReqVeterin:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:TransportDocuments:TransportCommonLeafTypesCust:5.14.3" schemaLocation="TransportCommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос решения Россельхознадзора при фактическом прибытии товара (при отсутствии ПИ или ее корректировки)  при перемещении товаров авиационным транспортом</xs:documentation>
+  </xs:annotation>
+  <xs:element name="AirReqVeterin" type="areqv:AirReqVeterinType">
+    <xs:annotation>
+      <xs:documentation>Запрос решения Россельхознадзора при фактическом прибытии товара (при отсутствии ПИ или ее корректировки)  при перемещении товаров авиационным транспортом</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="AirReqVeterinType">
+    <xs:annotation>
+      <xs:documentation>Запрос решения Россельхознадзора при фактическом прибытии товара (при отсутствии ПИ или ее корректировки)  при перемещении товаров авиационным транспортом</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="GUID" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Идентификатор цепочки обмена сообщениями</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IDNumber" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер идентификатора, полученного заинтересованным лицом в Россельхознадзоре</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsName" type="RUSclt_ru:FreeText1000Type">
+            <xs:annotation>
+              <xs:documentation>Наименование товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ShippingDoc" type="areqv:PermitDocType">
+            <xs:annotation>
+              <xs:documentation>Сведения о товаросопросодительном документе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TransportModeCode" type="clt_ru:TransportModeCodeType">
+            <xs:annotation>
+              <xs:documentation>Код вида транспортного средства </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="FlightNumber" type="cltTrans_ru:FlightNumberType">
+            <xs:annotation>
+              <xs:documentation>Номер рейса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ArrivalDate" type="clt_ru:DateTimeCustType">
+            <xs:annotation>
+              <xs:documentation>Дата и время фактического прибытия</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ArrivaPlace" type="RUSclt_ru:Name120Type">
+            <xs:annotation>
+              <xs:documentation>Место прибытия товаров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Decision" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Решение по товарам
+5 - Ввоз запрещен;                6 - Ввоз разрешен. Подлежит досмотру в месте назначения (доставки);         7 - Ввоз разрешен. Подлежит досмотру в специально оборудованных и оснащенных местах				</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009308E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="PermitDocType">
+    <xs:annotation>
+      <xs:documentation>Сведения о разрешительном документе</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocNumber" type="clt_ru:DocumentNumberType" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Номер документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocDate" type="clt_ru:DateCustType" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Дата документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

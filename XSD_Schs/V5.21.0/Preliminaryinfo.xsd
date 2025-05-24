@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:pri="urn:customs.ru:Information:CustomsDocuments:Preliminaryinfo:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" xmlns:cltpi_ru="urn:customs.ru:Information:PriorInformation:PriorCommonLeafTypes:5.17.0" xmlns:catpi_ru="urn:customs.ru:Information:PriorInformation:PriorCommonAggregateTypes:5.21.0" xmlns:cltTrans_ru="urn:customs.ru:Information:TransportDocuments:TransportCommonLeafTypesCust:5.14.3" targetNamespace="urn:customs.ru:Information:CustomsDocuments:Preliminaryinfo:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:PriorInformation:PriorCommonLeafTypes:5.17.0" schemaLocation="PriorCommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:PriorInformation:PriorCommonAggregateTypes:5.21.0" schemaLocation="PriorCommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:TransportDocuments:TransportCommonLeafTypesCust:5.14.3" schemaLocation="TransportCommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сведения о зарегистрированной предварительной информации о товарах, предполагаемых к ввозу</xs:documentation>
+  </xs:annotation>
+  <xs:element name="Preliminaryinfo" type="pri:PreliminaryinfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о зарегистрированной предварительной информации о товарах, предполагаемых к ввозу</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="PreliminaryinfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о зарегистрированной предварительной информации о товарах, предполагаемых к ввозу</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocType" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Тип документа: 0 - информация о регистрации ПИ; 2- перечень ПИ по запросу</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PreliminaryType" type="pri:PreliminaryType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Предварительная информация о товарах, предполагаемых к ввозу</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006829E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа. Код документа в Альбоме форматов</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="PreliminaryType">
+    <xs:annotation>
+      <xs:documentation>Предварительная информация о товарах, предполагаемых к ввозу</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RegNumber" type="catpi_ru:PIRegNumberType">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер предварительной информации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PI_RegID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Системный идентификатор зарегистрированной предварительной информации </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="UsageCode" type="clt_ru:Code2Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Код цели представления предварительной информации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ArrivalDateTime" type="clt_ru:DateTimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Планируемые дата и время прибытия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EntryCheckPointDetails" type="pri:EntryCheckPointDetailsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Место прибытия товаров на таможенную территорию Евразийского экономического союза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransportModeCode" type="clt_ru:TransportModeCodeType">
+        <xs:annotation>
+          <xs:documentation>Код вида транспортного средства по классификатору видов транспорта и транспортировки товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:choice>
+        <xs:element name="SeaTransportDetails" type="pri:SeaTransportDetailsType">
+          <xs:annotation>
+            <xs:documentation>Сведения о водном транспортном средстве, прибывающем на таможенную территорию Евразийского экономического союза</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="AirTransportDetails" type="pri:AirTransportDetailsType">
+          <xs:annotation>
+            <xs:documentation>Сведения о воздушном транспортном средстве, прибывающем на таможенную территорию Евразийского экономического союза</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+      <xs:element name="PICarrierInfo" type="RUScat_ru:SubjectDetailsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о перевозчике, осуществляющем ввоз товаров на таможенную территорию Евразийского экономического союза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Status" type="clt_ru:Numeric1Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Статус документа (0- зарегистрирован, 1- изменен, 2 –аннулирован)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AirTransportDetailsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о воздушном транспортном средстве, прибывающем на таможенную территорию Евразийского экономического союза</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AirRegNumber" type="cltTrans_ru:AirplaneRegNumber" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер воздушного судна (номер борта или название)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AirNationalityCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код страны принадлежности транспорта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FlightDetails" type="pri:FlightDetailsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о рейсе воздушного судна</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EntryCheckPointDetailsType">
+    <xs:annotation>
+      <xs:documentation>Место прибытия на таможенную территорию Евразийского экономического союза</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsOfficeCode" type="clt_ru:CustomsCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AirportCode" type="cltTrans_ru:AirportIATACodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Кодовое обозначение аэропорта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PortCode" type="RUSclt_ru:LocationCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Кодовое обозначение морского порта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BorderCheckpointCode" type="clt_ru:CodeVariable18Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код пункта пропуска</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BorderCheckpointName" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование пункта пропуска</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FlightDetailsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о рейсе воздушного судна</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AirlineId" type="cltTrans_ru:AirlineIATACodeType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор авиакомпании, присвоенный Международной ассоциацией воздушного транспорта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FlightId" type="clt_ru:CodeVariable4Type">
+        <xs:annotation>
+          <xs:documentation>Номер рейса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FilgftDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата, за которую выполняется рейс</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SeaTransportDetailsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о водном транспортном средстве, прибывающем на таможенную территорию Евразийского экономического союза</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ShipName" type="clt_ru:TransportMeansIDType">
+        <xs:annotation>
+          <xs:documentation>Наименование судна</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NationalityCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код страны принадлежности транспорта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ShipIMONumber" type="cltpi_ru:IMONumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИМО номер судна</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ShipType" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Тип судна</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ShipTypeCode" type="clt_ru:CodeVariable4Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код типа судна</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ShipDetails" type="pri:ShipDetailsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о национальной регистрации водного судна</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="VoyageId" type="clt_ru:CodeVariable8Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер рейса водного судна</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ShipDetailsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о национальной регистрации судна</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ShipCountryCode" type="clt_ru:CountryA2CodeType">
+        <xs:annotation>
+          <xs:documentation>Код страны регистрации (государства флага) судна</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ShipId" type="clt_ru:CodeVariable20Type">
+        <xs:annotation>
+          <xs:documentation>Идентификатор, присвоенный водному судну при внесении в реестр</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistryKind" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Вид реестра: 1 - Государственный реестр (Государственный судовой реестр); 2 - Международный реестр судов; 3 - Бербоут-чартерный реестр; 4 - Реестр маломерных судов (судовой реестр)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PortCode" type="RUSclt_ru:LocationCodeType">
+        <xs:annotation>
+          <xs:documentation>Кодовое обозначение порта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации судна в реестре</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

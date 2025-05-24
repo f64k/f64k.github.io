@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:fe_req="urn:customs.ru:Information:SQDocuments:FNSEGRRequest:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:FNSEGRRequest:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос cведений из Единого государственного реестра</xs:documentation>
+  </xs:annotation>
+  <xs:element name="FNSEGRRequest" type="fe_req:FNSEGRRequestType" />
+  <xs:complexType name="FNSEGRRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос cведений из Единого государственного реестра</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="NomerDela" type="clt_ru:DocumentNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер дела, находящегося в производстве в суде или правоохранительном органе, участником которого является юридическое лицо или индивидуальный предприниматель, в отношении которого запрашивается выписка</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IdDok" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Идентификатор запроса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:element name="INN" type="clt_ru:INNIDType">
+              <xs:annotation>
+                <xs:documentation>ИНН</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="OGRN" type="clt_ru:OGRNIDType">
+              <xs:annotation>
+                <xs:documentation>ОГРН</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009105E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

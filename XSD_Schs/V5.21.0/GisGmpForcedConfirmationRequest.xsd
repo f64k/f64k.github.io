@@ -1,0 +1,312 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Схемы ГИС ГМП -  аналог SQ.05060 -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:fc_req="urn:customs.ru:Information:SQDocuments:GisGmpForcedConfirmationRequest:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:GisGmpForcedConfirmationRequest:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Прием информации о погашении начисления (запрос)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="GisGmpForcedConfirmationRequest" type="fc_req:GisGmpForcedConfirmationRequestType">
+    <xs:annotation>
+      <xs:documentation>Прием информации о погашении начисления (запрос)</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GisGmpForcedConfirmationRequestType">
+    <xs:annotation>
+      <xs:documentation>Прием информации о погашении начисления (запрос)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="OriginatorID" type="clt_ru:Code6Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>УРН участника косвенного взаимодействия, сформировавшего запрос. Если запрос сформировал участник косвенного взаимодействия, то заполнение тега является обязательным. Значение должно быть должно содержать 6 латинских букв и цифр</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Option" type="fc_req:OptionType">
+            <xs:annotation>
+              <xs:documentation>Типы запроса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009259E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="OptionType">
+    <xs:annotation>
+      <xs:documentation>Типы запроса</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="Reconcile" type="fc_req:ReconcileType">
+          <xs:annotation>
+            <xs:documentation>Принудительное квитирование начисления с платежами</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="AnnulmentReconcile" type="fc_req:ReconcileType">
+          <xs:annotation>
+            <xs:documentation>Отмена принудительного квитирования начисления с платежами</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="ServiceProvided" type="fc_req:ServiceProvidedType">
+          <xs:annotation>
+            <xs:documentation>Установление платежу признака «Услуга предоставлена»</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="AnnulmentServiceProvided" type="fc_req:AnnulmentServiceType">
+          <xs:annotation>
+            <xs:documentation>Отмена факта установления платежу признака «Услуга предоставлена»</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReconcileType">
+    <xs:annotation>
+      <xs:documentation>Принудительное квитирование/отмена начисления с платежами</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SupplierBillID" type="fc_req:SupplierBillIDType">
+        <xs:annotation>
+          <xs:documentation>УИН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:choice>
+        <xs:element name="PaymentId" type="fc_req:PaymentIdType" maxOccurs="100">
+          <xs:annotation>
+            <xs:documentation>Перечень идентификаторов платежей. Перечень указывается в случае принудительного квитирования начисления с платежами</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="PaymentNotLoaded" type="fc_req:PaymentNotLoadedType">
+          <xs:annotation>
+            <xs:documentation>Признак принудительного квитирования начисления с отсутствующим в ГИС ГМП платежом. Для проведения принудительного квитирования начисления с отсутствующим в ГИС ГМП платежом необходимо указывать данный тег, значение которого должно быть равно «true»</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaymentNotLoadedType">
+    <xs:annotation>
+      <xs:documentation>Признак принудительного квитирования начисления</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Value" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Появляется при квитировании с отсутствующим платежом</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:choice>
+        <xs:element name="AmountReconcile" type="fc_req:LongIntegerType" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>Сумма погашения, в копейках. Используется при "Принудительное квитирование начисления с платежами"</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="ReconcileID" type="fc_req:ReconcileIDType" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>Номер операции принудительного квитирования начисления с отсутствующим в ГИС ГМП платежом (частичное погашение). Используется при "Отмена принудительного квитирования начисления с платежами"</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ServiceProvidedType">
+    <xs:annotation>
+      <xs:documentation>Установление платежу признака «Услуга предоставлена»</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PaymentDataInfo" type="fc_req:PaymentDataType" maxOccurs="100">
+        <xs:annotation>
+          <xs:documentation>Информация о платеже</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AnnulmentServiceType">
+    <xs:annotation>
+      <xs:documentation>Отмена факта установления платежу признака «Услуга предоставлена»</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PaymentDataID" type="fc_req:DataIDType" maxOccurs="100">
+        <xs:annotation>
+          <xs:documentation>Сведения об идентификаторах платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DataIDType">
+    <xs:annotation>
+      <xs:documentation>Сведения об идентификаторах платежа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PaymentId" type="fc_req:PaymentIdType">
+        <xs:annotation>
+          <xs:documentation>УПНО (УИП)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ServiceDataID" type="fc_req:ServiceDataIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>УПНО (УИП)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaymentDataType">
+    <xs:annotation>
+      <xs:documentation>Информация о платеже</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PaymentId" type="fc_req:PaymentIdType">
+        <xs:annotation>
+          <xs:documentation>УПНО (УИП)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ServiceData" type="fc_req:ServiceDataType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дополнительные сведения о предоставлении услуги/ об учете платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ServiceDataType">
+    <xs:annotation>
+      <xs:documentation>Дополнительные сведения о предоставлении услуги/ об учете платежа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Amount" type="fc_req:LongIntegerType">
+        <xs:annotation>
+          <xs:documentation>Сумма, на которую была предоставлена услуга, в копейках</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CourtName" type="fc_req:Text400Type">
+        <xs:annotation>
+          <xs:documentation>Наименование организации, принявшей решение об учете платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LawsuitInfo" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Реквизиты делопроизводства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersoneOfficial" type="fc_req:PersoneType">
+        <xs:annotation>
+          <xs:documentation>Информация о лице, принявшем решение об учете факта оплаты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PersoneType">
+    <xs:annotation>
+      <xs:documentation>Информация о лице, принявшем решение об учете факта оплаты</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Name" type="fc_req:Text100Type">
+        <xs:annotation>
+          <xs:documentation>Фамилия и инициалы должностного лица, принявшего решение об учете факта оплаты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OfficialPosition" type="fc_req:Text300Type">
+        <xs:annotation>
+          <xs:documentation>Должность лица, принявшего решение об учете платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="PaymentIdType">
+    <xs:annotation>
+      <xs:documentation>Идентификатор платежа</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:IdentifierCategoriesCust">
+      <xs:pattern value="1\d{15}((0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])\d{4})\d{8}">
+        <xs:annotation>
+          <xs:documentation>Структура УИП для кредитных организаций</xs:documentation>
+        </xs:annotation>
+      </xs:pattern>
+      <xs:pattern value="2\d{4}0{11}((0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])\d{4})\d{8}">
+        <xs:annotation>
+          <xs:documentation>Структура УИП для ТОФК</xs:documentation>
+        </xs:annotation>
+      </xs:pattern>
+      <xs:pattern value="3[a-fA-F0-9]{6}((0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])\d{4})\d{17}">
+        <xs:annotation>
+          <xs:documentation>Структура УИП для остальных участников</xs:documentation>
+        </xs:annotation>
+      </xs:pattern>
+      <xs:pattern value="\w{32}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SupplierBillIDType">
+    <xs:annotation>
+      <xs:documentation>УИН. 20 символов или 25 цифр</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:pattern value="\w{20}" />
+      <xs:pattern value="\d{25}" />
+      <xs:pattern value="\d{15}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="LongIntegerType">
+    <xs:annotation>
+      <xs:documentation>Целое неотрицательное число от 0 до 18446744073709551615</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:IntegerCategoriesCust">
+      <xs:minInclusive value="0" />
+      <xs:maxInclusive value="18446744073709551615" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ReconcileIDType">
+    <xs:annotation>
+      <xs:documentation>Номер операции принудительного квитирования начисления с отсутствующим в ГИС ГМП
+                платежом
+            </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:length value="24" />
+      <xs:pattern value="N[a-fA-F0-9]{6}\d{17}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ServiceDataIDType">
+    <xs:annotation>
+      <xs:documentation>Идентификатор информации об учете факта оплаты</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:length value="24" />
+      <xs:pattern value="P[a-fA-F0-9]{6}\d{17}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text100Type">
+    <xs:annotation>
+      <xs:documentation>Строка до 100 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="100" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text300Type">
+    <xs:annotation>
+      <xs:documentation>Строка до 300 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="300" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text400Type">
+    <xs:annotation>
+      <xs:documentation>Строка до 400 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="400" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

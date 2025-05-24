@@ -1,0 +1,404 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ESADout_Sheet="urn:customs.ru:Information:CustomsDocuments:ESADout_Sheet:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:catESAD_cu="urn:customs.ru:CUESADCommonAggregateTypesCust:5.24.0" xmlns:cltESAD_cu="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:ESADout_Sheet:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonAggregateTypesCust:5.24.0" schemaLocation="CUESADCommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" schemaLocation="CUESADCommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сводные данные по декларации на товары</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ESADout_Sheet" type="ESADout_Sheet:ESADout_SheetType">
+    <xs:annotation>
+      <xs:documentation>Сводные данные по декларации на товары</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ESADout_SheetType">
+    <xs:annotation>
+      <xs:documentation>Сводные данные по декларации на товары</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="CustomsProcedure" type="clt_ru:CUCustomsProcedureType">
+            <xs:annotation>
+              <xs:documentation>ИМ, ЭК, ТТ. Первый подраздел гр.1 ДТ/ТД</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsModeCode" type="cltESAD_cu:CustomsModeCodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код таможенной процедуры в соответствии с классификатором видов таможенных процедур. Гр. 1. Второй подраздел ДТ. Первый элемент первого подраздела гр. 37/«00» – для припасов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DeclarationKind" type="cltESAD_cu:CustomsDeclarationKindType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код особенности декларирования товаров по классификатору особенностей таможенного декларирования товаров. Гр.7 ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OptionalGoodsShipment" type="ESADout_Sheet:OptionalGoodsShipmentType">
+            <xs:annotation>
+              <xs:documentation>Выборочные сведения о товарной партии</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009316E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа. (Код документа в Альбоме форматов для РФ)</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ContractCostType">
+    <xs:annotation>
+      <xs:documentation>Валюта и общая стоимость по счету. Гр. 22, 23</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ContractCurrencyCode" type="clt_ru:CurrencyA3CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Трехзначный буквенный в графе 22 код валюты цены договора/ платежа (оценки). По классификатору валют</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ContractCurrencyRate" type="clt_ru:CurrencyRateType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Курс валюты цены договора (контракта) или валюты платежа (оценки)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TotalInvoiceAmount" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Общая стоимость товаров. Гр 22 подраздел 2</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TotalAmount" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Общая стоимость товара, перемещаемого через таможенную границу Евразийского экономического союза в несобранном или разобранном виде, в том числе некомплектном или незавершенном виде</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GoodsGroupDescriptionType">
+    <xs:annotation>
+      <xs:documentation>Описание группы товаров одного наименования с отличающимися от других групп характеристиками</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание группы товаров с учетом дополнительных характеристик (качественных, технических, коммерческих), необходимых для классификации товара и для исчисления таможенной стоимости. В случае отсутствия описания группы товаров указывается символ «:» (двоеточие). Гр. 31 первый подраздел</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RKTNVED" type="clt_ru:CUGoodsNomenclatuerCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Кодовое обозначение компонента машины в соответствии с ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ObjectOrdinal" type="clt_ru:Code3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер (позиция) компонента товара, перемещаемого через таможенную границу Евразийского экономического союза в несобранном или разобранном виде, в том числе некомплектном или незавершенном виде, в соответствии с решением таможенного органа о классификации товара в соответствии с ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ComponentNumber" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сборочный номер компонента товара, перемещаемого через таможенную границу Евразийского экономического союза в несобранном или разобранном виде, в том числе некомплектном или незавершенном виде, в соответствии с решением таможенного органа о классификации товара в соответствии с ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsGroupInformation" type="ESADout_Sheet:GoodsGroupInformationType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Характеристика товаров в группе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GroupNum" type="clt_ru:Count4Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер группы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GoodsGroupInformationType">
+    <xs:annotation>
+      <xs:documentation>Характеристика товаров в группе</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="InfoDescription" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="4">
+        <xs:annotation>
+          <xs:documentation>Наименование артикула</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Manufacturer" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование производителя (изготовителя) товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ManufacturerOKATO" type="clt_ru:OKATOCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код ОКАТО производителя (изготовителя) товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TradeMark" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование товарного знака, объекта авторского права, смежных прав, патента  и т.д. </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProductionPlaceName" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование места происхождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsMark" type="cltESAD_cu:GoodsArticulType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование марки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsModel" type="cltESAD_cu:GoodsArticulType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование модели продукта (товара)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsMarking" type="cltESAD_cu:GoodsArticulType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор вида продукта (товара) или артикул товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsStandard" type="cltESAD_cu:GoodsArticulType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование стандарта (международного, межгосударственного, государственного, отраслевого или организации) или технических условий на товар </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsSort" type="cltESAD_cu:GoodsArticulType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование сорта / сорт или группа сортов (для лесо- и пиломатериалов)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WoodDescriptionDetails" type="catESAD_cu:WoodDescriptionDetailsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о лесоматериалах</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Dimensions" type="catESAD_cu:DimensionType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Линейные размеры объекта (длина, ширина и высота)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateIssue" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата производства (изготовления) товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SerialNumber" type="clt_ru:Text50Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор (серийный номер, код) экземпляра продукта (товара)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsGroupQuantity" type="catESAD_cu:SupplementaryQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RecordId" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор записи</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LineNum" type="clt_ru:Count5Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер записи в группе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InvoicedCost" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Цена/стоимость товарной позиции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Goods_SheetType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товаре. Гр. 31-47</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsNumeric" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер декларируемого товара / номер товара по списку/ номер корректируемого товара. Гр.32</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="4">
+        <xs:annotation>
+          <xs:documentation>Наименование (коммерческое, фирменное или иное традиционное наименование) товаров/ «Товары согласно прилагаемому Списку». Гр.31 первый подраздел</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GrossWeightQuantity" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вес товара, брутто (кг). Гр. 35</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NetWeightQuantity" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вес товара, нетто (кг). Гр.38</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NetWeightQuantity2" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вес товара, нетто без учета всех видов упаковки. Гр.38</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InvoicedCost" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Цена/ стоимость товара. Гр 42</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InvoicedCurrencyCode" type="clt_ru:CurrencyA3CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Трехзначный буквенный код валюты цены/ стоимости товара. По классификатору валют</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsCost" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Таможенная стоимость товара. Гр.45</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StatisticalCost" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Статистическая стоимость декларируемого товара. Гр. 46</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TotalStatisticValueAmount" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Общая статистическая стоимость товара, перемещаемого через таможенную границу Евразийского экономического союза в несобранном или разобранном виде, в том числе некомплектном или незавершенном виде</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TotalGrossMassMeasure" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Общая масса брутто товара, перемещаемого через таможенную границу Евразийского экономического союза в несобранном или разобранном виде, в том числе некомплектном или незавершенном виде</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TotalNetMassMeasure" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Общая масса нетто товара, перемещаемого через таможенную границу Евразийского экономического союза в несобранном или разобранном виде, в том числе некомплектном или незавершенном виде</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsTNVEDCode" type="clt_ru:CUGoodsNomenclatuerCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код товара по ТН ВЭД ЕАЭС. Гр.33 первый раздел</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OriginCountryCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код страны происхождения в соответствии с классификатором стран мира / «EU» / 00 (неизвестна). Гр.34</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OriginCountryName" type="clt_ru:CountryNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Краткое название страны происхождения / экономического союза. Гр.34</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SupplementaryGoodsQuantity" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество товара в дополнительной единице измерения. Гр.41</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SupplementaryGoodsQuantity1" type="cat_ru:SupplementaryQuantityType" minOccurs="0" maxOccurs="3">
+        <xs:annotation>
+          <xs:documentation>Количество товара в единице измерения, отличной от основной и дополнительной (элемент 1 Гр.31)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PakageQuantity" type="clt_ru:PakageNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Общее количество грузовых мест, занятых товаром</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ElectricalEnergReceived" type="catESAD_cu:CU_ElectricalEnergyType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о количестве принятой электроэнергии за отчетный период (элемент 9 Гр 31)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ElectricalEnergGiven" type="catESAD_cu:CU_ElectricalEnergyType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о количестве переданной электроэнергии за отчетный период (элемент 9 Гр 31)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsAutomobile" type="catESAD_cu:AutomobileType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения об автомобилях. Гр. 31</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsGroupDescription" type="ESADout_Sheet:GoodsGroupDescriptionType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание и характеристика товаров / Описание группы товаров одного наименования с отличающимися от других групп характеристиками</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OptionalGoodsShipmentType">
+    <xs:annotation>
+      <xs:documentation>Выборочные сведения о товарной партии</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SpecificationNumber" type="clt_ru:SheetNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Общее количество представленных спецификаций. Гр.4_1</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SpecificationListNumber" type="clt_ru:SheetNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Общее количество листов представленных спецификаций. Гр.4_2</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TotalGoodsNumber" type="clt_ru:Count3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Всего наименований товаров в декларации на товары. Гр.5</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TotalPackageNumber" type="clt_ru:PakageNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Общее количество грузовых мест. Гр.6</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OriginCountryName" type="clt_ru:CountryNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Страна происхождения товара. Краткое название страны в соответствии с классификатором стран мира / РАЗНЫЕ/ НЕИЗВЕСТНА/ ЕВРОСОЮЗ. Гр.16</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OriginCountryCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Страна происхождения. Буквенный код страны в соответствии с классификатором стран мира. Гр.16</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TotalCustCost" type="ESADout_Sheet:ContractCostType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Валюта и общая стоимость по счету. Гр. 22, 23</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Goods_Sheet" type="ESADout_Sheet:Goods_SheetType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о товарах. Гр. 31-47</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TotalGrossWeight" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Общий вес брутто по ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TotalNetWeight" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Общий вес нетто по ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ESADout_CUCustomsPayment" type="catESAD_cu:ESADout_CUCustomsPaymentType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения об уплате. Гр. В</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TotalPaymentAmountRUB" type="clt_ru:Code2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Общая сумма таможенных платежей по гр."В" в рублях</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TotalPaymentAmountUSD" type="clt_ru:Code2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Общая сумма таможенных платежей по гр."В" в долларах США</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

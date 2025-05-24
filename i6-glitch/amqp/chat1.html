@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AMQP Chat 1</title>
+    <script src="https://cdn.jsdelivr.net/npm/@cloudamqp/amqp-client@3.2.1/lib/cjs/index.min.js"></script>
+    <style>
+        body {
+            font-family: monospace;
+            margin: 20px;
+        }
+
+        input,
+        button {
+            margin: 5px;
+            padding: 8px;
+        }
+
+        #messages {
+            border: 1px solid #ccc;
+            padding: 10px;
+            height: 300px;
+            overflow-y: scroll;
+        }
+    </style>
+</head>
+
+<body>
+    <h2> Параметры подключения </h2>
+    <div>
+        <input type="text" id="url" placeholder="AMQP URL (wss://...)" size="40">
+        <input type="text" id="queue" placeholder="Имя очереди" value="chat">
+        <button onclick="connect()">Подключиться</button>
+    </div>
+
+    <!-- Чат -->
+    <div id="chat" style="display: none;">
+        <div id="messages"></div>
+        <input type="text" id="message" placeholder="Сообщение">
+        <button onclick="send()">Отправить</button>
+    </div>
+
+    <script>
+        let connection, channel;
+
+        async function connect() {
+            try {
+                // Подключение к брокеру
+                connection = new AMQP.WebSocketClient({
+                    url: document.getElementById('url').value
+                }).connection();
+
+                // Создание канала и очереди
+                channel = await connection.channel();
+                await channel.queueDeclare(document.getElementById('queue').value);
+
+                // Подписка на сообщения
+                await channel.basicConsume(document.getElementById('queue').value, msg => {
+                    const div = document.createElement('div');
+                    div.textContent = msg.bodyToString();
+                    document.getElementById('messages').appendChild(div);
+                });
+
+                document.getElementById('chat').style.display = 'block';
+            } catch (e) {
+                alert('Ошибка подключения: ' + e);
+            }
+        }
+
+        async function send() {
+            if (!channel) return;
+            const message = document.getElementById('message').value;
+            await channel.basicPublish('', document.getElementById('queue').value, message);
+            document.getElementById('message').value = '';
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:erslt="urn:customs.ru:Information:CustomsDocuments:EBVRResult:5.21.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:EBVRResult:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Результат поиска в ЕБВР</xs:documentation>
+  </xs:annotation>
+  <xs:element name="EBVRResult" type="erslt:EBVRResultType">
+    <xs:annotation>
+      <xs:documentation>Результат поиска в ЕБВР</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="EBVRResultType">
+    <xs:annotation>
+      <xs:documentation>Тип, описывающий результат поиска в ЕБВР</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:choice>
+          <xs:element name="ResultInfo" type="erslt:ResultInfoType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Результат поиска по товару.
+Примечание. Порядковый номер ResultInfo соответствует порядковому номеру EBVRRequest/RequestInfo</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ResultAddInfo" type="erslt:ResultAddInfoType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Результат дополнения записей ЕБВР. Примечание. Порядковый номер ResultAddInfo соответствует порядковому номеру RiskMSGAddInfo/AddInfo</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:choice>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006219E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ResultInfoType">
+    <xs:annotation>
+      <xs:documentation>Тип, описывающий результат по товару</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RiskMSG" type="clt_ru:Quantity11Type">
+        <xs:annotation>
+          <xs:documentation>Количество отобранных сообщений о выявленных рисках в ЕБВР по товару</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EBVR_URL" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Ссылка (-и) для просмотра отобранных сообщений</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ResultAddInfoType">
+    <xs:annotation>
+      <xs:documentation>Тип, описывающий результат дополнения записей ЕБВР</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ResultCode" type="clt_ru:Code3Type">
+        <xs:annotation>
+          <xs:documentation>Результат обработки запроса в ЕБВР</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ResultDescription" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Текстовое описание ошибки.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

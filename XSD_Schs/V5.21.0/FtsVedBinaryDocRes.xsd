@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+SQ.00271, СМЭВ - ftsVedMembersIdentifiers-root.xsd (Предоставление сведений об идентификаторах субъектов в качестве участников ВЭД (режим по требованию))
+SQ.00311, СМЭВ - ftsVedFullMembersInfoByPeriod-root.xsd (Предоставление полных сведений о субъектах в качестве участников ВЭД за период, режим по требованию)
+SQ.00321, СМЭВ - ftsAllFEASubjectsReglament-root.xsd (Предоставление сведений по всем субъектам - участникам ВЭД за отчётный период, регламентный режим)
+SQ.00331, СМЭВ - ftsListFEASubjectsReglament-root.xsd (Предоставление сведений по списку субъектов - участников ВЭД за отчётный период, регламентный режим)
+SQ.00341, СМЭВ - ftsAllFEASubjectsOnDemand-root.xsd (Предоставление сведений по всем субъектам - участникам ВЭД, режим по требованию)
+SQ.00351, СМЭВ - ftsListFEASubjectsOnDemand-root.xsd (Предоставление сведений по списку субъектов - участников ВЭД за период, режим по требованию)
+SQ.00361, СМЭВ - ftsVedMemberDocList-root.xsd (Предоставление сведений о доступном перечне электронных документов по субъекту - участнику ВЭД и параметрах их отбора или ссылках, режим по требованию)
+SQ.00371, СМЭВ - ftsVedMemberDoc-root.xsd (Предоставление электронного документа по субъекту - участнику ВЭД, режим по требованию)
+-->
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:vbd_res="urn:customs.ru:Information:SQDocuments:FtsVedBinaryDocRes:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:SQDocuments:FtsVedBinaryDocRes:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Ответ на запрос на предоставление сведений об участниках ВЭД</xs:documentation>
+  </xs:annotation>
+  <xs:element name="FtsVedBinaryDocRes" type="vbd_res:FtsVedBinaryDocResType" />
+  <xs:complexType name="FtsVedBinaryDocResType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос на предоставление сведений об участниках ВЭД</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="InfoKind" type="clt_ru:LetterIndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Вид ответа на запрашиваемую информацию: 1 - Ответ на запрос на предоставление сведений об идентификаторах субъектов в качестве участников ВЭД (режим по требованию); 2 - Ответ на запрос на предоставление полных сведений о субъектах в качестве участников ВЭД за период, режим по требованию; 3 - Ответ на запрос на предоставление сведений по всем субъектам - участникам ВЭД за отчётный период, регламентный режим; 4 - Ответ на запрос на предоставление сведений по списку субъектов - участников ВЭД за отчётный период, регламентный режим; 5 - Ответ на запрос на предоставление сведений по всем субъектам - участникам ВЭД, режим по требованию; 6 - Ответ на запрос на предоставление сведений по списку субъектов - участников ВЭД за период, режим по требованию; 7 - Ответ на запрос на предоставление сведений о доступном перечне электронных документов по субъекту - участнику ВЭД и параметрах их отбора или ссылках, режим по требованию; 8 - Ответ на запрос на предоставление электронного документа по субъекту - участнику ВЭД, режим по требованию.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:element name="AttachmentFS" type="vbd_res:AttachmentFSType">
+              <xs:annotation>
+                <xs:documentation>Вложение передается через файловое хранилище (ФХ)</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="IsMTOMAttachmentContent" type="clt_ru:IndicatorType">
+              <xs:annotation>
+                <xs:documentation>Признак передачи вложения методом MTOM</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+          <xs:element name="IsUnstructuredFormat" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Признак того, является или нет вложение неструктурированным</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IsZippedPacket" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Признак того, будет ли вложение помещено в zip-архив</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CodeDocument" type="clt_ru:Text50Type">
+            <xs:annotation>
+              <xs:documentation>Код документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OriginalFileName" type="clt_ru:Text150Type">
+            <xs:annotation>
+              <xs:documentation>Оригинальное имя файла</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OriginalFileMimeType" type="clt_ru:CodeVariable20Type">
+            <xs:annotation>
+              <xs:documentation>Оригинальное расширение файла (text/xml)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="FileName" type="clt_ru:Text50Type">
+            <xs:annotation>
+              <xs:documentation>Имя файла внутри архива</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="FileData" type="clt_ru:Text3MB" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Данные файла  в кодировке BASE64</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1060002E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AttachmentFSType">
+    <xs:annotation>
+      <xs:documentation>Вложение передается через файловое хранилище (ФХ)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AttachmentFSLink" type="clt_ru:Text3MB">
+        <xs:annotation>
+          <xs:documentation>Ссылка на папку ФХ, в которой содержится передаваемое вложение
+					</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AttachmentSignatureFSLink" type="clt_ru:Text3MB" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Блок передачи файла отсоединенной электронной подписи вложения
+					</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

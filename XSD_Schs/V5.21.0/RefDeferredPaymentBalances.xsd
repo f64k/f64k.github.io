@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Ответ на запрос об остатках в рамках использования Решения о предоставлении отсрочки/рассрочки уплаты ввозных таможенных пошлин, налогов-->
+<!-- 
+Проект Приказа ФТС "Об утверждении формы заявления о предоставлении отсрочки или рассрочки уплаты ввозных таможенных пошлин, налогов, перечня сведений, подлежащих указанию в заявлении, и порядков его заполнения и рассмотрения, а также об утверждении форм решений о предоставлении, отказе в предоставлении отсрочки или рассрочки уплаты ввозных таможенных пошлин, налогов, формы графика поэтапной уплаты сумм ввозных таможенных пошлин, налогов"
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:rdpb="urn:customs.ru:Information:CommercialFinanceDocuments:RefDeferredPaymentBalances:5.21.0" targetNamespace="urn:customs.ru:Information:CommercialFinanceDocuments:RefDeferredPaymentBalances:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Ответ на запрос об остатках в рамках использования Решения о предоставлении отсрочки/рассрочки уплаты ввозных таможенных пошлин, налогов</xs:documentation>
+  </xs:annotation>
+  <xs:element name="RefDeferredPaymentBalances" type="rdpb:RefDeferredPaymentBalancesType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос об остатках в рамках использования Решения о предоставлении отсрочки/рассрочки уплаты ввозных таможенных пошлин, налогов</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RefDeferredPaymentBalancesType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос об остатках в рамках использования Решения о предоставлении отсрочки/рассрочки уплаты ввозных таможенных пошлин, налогов</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DecisionRegNumber" type="rdpb:DecisionRegNumberType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер Решения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TotalAmount" type="clt_ru:AmountType">
+            <xs:annotation>
+              <xs:documentation>Общая сумма платежей, указанная в Решении, по которым может быть предоставлена отсрочка (рассрочка), рублей</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PercentAmount" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Признак уплаты процентов (1 - с уплатой процентов, 0 - без уплаты процентов)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TotalFundsAmount" type="clt_ru:AmountType">
+            <xs:annotation>
+              <xs:documentation>Общая сумма платежей, по которым уже предоставлена отсрочка (рассрочка), рублей</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TotalBalanceAmount" type="clt_ru:AmountType">
+            <xs:annotation>
+              <xs:documentation>Общая сумма платежей, по которым может быть предоставлена отсрочка (рассрочка), рублей</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1002042E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DecisionRegNumberType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер Решения о предоставлении / об отказе в предоставлении отсрочки или рассрочки уплаты ввозных таможенных пошлин, налогов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, зарегистрировавшего Решение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации Решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AbbTermsPay" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Аббревиатура в части Решений, касающихся условия обязательства уплаты таможенных платежей: "ОП" – отсрочка; "РП" – рассрочка.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AbbBasis" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Аббревиатура основания: "-" – в случаях, касающихся отсрочки, предоставление которой предусмотрено пунктом 1 статьи 59 ТК ЕАЭС; "О" – в иных случаях.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SerialNumberPrefix" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Префикс порядкового номера Решения по журналу регистрации, указывающий на вид принятого решения об отсрочке или рассрочке уплаты ввозных таможенных пошлин, налогов: "Р" - решение о предоставлении; "О" - решение об отказе в предоставлении; "А" - решение об аннулировании решения в предоставлении.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SerialNumber" type="clt_ru:Code4Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер Решения по журналу регистрации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

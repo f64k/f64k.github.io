@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ast="urn:customs.ru:Information:SQDocuments:ApplicationStatus:5.24.0" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" targetNamespace="urn:customs.ru:Information:SQDocuments:ApplicationStatus:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Статусное состояние заявки</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ApplicationStatus" type="ast:ApplicationStatusType">
+    <xs:annotation>
+      <xs:documentation>Статусное состояние заявки</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ApplicationStatusType">
+    <xs:annotation>
+      <xs:documentation>Статусное состояние заявки</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="ApplicationSourceSystemID" type="clt_ru:DocumentNumberType">
+            <xs:annotation>
+              <xs:documentation>Номер заявления на ЕПГУ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ApplicationDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата заявления на ЕПГУ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ApplicationID" type="clt_ru:DocumentNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер заявления на АПС "Электронные Госуслуги"</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ApplicationRegDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата регистрации заявления на АПС "Электронные Госуслуги"</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Status" type="ast:StatusType">
+            <xs:annotation>
+              <xs:documentation>Статусное состояние</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Document" type="ast:PresentedDocumentsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Архивы документов, приложенных к заявке</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009211E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="PresentedDocumentsType">
+    <xs:annotation>
+      <xs:documentation>Архивы документов, приложенных к решению</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocumentsBody" type="CategoryCust:BinaryDataCategoriesCust" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Данные файла в кодировке BASE64</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="StatusType">
+    <xs:annotation>
+      <xs:documentation>Статусное состояние.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Kind" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Код статуса (3 - Исполнено, 4 - Отказ, 6 - Принято ведомством)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Date" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата присвоения статуса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Comment" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Комментарий.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

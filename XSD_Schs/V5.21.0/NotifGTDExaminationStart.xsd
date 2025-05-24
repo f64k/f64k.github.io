@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:nges="urn:customs.ru:Information:ExchangeDocuments:NotifGTDExaminationStart:5.21.0" targetNamespace="urn:customs.ru:Information:ExchangeDocuments:NotifGTDExaminationStart:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Уведомление о начале проверки ДТ.</xs:documentation>
+  </xs:annotation>
+  <xs:element name="NotifGTDExaminationStart" type="nges:NotifGTDExaminationStartType" />
+  <xs:complexType name="NotifGTDExaminationStartType">
+    <xs:annotation>
+      <xs:documentation>Уведомление о начале проверки декларации</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocSign" type="clt_ru:DigitalIndicatorType">
+            <xs:annotation>
+              <xs:documentation>Тип документа : 0 - Уведомление о начале проверки ДТ, 1- Уведомление о фактическом предъявлении МПО в ТО, 2 - Уведомление о поступление МПО на осмотр, 3 - Уведомление о начале проверки МПО, 4 - начата проверка информации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ControlStartDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата начала проверки / Дата предъявления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ControlStartTime" type="clt_ru:TimeCustType">
+            <xs:annotation>
+              <xs:documentation>Время начала проверки / Время предъявления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Comments" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Комментарий</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsPerson" type="cat_ru:CustomsPersonType">
+            <xs:annotation>
+              <xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Customs" type="cat_ru:CustomsType">
+            <xs:annotation>
+              <xs:documentation>Таможенный орган</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocID" type="nges:DocIDType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1004052E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="MPORegNumType">
+    <xs:annotation>
+      <xs:documentation>Номер МПО</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, зарегистрировавшего документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MPO_Number" type="clt_ru:Code13Type">
+        <xs:annotation>
+          <xs:documentation>Уникальный номер МПО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocIDType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер документа</xs:documentation>
+    </xs:annotation>
+    <xs:choice>
+      <xs:element name="DTRegNum" type="cat_ru:GTDIDType">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер ДТ </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MPORegNum" type="nges:MPORegNumType">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер МПО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PI_RegID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер пакета информации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+</xs:schema>

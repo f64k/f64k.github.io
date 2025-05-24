@@ -1,0 +1,263 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+PaymentType = 0 - в приказах нет (был в ГУФТДиТР 2018 № 00415 ФТ на ЛК и Задолженность по формам (пошлины) (приложение).tif)
+PaymentType = 1 -  Приказ ФТС России от 21.11.2018 № 1882
+-->
+<xs:schema xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:req_gr="urn:customs.ru:Information:CommercialFinanceDocuments:ReqGuarant:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CommercialFinanceDocuments:ReqGuarant:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Требование об уплате денежных средств по гарантии банка или договору поручительства / гарантирующим объединением (ассоциацией)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ReqGuarant" type="req_gr:ReqGuarantType">
+    <xs:annotation>
+      <xs:documentation>Требование об уплате денежных средств по гарантии банка или договору поручительства / гарантирующим объединением (ассоциацией)</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ReqGuarantType">
+    <xs:annotation>
+      <xs:documentation>Требование об уплате денежных средств по гарантии банка или договору поручительства / гарантирующим объединением (ассоциацией)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="InfoDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата формирования сведений</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="InfoTime" type="clt_ru:TimeCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Время формирования сведений</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocumentInfo" type="req_gr:DocumentInfoType">
+            <xs:annotation>
+              <xs:documentation>Сведения о документе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1002046E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DocumentInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о документе</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsOffice" type="cat_ru:CustomsType">
+        <xs:annotation>
+          <xs:documentation>Код и наименование таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentType" type="xs:integer">
+        <xs:annotation>
+          <xs:documentation>Тип сведений: 0 - документ, 1 - отметка об ознакомлении участника ВЭД с документом</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentType" type="xs:integer">
+        <xs:annotation>
+          <xs:documentation>Вид оплаты: 0 - по гарантии банка или договору поручительства, 1 - гарантирующим объединением (ассоциацией)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RequisitesDocument" type="cat_ru:DocumentBaseType">
+        <xs:annotation>
+          <xs:documentation>Реквизиты документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Organization" type="req_gr:OrganizationMeasType">
+        <xs:annotation>
+          <xs:documentation>Сведения об участнике ВЭД (из паспорта)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentSupportinformation" type="req_gr:DocumentSupportinformationType">
+        <xs:annotation>
+          <xs:documentation>Информация о солидарном лице (гарантия, поручительство, ассоциация)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentPaymentReqs" type="req_gr:DocumentPaymentReqsType">
+        <xs:annotation>
+          <xs:documentation>Реквизиты для перечисления денежных средств на счет Федерального казначейства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NotificationDocument" type="req_gr:NotificationDocumentType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Реквизиты уведомления (уточнения к уведомлению) об уплате таможенных платежей, специальных, антидемпинговых, компенсационных пошлин, процентов и пени</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RTPDocument" type="cat_ru:DocumentBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Реквизиты расчета таможенных пошлин</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RecievingSignature" type="cat_ru:PersonSignatureType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отметка о вручении - подпись представителя организации. Заполняется в Личном Кабинете участника ВЭД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentSignature" type="req_gr:DocumentSignatureType">
+        <xs:annotation>
+          <xs:documentation>Подпись документов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocumentPaymentReqsType">
+    <xs:annotation>
+      <xs:documentation>Банковские реквизиты для оплаты</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="BankInfoRecipient" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Банк получателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BICBankRecipient" type="clt_ru:BICIDType">
+        <xs:annotation>
+          <xs:documentation>БИК банка получателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AccountRecipient" type="clt_ru:AccountType">
+        <xs:annotation>
+          <xs:documentation>Номер счета</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RecipientName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование получателя платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RecipientINN" type="clt_ru:INNIDType">
+        <xs:annotation>
+          <xs:documentation>ИНН получателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RecipientKPP" type="clt_ru:KPPCodeType">
+        <xs:annotation>
+          <xs:documentation>КПП получателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OKTMO" type="clt_ru:CodeVariable11Type">
+        <xs:annotation>
+          <xs:documentation>ОКТМО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentAmountText" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Сумма,подлежащая уплате прописью</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentAmount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма, подлежащая уплате цифрами</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FinePaymentAmount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма пени, подлежащая уплате цифрами</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocumentSignatureType">
+    <xs:annotation>
+      <xs:documentation>Типы подписи документов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustChiefSignature" type="cat_ru:PersonSignatureType">
+        <xs:annotation>
+          <xs:documentation>Подпись Ф.И.О. начальника таможенного органа. Заполняется в АПС Задолженность.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExecutiveSignature" type="req_gr:ExecutiveType">
+        <xs:annotation>
+          <xs:documentation>Подпись И.О.  исполнителя. Заполняется в АПС Задолженность.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocumentSupportinformationType">
+    <xs:annotation>
+      <xs:documentation>Основания обеспечения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OrganizationGuarant" type="req_gr:OrganizationMeasType">
+        <xs:annotation>
+          <xs:documentation>Наименование солидарного лица (гаранта/поручителя, гарантирующего объединения МДП/АТА)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RequisitesDocument" type="cat_ru:DocumentBaseType">
+        <xs:annotation>
+          <xs:documentation>Реквизиты документа обеспечения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ExecutiveType">
+    <xs:annotation>
+      <xs:documentation>Данные исполнителя</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:PersonSignatureType">
+        <xs:sequence>
+          <xs:element name="Phone" type="clt_ru:PhoneNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер телефона исполнителя</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="NotificationDocumentType">
+    <xs:annotation>
+      <xs:documentation>Уведомления (уточнения к уведомлению)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SerialNumber" type="clt_ru:Code5Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер уведомления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PrDocumentNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PrDocumentDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocDatePeriodExecution" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Срок исполнения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OrganizationMeasType">
+    <xs:annotation>
+      <xs:documentation>Сведения об участнике ВЭД (из меры)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:OrganizationType">
+        <xs:sequence>
+          <xs:element name="ITN" type="clt_ru:ITNType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>ИТН</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

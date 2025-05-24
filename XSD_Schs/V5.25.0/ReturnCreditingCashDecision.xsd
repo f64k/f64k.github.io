@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Приказ ФТС России от 10 января 2019 года № 7
+DecisionIndicator = 0 - Приложение № 2 - Решение таможенного органа о возврате авансовых платежей
+DecisionIndicator = 1 - Приложение № 3 - Уведомление об отказе в возврате авансовых платежей 
+-->
+<xs:schema xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:rccd="urn:customs.ru:Information:CommercialFinanceDocuments:ReturnCreditingCashDecision:5.24.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CommercialFinanceDocuments:ReturnCreditingCashDecision:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Уведомление об отказе в возврате авансовых платежей</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ReturnCreditingCashDecision" type="rccd:ReturnCreditingCashDecisionType">
+    <xs:annotation>
+      <xs:documentation>Уведомление об отказе в возврате авансовых платежей</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ReturnCreditingCashDecisionType">
+    <xs:annotation>
+      <xs:documentation>Уведомление об отказе в возврате авансовых платежей</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="RegistrationReqDoc" type="cat_ru:DocumentBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер и дата документа (Решения о возврате или Уведомления об отказе)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RefusalPayPercentSign" type="clt_ru:IndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Признак отказа в выплате процентов: 1- отказано в выплате процентов, 0 - не отказано в выплате процентов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegistrationReq" type="cat_ru:DocumentBaseType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер и дата заявления о возврате авансовых платежей</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ApplicantInfo" type="rccd:ApplicantInfoType">
+            <xs:annotation>
+              <xs:documentation>Сведения о заявителе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DecisionIndicator" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Тип документа: 0 - Решение таможенного органа о возврате авансовых платежей; 1 - Уведомление об отказе в возврате авансовых платежей</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:element name="DecisionReturn" type="rccd:DecisionReturnType">
+              <xs:annotation>
+                <xs:documentation>Сведения для Решения таможенного органа о возврате авансовых платежей</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="NoticeRefusal" type="rccd:NoticeRefusalType">
+              <xs:annotation>
+                <xs:documentation>Сведения для Уведомления об отказе в возврате авансовых платежей</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+          <xs:element name="Customs" type="cat_ru:CustomsType">
+            <xs:annotation>
+              <xs:documentation>Таможенный орган</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="HeadCustoms" type="cat_ru:PersonSignatureType">
+            <xs:annotation>
+              <xs:documentation>Начальник (заместитель начальника) таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="HeadDepartment" type="cat_ru:PersonSignatureType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Начальник отдела</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Executor" type="cat_ru:PersonSignatureType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Исполнитель</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1002032E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AmountCashType">
+    <xs:annotation>
+      <xs:documentation>Сведения о сумме возврата (в рублях)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="BCC" type="clt_ru:CodeVariable20Type">
+        <xs:annotation>
+          <xs:documentation>Код бюджетной классификации (КБК)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentModeCode" type="clt_ru:CUCustomsPaymentCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код вида платежа в соответствии с Классификатором  видов налогов, сборов и иных платежей, взимание которых возложено на таможенные органы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentModeName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Amount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ApplicantInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о заявителе</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:OrganizationType">
+        <xs:sequence>
+          <xs:element name="OKSM" type="clt_ru:CountryA2CodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Буквенный код страны в соответствии с классификатором стран мира</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Classification" type="clt_ru:Numeric1Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Классификация лицевого счета: "0" - "юридическое лицо"; "1" - "физическое лицо"; "2" - "ИП". </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OKTMO" type="clt_ru:OKATOCodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код ОКТМО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Birthdate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата рождения физического лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IdentityCard" type="RUScat_ru:RUIdentityCardType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Документ, удостоверяющий личность</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DecisionReturnType">
+    <xs:annotation>
+      <xs:documentation>Сведения для Решения таможенного органа о возврате авансовых платежей</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="JudicialActReq" type="cat_ru:DocumentBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Реквизиты судебного акта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DecisionCustomsReq" type="cat_ru:DocumentBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер решения таможенного органа (во исполнение которого выносится настояшее решение о возврате)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ClaimedAmount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма, заявленная к возврату</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AmountReturn" type="rccd:AmountCashType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о сумме возврата (в рублях)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AmountDue" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сумма задолженности по уплате таможенных пошлин, налогов и иных платежей на дату принятия решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="NoticeRefusalType">
+    <xs:annotation>
+      <xs:documentation>Сведения для Уведомления об отказе в возврате авансовых платежей</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ParSt36Ch18" type="rccd:ParSt36Ch18Type">
+        <xs:annotation>
+          <xs:documentation>Пункт части 18 статьи 36 Федерального закона от 03.08.2018 г. № 289-ФЗ, по которому не производится возврат авансовых платежей</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ParSt36Ch18Type">
+    <xs:annotation>
+      <xs:documentation>Пункт части 18 статьи 36 Федерального закона от 03.08.2018 г. № 289-ФЗ, по которому не производится возврат авансовых платежей</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ParNumSt36Ch18" type="clt_ru:CodeVariable2Type">
+        <xs:annotation>
+          <xs:documentation>Номер пункта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ParTextSt36Ch18" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Содержание пункта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

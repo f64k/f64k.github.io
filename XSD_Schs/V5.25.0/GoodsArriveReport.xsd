@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:catWH_ru="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonAggregateTypesCust:5.24.0" xmlns:gare="urn:customs.ru:Information:CustomsDocuments:GoodsArriveReport:5.24.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:GoodsArriveReport:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonAggregateTypesCust:5.24.0" schemaLocation="WarehouseCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Информация о прибытии товаров</xs:documentation>
+  </xs:annotation>
+  <xs:element name="GoodsArriveReport" type="gare:GoodsArriveReportType">
+    <xs:annotation>
+      <xs:documentation>Информация о прибытии товаров</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GoodsArriveReportType">
+    <xs:annotation>
+      <xs:documentation>Информация о прибытии товаров</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="ReqDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата формирования запроса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReqTime" type="clt_ru:TimeCustType">
+            <xs:annotation>
+              <xs:documentation>Время формирования запроса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DO1Sign" type="clt_ru:IndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Признак наличия ДО-1</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Customs" type="cat_ru:CustomsType">
+            <xs:annotation>
+              <xs:documentation>Код и наименование таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsPerson" type="catWH_ru:WHCustomInspectorType">
+            <xs:annotation>
+              <xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsInfo" type="gare:GoodsInfoType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о товарах</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TransportMeanArrive" type="gare:TransportMeanArriveType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Описание транспортного средства</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ContainerNumber" type="clt_ru:ContainerIdentityType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Номера контейнеров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ExpressTransportDoc" type="gare:ExpressTransportDocType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Общая накладная на экспресс-грузы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006129E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ExpressTransportDocType">
+    <xs:annotation>
+      <xs:documentation>Общая накладная на экспресс-грузы</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="DocumentModeCode" type="clt_ru:CustomsDocumentCodeType">
+            <xs:annotation>
+              <xs:documentation>Код вида документа в соответствии с Классификатором видов документов.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="HouseWaybill" type="gare:TransportDocumentsType" minOccurs="0" maxOccurs="500">
+            <xs:annotation>
+              <xs:documentation>Индивидуальная накладная на экспресс-грузы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DO1Number" type="cat_ru:GTDIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер отчета о принятии по форме ДО-1</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DO1Sign" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Признак размещения на ВХ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GoodsInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товарах</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GTDGoodsNumber" type="clt_ru:Count4Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер товара в ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsTNVEDCode" type="clt_ru:GoodsNomenclatureCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" maxOccurs="4">
+        <xs:annotation>
+          <xs:documentation>Описание товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ValuePresence" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак присутствия товара на СВХ (присутствует/отсутствует)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ZTKSign" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак присутствия товара в ЗТК</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Note" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Примечание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransportDocuments" type="gare:TransportDocumentsType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о транспортных документах</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TransportDocumentsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о транспортных документах</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="DocumentModeCode" type="clt_ru:CustomsDocumentCodeType">
+            <xs:annotation>
+              <xs:documentation>Код вида документа в соответствии с Классификатором видов документов.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TransportMeanArriveType">
+    <xs:annotation>
+      <xs:documentation>Описание транспортного средства</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:TransportMeansBaseType">
+        <xs:sequence>
+          <xs:element name="TransportMeanArriveFlag" type="clt_ru:IndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Индикатор нахождения транспортного средства в зоне таможенного контроля</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Date" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата пересечения таможенной границы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Note" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Примечание</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

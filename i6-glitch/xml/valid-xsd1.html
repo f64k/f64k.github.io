@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>XML/XSD Validator</title>
+    <style>
+        .container { padding: 20px; max-width: 800px; margin: 0 auto; }
+        .editor { width: 100%; height: 200px; margin: 10px 0; font-family: monospace; }
+        #errors { color: red; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>XML/XSD Validator</h2>
+        
+        <div>
+            <label>XSD Schema:</label>
+            <textarea id="xsd" class="editor">
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="book">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="title" type="xs:string"/>
+        <xs:element name="author" type="xs:string"/>
+        <xs:element name="year" type="xs:integer"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+            </textarea>
+        </div>
+
+        <div>
+            <label>XML Document:</label>
+            <textarea id="xml" class="editor">
+<?xml version="1.0"?>
+<book>
+  <title>1984</title>
+  <author>George Orwell</author>
+  <year>1949</year>
+</book>
+            </textarea>
+        </div>
+
+        <button onclick="validate()">Validate XML</button>
+        <div id="errors"></div>
+    </div>
+
+    <!-- LibXML.js (WebAssembly версия) -->
+    <script src="https://cdn.jsdelivr.net/npm/libxmljs-wasm@0.6.3/dist/libxmljs.js"></script>
+
+    <script>
+    let libxml = null;
+
+    // Инициализация парсера
+    LibxmljsWasm.initialize().then(module => {
+        libxml = module;
+        document.getElementById('errors').textContent = 'Parser initialized!';
+    });
+
+    async function validate() {
+        if (!libxml) {
+            alert('Parser not initialized yet!');
+            return;
+        }
+
+        const xsdContent = document.getElementById('xsd').value;
+        const xmlContent = document.getElementById('xml').value;
+
+        try {
+            // Валидация XML
+            const schema = libxml.parseXml(xsdContent);
+            const doc = libxml.parseXml(xmlContent);
+            const isValid = doc.validate(schema);
+
+            // Вывод ошибок
+            const errors = doc.validationErrors
+                .map(err => `Line ${err.line}: ${err.message}`)
+                .join('\n');
+
+            document.getElementById('errors').textContent = isValid 
+                ? 'XML is valid!' 
+                : `Validation errors:\n${errors}`;
+
+        } catch (err) {
+            document.getElementById('errors').textContent = 
+                `Critical error: ${err.message}`;
+        }
+    }
+    </script>
+</body>
+</html>

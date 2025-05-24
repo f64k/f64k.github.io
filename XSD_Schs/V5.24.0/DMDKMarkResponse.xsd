@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:dmdk_res="urn:customs.ru:Information:SQDocuments:DMDKMarkResponse:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:DMDKMarkResponse:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Ответ на запрос сведений из ГИИС ДМДК о ввозе и вывозе товаров</xs:documentation>
+  </xs:annotation>
+  <xs:element name="DMDKMarkResponse" type="dmdk_res:DMDKMarkResponseType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос сведений из ГИИС ДМДК о ввозе и вывозе товаров</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DMDKMarkResponseType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос сведений из ГИИС ДМДК о ввозе и вывозе товаров</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="MarkedGoods" type="dmdk_res:MarkedGoodsType">
+            <xs:annotation>
+              <xs:documentation>Сведения о маркированном товаре</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009388E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="Code16Type">
+    <xs:annotation>
+      <xs:documentation>Уникальный идентификационный номер (УИН) изделия (слитка) или индивидуальный номер  партии (ИНП) (SSSYYNNNNNNNNNNC, где: SSS - код страны происхождения по ОКСМ, YY - две последние цифры года присвоения УИН/ИКП, NNNNNNNNNN - порядковый номер партии/изделия, C – контрольный разряд)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:length value="16" />
+      <xs:pattern value="\d{16}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Code5Type">
+    <xs:annotation>
+      <xs:documentation>Количественное содержание основного ДМ в сплаве в тысячных долях процента</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:length value="5" />
+      <xs:pattern value="\d{5}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Code7Type">
+    <xs:annotation>
+      <xs:documentation>Код. Символьная строка (буквы, цифры, знаки) используемая для краткого (и (или) независимого от языка) представления или замены определенных значений или текстовых свойств. 7 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:length value="7" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FreeText2000Type">
+    <xs:annotation>
+      <xs:documentation>Текстовая строка. До 2000 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="2000" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FreeText255Type">
+    <xs:annotation>
+      <xs:documentation>Текстовая строка. До 255 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="255" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="MarkedGoodsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о маркированном товаре</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="UnitIDNumber" type="dmdk_res:Code16Type">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификационный номер (УИН) изделия (слитка) или индивидуальный номер партии (ИНП)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="JewelryName" type="dmdk_res:FreeText255Type">
+        <xs:annotation>
+          <xs:documentation>Наименование ЮИ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="JewelryDescription" type="dmdk_res:FreeText2000Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание ЮИ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Status" type="dmdk_res:FreeText255Type">
+        <xs:annotation>
+          <xs:documentation>Статус. Код по справочнику «Состояние партии ГИИС ДМДК»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Stage" type="dmdk_res:FreeText255Type">
+        <xs:annotation>
+          <xs:documentation>Этап. Код по справочнику «Этап обработки партии/изделия ГИИС ДМДК»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ArticleNumber" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Артикул</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DMOriginCountryCode" type="clt_ru:CountryN3CodeType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о стране происхождения ДМ. Код страны в соответствии с ОКСМ (цифровой код)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DKOriginCountryCode" type="clt_ru:CountryN3CodeType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о стране происхождения ДК. Код страны в соответствии с ОКСМ (цифровой код)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="JewelryOwner" type="RUScat_ru:SubjectDetailsBankType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о собственнике ЮИ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DisposalDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата выбытия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Namesake" type="clt_ru:CodeVariable20Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код именника производителя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsTNVEDCode" type="clt_ru:CUGoodsNomenclatuerCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код товара по ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsNumeric" type="clt_ru:Count3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер товара по ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Спецификация обмена АИС "АИСТ-М" и КПС "Марка-Т" -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:els_agr="urn:customs.ru:Information:ELSDocuments:ELSAggregateTypes:5.21.0" xmlns:dsdi="urn:customs.ru:Information:ELSDocuments:DeclStampsDeductionInquiry:5.21.0" xmlns:cltESAD_cu="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" targetNamespace="urn:customs.ru:Information:ELSDocuments:DeclStampsDeductionInquiry:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:ELSDocuments:ELSAggregateTypes:5.21.0" schemaLocation="ELSAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" schemaLocation="CUESADCommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос списания акцизных марок по ДТ</xs:documentation>
+  </xs:annotation>
+  <xs:element name="DeclStampsDeductionInquiry" type="dsdi:DeclStampsDeductionInquiryType">
+    <xs:annotation>
+      <xs:documentation>Запрос списания акцизных марок по ДТ</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DeclStampsDeductionInquiryType">
+    <xs:annotation>
+      <xs:documentation>Запрос списания акцизных марок по ДТ</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="RegistrationNumber" type="els_agr:RegistrationNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DeductionStamps" type="dsdi:DeductionStampsType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Товары к списанию</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1040040E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DeductionStampsType">
+    <xs:annotation>
+      <xs:documentation>Товары к списанию</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="NomenNumb" type="clt_ru:Quantity3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер товара в ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TNVEDCode" type="clt_ru:GoodsNomenclatureCodeType">
+        <xs:annotation>
+          <xs:documentation>Код товара по ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ApplicationDocument" type="cat_ru:DocumentBaseType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Заявление (G441 = 01261)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExciseStamps" type="dsdi:ExciseStampsType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Акцизные марки к списанию</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ExciseStampsType">
+    <xs:annotation>
+      <xs:documentation>Акцизные марки к списанию</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Series" type="cltESAD_cu:ExciseSeriesesType">
+        <xs:annotation>
+          <xs:documentation>Серия акцизной марки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Count" type="clt_ru:Quantity8Type">
+        <xs:annotation>
+          <xs:documentation>Количество марок в диапазонах</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExciseRange" type="dsdi:ExciseRangeType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Диапазон номеров акцизных марок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ExciseRangeType">
+    <xs:annotation>
+      <xs:documentation>Диапазон номеров акцизных марок</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="StartNumber" type="dsdi:ExciseNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Начальный номер диапазона акцизных марок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EndNumber" type="dsdi:ExciseNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Конечный номер диапазона акцизных марок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="ExciseNumberType">
+    <xs:annotation>
+      <xs:documentation>Номер марки акцизного сбора. Целое положительное число. До 9 цифр</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:NumericCategoriesCust">
+      <xs:minInclusive value="1" />
+      <xs:fractionDigits value="0" />
+      <xs:totalDigits value="9" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

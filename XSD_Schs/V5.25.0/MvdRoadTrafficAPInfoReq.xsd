@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:rt_req="urn:customs.ru:Information:SQDocuments:MvdRoadTrafficAPInfoReq:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:MvdRoadTrafficAPInfoReq:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос сведений об административных правонарушениях в области дорожного движения</xs:documentation>
+  </xs:annotation>
+  <xs:element name="MvdRoadTrafficAPInfoReq" type="rt_req:MvdRoadTrafficAPInfoReqType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений об административных правонарушениях в области дорожного движения</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="MvdRoadTrafficAPInfoReqType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений об административных правонарушениях в области дорожного движения</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="RequestedPerson" type="rt_req:RequestedPersonType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о лице, в отношении которого совершается запрос</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DriveLicenseNum" type="rt_req:MvdIdentityCardType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер водительского удостоверения/Паспорт</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NumDoc" type="cat_ru:DocumentBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер первичного документа (протокол, постановление)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegPointNum" type="clt_ru:TransportMeansIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Государственный регистрационный знак</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SNILS" type="clt_ru:CodeVariable11Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>СНИЛС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="UnicNumber" type="cat_ru:DocumentBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Уникальный номер дела</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegDoc" type="cat_ru:DocumentBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Регистрационный документ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OtherData" type="rt_req:OtherDataType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Прочие данные фильтра для поиска в виде списка параметров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009134E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="MvdIdentityCardType">
+    <xs:annotation>
+      <xs:documentation>Документ, удостоверяющий личность</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:RUIdentityCardType">
+        <xs:sequence>
+          <xs:element name="SeriesAndNumberOneLine" type="clt_ru:DocumentNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Серия и номер локумента одной строкой</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="OtherDataType">
+    <xs:annotation>
+      <xs:documentation>Прочие данные фильтра для поиска в виде списка параметров</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Key" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Ключ параметра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Value" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Значение параметра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RequestedPersonType">
+    <xs:annotation>
+      <xs:documentation>Сведения о лице, в отношении которого совершается запрос</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:PersonBaseType">
+        <xs:sequence>
+          <xs:element name="BirthDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата рождения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

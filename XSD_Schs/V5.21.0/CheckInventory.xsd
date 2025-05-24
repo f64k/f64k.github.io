@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:chinv="urn:customs.ru:Information:CustomsDocuments:CheckInventory:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:CheckInventory:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос на сверку описи в ЭАД</xs:documentation>
+  </xs:annotation>
+  <xs:element name="CheckInventory" type="chinv:CheckInventoryType" />
+  <xs:complexType name="CheckInventoryType">
+    <xs:annotation>
+      <xs:documentation>Запрос на сверку описи в ЭАД</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="InventoryID" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Идентификатор описи документов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="InventoryInstance" type="chinv:InventoryInstanceType">
+            <xs:annotation>
+              <xs:documentation>Экземпляр описи</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006167E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="InventDocumentType">
+    <xs:annotation>
+      <xs:documentation>Документ из описи.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="InvDocCode" type="clt_ru:CustomsDocumentCodeType">
+        <xs:annotation>
+          <xs:documentation>Код вида представляемого документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InvDocName" type="clt_ru:DocumentNameType">
+        <xs:annotation>
+          <xs:documentation>Вид документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InvDocNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InvDocDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ArchID" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор электронного архива декларанта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ArchDocID" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор документа в электронном архиве декларанта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InventDocumentID" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор документа, представленного в описи. Заполняется при использовании в системах электронного декларирования в случае наличия на момент составления описи указанного документа в электронном виде.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InventLineID" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор строки в описи. GUID. Обязателен для заполнения при использовании в системах электронного декларирования.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InventoryInstanceType">
+    <xs:annotation>
+      <xs:documentation>Экземпляр описи.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="InstanceNumber" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер описи</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InventoryInstanceDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата предоставления описи</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InventDocument" type="chinv:InventDocumentType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Документ из описи</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

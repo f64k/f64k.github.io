@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Аналог EEC_R_CA_CC_05_RegisterCustomsBroker_v1.2.4.xsd альбома ЕЭК (R.CA.CC.05.001: Реестр таможенных представителей (Реестр таможенных представителей))-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:RUDECLcat="urn:customs.ru:RUDeclCommonAggregateTypesCust:5.24.0" xmlns:rcb="urn:customs.ru:Information:SQDocuments:RegisterCustBroker:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:RegisterCustBroker:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:RUDeclCommonAggregateTypesCust:5.24.0" schemaLocation="RUDeclCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Реестр таможенных представителей</xs:documentation>
+  </xs:annotation>
+  <xs:element name="RegisterCustBroker" type="rcb:RegisterCustBrokerType">
+    <xs:annotation>
+      <xs:documentation>Сведения из реестра таможенных представителей</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RegisterCustBrokerType">
+    <xs:annotation>
+      <xs:documentation>Сведения из реестра таможенных представителей</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="EECEDocHeaderAddInfo" type="RUScat_ru:EECEDocHeaderAddInfoType">
+            <xs:annotation>
+              <xs:documentation>Дополнительные технологические реквизиты электронного документа (сведений)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegisterCustBrokerDetails" type="rcb:RegisterCustBrokerDetailsType">
+            <xs:annotation>
+              <xs:documentation>Сведения об объекте учета реестра таможенных представителей</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="UpdatedCustBrokerDetails" type="rcb:RegisterCustBrokerDetailsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Обновленные сведения об объекте учета реестра таможенных представителей
+							</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009124E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CustomsBrokerDetailsType">
+    <xs:annotation>
+      <xs:documentation>Сведения об организации, включенной в реестр таможенных представителей.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsBrokerParentDetails" type="RUScat_ru:RegisterOrganizationDetailsType">
+        <xs:annotation>
+          <xs:documentation>Сведения о головном подразделении таможенного представителя.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsBrokerBranchDetails" type="RUScat_ru:RegisterOrganizationDetailsType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о структурных подразделениях таможенного представителя.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegisterCustBrokerDetailsType">
+    <xs:annotation>
+      <xs:documentation>Сведения об объекте учета реестра таможенных представителей</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RegisterCountryCode" type="clt_ru:CountryA2CodeType">
+        <xs:annotation>
+          <xs:documentation>Кодовое обозначение страны, предоставившей информацию</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegisterDocumentDetails" type="RUDECLcat:RegisterDocumentDetailsType">
+        <xs:annotation>
+          <xs:documentation>Сведения о документе, подтверждающем включение юридического лица в реестр</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsBrokerDetails" type="rcb:CustomsBrokerDetailsType">
+        <xs:annotation>
+          <xs:documentation>Сведения об организации, включенной в реестр таможенных представителей.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsRestrictionText" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Ограничения по видам товаров в соответствии с ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsOperationRestrictionText" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Ограничение по видам таможенных операций</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransportRestrictionText" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Ограничение по видам транспорта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegionRestrictionText" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Ограничения по региону деятельности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AdditionalInfoText" type="RUSclt_ru:FreeText4000Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дополнительная информация, относящаяся к описываемому объекту</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StartActivityDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата начала осуществления деятельности (1-й день действия, в том числе после временного прекращения (приостановления))</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EndActivityDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата окончания осуществления деятельности (последний день действия, в том числе по причине временного прекращения)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ResourceItemStatusDetails" type="RUScat_ru:ResourceItemStatusDetailsType">
+        <xs:annotation>
+          <xs:documentation>Совокупность технологических сведений о записи общего ресурса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

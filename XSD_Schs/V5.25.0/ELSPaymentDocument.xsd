@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:els_agr="urn:customs.ru:Information:ELSDocuments:ELSAggregateTypes:5.25.0" xmlns:els_leaf="urn:customs.ru:Information:ELSDocuments:ELSLeafTypes:5.21.0" xmlns:elspd="urn:customs.ru:Information:ELSDocuments:ELSPaymentDocument:5.25.0" targetNamespace="urn:customs.ru:Information:ELSDocuments:ELSPaymentDocument:5.25.0" elementFormDefault="qualified" version="5.25.0.0">
+  <xs:import namespace="urn:customs.ru:Information:ELSDocuments:ELSAggregateTypes:5.25.0" schemaLocation="ELSAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:ELSDocuments:ELSLeafTypes:5.21.0" schemaLocation="ELSLeafTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Состояние расчетов по ДН</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ELSPaymentDocument" type="elspd:ELSPaymentDocumentType" />
+  <xs:complexType name="ELSPaymentDocumentType">
+    <xs:annotation>
+      <xs:documentation>Состояние расчетов по ДТ</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="ELSPaymentDocuments" type="elspd:ELSPaymentDocumentsType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Состояние расчетов по документам начисления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1040013E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа. Атрибут</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ELSPaymentDocumentsType">
+    <xs:annotation>
+      <xs:documentation>Состояние расчетов по документам начисления</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RegistrationNumber" type="els_agr:RegistrationNumberType">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер ДТ/справочный номер ТПО/справочный номер ТР / номер МПО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentStatus" type="els_leaf:DocChargeStatusType">
+        <xs:annotation>
+          <xs:documentation>Состояние ДН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProccessStatus" type="clt_ru:DigitalIndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Статус выполнения запроса: 0 - выполнен полностью, 1 - не выполнен</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DclPaymentInfo" type="els_agr:DclPaymentInfoType">
+        <xs:annotation>
+          <xs:documentation>Сведения о платежах по ДН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

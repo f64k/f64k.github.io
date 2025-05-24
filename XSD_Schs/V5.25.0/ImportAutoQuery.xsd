@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Аналог EEC_R_CA_CP_05_ImportCarQuery_v1.0.0.xsd альбома ЕЭК (R.CA.CP.05.002: Запрос сведений в отношении автомобилей, ввезенных и выпущенных для внутреннего потребления (в свободное обращение)-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:iaq="urn:customs.ru:Information:SQDocuments:ImportAutoQuery:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:ImportAutoQuery:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос сведений в отношении автомобилей, ввезенных и выпущенных для внутреннего потребления (в свободное обращение)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ImportAutoQuery" type="iaq:ImportAutoQueryType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений в отношении автомобилей, ввезенных и выпущенных для внутреннего потребления (в свободное обращение)</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ImportAutoQueryType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений в отношении автомобилей, ввезенных и выпущенных для внутреннего потребления (в свободное обращение)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="EECEDocHeaderAddInfo" type="RUScat_ru:EECEDocHeaderAddInfoType">
+            <xs:annotation>
+              <xs:documentation>Дополнительные технологические реквизиты электронного документа (сведений)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="UnifiedCountryCode" type="clt_ru:CountryA2CodeType">
+            <xs:annotation>
+              <xs:documentation>Код государства-члена, сформировавшего запрос</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+            <xs:annotation>
+              <xs:documentation>Код таможенного органа, сформировавшего запрос</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsDocIdDetails" type="cat_ru:GTDIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер декларации на товары</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TPOID" type="iaq:TPOIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о справочном номере ТПО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="VehicleIdDetails" type="iaq:VehicleIdDetailsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Совокупность идентификаторов транспортного средства</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TNVEDCode" type="clt_ru:GoodsNomenclatureCodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код группы (класса) товаров в соответствии с ТН ВЭД ЕАЭС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsPerson" type="RUScat_ru:CustomsPersonDetails">
+            <xs:annotation>
+              <xs:documentation>Должностное лицо ТО, сформировавшее запрос</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009222E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="TPOIDType">
+    <xs:annotation>
+      <xs:documentation>Идентифицирующие параметры документа ТПО</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocCreationDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата выдачи, подписания, утверждения или регистрации документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrderNumber" type="clt_ru:Code10Type">
+        <xs:annotation>
+          <xs:documentation>Серия и (или) типографский номер ТПО, либо порядковый номер по журналу регистрации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="VehicleIdDetailsType">
+    <xs:annotation>
+      <xs:documentation>Идентификаторы транспортного средства</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="VINID" type="clt_ru:VINIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификационный номер транспортного средства (шасси транспортного средства, самоходной машины), присвоенный изготовителем</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ChassisID" type="clt_ru:VINIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификационный номер шасси (рамы) транспортного средства, присвоенный изготовителем</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BodyID" type="clt_ru:VINIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификационный номер кузова (кабины) транспортного средства (шасси транспортного средства, самоходной машины), присвоенный изготовителем</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

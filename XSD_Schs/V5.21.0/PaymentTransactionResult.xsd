@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_crd="urn:customs.ru:CardCommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:rslt="urn:customs.ru:CustomsCardDoc:PaymentTransactionResult:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:CustomsCardDoc:PaymentTransactionResult:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CardCommonAggregateTypes:5.21.0" schemaLocation="CardCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сообщение о результатах обработки</xs:documentation>
+  </xs:annotation>
+  <xs:element name="PaymentTransactionResult" type="rslt:PaymentTransactionResultType" />
+  <xs:complexType name="PaymentTransactionResultType">
+    <xs:annotation>
+      <xs:documentation>Сообщение о результатах обработки</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_crd:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocumentStatusFlag" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Флаг состояния документа. 1 - новый документ (отправляется впервые), 2 - исправление документа (исправленная версия документа)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocumentDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата чека</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocumentNumber" type="rslt:DocumentNumberType">
+            <xs:annotation>
+              <xs:documentation>Номер документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PaymentInformation" type="rslt:PaymentInformationType">
+            <xs:annotation>
+              <xs:documentation>Сведения о платеже</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ErrorInfo" type="rslt:ErrorInfoType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения об ошибке</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1040002E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DocumentNumberType">
+    <xs:annotation>
+      <xs:documentation>Номер документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TerminalID" type="clt_ru:Code8Type">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификационный номер электронного терминала платежного теримнала, банкомата</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ChequeNumber" type="clt_ru:Code4Type">
+        <xs:annotation>
+          <xs:documentation>Номер чека, сформированного электронным терминалом, платежным терминалом, банкоматом</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TerminalKind" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Вид устройства приема платежей: 1 - электронный терминал, 2 - платежный терминал; 3 - банкомат, 4 - зарезервировано</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ErrorInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения об ошибке</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ErrorCode" type="clt_ru:CodeVariable11Type">
+        <xs:annotation>
+          <xs:documentation>Код ошибки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ErrorDescription" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Описание ошибки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaymentInformationType">
+    <xs:annotation>
+      <xs:documentation>Сведения о платеже</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ProcessingDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата обработки оператором таможенных платежей операции уплаты таможенных и иных платежей</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CurrencyCode" type="clt_ru:CurrencyN3CodeType">
+        <xs:annotation>
+          <xs:documentation>Код валюты платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Amount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BankTransactionID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор банковской операции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа - получателя платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата совершения платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentTime" type="clt_ru:TimeCustType">
+        <xs:annotation>
+          <xs:documentation>Время совершения платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CardNumber" type="clt_ru:Count19Type">
+        <xs:annotation>
+          <xs:documentation>Номер таможенной платежной карты, с использованием которой был осуществлен платеж</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

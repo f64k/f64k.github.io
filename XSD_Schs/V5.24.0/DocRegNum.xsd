@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:drn="urn:customs.ru:Information:CustomsDocuments:DocRegNum:5.24.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:DocRegNum:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Регистрационный номер документа</xs:documentation>
+  </xs:annotation>
+  <xs:element name="DocRegNum" type="drn:DocRegNumType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер документа</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DocRegNumType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер документа</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="RegDateTime" type="clt_ru:DateTimeCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата и время регистрации </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:element name="DocNumber" type="cat_ru:DocumentBaseType">
+              <xs:annotation>
+                <xs:documentation>Регистрационный номер произвольного документа</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="DTNumber" type="drn:DTNumType">
+              <xs:annotation>
+                <xs:documentation>Регистрационный номер ДТ/ТД/КДТ/Уведомления о прибытии/ Заявления о необходимости совершения операций в отношении товаров, находящихся под таможенным контролем</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="RegNoticeNumber" type="drn:RegNoticeNumberType">
+              <xs:annotation>
+                <xs:documentation>Регистрационный номер Уведомления о регистрации документа</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1004130E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DTNumType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер ДТ/ТД/КДТ</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:GTDIDType">
+        <xs:sequence>
+          <xs:element name="AddNumber" type="clt_ru:CodeVariable2Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дополнительная составляющая номера </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DTKind" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Тип декларации: 0 - транзитная декларация, 1 - декларация на товары, 2 - уведомление о прибытии, 3 - декларация на ЭГ, 4 - Заявление о необходимости совершения операций в отношении товаров, находящихся под таможенным контролем, 5 - расчет утилизационного сбора</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="KDTNum" type="clt_ru:Count2Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер КДТ по порядку</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ConsignmentNum" type="clt_ru:Count3Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер товарной партии в уведомлении</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MatchSign" type="clt_ru:IndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Признак соответствия сведений ПТД: 1 - сведения соответствуют, 0 - выявлено несоответствие</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RegNoticeNumberType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер Уведомления о регистрации</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:GTDID5Type">
+        <xs:sequence>
+          <xs:element name="AddNumber" type="clt_ru:Code4Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дополнительная составляющая номера </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

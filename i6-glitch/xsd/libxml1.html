@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>XML Validator</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .container {
+            padding: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+        }
+
+        #result {
+            margin-top: 10px;
+            padding: 10px;
+        }
+
+        .valid {
+            background: #e8f5e9;
+        }
+
+        .invalid {
+            background: #ffebee;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>XML/XSD Validator </h2>
+        <a href="https://jameslan.github.io/libxml2-wasm/v0.5/documents/Working_with_XmlDocument.html#validate-xml"
+            rel="noopener noreferrer" target="_blank">libxml2-wasm</a>
+        <button onclick="validate()">Validate</button>
+        <div id="result">Initializing...</div>
+    </div>
+
+    <!-- Правильное подключение через jsDelivr -->
+    <script src="https://cdn.jsdelivr.net/npm/libxmljs-wasm@0.8.0/lib/libxmljs.js"></script>
+
+    <script>
+        let libxml = null;
+
+        // Новая инициализация через XMLParser
+        const parser = new window.libxmljsWasm.XMLParser();
+
+        parser.initialize().then(() => {
+            libxml = parser;
+            document.getElementById('result').textContent = 'Ready!';
+        });
+
+        async function validate() {
+            if (!libxml) {
+                alert('Parser not initialized!');
+                return;
+            }
+
+            const xml = `<root><element>Test</element></root>`;
+
+            try {
+                const doc = libxml.parse(xml);
+                document.getElementById('result').className = 'valid';
+                document.getElementById('result').textContent = 'Valid XML!';
+            } catch (err) {
+                document.getElementById('result').className = 'invalid';
+                document.getElementById('result').textContent = `Error: ${err.message}`;
+            }
+        }
+    </script>
+</body>
+
+</html>

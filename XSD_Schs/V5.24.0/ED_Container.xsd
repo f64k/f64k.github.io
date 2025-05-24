@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:edcnt="urn:customs.ru:Information:ExchangeDocuments:ED_Container:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:ExchangeDocuments:ED_Container:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Документ-контейнер. Предназначен для пакетной передачи документов. </xs:documentation>
+  </xs:annotation>
+  <xs:element name="ED_Container" type="edcnt:ED_ContainerType" />
+  <xs:complexType name="ED_ContainerType">
+    <xs:annotation>
+      <xs:documentation>Документ-Контейнер</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="FullSetIndicator" type="clt_ru:IndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Признак полноты комплекта документов. Используется в системах электронного декларирования. при обычном порядке оформления не заполняется.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Xindicator" type="clt_ru:Text10Type" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Признак. Используется в электронном представлении сведений.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ContainerDoc" type="edcnt:ContainerDocType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Документ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006058E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ContainerDocType">
+    <xs:annotation>
+      <xs:documentation>Элемент контейнера</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Order" type="clt_ru:Count2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Порядок обработки документа. Используется в системах электронного декларирования. при обычном порядке оформления не заполняется.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AFVersion" type="clt_ru:Text10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Версия альбома форматов, в которой создан документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AFDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата формирования документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocBody" type="edcnt:DocBodyType">
+        <xs:annotation>
+          <xs:documentation>Документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocBodyType">
+    <xs:annotation>
+      <xs:documentation>Документ, подписанный  ЭЦП</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:any processContents="skip">
+        <xs:annotation>
+          <xs:documentation>Документ, подписанный  ЭЦП</xs:documentation>
+        </xs:annotation>
+      </xs:any>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,488 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:exri="urn:customs.ru:Information:CustomsDocuments:ExpertiseResultsInformation:5.24.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:ExpertiseResultsInformation:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сведения по итогам применения или о причинах неприменения результатов проведенных экспертиз/исследований</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ExpertiseResultsInformation" type="exri:ExpertiseResultsInformationType">
+    <xs:annotation>
+      <xs:documentation>Сведения по итогам применения или о причинах неприменения результатов проведенных экспертиз/исследований</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ExpertiseResultsInformationType">
+    <xs:annotation>
+      <xs:documentation>Сведения по итогам применения или о причинах неприменения результатов проведенных экспертиз/исследований</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="ConclusionNumber" type="cat_ru:GTDIDType">
+            <xs:annotation>
+              <xs:documentation>Номер заключения экспертизы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AcceptConclusionSign" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Признак принятия заключения: 0 - не принято, 1 - принято</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReasonForRejection" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Причина непринятия заключения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ExpertiseKind" type="clt_ru:LetterIndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Тип экспертизы: 1 – экспертиза в рамках ТК, 2 – исследование в рамках ОРД,3 – экспертиза в рамках АП, 4 – экспертиза в рамках УД, 5 – исследование в интересах таможенных органов,  6 – исследование в интересах иных ФОИВ, 7 – исследование в рамках НЭО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ObjectsAndResults" type="exri:ObjectsAndResultsType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения об объектах (образцах) экспертизы/исследования и полученных результатах</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="InitiationCaseInfo" type="exri:InitiationCaseInfoType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о возбуждении дела</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PunishmentInfo" type="exri:PunishmentInfoType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о назначении наказания по делу об АП или уголовному делу либо о прекращении уголовного дела в связи с возмещением причиненного преступлениями ущерба</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TerminationProceedingsInfo" type="exri:TerminationProceedingsInfoType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о прекращении производства по делу (за исключением нереабилитирующих оснований)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PersonDetails" type="exri:PersonDetailsType">
+            <xs:annotation>
+              <xs:documentation>Сведения о лице, заполнившем документ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentIDType" use="required" fixed="1051036E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="AccrualCodeType">
+    <xs:annotation>
+      <xs:documentation>Перечислимый тип для кода начисления</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="clt_ru:CodeVariable2Type">
+      <xs:enumeration value="6">
+        <xs:annotation>
+          <xs:documentation>штраф</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="8">
+        <xs:annotation>
+          <xs:documentation>конфискация</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="9">
+        <xs:annotation>
+          <xs:documentation>возмещение ущерба, послужившего основанием применения статей 75, 76.1 или 76.2 УК РФ</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="10">
+        <xs:annotation>
+          <xs:documentation>издержки</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="11">
+        <xs:annotation>
+          <xs:documentation>административное приостановление деятельности</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="12">
+        <xs:annotation>
+          <xs:documentation>административный арест</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="13">
+        <xs:annotation>
+          <xs:documentation>дисквалификация</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="14">
+        <xs:annotation>
+          <xs:documentation>обязательные работы</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="15">
+        <xs:annotation>
+          <xs:documentation>предупреждение</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="16">
+        <xs:annotation>
+          <xs:documentation>часть 5 статьи 4.4 КоАП РФ</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="17">
+        <xs:annotation>
+          <xs:documentation>часть 6 статьи 4.4 КоАП РФ</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18">
+        <xs:annotation>
+          <xs:documentation>арест</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="19">
+        <xs:annotation>
+          <xs:documentation>исправительные работы</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="20">
+        <xs:annotation>
+          <xs:documentation>лишение права занимать определенные должности или заниматься определенной деятельностью</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="21">
+        <xs:annotation>
+          <xs:documentation>лишение свободы на определенный срок</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="22">
+        <xs:annotation>
+          <xs:documentation>лишение специального, воинского или почетного звания, классного чина и государственных наград</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="23">
+        <xs:annotation>
+          <xs:documentation>обязательные работы</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="24">
+        <xs:annotation>
+          <xs:documentation>ограничение по военной службе</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="25">
+        <xs:annotation>
+          <xs:documentation>ограничение свободы</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="26">
+        <xs:annotation>
+          <xs:documentation>пожизненное лишение свободы</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="27">
+        <xs:annotation>
+          <xs:documentation>принудительные работы</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="28">
+        <xs:annotation>
+          <xs:documentation>смертная казнь</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="29">
+        <xs:annotation>
+          <xs:documentation>содержание в дисциплинарной воинской части</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="99">
+        <xs:annotation>
+          <xs:documentation>иное решение</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="InitiationCaseInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о возбуждении дела</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CaseKind" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Вид дела: 1 – АП, 2 – УД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CaseDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата возбуждения дела</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CaseNumber" type="clt_ru:Text40Type">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер дела</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsOfficeName" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Наименование таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ObjectsAndResultsType">
+    <xs:annotation>
+      <xs:documentation>Сведения об объектах (образцах) экспертизы/исследования и полученных результатах</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SequentialNumber" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Номер п/п</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ObjectNumber" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Номер объекта экспертизы/ исследования (образца в запросе на ЭИР) </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ObjectDescription" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Описание объекта экспертизы/ исследования (образца в запросе на ЭИР) </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RiskProfile" type="exri:RiskProfileType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Профиль риска</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReceivedEconomicEffect" type="exri:ReceivedEconomicEffectType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Экономический эффект</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsNomenclatuerCode" type="clt_ru:CUGoodsNomenclatuerCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код ТНВЭД ЕАЭС (принятый/ подтвержденный таможенным органом)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OtherDecision" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Иное решение (при отсутствии результата, указанного в графе 7)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PersonDetailsType">
+    <xs:annotation>
+      <xs:documentation>Информация о принятом решении</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ExpertiseSTO" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Способ представления сведений. Программное средство, сформировавшее документ: 0 – бумажное заполнение,1 - АИС АИСТ-М, 2 - АС КТТ-2, 3 - АС ПП, 4 - АИС "Правоохрана", 5 - КПС "Постконтроль", 9 - иное </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsOfficeName" type="clt_ru:CustomsOfficeNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AutoFillFlag" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак автоматического заполнения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonSignature" type="cat_ru:PersonBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Лицо, заполнившее документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IssueDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата заполнения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PunishmentEconomicEffectType">
+    <xs:annotation>
+      <xs:documentation>Экономический эффект (наказание)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AccrualCode" type="exri:AccrualCodeType">
+        <xs:annotation>
+          <xs:documentation>Код начисления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Amount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OtherDecision" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Иное решение (столбец 7)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PunishmentInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о назначении наказания по делу об АП или уголовному делу либо о прекращении уголовного дела в связи с возмещением причиненного преступлениями ущерба</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CaseKind" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Вид ответственности: 1 – АП, 2 – УД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CaseDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CaseNumber" type="clt_ru:Text40Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Name" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Наименование</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PunishmentEconomicEffect" type="exri:PunishmentEconomicEffectType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Экономический эффект</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReceivedEconomicEffectType">
+    <xs:annotation>
+      <xs:documentation>Экономический эффект</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AccrualCode" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Код начисления: 2 – таможенная пошлина, 4 – акциз, 5 – налог на добавленную стоимость, 6 – штраф, 7 – пеня, 8 – конфискация, 9 – иное</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Amount" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сумма</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RiskActionType">
+    <xs:annotation>
+      <xs:documentation>Принятые меры по выявленным рискам</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ActionCode" type="clt_ru:Code3Type">
+        <xs:annotation>
+          <xs:documentation>Код мер по минимизации рисков </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ActionResultCode" type="clt_ru:Code2Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Код результата применения меры по минимизации риска </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RiskProfileType">
+    <xs:annotation>
+      <xs:documentation>Профиль риска</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RiskProfileType" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Тип выявленного профиля риска</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TerrActionCode" type="clt_ru:CodeVariable2Type">
+        <xs:annotation>
+          <xs:documentation>Код вида профиля риска</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DivisionCode" type="clt_ru:Code5Type">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, разработавшего ПР/ЦПР</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RiskProfileRegDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации профиля риска</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RiskProfileNumber" type="RUSclt_ru:RiskProfileNumType">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер профиля риска</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RiskProfileNumberVersion" type="clt_ru:Quantity3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер версии профиля риска.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RiskAction" type="exri:RiskActionType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Принятые меры по выявленным рискам</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TerminationProceedingsInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о прекращении производства по делу (за исключением нереабилитирующих оснований)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsOfficeName" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Наименование таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsPerson" type="cat_ru:PersonBaseType">
+        <xs:annotation>
+          <xs:documentation>ФИО, должность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CaseDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CaseNumber" type="clt_ru:Text40Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CaseName" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Наименование</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GroundsForTermination" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Основание для прекращения дела</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

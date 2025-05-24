@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:uttp="urn:customs.ru:Information:CustomsDocuments:UtilizationTPOInfo:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:UtilizationTPOInfo:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сведения об оформленном ТПО на утилизационные сборы. (Взаимодействие АИС «Ордер» и АИС «АИСТ-М».)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="UtilizationTPOInfo" type="uttp:UtilizationTPOInfoType" />
+  <xs:complexType name="UtilizationTPOInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения об оформленном ТПО на утилизационные сборы.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="CodeReasonFreePayment" type="clt_ru:Code2Type">
+            <xs:annotation>
+              <xs:documentation>Код освобождения от уплаты от утилизационных сборов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TPOID" type="uttp:TPOIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Идентифицирующие параметры документа ТПО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CardNumber" type="cat_ru:GTDIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Учетный номер карточки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsNumeric" type="clt_ru:Count5Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер товара по ДТ / списку</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PTSNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер ПТС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PTSDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата выдачи паспорта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="LNP" type="clt_ru:LNPIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>ЛНП инспектора, выдавшего ПТС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006153E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="TPOIDType">
+    <xs:annotation>
+      <xs:documentation>Идентифицирующие параметры документа ТПО</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, зарегистрировавшего документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrderNumber" type="clt_ru:Code10Type">
+        <xs:annotation>
+          <xs:documentation>Типографский номер бланка ТПО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

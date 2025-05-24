@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:catWH_ru="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonAggregateTypesCust:5.24.0" xmlns:cwqr="urn:customs.ru:Information:WarehouseDocuments:CWQuery:5.24.0" targetNamespace="urn:customs.ru:Information:WarehouseDocuments:CWQuery:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonAggregateTypesCust:5.24.0" schemaLocation="WarehouseCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос на получение новых документов</xs:documentation>
+  </xs:annotation>
+  <xs:element name="CWQuery" type="cwqr:CWQueryType" />
+  <xs:complexType name="CWQueryType">
+    <xs:annotation>
+      <xs:documentation>Запрос на получение новых документов</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="catWH_ru:CWDocType">
+        <xs:sequence>
+          <xs:element name="Document" type="cwqr:DocumentType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Информация о запрашиваемых документах </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1008006E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DocumentType">
+    <xs:annotation>
+      <xs:documentation>Информация о запрашиваемых документах </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocumentModeID" type="clt_ru:DocumentModeIDType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор вида документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:choice minOccurs="0">
+        <xs:element name="Period" type="cwqr:PeriodType">
+          <xs:annotation>
+            <xs:documentation>Период, за который запрашиваются документы</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Numbers" type="cwqr:NumbersType">
+          <xs:annotation>
+            <xs:documentation>Номера запрашиваемых документов</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="NumbersType">
+    <xs:annotation>
+      <xs:documentation>Номера запрашиваемых документов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocumentNumbers" type="clt_ru:DocumentNumberType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Номер запрашиваемого документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PeriodType">
+    <xs:annotation>
+      <xs:documentation>Период, за который запрашиваются документы</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PeriodBegin" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Начало периода</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PeriodEnd" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Окончание периода</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

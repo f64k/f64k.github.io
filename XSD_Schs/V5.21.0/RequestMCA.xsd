@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:catESAD_cu="urn:customs.ru:CUESADCommonAggregateTypesCust:5.21.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:cltESAD_cu="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:itsri="urn:customs.ru:Information:CustomsDocuments:RequestMCA:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:RequestMCA:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonAggregateTypesCust:5.21.0" schemaLocation="CUESADCommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" schemaLocation="CUESADCommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Информация о ДТ и документе по запросу</xs:documentation>
+  </xs:annotation>
+  <xs:element name="RequestMCA" type="itsri:RequestMCAType" />
+  <xs:complexType name="RequestMCAType">
+    <xs:annotation>
+      <xs:documentation>Информация о ДТ и документе по запросу</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="TransitDirectionCode" type="clt_ru:TransitDirectionCodeType">
+            <xs:annotation>
+              <xs:documentation>Направление перемещения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CurrencyCode" type="clt_ru:CurrencyA3CodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код валюты договора (буквенный)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PaymentsFact" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Факт наличия в ДТС лицензионных платежей</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OtherPaymentsFact" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Факт наличия в ДТ иных платежей</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="VendorInfo" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Описание продавца</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DTRegNumber" type="cat_ru:GTDIDType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Consigner" type="cat_ru:OrganizationBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Отправитель товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Consignee" type="cat_ru:OrganizationBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Получатель товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ContractHolder" type="cat_ru:OrganizationBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Контрактодержатель</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Buyer" type="cat_ru:OrganizationBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Покупатель</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ITSInfo" type="itsri:ITSInfoType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Информация о товарной позиции по запросу</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006213E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ITSInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о товарной позиции по запросу</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsNumeric" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Номер товарной позиции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsTNVEDCode" type="clt_ru:CUGoodsNomenclatuerCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsModeCode" type="cltESAD_cu:CustomsModeCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенной процедуры</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OriginCountryCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код страны происхождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DispatchCountryCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код страны отправления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransportModeCode" type="clt_ru:TransportModeCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код вида транспорта на границе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MDPNum" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Номер МДП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PassportDeal" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Паспорт сделки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InvoiceCost" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Фактурная стоимость</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PlacesKol" type="clt_ru:Count8Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество грузовых мест</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsGroupInformation" type="catESAD_cu:GoodsGroupInformationType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Характеристика товаров в группе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Contract" type="cat_ru:DocumentBaseType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Контракт</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Invoice" type="cat_ru:DocumentBaseType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Инвойс</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ITSRequest" type="itsri:ITSRequestInfoMCAType">
+        <xs:annotation>
+          <xs:documentation>Информация о количественных характеристиках товарной позиции для уровня таможенного поста по запросу</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ITSRequestInfoMCAType">
+    <xs:annotation>
+      <xs:documentation>Информация о значениях стоимости, количества и веса при запросе информации</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="NetWeight" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вес нетто</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GrossWeight" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вес брутто</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsCostRUB" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Таможенная стоимость (в рублях)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsQuantity" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество в ДЕИ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

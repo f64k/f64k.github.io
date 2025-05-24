@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AG-Grid Hierarchical Data</title>
+    
+    <!-- AG-Grid Community CSS -->
+    <!--
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community@31.0.1/styles/ag-grid.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community@31.0.1/styles/ag-theme-alpine.min.css" />
+    -->
+    <!-- AG-Grid Enterprise CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-enterprise@31.0.1/styles/ag-grid.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-enterprise@31.0.1/styles/ag-theme-alpine.min.css" />    
+    
+    <!-- Custom Styles -->
+    <style>
+      :root {
+        --primary-color: #3A76F8;
+        --primary-light: #EBF1FF;
+        --secondary-color: #00A86B;
+        --secondary-light: #E6F7F1;
+        --text-dark: #333333;
+        --text-light: #666666;
+        --border-color: #E5E7EB;
+        --background-light: #F9FAFB;
+      }
+      
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        color: var(--text-dark);
+        background-color: var(--background-light);
+        line-height: 1.5;
+      }
+      
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+      }
+      
+      header {
+        margin-bottom: 2rem;
+      }
+      
+      h1 {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--text-dark);
+      }
+      
+      p.subtitle {
+        color: var(--text-light);
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+      }
+      
+      .grid-container {
+        height: 500px;
+        width: 100%;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      
+      /* Custom AG-Grid Styles */
+      .ag-theme-alpine {
+        --ag-header-background-color: var(--primary-light);
+        --ag-header-foreground-color: var(--primary-color);
+        --ag-header-cell-hover-background-color: var(--primary-light);
+        --ag-header-cell-moving-background-color: var(--primary-light);
+        --ag-row-hover-color: var(--primary-light);
+        --ag-selected-row-background-color: var(--primary-light);
+        --ag-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        --ag-font-size: 14px;
+        --ag-border-color: var(--border-color);
+      }
+      
+      .ag-theme-alpine .ag-header {
+        font-weight: 600;
+      }
+      
+      .ag-theme-alpine .ag-row-level-0 {
+        font-weight: 500;
+        background-color: var(--primary-light);
+      }
+      
+      .ag-theme-alpine .ag-row-level-1 {
+        background-color: white;
+      }
+      
+      /* Animation for row expansion */
+      .ag-row-animation {
+        transition: height 0.3s ease;
+      }
+      
+      /* Status Badges */
+      .status-badge {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 500;
+      }
+      
+      .status-active {
+        background-color: var(--secondary-light);
+        color: var(--secondary-color);
+      }
+      
+      .status-pending {
+        background-color: #FFF7E6;
+        color: #D97706;
+      }
+      
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .container {
+          padding: 1rem;
+        }
+        
+        h1 {
+          font-size: 1.5rem;
+        }
+        
+        .grid-container {
+          height: 400px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Hierarchical Data View</h1>
+        <p class="subtitle">Displaying organization structure with expandable parent-child relationships</p>
+      </header>
+      
+      <div id="myGrid" class="ag-theme-alpine grid-container"></div>
+    </div>
+    
+    <!-- AG-Grid Community Script -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/ag-grid-community@31.0.1/dist/ag-grid-community.min.js"></script>
+    -->
+    <script src="https://cdn.jsdelivr.net/npm/ag-grid-enterprise@31.0.1/dist/ag-grid-enterprise.min.js"></script>
+    
+    <script>
+      // Wait for DOM to be loaded
+      document.addEventListener('DOMContentLoaded', function() {
+        // Column Definitions
+        const columnDefs = [
+          {
+            field: 'name',
+            headerName: 'Name',
+            cellRenderer: 'agGroupCellRenderer',
+            cellRendererParams: {
+              innerRenderer: function(params) {
+                return params.value;
+              }
+            }
+          },
+          {
+            field: 'position',
+            headerName: 'Position'
+          },
+          {
+            field: 'department',
+            headerName: 'Department'
+          },
+          {
+            field: 'status',
+            headerName: 'Status',
+            cellRenderer: function(params) {
+              if (!params.value) return '';
+              
+              let statusClass = 'status-active';
+              if (params.value === 'Pending') {
+                statusClass = 'status-pending';
+              }
+              
+              return `<span class="status-badge ${statusClass}">${params.value}</span>`;
+            }
+          },
+          {
+            field: 'joinDate',
+            headerName: 'Join Date'
+          }
+        ];
+        
+        // Hierarchical Row Data
+        const rowData = [
+          {
+            name: 'Engineering Department',
+            position: 'Department',
+            department: 'Technology',
+            status: 'Active',
+            joinDate: 'Jan 2020',
+            children: [
+              {
+                name: 'John Smith',
+                position: 'Senior Engineer',
+                department: 'Engineering',
+                status: 'Active',
+                joinDate: 'Mar 2020'
+              },
+              {
+                name: 'Emily Johnson',
+                position: 'Frontend Developer',
+                department: 'Engineering',
+                status: 'Active',
+                joinDate: 'Jun 2021'
+              }
+            ]
+          },
+          {
+            name: 'Marketing Department',
+            position: 'Department',
+            department: 'Business',
+            status: 'Active',
+            joinDate: 'Feb 2019',
+            children: [
+              {
+                name: 'Sarah Williams',
+                position: 'Marketing Specialist',
+                department: 'Marketing',
+                status: 'Active',
+                joinDate: 'Apr 2019'
+              },
+              {
+                name: 'Michael Brown',
+                position: 'Content Creator',
+                department: 'Marketing',
+                status: 'Pending',
+                joinDate: 'Sep 2022'
+              }
+            ]
+          }
+        ];
+        
+        // Grid Options
+        const gridOptions = {
+          columnDefs: columnDefs,
+          rowData: rowData,
+          animateRows: true,
+          defaultColDef: {
+            flex: 1,
+            sortable: false,
+            filter: true,
+            resizable: true,
+          },
+          autoGroupColumnDef: {
+            headerName: 'Organization Structure',
+            minWidth: 50,
+            cellRendererParams: {
+              suppressCount: false,
+            },
+          },
+          //treeData: true, // https://www.ag-grid.com/javascript-data-grid/tree-data/
+          getDataPath: function(data) {
+            return data.dataPath || [];
+          },
+          getRowClass: function(params) {
+            if (params.node.level === 0) {
+              return 'parent-row';
+            }
+            return '';
+          },
+          onGridReady: function(params) {
+            // Auto-size columns after grid is ready
+            params.api.sizeColumnsToFit();
+            
+            // Expand all rows by default
+            setTimeout(function() {
+              params.api.forEachNode(function(node) {
+                if (node.group) {
+                  node.setExpanded(true);
+                }
+              });
+            }, 500);
+          },
+          onFirstDataRendered: function(params) {
+            params.api.sizeColumnsToFit();
+          }
+        };
+        
+        // Create the Grid
+        const gridDiv = document.querySelector('#myGrid');
+        new agGrid.Grid(gridDiv, gridOptions);
+        
+        // Handle window resize
+        window.addEventListener('resize', function() {
+          if (gridOptions.api) {
+            gridOptions.api.sizeColumnsToFit();
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

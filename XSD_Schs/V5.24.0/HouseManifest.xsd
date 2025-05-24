@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:catTrans_ru="urn:customs.ru:Information:TransportDocuments:TransportCommonAgregateTypesCust:5.24.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:rsm="urn:customs.ru:Information:TransportDocuments:HouseManifest:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:TransportDocuments:HouseManifest:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:TransportDocuments:TransportCommonAgregateTypesCust:5.24.0" schemaLocation="TransportCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Консолидированный манифест</xs:documentation>
+  </xs:annotation>
+  <xs:element name="HouseManifest" type="rsm:HouseManifestType">
+    <xs:annotation>
+      <xs:documentation>Консолидированный манифест</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="HouseManifestType">
+    <xs:annotation>
+      <xs:documentation>Консолидированный манифест</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="LinesNumberTotal" type="clt_ru:Count3Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Общее количество наименований товаров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TotalNumberOfPieces" type="clt_ru:Count4Type">
+            <xs:annotation>
+              <xs:documentation>Общее количество товаров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TotalGrossWeight" type="cat_ru:SupplementaryQuantityType">
+            <xs:annotation>
+              <xs:documentation>Общий вес товаров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Header" type="rsm:HeaderType">
+            <xs:annotation>
+              <xs:documentation>Заголовок документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ItemDetails" type="rsm:ItemDetailsType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Описание товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1003004E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="HandlingInformationType">
+    <xs:annotation>
+      <xs:documentation>Метод обработки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ServiceTypeCode" type="clt_ru:Code3Type">
+        <xs:annotation>
+          <xs:documentation>Код метода обработки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Description" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание метода обработки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HeaderType">
+    <xs:annotation>
+      <xs:documentation>Заголовок документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OriginLocation" type="catTrans_ru:AirportType">
+        <xs:annotation>
+          <xs:documentation>Место происхождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DestinationLocation" type="catTrans_ru:AirportType">
+        <xs:annotation>
+          <xs:documentation>Место назначения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MasterWaybillNumber" type="catTrans_ru:AWBNumberType">
+        <xs:annotation>
+          <xs:documentation>Серийный номер главной накладной</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HouseWBOrgType">
+    <xs:annotation>
+      <xs:documentation>Сведения об организации из домашней накладной</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:OrganizationType">
+        <xs:sequence>
+          <xs:element name="AccountNumber" type="clt_ru:ForeignAccountType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер счета</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ItemDetailsType">
+    <xs:annotation>
+      <xs:documentation>Описание товара</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="HouseWaybillNumber" type="rsm:CodeVariable32Type">
+        <xs:annotation>
+          <xs:documentation>Серийный номер домашней накладной</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LineItemNumber" type="clt_ru:Count5Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер товара по списку</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ItemDescription" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ItemName" type="clt_ru:CodeVariable18Type">
+        <xs:annotation>
+          <xs:documentation>Краткое наименование товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NumberOfPieces" type="clt_ru:Count4Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OriginLocation" type="catTrans_ru:AirportType">
+        <xs:annotation>
+          <xs:documentation>Место происхождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DestinationLocation" type="catTrans_ru:AirportType">
+        <xs:annotation>
+          <xs:documentation>Место назначения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GrossWeight" type="cat_ru:SupplementaryQuantityType">
+        <xs:annotation>
+          <xs:documentation>Сведения о весе товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SpecialHandlingCode" type="rsm:HandlingInformationType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>SPH Инструкция</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Consignor" type="rsm:HouseWBOrgType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Грузоотправитель</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Consignee" type="rsm:HouseWBOrgType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Грузополучатель</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="CodeVariable32Type">
+    <xs:annotation>
+      <xs:documentation>Код. Символьная строка (буквы, цифры, знаки) используемая для краткого (и (или) независимого от языка) представления или замены определенных значений или текстовых свойств. От 1 до 32 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="32" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

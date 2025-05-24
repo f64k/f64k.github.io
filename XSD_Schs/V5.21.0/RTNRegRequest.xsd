@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:rtnreg="urn:customs.ru:Information:SQDocuments:RTNRegRequest:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:RTNRegRequest:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос сведений из реестра разрешений ОГ, реестра разрешительных документов, реестра карточек допуска</xs:documentation>
+  </xs:annotation>
+  <xs:element name="RTNRegRequest" type="rtnreg:RTNRegRequestType" />
+  <xs:complexType name="RTNRegRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений из реестра разрешений ОГ, реестра разрешительных документов, реестра карточек допуска</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Request" type="rtnreg:RequestType">
+            <xs:annotation>
+              <xs:documentation>Запрос сведений</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009140E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="RequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="OGPermitRequest" type="rtnreg:OGPermitRequestType">
+          <xs:annotation>
+            <xs:documentation>Запрос сведений из реестра разрешений ОГ</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="DocReestrRequest" type="rtnreg:DocReestrRequestType">
+          <xs:annotation>
+            <xs:documentation>Запрос сведений из реестра разрешительных документов</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="CardPermitRequest" type="rtnreg:CardPermitRequestType">
+          <xs:annotation>
+            <xs:documentation>Запрос сведений из реестра карточек допуска</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OGPermitRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений из реестра разрешений ОГ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AutoNumber" type="clt_ru:CodeVariable20Type">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер ТС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryList" type="rtnreg:CountryListType">
+        <xs:annotation>
+          <xs:documentation>Перечень стран Таможенного союза, у которых необходимо запросить информацию</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PermitNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер разрешения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocReestrRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений из реестра разрешительных документов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Number" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер разрешения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryList" type="rtnreg:CountryListType">
+        <xs:annotation>
+          <xs:documentation>Перечень стран Таможенного союза, у которых необходимо запросить информацию</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransitPermitTypeName" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вид разрешения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CardPermitRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений из реестра карточек допуска</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AutoNumber" type="clt_ru:CodeVariable20Type">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер ТС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Number" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Серия и номер бланка карточки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CertificateNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер удостоверения допуска</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CountryListType">
+    <xs:annotation>
+      <xs:documentation>Перечень стран Таможенного союза, у которых необходимо запросить информацию</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Country" type="clt_ru:CountryA2CodeType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Страна Таможенного союза, у которой необходимо запросить информацию</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

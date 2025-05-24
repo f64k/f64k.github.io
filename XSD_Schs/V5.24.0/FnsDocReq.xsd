@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- аналог SQ.01130 -->
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:fdreq="urn:customs.ru:Information:SQDocuments:FnsDocReq:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:SQDocuments:FnsDocReq:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос на предоставление сведений о наличии задолженности по обязательным платежам</xs:documentation>
+  </xs:annotation>
+  <xs:element name="FnsDocReq" type="fdreq:FnsDocReqType">
+    <xs:annotation>
+      <xs:documentation>Запрос на предоставление сведений о наличии задолженности по обязательным платежам</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="FnsDocReqType">
+    <xs:annotation>
+      <xs:documentation>Запрос на предоставление сведений о наличии задолженности по обязательным платежам</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="NumberNotificationTaxAuthority" type="clt_ru:DocumentNumberType">
+            <xs:annotation>
+              <xs:documentation>Номер уведомления налогового органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DateNotificationTaxAuthority" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата уведомления налогового органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="InfoDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата, на момент которой запрашивается информация. При отсутствии информация предоставляется на текущую дату</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="FullName" type="clt_ru:FreeText250Type">
+            <xs:annotation>
+              <xs:documentation>Полное наименование уполномоченного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Address" type="RUScat_ru:RUAddressType">
+            <xs:annotation>
+              <xs:documentation>Адрес</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:element name="DebtorUL" type="fdreq:DebtorULType">
+              <xs:annotation>
+                <xs:documentation>Сведения о юр.лице</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="DebtorIP" type="fdreq:DebtorIPType">
+              <xs:annotation>
+                <xs:documentation>Сведения об ИП</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009232E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DebtorULType">
+    <xs:annotation>
+      <xs:documentation>Сведения о юр.лице</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FullNameUL" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Полное наименование</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Form" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Организационно-правовая форма</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INN" type="clt_ru:INNIDType">
+        <xs:annotation>
+          <xs:documentation>ИНН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OGRN" type="clt_ru:OGRNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ОГРН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DebtorIPType">
+    <xs:annotation>
+      <xs:documentation>Сведения об ИП</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="LastName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Фамилия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FirstName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Имя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Patronymic" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INN" type="clt_ru:INNIDType">
+        <xs:annotation>
+          <xs:documentation>ИНН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OGRNIP" type="clt_ru:OGRNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ОГРН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

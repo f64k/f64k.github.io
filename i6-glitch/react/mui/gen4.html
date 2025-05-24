@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Fixed Dashboard</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@mui/material@5.14.2/umd/material-ui.production.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+        .resize-handle {
+            position: absolute;
+            top: 0;
+            right: -4px;
+            width: 8px;
+            height: 100%;
+            cursor: col-resize;
+            z-index: 100;
+            background: transparent;
+            transition: background 0.2s;
+        }
+        .resize-handle:hover {
+            background: #2196f3;
+        }
+        .tree-item {
+            padding-left: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script>
+        const { createElement, useState, useEffect, useCallback } = React;
+        const {
+            Box,
+            AppBar,
+            Toolbar,
+            IconButton,
+            Typography,
+            Drawer,
+            List,
+            ListItem,
+            ListItemIcon,
+            ListItemText,
+            CssBaseline,
+            Accordion,
+            AccordionSummary,
+            AccordionDetails,
+            Collapse
+        } = MaterialUI;
+
+        const defaultConfig = {
+            leftWidth: 300,
+            rightWidth: 300
+        };
+
+        // Кастомный компонент для ресайза
+        function ResizableDrawer({ side, width, onResize, children }) {
+            const [isDragging, setIsDragging] = useState(false);
+            
+            const handleMouseDown = useCallback(() => {
+                setIsDragging(true);
+            }, []);
+
+            const handleMouseMove = useCallback((e) => {
+                if (!isDragging) return;
+                const newWidth = side === 'left' 
+                    ? e.clientX 
+                    : document.documentElement.clientWidth - e.clientX;
+                onResize(Math.max(200, Math.min(600, newWidth)));
+            }, [isDragging, side, onResize]);
+
+            const handleMouseUp = useCallback(() => {
+                setIsDragging(false);
+            }, []);
+
+            useEffect(() => {
+                if (isDragging) {
+                    document.addEventListener('mousemove', handleMouseMove);
+                    document.addEventListener('mouseup', handleMouseUp);
+                    return () => {
+                        document.removeEventListener('mousemove', handleMouseMove);
+                        document.removeEventListener('mouseup', handleMouseUp);
+                    };
+                }
+            }, [isDragging, handleMouseMove, handleMouseUp]);
+
+            return createElement(Drawer, {
+                variant: "permanent",
+                anchor: side === 'left' ? 'left' : 'right',
+                sx: {
+                    width: width,
+                    flexShrink: 0,
+                    '& .MuiDrawer-paper': {
+                        width: width,
+                        boxSizing: 'border-box',
+                        position: 'relative'
+                    }
+                }
+            },
+                children,
+                createElement('div', {
+                    className: 'resize-handle',
+                    onMouseDown: handleMouseDown
+                })
+            );
+        }
+
+        // Упрощенное дерево без TreeView
+        function TreeItem({ nodeId, label, children }) {
+            const [open, setOpen] = useState(false);
+            
+            return createElement(Box, null,
+                createElement(ListItem, {
+                    button: true,
+                    onClick: () => setOpen(!open)
+                },
+                    createElement(ListItemIcon, {}, open ? '📂' : '📁'),
+                    createElement(ListItemText, { primary: label })
+                ),
+                createElement(Collapse, { in: open, timeout: "auto", unmountOnExit: true },
+                    createElement(Box, { className: "tree-item" },
+                        children
+                    )
+                )
+            );
+        }
+
+        function ObjectTree() {
+            return createElement(List, null,
+                createElement(TreeItem, { nodeId: "1", label: "Window" },
+                    createElement(TreeItem, { nodeId: "2", label: "document" },
+                        createElement(ListItem, null, "title: ", document.title),
+                        createElement(ListItem, null, "URL: ", location.href)
+                    ),
+                    createElement(TreeItem, { nodeId: "3", label: "navigator" },
+                        createElement(ListItem, null, "userAgent: ", navigator.userAgent),
+                        createElement(ListItem, null, "platform: ", navigator.platform)
+                    )
+                )
+            );
+        }
+
+        function SystemInfo() {
+            const [info, setInfo] = useState({});
+            
+            useEffect(() => {
+                const updateInfo = () => {
+                    setInfo({
+                        window: {
+                            width: window.innerWidth,
+                            height: window.innerHeight
+                        },
+                        screen: {
+                            width: screen.width,
+                            height: screen.height
+                        },
+                        date: new Date().toLocaleString()
+                    });
+                };
+                
+                updateInfo();
+                window.addEventListener('resize', updateInfo);
+                return () => window.removeEventListener('resize', updateInfo);
+            }, []);
+
+            return createElement(Box, { p: 2 },
+                Object.entries(info).map(([key, value]) =>
+                    createElement(Accordion, { key },
+                        createElement(AccordionSummary, {}, key),
+                        createElement(AccordionDetails, {},
+                            createElement('pre', null, 
+                                JSON.stringify(value, null, 2)
+                            )
+                        )
+                    )
+                )
+            );
+        }
+
+        function Dashboard() {
+            const [config, setConfig] = useState(() => {
+                const saved = localStorage.getItem('dashboard-config');
+                return saved ? JSON.parse(saved) : defaultConfig;
+            });
+
+            const handleResize = (side) => (newWidth) => {
+                setConfig(prev => ({
+                    ...prev,
+                    [`${side}Width`]: newWidth
+                }));
+            };
+
+            useEffect(() => {
+                localStorage.setItem('dashboard-config', JSON.stringify(config));
+            }, [config]);
+
+            return createElement(Box, { sx: { display: 'flex' } },
+                createElement(CssBaseline),
+                
+                // Левая панель
+                createElement(ResizableDrawer, {
+                    side: 'left',
+                    width: config.leftWidth,
+                    onResize: handleResize('left')
+                },
+                    createElement(Box, { p: 2 },
+                        createElement(Typography, { variant: 'h6', gutterBottom: true }, 
+                            "Object Tree"
+                        ),
+                        createElement(ObjectTree)
+                    )
+                ),
+
+                // Основной контент
+                createElement(Box, {
+                    component: "main",
+                    sx: { 
+                        flexGrow: 1,
+                        p: 3,
+                        marginLeft: `${config.leftWidth}px`,
+                        marginRight: `${config.rightWidth}px`
+                    }
+                },
+                    Array.from({ length: 50 }).map((_, i) =>
+                        createElement(Typography, { key: i, paragraph: true },
+                            `${i + 1}. Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                            Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`
+                        )
+                    )
+                ),
+
+                // Правая панель
+                createElement(ResizableDrawer, {
+                    side: 'right',
+                    width: config.rightWidth,
+                    onResize: handleResize('right')
+                },
+                    createElement(Box, { p: 2 },
+                        createElement(Typography, { variant: 'h6', gutterBottom: true }, 
+                            "System Info"
+                        ),
+                        createElement(SystemInfo)
+                    )
+                )
+            );
+        }
+
+        ReactDOM.createRoot(document.getElementById('root'))
+            .render(createElement(Dashboard));
+    </script>
+</body>
+</html>

@@ -1,0 +1,444 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" elementFormDefault="qualified" targetNamespace="urn:customs.ru:Information:CustomsDocuments:PaymentDocument:5.24.0" version="5.24.0.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:paydo="urn:customs.ru:Information:CustomsDocuments:PaymentDocument:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Документ уплаты таможенных и иных платежей </xs:documentation>
+  </xs:annotation>
+  <xs:element name="PaymentDocument" type="paydo:PaymentDocumentType" />
+  <xs:complexType name="PaymentDocumentType">
+    <xs:annotation>
+      <xs:documentation>Документ уплаты таможенных и иных платежей </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="PDKind" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Вид ДУ: "1" - ДУ/ДТ; "2" - ДУ/ТПО; "3" - ДУ/ТР.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PDParticular" type="clt_ru:CodeVariable8Type">
+            <xs:annotation>
+              <xs:documentation>Особенности ДУ : ДУ/ДТ:- Код особенности декларирования товаров (гр. 7 ДТ) ДУ/ТПО:- Тип ордера (гр. 1 ТПО) ДУ/ТР:- Тип расписки (гр. 1 ТР)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NumberPD" type="clt_ru:Count2Type">
+            <xs:annotation>
+              <xs:documentation>Номер ДУ по порядку</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegistrationNumber" type="paydo:RegistrationNumberType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер ДТ/справочный номер ТПО/справочный номер ТР.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" name="PayerInfo" type="paydo:PayerInfoType">
+            <xs:annotation>
+              <xs:documentation>Сведения о плательщике</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="PrecedingDocument" type="paydo:PrecedingDocumentType">
+            <xs:annotation>
+              <xs:documentation>"ДУ - предшествующие ДТ/аннулированные ТПО/ аннулированные ТР"</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" name="PayableAmount" type="paydo:PayableAmountType">
+            <xs:annotation>
+              <xs:documentation>ДУ - суммы к уплате/резервируемые суммы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" name="Paid" type="paydo:PaidType">
+            <xs:annotation>
+              <xs:documentation>ДУ - уплачено</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="ExcessPaymentAmount" type="paydo:ExcessPaymentAmountType">
+            <xs:annotation>
+              <xs:documentation>ДУ - суммы излишней уплаты, снятые с учета</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="OutstandingBalances" type="paydo:OutstandingBalancesType">
+            <xs:annotation>
+              <xs:documentation>ДУ - незавершенные расчеты</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Fledging" type="paydo:FledgingType">
+            <xs:annotation>
+              <xs:documentation>Формирование ДУ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ReceiptPD" type="cat_ru:PersonSignatureType">
+            <xs:annotation>
+              <xs:documentation>Получение ДУ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute fixed="1006125E" name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AccountType">
+    <xs:annotation>
+      <xs:documentation>Номер лицевого счета плательщика</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, открывшего лицевой счет участника ВЭД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Date" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата открытия лицевого счета участника ВЭД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INN" type="clt_ru:INNIDType">
+        <xs:annotation>
+          <xs:documentation>ИНН - Индивидуальный номер налогоплательщика.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KPP" type="clt_ru:KPPCodeType">
+        <xs:annotation>
+          <xs:documentation>КПП - Код причины постановки на учет.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ExcessPaymentAmountType">
+    <xs:annotation>
+      <xs:documentation>ДУ - суммы излишней уплаты, снятые с учета</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="BCC" type="clt_ru:CodeVariable20Type">
+        <xs:annotation>
+          <xs:documentation>Код бюджетной классификации (КБК) согласно Классификатору  видов налогов, сборов и иных платежей, взимание которых возложено на таможенные органы.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentModeCode" type="clt_ru:CUCustomsPaymentCodeType">
+        <xs:annotation>
+          <xs:documentation>Код вида платежа в соответствии с Классификатором  видов налогов, сборов и иных платежей, взимание которых возложено на таможенные органы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Amount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма излишней уплаты таможенных платежей, снятой с учета в связи с её возвратом на расчетный счет плательщика, зачетом на лицевой счет плательщика или в счет погашения задолженности по уплате таможенных платежей либо отражения в составе прочих неналоговых доходов федерального бюджета как невостребованной</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateDrawdown" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата снятия с учета - дата решения на возврат/зачет денежных средств или дата акта о выявлении невостребованных денежных средств</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DeregistrationSign" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Признак снятия с учета: "1" - возврат на расчетный счет плательщика; "2" - зачет на лицевой счет плательщика; "3" - зачет в счет погашения задолженности по уплате таможенных платежей; "4" - отражение в составе прочих неналоговых доходов федерального бюджета как невостребованной.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FledgingType">
+    <xs:annotation>
+      <xs:documentation>Формирование ДУ</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:CustomsPersonType">
+        <xs:sequence>
+          <xs:element name="EndDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата формирования ДУ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CompletionSign" type="clt_ru:LetterIndicatorType">
+            <xs:annotation>
+              <xs:documentation>Признак завершения процесса формирования ДУ: "true" - завершен; "false" - не завершен</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="OutstandingBalancesType">
+    <xs:annotation>
+      <xs:documentation>ДУ - незавершенные расчеты</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="BCC" type="clt_ru:CodeVariable20Type">
+        <xs:annotation>
+          <xs:documentation>Код бюджетной классификации (КБК) согласно Классификатору  видов налогов, сборов и иных платежей, взимание которых возложено на таможенные органы.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentModeCode" type="clt_ru:CUCustomsPaymentCodeType">
+        <xs:annotation>
+          <xs:documentation>Код вида платежа в соответствии с Классификатором  видов налогов, сборов и иных платежей, взимание которых возложено на таможенные органы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DeptAmount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма задолженности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Overpayment" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма переплаты </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaidType">
+    <xs:annotation>
+      <xs:documentation>ДУ - уплачено</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="BCC" type="clt_ru:CodeVariable20Type">
+            <xs:annotation>
+              <xs:documentation>Код бюджетной классификации (КБК) согласно Классификатору  видов налогов, сборов и иных платежей, взимание которых возложено на таможенные органы.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PaymentDocumentType" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Тип платежного документа: "1" - "ПП" (при безналичной уплате денежных средств); "2" - "ПКО" (при внесении денежных средств в кассу таможенного органа); "3" - "квит." (при внесении денежных средств в кассы кредитных организаций для их последующего перечисления на счет Федерального казначейства); "4" - "чек" (при уплате таможенных платежей посредством микропроцессорных пластиковых карт); "5" - "расп." (при централизованной уплате таможенных платежей).</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TotalAmount" type="clt_ru:AmountType">
+            <xs:annotation>
+              <xs:documentation>Общая сумма по платежному документу</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="WriteOffs" type="clt_ru:AmountType">
+            <xs:annotation>
+              <xs:documentation>ДУ/ДТ, ДУ/ТПО: - сумма списания (зачета) денежных средств в счет уплаты таможенных платежей; ДУ/ТР: - сумма списания (зачета) денежных средств в счет обеспечения уплаты таможенных пошлин, налогов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DatewWiting" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>ДУ/ДТ, ДУ/ТПО: - дата списания (зачета) денежных средств в счет уплаты таможенных платежей; ДУ/ТР: - дата списания (зачета) денежных средств в счет обеспечения уплаты таможенных пошлин, налогов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="SerialNumber" type="clt_ru:Count8Type">
+            <xs:annotation>
+              <xs:documentation>ДУ/ДТ: - порядковый номер КТС (КДТ), по которой произведено доначисление платежей </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="CurrencyCode" type="clt_ru:CurrencyN3CodeType">
+            <xs:annotation>
+              <xs:documentation>Цифровой код валюты платежа / резервируемой суммы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="KindAccrual" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>ДУ/ДТ:  - тип документа, который послужил основанием для доначисления платежей: "2" - "КТС"; "3" - "КДТ".</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="PaymentCurrCode" type="clt_ru:CurrencyN3CodeType">
+            <xs:annotation>
+              <xs:documentation>Цифровой код валюты суммы по платежному документу</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PaymentModeCode" type="clt_ru:CUCustomsPaymentCodeType">
+            <xs:annotation>
+              <xs:documentation>Код вида платежа в соответствии с Классификатором  видов налогов, сборов и иных платежей, взимание которых возложено на таможенные органы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Agreement" type="cat_ru:DocumentBaseType">
+            <xs:annotation>
+              <xs:documentation>Cоглашение о применении централизованного порядка уплаты таможенных пошлин, налогов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PayerOrgData" type="paydo:PayerOrgDataType">
+            <xs:annotation>
+              <xs:documentation>Сведения о плательщике по платежному документу</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PayableAmountType">
+    <xs:annotation>
+      <xs:documentation>ДУ - суммы к уплате/резервируемые суммы</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="BCC" type="clt_ru:CodeVariable20Type">
+        <xs:annotation>
+          <xs:documentation>Код бюджетной классификации (КБК) согласно Классификатору  видов налогов, сборов и иных платежей, взимание которых возложено на таможенные органы.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DateAccrual" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата начисления, доначисления или установления излишнего начисления платежей</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentModeCode" type="clt_ru:CUCustomsPaymentCodeType">
+        <xs:annotation>
+          <xs:documentation>Код вида платежа в соответствии с Классификатором  видов налогов, сборов и иных платежей, взимание которых возложено на таможенные органы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Amount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>ДУ/ДТ, ДУ/ТПО: - сумма платежа, начисленная (доначисленная) к уплате; ДУ/ТР: - резервируемая сумма</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="KindAccrual" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>ДУ/ДТ: - тип начисления - тип документа, который послужил основанием для начисления к уплате платежей: "1" - "ДТ"; "2" - "КТС"; "3" - "КДТ".</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SerialNumber" type="clt_ru:Count8Type">
+        <xs:annotation>
+          <xs:documentation>ДУ/ДТ: - порядковый номер КТС (КДТ), по которой произведено доначисление платежей </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CurrencyCode" type="clt_ru:CurrencyN3CodeType">
+        <xs:annotation>
+          <xs:documentation>Цифровой код валюты платежа / резервируемой суммы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CurrencyRate" type="clt_ru:CurrencyRateType">
+        <xs:annotation>
+          <xs:documentation>Курс валюты платежа / резервируемой суммы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PayerInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о плательщике</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OrganizationName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Наименование организации / ФИО физического лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Classification" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Классификация плательщика/тип лицевого счета: "1" - "юридическое лицо"; "2" - "физическое лицо"; "3" - "таможенный представитель". </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ResidenceStatus" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Статус плательщика: "true" - резидент; "false" - нерезидент.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ITN" type="clt_ru:ITNType">
+        <xs:annotation>
+          <xs:documentation>ИТН плательщика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="OGRNID" type="clt_ru:OGRNIDType">
+        <xs:annotation>
+          <xs:documentation>ОГРН/ОГРНИП плательщика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="IdentityCard" type="RUScat_ru:RUIdentityCardType">
+        <xs:annotation>
+          <xs:documentation>Документ, удостоверяющий личность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Account" type="paydo:AccountType">
+        <xs:annotation>
+          <xs:documentation>Номер лицевого счета плательщика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PayerOrgDataType">
+    <xs:annotation>
+      <xs:documentation>Сведения о плательщике по платежному документу</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="PayerITN" type="clt_ru:ITNType">
+        <xs:annotation>
+          <xs:documentation>ИТН плательщика по платежному документу</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="PayerINN" type="clt_ru:INNIDType">
+        <xs:annotation>
+          <xs:documentation>ИНН плательщика по платежному документу</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="PayerKPP" type="clt_ru:KPPCodeType">
+        <xs:annotation>
+          <xs:documentation>КПП плательщика по платежному документу</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaymentType">
+    <xs:annotation>
+      <xs:documentation>Платежи</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PaymentModeCode" type="clt_ru:CUCustomsPaymentCodeType">
+        <xs:annotation>
+          <xs:documentation>Код вида платежа в соответствии с Классификатором  видов налогов, сборов и иных платежей, взимание которых возложено на таможенные органы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AmountRUB" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>ДУ/ДТ: - сумма платежа, фактически уплаченная (взысканная) по предшествующей ДТ (в валюте Российской Федерации); ДУ/ТПО: - сумма таможенных платежей, фактически уплаченная по предшествующему ТПО (в валюте Российской Федерации); ДУ/ТР: - сумма денежного залога, внесенная по предшествующей ТР</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Amount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>ДУ/ДТ: - сумма платежа, зачтенная в счет уплаты по текущей ДТ; ДУ/ТПО: - сумма платеже, зачтенная в счет уплаты таможенных платежей по текущему ТПО; ДУ/ТР: - сумма, учитываемая в качестве денежного залога по текущей ТР</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PrecedingDocumentType">
+    <xs:annotation>
+      <xs:documentation>"ДУ - предшествующие ДТ/аннулированные ТПО/ аннулированные ТР"</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="BCC" type="clt_ru:CodeVariable20Type">
+        <xs:annotation>
+          <xs:documentation>Код бюджетной классификации (КБК) согласно Классификатору  видов налогов, сборов и иных платежей, взимание которых возложено на таможенные органы.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PrecedingRegistrationNumber" type="paydo:RegistrationNumberType">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер предшествующей ДТ/справочный номер предшествующего аннулированного ТПО/справочный номер предшествующей аннулированной ТР</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" name="Payment" type="paydo:PaymentType">
+        <xs:annotation>
+          <xs:documentation>Платежи</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegistrationNumberType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер ДТ/справочный номер ТПО/справочный номер ТР.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации документа.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Number" type="clt_ru:CodeVariable10Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый (регистрационный) номер ДТ/ регистрационный номер (серия, типографский номер) ТПО/ типографский номер ТР</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

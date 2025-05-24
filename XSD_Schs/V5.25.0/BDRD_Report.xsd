@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="urn:customs.ru:Information:CustomsDocuments:BDRD_Report:5.24.0" version="5.24.0.0" xmlns:bdr="urn:customs.ru:Information:CustomsDocuments:BDRD_Report:5.24.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Отчет по результатам сопоставления сведений из РД и ДТ</xs:documentation>
+  </xs:annotation>
+  <xs:element name="BDRD_Report" type="bdr:BDRD_ReportType" />
+  <xs:complexType name="BDRD_ReportType">
+    <xs:annotation>
+      <xs:documentation>Отчет по результатам сопоставления сведений из РД и ДТ</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="RequestPositionID" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Позиция РД в запросе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" name="CheckResult" type="bdr:CheckResultType">
+            <xs:annotation>
+              <xs:documentation>Результаты сверки сведений</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute fixed="1006179E" name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CheckResultType">
+    <xs:annotation>
+      <xs:documentation>Результаты сверки сведений</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DataSource" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Источник получения сведений (ФОИВ)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="QuotaPosibilitySign" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак возможности списания квоты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsNumber" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Номер товара по ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Numeric" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Номер позиции товара по приложению разрешительного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="4" name="DT_GoodsDescription" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Описание товара по ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DT_GoodsTNVEDCode" type="clt_ru:CUGoodsNomenclatuerCodeType">
+        <xs:annotation>
+          <xs:documentation>Код товара по ТН ВЭД ЕАЭС по ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="4" name="RD_GoodsDescription" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Описание товара по РД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="RD_GoodsTNVEDCode" type="clt_ru:CUGoodsNomenclatuerCodeType">
+        <xs:annotation>
+          <xs:documentation>Код товара по ТН ВЭД ЕАЭС по РД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" name="DT_SupplementaryQuantity" type="cat_ru:SupplementaryQuantityType">
+        <xs:annotation>
+          <xs:documentation>Количество товара по ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" name="RD_SupplementaryQuantity" type="cat_ru:SupplementaryQuantityType">
+        <xs:annotation>
+          <xs:documentation>Количество товара по РД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

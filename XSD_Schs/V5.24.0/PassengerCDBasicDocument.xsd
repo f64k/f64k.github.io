@@ -1,0 +1,774 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--  Решение КТС от 18.06.2010 №287  -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:catESAD_cu="urn:customs.ru:CUESADCommonAggregateTypesCust:5.24.0" xmlns:cat_pcd="urn:customs.ru:Information:CustomsDocuments:PassengerCDCommonAggregateTypesCust:5.24.0" xmlns:pcd_bd="urn:customs.ru:Information:CustomsDocuments:PassengerCDBasicDocument:5.24.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:PassengerCDBasicDocument:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonAggregateTypesCust:5.24.0" schemaLocation="CUESADCommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:CustomsDocuments:PassengerCDCommonAggregateTypesCust:5.24.0" schemaLocation="PassengerCDCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Пассажирская таможенная декларация</xs:documentation>
+  </xs:annotation>
+  <xs:element name="PassengerCDBasicDocument" type="pcd_bd:PassengerCDBasicDocumentType" />
+  <xs:complexType name="PassengerCDBasicDocumentType">
+    <xs:annotation>
+      <xs:documentation>Пассажирская таможенная декларация</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="EnterOrExitCustomsTerritory" type="clt_ru:LetterIndicatorType">
+            <xs:annotation>
+              <xs:documentation>Тип декларации. 1 - Въезд, 2 - Выезд, 3 - Транзит</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DeclarantPerson" type="pcd_bd:PersonType">
+            <xs:annotation>
+              <xs:documentation>Сведения о декларанте (физ.лицо)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CountryDeparture" type="cat_pcd:CountryType">
+            <xs:annotation>
+              <xs:documentation>Из какой страны прибыл (указывается страна отправления)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CountryDestination" type="cat_pcd:CountryType">
+            <xs:annotation>
+              <xs:documentation>В какую страну следует (указывается страна назначения)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Children" type="pcd_bd:HaveAndQuantityType">
+            <xs:annotation>
+              <xs:documentation>Совместно следуют несовершеннолетние (не достигшие шестнадцатилетнего возраста) дети</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MovementGoodsAndTransportMeansInfo" type="pcd_bd:MovementGoodsAndTransportMeansInfoType">
+            <xs:annotation>
+              <xs:documentation>Сведения о способе перемещения товаров и транспортных средств, пункт 2 Основного формуляра</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MovementCurrencyValuesInfo" type="pcd_bd:MovementCurrencyValuesInfoType" minOccurs="0">
+            <xs:annotation>
+              <!-- Не заполняется в случае типа декларации 3 - транзитная -->
+              <xs:documentation>Сведения о перемещаемых валютных ценностях, пункты 3.1, 3.2 Основного формуляра</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TransportMeans" type="pcd_bd:TransportMeansType">
+            <xs:annotation>
+              <xs:documentation>Транспортные средства, пункт 3.3 Основного формуляра</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Goods" type="pcd_bd:GoodsType">
+            <xs:annotation>
+              <xs:documentation>Сведения о товарах, пункты 3.4, 3.5, 4 Основного формуляра</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата составления декларации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="LanguagePassDecl" type="clt_ru:LanguageCodeType">
+            <xs:annotation>
+              <xs:documentation>Код языка заполнения документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Signer" type="cat_pcd:SignerType">
+            <xs:annotation>
+              <!-- Внимание! Если тип декларации 3 - Транзит, то подать и подписать может только декларант -->
+              <xs:documentation>Подпись лица, заявляющего сведения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReservationID" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Идентификатор резервирования денежных средств для целей уплаты таможенных платежей</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsMark" type="cat_pcd:CustomsMarkType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о должностном лице таможенного органа, проставившем штамп и служебные отметки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PCDAdditionalInfo" type="pcd_bd:PCDAdditionalInfoType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дополнительный формуляр (Декларация наличных денег и/или денежных инструментов)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006230E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="DocumentKindType">
+    <xs:annotation>
+      <xs:documentation>Перечислимый тип документов, подтверждающих заявленные сведения (1 - документы, подтверждающие соблюдение ограничений, связанных с перемещением товаров через таможенную границу; 2 - документы, позволяющие идентифицировать несопровождаемый багаж; 3 - документы, подтверждающие право на льготы по уплате таможенных платежей; 4 - документы, подтверждающие применение мер обеспечения соблюдения таможенной процедуры таможенного транзита; 5 - Иные документы)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="clt_ru:LetterIndicatorType">
+      <xs:enumeration value="1">
+        <xs:annotation>
+          <xs:documentation>документы, подтверждающие соблюдение ограничений, связанных с перемещением товаров через таможенную границу</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="2">
+        <xs:annotation>
+          <xs:documentation>документы, позволяющие идентифицировать несопровождаемый багаж</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="3">
+        <xs:annotation>
+          <xs:documentation>документы, подтверждающие право на льготы по уплате таможенных платежей</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="4">
+        <xs:annotation>
+          <xs:documentation>документы, подтверждающие применение мер обеспечения соблюдения таможенной процедуры таможенного транзита</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="5">
+        <xs:annotation>
+          <xs:documentation>Иные документы</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="IntendedUseMoneyKindType">
+    <xs:annotation>
+      <xs:documentation>Перечислимый тип cведений о предполагаемом использовании наличных денежных средств и (или) денежных инструментов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="clt_ru:LetterIndicatorType">
+      <xs:enumeration value="1">
+        <xs:annotation>
+          <xs:documentation>текущие расходы (приобретение товаров и услуг)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="2">
+        <xs:annotation>
+          <xs:documentation>инвестиции, включая приобретение недвижимости</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="3">
+        <xs:annotation>
+          <xs:documentation>безвозмездные трансферты в пользу физических лиц (материальная помощь и т.п.)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="4">
+        <xs:annotation>
+          <xs:documentation>безвозмездные трансферты в пользу юридических лиц (благотворительность, пожертвования и т.п.)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="5">
+        <xs:annotation>
+          <xs:documentation>прочее</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="IntendedUseMoneyType">
+    <xs:annotation>
+      <xs:documentation>Сведения о предполагаемом использовании наличных денежных средств и (или) денежных инструментов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="IntendedUseMoneyKind" type="pcd_bd:IntendedUseMoneyKindType">
+        <xs:annotation>
+          <xs:documentation>Вариант предполагаемого использование наличных денежных средств и (или) денежных инструментов (1 - текущие расходы (приобретение товаров и услуг); 2 - инвестиции, включая приобретение недвижимости; 3 - безвозмездные трансферты в пользу физических лиц (материальная помощь и т.п.); 4 - безвозмездные трансферты в пользу юридических лиц (благотворительность, пожертвования и т.п.); 5 - прочее)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IntendedUseMoneyOther" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Указание предполагаемого использования в случае выбора варианта 5 (прочее) </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HaveAndQuantityType">
+    <xs:annotation>
+      <xs:documentation>Признак наличия и количество, если есть</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="HaveSign" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Наличие (1 или true - да; 0 или false - нет)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Quantity" type="clt_ru:Quantity3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество (если есть наличие)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GoodsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товарах, пункты 3.4, 3.5, 4 Основного формуляра</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsForbiddenHaveSign" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Наличие товаров, в отношении которых применяются запреты или ограничения (1 или true - да; 0 или false - нет), пункт 3.4 Основного формуляра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsIndivisibleHaveSign" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наличие неделимых товаров весом свыше порогового значения, товаров общим весом свыше порогового значения и (или) общей таможенной стоимостью свыше порогового значения (соответствующие пороговые значения устанавливаются Решением Совета ЕАЭС) (1 или true - да; 0 или false - нет), пункт 3.5 Основного формуляра</xs:documentation>
+        </xs:annotation>
+        <!-- Не заполняется в случае типа декларации 3 - транзитная -->
+      </xs:element>
+      <xs:element name="PassDeclGoodsInfo" type="pcd_bd:PassDeclGoodsInfoType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о товарах, указанных в подпунктах 3.4, 3.5, товарах, подлежащих таможенному декларированию, и иных товарах по желанию физического лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MonetaryInstrumentsDetailsType">
+    <xs:annotation>
+      <xs:documentation>Денежные инструменты, за исключением дорожных чеков (векселя, чеки (банковские), ценные бумаги на предъявителя и иное)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="pcd_bd:RecForeignCurDetailsBaseType">
+        <xs:sequence>
+          <xs:element name="MonetaryInstrumentKind" type="clt_ru:DigitalIndicatorType">
+            <xs:annotation>
+              <xs:documentation>Тип инструмента: 0 - вексель; 1 - банковский чек; 2 - ценные бумаги на предъявителя; 3 - иное</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MonetaryInstrumentName" type="clt_ru:DocumentNameType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Наименование типа инструмента в случае типа инструмента 3 - иное</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="WhoReleased" type="clt_ru:DocumentNameType">
+            <xs:annotation>
+              <xs:documentation>Кем выпущен</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DateReleased" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата выпуска</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MonetaryInstrumentNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Идентификационный номер (при наличии)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Quantity" type="clt_ru:Quantity3Type">
+            <xs:annotation>
+              <xs:documentation>Количество</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="MovementCurrencyValuesInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о перемещаемых валютных ценностях, пункты 3.1, 3.2 Основного формуляра</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="NotExcessLimitForeignCurSign" type="pcd_bd:NotExcessLimitForeignCurSignType">
+        <xs:annotation>
+          <xs:documentation>Наличие валюты государств-членов таможенного союза, иностранной валюты, дорожных чеков в сумме, не превышающей 10000 долларов США в эквиваленте (да или нет, перечень (если есть, заполняется по желанию)), пункт 3.1 Основного формуляра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExcessLimitForeignCurSign" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Есть валюта государств-членов таможенного союза, иностранная валюта, дорожные чеки в сумме, превышающей 10000 долларов США в эквиваленте, векселя, чеки (банковские), ценные бумаги на предъявителя (1 или true - да; 0 или false - нет), пункт 3.2 основного формуляра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MovementGoodsAndTransportMeansInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о способе перемещения товаров и транспортных средств, пункт 2 Основного формуляра</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AccompaniedLuggage" type="pcd_bd:HaveAndQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Есть сопровождаемый багаж (да или нет, количество мест (если есть)), пункт 2.1 Основного формуляра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="UnaccompaniedLuggage" type="pcd_bd:HaveAndQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Есть несопровождаемый багаж (да или нет, количество мест (если есть)), пункт 2.2 Основного формуляра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsDeliveredByCarrier" type="pcd_bd:HaveAndQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Есть товары, доставляемые перевозчиком (да или нет, количество мест (если есть)), пункт 2.3 Основного формуляра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="NotExcessLimitForeignCurSignType">
+    <xs:annotation>
+      <xs:documentation>Наличие валюты государств-членов таможенного союза, иностранной валюты, дорожных чеков в сумме, не превышающей 10000 долларов США в эквиваленте (да или нет, перечень (если есть, заполняется по желанию))</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="NotExcessLimitForeignCurSign" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Есть валюта государств-членов таможенного союза, иностранная валюта, дорожные чеки в сумме, не превышающей 10000 долларов США в эквиваленте (1 или true - да; 0 или false - нет)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DetailsNotExcessLimitForeignCur" type="pcd_bd:RecForeignCurDetailsType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Валюта государств-членов таможенного союза, иностранная валюта, дорожные чеки в сумме, не превышающей 10000 долларов США в эквиваленте (заполняется по желанию физического лица)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="OriginMoneyKindType">
+    <xs:annotation>
+      <xs:documentation>Перечислимый тип сведений о происхождении наличных денежных средств и (или) денежных инструментов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="clt_ru:Count2Type">
+      <xs:enumeration value="1">
+        <xs:annotation>
+          <xs:documentation>Заработная плата, доходы от предпринимательской деятельности физического лица</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="2">
+        <xs:annotation>
+          <xs:documentation>дивиденды и другие доходы от участия в капитале предприятий</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="3">
+        <xs:annotation>
+          <xs:documentation>доходы от реализации движимого и недвижимого имущества</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="4">
+        <xs:annotation>
+          <xs:documentation>безвозмездные трансферты, полученные от физических и юридических лиц (материальная помощь, гранты и т.п.)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="5">
+        <xs:annotation>
+          <xs:documentation>пенсия, стипендия, социальные пособия, алименты</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="6">
+        <xs:annotation>
+          <xs:documentation>доходы от аренды недвижимости и земельных участков</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="7">
+        <xs:annotation>
+          <xs:documentation>заемные средства</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="8">
+        <xs:annotation>
+          <xs:documentation>наследство</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="9">
+        <xs:annotation>
+          <xs:documentation>прочее</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="OriginMoneyType">
+    <xs:annotation>
+      <xs:documentation>Сведения о происхождении наличных денежных средств и (или) денежных инструментов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OriginMoneyKind" type="pcd_bd:OriginMoneyKindType">
+        <xs:annotation>
+          <xs:documentation>Вариант происхождения наличных денежных средств и (или) денежных инструментов (1 - заработная плата, доходы от предпринимательской деятельности физического лица; 2 - дивиденды и другие доходы от участия в капитале предприятий; 3 - доходы от реализации движимого и недвижимого имущества; 4 - безвозмездные трансферты, полученные от физических и юридических лиц (материальная помощь, гранты и т.п.); 5 - пенсия, стипендия, социальные пособия, алименты; 6 - доходы от аренды недвижимости и земельных участков; 7 - заемные средства; 8 - наследство; 9 - прочее)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OriginMoneyOther" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Указание происхождения в случае выбора варианта 9 (прочее) </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OwnerMoneyType">
+    <xs:annotation>
+      <xs:documentation>Сведения о владельце наличных денежных средств и (или) денежных инструментов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OwnerMoneyKind" type="clt_ru:DigitalIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Кто является владельцем: 0 - декларант; 1 - другое физическое лицо; 2 - иное лицо</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OwnerMoneyName" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Фамилия, имя для физических лиц/Наименование иного лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OwnerMoneyAddress" type="cat_ru:AddressType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Адрес местожительства для физического лица/Адрес местонахождения (юридический адрес) для иных лиц</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PassDeclGoodsInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товарах, указанных в подпунктах 3.4, 3.5, товарах, подлежащих таможенному декларированию, и иных товарах по желанию физического лица</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="MethodPostingInfo" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Способ размещения информации о товарах, п.4 Основного формуляра: 1 - на основном и дополнительных листах, 2 - в описи</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PassDeclGoods" type="pcd_bd:PassDeclGoodsType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о товарах</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsWeightQuantity" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Общий вес (итого)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsQuantity" type="pcd_bd:QuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Общее количество (итого)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsCost" type="cat_pcd:MoveMoneyType">
+        <xs:annotation>
+          <xs:documentation>Общая стоимость (итого)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PassDeclGoodsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товаре</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsNumeric" type="clt_ru:Count5Type">
+        <xs:annotation>
+          <xs:documentation>Номер товара по порядку</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Наименование и другие отличительные признаки товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PresentedDocuments" type="pcd_bd:PresentedDocumentsType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Номер и дата выдачи документа, подтверждающего соблюдение ограничений и орган, его выдавший</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsWeightQuantity" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вес</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsQuantity" type="pcd_bd:QuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsCost" type="cat_pcd:MoveMoneyType">
+        <xs:annotation>
+          <xs:documentation>Стоимость</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PCDAdditionalInfoType">
+    <xs:annotation>
+      <xs:documentation>Дополнительный формуляр (Декларация наличных денег и/или денежных инструментов)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RecDetailsForeignCur" type="pcd_bd:RecForeignCurDetailsADType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Наличные денежные средства и дорожные чеки, пункт 2.1 Дополнительного формуляра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MonetaryInstrumentsDetails" type="pcd_bd:MonetaryInstrumentsDetailsType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Денежные инструменты, за исключением дорожных чеков (векселя, чеки (банковские), ценные бумаги на предъявителя и иное), пункт 2.2 Дополнительного формуляра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IntendedUseMoney" type="pcd_bd:IntendedUseMoneyType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о предполагаемом использовании наличных денежных средств и (или) денежных инструментов, пункт 5 Дополнительного формуляра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RouteMoney" type="pcd_bd:RouteMoneyType">
+        <xs:annotation>
+          <xs:documentation>Сведения о маршруте и способе перевозке (о виде транспорта)  наличных денежных средств и (или) денежных инструментов, пункт 6 Дополнительного формуляра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PersonType">
+    <xs:annotation>
+      <xs:documentation>Сведения о физическом лице</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_pcd:DeclarantPersonType">
+        <xs:sequence>
+          <xs:element name="BirthDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата рождения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <!-- Заполняется в случае наличия Дополнительного формуляра (Декларация наличных денег и (или) денежных инструментов) -->
+          <xs:element name="BirthPlace" type="clt_ru:FreeText500Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Место рождения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Address" type="cat_ru:AddressType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Адрес постоянного места жительства</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegDocumentReference" type="cat_ru:DocumentBaseType" minOccurs="0">
+            <xs:annotation>
+              <!-- Указывается при наличии в случае положительного ответа в пункте 3.2 основного формуляра лицами, не являющимися лицами государств-членов Таможенного союза -->
+              <xs:documentation>номер и дата выдачи визы (реквизиты документа, подтверждающего право пребывания на таможенной территории Таможенного союза)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CRTaxAllowanceCode" type="clt_ru:CodeVariable2Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Признак наличия льготы:               1 – переселение в Российскую Федерацию на постоянное место жительства;
+6 – беженцы;
+К – работники посольств;
+S – физические лица государства-члена, временно проживавшие за границей не менее 1 года</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PresentedDocumentsType">
+    <xs:annotation>
+      <xs:documentation>Документы, подтверждающие заявленные сведения</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="DocumentKind" type="pcd_bd:DocumentKindType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Тип документа, подтверждающего заявленные сведения (1 - документы, подтверждающие соблюдение ограничений, связанных с перемещением товаров через таможенную границу; 2 - документы, позволяющие идентифицировать несопровождаемый багаж; 3 - документы, подтверждающие право на льготы по уплате таможенных платежей; 4 - документы, подтверждающие применение мер обеспечения соблюдения таможенной процедуры таможенного транзита; 5 - Иные документы)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OrganizationName" type="clt_ru:NameType">
+            <xs:annotation>
+              <xs:documentation>Наименование органа, выдавшего документ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ModeCode" type="clt_ru:CustomsDocumentCodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код вида документа (заполняется в соответствии с классификатором видов документов, используемых при таможенном декларировании)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PresentedDocumentId" type="catESAD_cu:RFBasePresentedDocIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дополнительные технологические идентификаторы представленного документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RecForeignCurDetailsBaseType">
+    <xs:annotation>
+      <xs:documentation>Базовый тип сведений о перемещаемых валютных ценностях</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="MoveAmount" type="cat_pcd:MoveMoneyType">
+        <xs:annotation>
+          <xs:documentation>Валюта и Сумма/Стоимость</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OwnerMoney" type="pcd_bd:OwnerMoneyType">
+        <xs:annotation>
+          <xs:documentation>Сведения о владельце наличных денежных средств и (или) денежных инструментов – указывается, если декларант не является собственником</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OriginMoney" type="pcd_bd:OriginMoneyType">
+        <xs:annotation>
+          <xs:documentation>Сведения о происхождении наличных денежных средств и (или) денежных инструментов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RecForeignCurDetailsADType">
+    <xs:annotation>
+      <xs:documentation>Сведения о перемещаемой наличной валюте и дорожных чеках</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="pcd_bd:RecForeignCurDetailsBaseType">
+        <xs:sequence>
+          <xs:element name="ForeignCurKind" type="clt_ru:DigitalIndicatorType">
+            <xs:annotation>
+              <xs:documentation>Вид перемещаемой валюты: 1 - банкноты; 2 - монеты; 3 - дорожные чеки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RecForeignCurDetailsType">
+    <xs:annotation>
+      <xs:documentation>Строка сведений о перемещаемой наличной валюте и дорожных чеках в сумме, не превышающей 10000 долларов США в эквиваленте</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ForeignCurKind" type="clt_ru:DigitalIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Вид перемещаемой валюты: 1 - банкноты; 2 - монеты; 3 - дорожные чеки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MoveAmount" type="cat_pcd:MoveMoneyType">
+        <xs:annotation>
+          <xs:documentation>Валюта и Сумма/Стоимость</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RouteMoneyType">
+    <xs:annotation>
+      <xs:documentation>Сведения о маршруте и способе перевозки (о виде транспорта) наличных денежных средств и (или) денежных инструментов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RMCountryDeparture" type="cat_pcd:CountryType">
+        <xs:annotation>
+          <!-- указывается начальный пункт маршрута (страна, из которой вывозятся либо были вывезены декларируемые наличные денежные средства и (или) денежные инструменты) -->
+          <xs:documentation>Страна убытия (начальный пункт маршрута (страна, из которой вывозятся либо были вывезены декларируемые наличные денежные средства и (или) денежные инструменты))</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RMDateDeparture" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата убытия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RMCountryArrival" type="cat_pcd:CountryType">
+        <xs:annotation>
+          <!-- указывается страна, являющаяся конечным пунктом следования декларанта -->
+          <xs:documentation>Страна прибытия (конечный пункт следования декларанта)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RMDateArrival" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата прибытия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransitCountries" type="cat_pcd:CountryType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Транзитные страны</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransportModeCode" type="clt_ru:TransportModeCodeType">
+        <xs:annotation>
+          <xs:documentation>Код вида транспортного средства, на котором декларант прибыл/убывает на территорию таможенного союза/с территории таможенного союза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TransportMeansDetailsType">
+    <xs:annotation>
+      <xs:documentation>Перечень транспортных средств</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:TransportMeansBaseType">
+        <xs:sequence>
+          <xs:element name="NumberTransportMeans" type="clt_ru:Count3Type">
+            <xs:annotation>
+              <xs:documentation>Порядковый номер транспортного средства</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TransportKindName" type="clt_ru:TransportNameType">
+            <xs:annotation>
+              <xs:documentation>Наименование вида транспортного средства</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Mark" type="clt_ru:MarkCarNameType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Наименование марки транспортного средства</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OfftakeYear" type="clt_ru:DateYearCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Момент выпуска (год изготовления транспортного средства)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="EngineVolumeQuanity" type="clt_ru:EngineVolumeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Объем двигателя, куб. см</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustCost" type="cat_pcd:MoveMoneyType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Таможенная стоимость</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RemovalRegister" type="clt_ru:IndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Снято с регистрационного учета в государстве предыдущей регистрации (1 или true - да; 0 или false - нет)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DirectionMovement" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Направление перемещения (1 - ввоз; 2 - вывоз; 3 - временный ввоз; 4 - обратный вывоз)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TransportMeansType">
+    <xs:annotation>
+      <xs:documentation>Транспортные средства</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TransportMeansHaveSign" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Наличие транспортного средства (1 или true - да; 0 или false - нет)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransportMeansDetails" type="pcd_bd:TransportMeansDetailsType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Транспортные средства, пункт 3.3 Основного формуляра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="QuantityType">
+    <xs:annotation>
+      <xs:documentation>Количество товара</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="MeasureUnitOperationCode" type="clt_ru:MeasureUnitQualifierCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код единицы измерения веса/количества</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeasureUnitOperation" type="clt_ru:MeasureUnitQualifierNameType">
+        <xs:annotation>
+          <xs:documentation>Наименование единицы измерения веса/количества</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Quantity" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Количество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

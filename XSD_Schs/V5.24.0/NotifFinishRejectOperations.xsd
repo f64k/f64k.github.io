@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="urn:customs.ru:Information:CustomsDocuments:NotifFinishRejectOperations:5.24.0" version="5.24.0.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:nfro="urn:customs.ru:Information:CustomsDocuments:NotifFinishRejectOperations:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Уведомление о завершении операций/об отказе в проведении операций в отношении товаров и транспортных средств</xs:documentation>
+  </xs:annotation>
+  <xs:element name="NotifFinishRejectOperations" type="nfro:NotifFinishRejectOperationsType" />
+  <xs:complexType name="NotifFinishRejectOperationsType">
+    <xs:annotation>
+      <xs:documentation>Уведомление о завершении операций/об отказе в проведении операций в отношении товаров и транспортных средств</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocumentSign" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Признак: 0 - отказ, 1 - завершение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="OperationDescription" type="clt_ru:Count2Type">
+            <xs:annotation>
+              <xs:documentation>Операция (Заполняется в случае отказа в выполнении конкретного вида операции): 1 - Транспортировка, 2 - Взвешивание, 3 - Иное определение количества товаров, 4 - Погрузка, 5 - Выгрузка, 6 - Перегрузка, 7 - Исправление поврежденной упаковки, 8 - Вскрытие упаковки, 9 - Упаковка, 10 - Переупаковка, 11- Вскрытие помещений, емкостей и других мест,  где находятся или могут находиться товары, 12 - Разделение товарной партии по отдельным видам и (или) наименованиям товаров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="GTDNumber" type="cat_ru:GTDIDType">
+            <xs:annotation>
+              <xs:documentation>Номер таможенной декларации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Declarant" type="nfro:DeclarantType">
+            <xs:annotation>
+              <xs:documentation>Сведения о декларанте/ином лице, обладающем полномочиями в отношении товаров и (или) транспортных средств, и их представителей.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsOffice" type="cat_ru:CUCustomsType">
+            <xs:annotation>
+              <xs:documentation>Таможеннный орган</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute fixed="1006176E" name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DeclarantType">
+    <xs:annotation>
+      <xs:documentation>Сведения о декларанте/ином лице, обладающем полномочиями в отношении товаров и (или) транспортных средств, и их представителей.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:OrganizationBaseType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Representative" type="cat_ru:OrganizationBaseType">
+            <xs:annotation>
+              <xs:documentation>Представитель</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:fin_rep="urn:customs.ru:Information:ELSDocuments:ELSPaymentsReport:5.21.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:ELSDocuments:ELSPaymentsReport:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Перечень платёжных документов</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ELSPaymentsReport" type="fin_rep:ELSPaymentsReportType">
+    <xs:annotation>
+      <xs:documentation>Перечень платёжных документов</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ELSPaymentsReportType">
+    <xs:annotation>
+      <xs:documentation>Перечень платёжных документов</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="CreateDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата формирования отчета</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PaymentDocument" type="fin_rep:PaymentDocumentType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Платежный документ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1040032E">
+          <xs:annotation>
+            <xs:documentation>Служебный идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PaymentDocumentType">
+    <xs:annotation>
+      <xs:documentation>Платежный документ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocumentID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Payment" type="fin_rep:PaymentType">
+        <xs:annotation>
+          <xs:documentation>Платёж</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RestSum" type="clt_ru:Quantity14point2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сумма доступного остатка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PayerName" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Наименование плательщика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BeneficiaryInfo" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация о бенефициаре</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentNote" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Назначение платежа из платёжного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RecipientInfo" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация отправителя получателю</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentUniqChgID" type="clt_ru:CodeVariable20Type">
+        <xs:annotation>
+          <xs:documentation>УИН из платёжного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AccountID" type="fin_rep:CodeVariable30Type">
+        <xs:annotation>
+          <xs:documentation>Идентификатор лицевого счета</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaymentType">
+    <xs:annotation>
+      <xs:documentation>Платёж</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SignCurrencyDoc" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак валютного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PayDocNum" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер платежного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PayDocDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата платежного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PayDocSum" type="clt_ru:Quantity14point2Type">
+        <xs:annotation>
+          <xs:documentation>Сумма по платежному документу в рублях</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Currency" type="clt_ru:CurrencyA3CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код валюты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PayDocSumCur" type="clt_ru:Quantity14point2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сумма по документу в валюте</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CurConvDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата валютирования</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PayerINN" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН плательщика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PayerKPP" type="clt_ru:KPPCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>КПП плательшика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KBK" type="clt_ru:CodeVariable20Type">
+        <xs:annotation>
+          <xs:documentation>КБК</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код ТО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocTypeNum" type="clt_ru:CodeVariable18Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер документа - основания платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocTypeDate" type="clt_ru:CodeVariable10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата документа - основания платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SignNonID" type="clt_ru:DigitalIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак неидентифицированного платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="CodeVariable30Type">
+    <xs:annotation>
+      <xs:documentation>Код. Символьная строка (буквы, цифры, знаки) используемая для краткого (и (или) независимого от языка) представления или замены определенных значений или текстовых свойств. От 1 до 30 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="30" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

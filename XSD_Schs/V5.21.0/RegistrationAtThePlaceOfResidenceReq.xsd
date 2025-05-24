@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:ratpor_req="urn:customs.ru:Information:SQDocuments:RegistrationAtThePlaceOfResidenceReq:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:RegistrationAtThePlaceOfResidenceReq:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос сведений о регистрации по месту жительства граждан РФ</xs:documentation>
+  </xs:annotation>
+  <xs:element name="RegistrationAtThePlaceOfResidenceReq" type="ratpor_req:RegistrationAtThePlaceOfResidenceReqType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений о регистрации по месту жительства граждан РФ</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RegistrationAtThePlaceOfResidenceReqType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений о регистрации по месту жительства граждан РФ</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="PersonInfo" type="ratpor_req:PersonInfoType">
+            <xs:annotation>
+              <xs:documentation>Данные физлица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Document" type="ratpor_req:DocumentType">
+            <xs:annotation>
+              <xs:documentation>Данные документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009385E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="PersonInfoType">
+    <xs:annotation>
+      <xs:documentation>Данные физлица</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="LastName" type="ratpor_req:String99Type">
+        <xs:annotation>
+          <xs:documentation>Фамилия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FirstName" type="ratpor_req:String49Type">
+        <xs:annotation>
+          <xs:documentation>Имя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MiddleName" type="ratpor_req:String49Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BirthDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата рождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocumentType">
+    <xs:annotation>
+      <xs:documentation>Данные документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="RussianPassport" type="ratpor_req:RussianPassportType">
+          <xs:annotation>
+            <xs:documentation>Паспорт гражданина РФ</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="ForeignPassport" type="ratpor_req:ForeignPassportType">
+          <xs:annotation>
+            <xs:documentation>Загранпаспорт гражданина РФ</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="BirthCertificate" type="ratpor_req:BirthCertificateType">
+          <xs:annotation>
+            <xs:documentation>Свидетельство о рождении</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RussianPassportType">
+    <xs:annotation>
+      <xs:documentation>Паспорт гражданина РФ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Series" type="ratpor_req:Digits4Type">
+        <xs:annotation>
+          <xs:documentation>Серия паспорта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Number" type="ratpor_req:Digits6Type">
+        <xs:annotation>
+          <xs:documentation>Номер паспорта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IssueDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата выдачи паспорта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ForeignPassportType">
+    <xs:annotation>
+      <xs:documentation>Загранпаспорт гражданина РФ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Series" type="ratpor_req:Digits2Type">
+        <xs:annotation>
+          <xs:documentation>Серия паспорта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Number" type="ratpor_req:Digits7Type">
+        <xs:annotation>
+          <xs:documentation>Номер паспорта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IssueDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата выдачи паспорта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="BirthCertificateType">
+    <xs:annotation>
+      <xs:documentation>Свидетельство о рождении</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Series" type="ratpor_req:BirthCertificateSeries">
+        <xs:annotation>
+          <xs:documentation>Серия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Number" type="ratpor_req:Digits6Type">
+        <xs:annotation>
+          <xs:documentation>Номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IssueDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата выдачи</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="BirthCertificateSeries">
+    <xs:annotation>
+      <xs:documentation>Серия свидетельства о рождении: римская цифра, тире, две прописные буквы кириллицы</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="13" />
+      <xs:pattern value="[IVXLCDM]{1,10}[\-][А-Я]{2}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Digits2Type">
+    <xs:annotation>
+      <xs:documentation>Строка, состоящая из 2 цифр</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:length value="2" />
+      <xs:pattern value="\d{2}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Digits4Type">
+    <xs:annotation>
+      <xs:documentation>Строка, состоящая из 4 цифр</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:length value="4" />
+      <xs:pattern value="\d{4}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Digits6Type">
+    <xs:annotation>
+      <xs:documentation>Строка, состоящая из 6 цифр</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:length value="6" />
+      <xs:pattern value="\d{6}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Digits7Type">
+    <xs:annotation>
+      <xs:documentation>Строка, состоящая из 7 цифр</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:length value="7" />
+      <xs:pattern value="\d{7}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="String99Type">
+    <xs:annotation>
+      <xs:documentation>Строка длиной до 99 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="99" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="String49Type">
+    <xs:annotation>
+      <xs:documentation>Строка длиной до 49 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="49" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

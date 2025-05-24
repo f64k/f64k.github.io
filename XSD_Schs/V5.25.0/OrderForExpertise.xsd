@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" xmlns:ofp="urn:customs.ru:Information:CustomsDocuments:OrderForExpertise:5.25.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:OrderForExpertise:5.25.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.25.0.0">
+	<xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Поручение на производство экспертно-исследовательской работы</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OrderForExpertise" type="ofp:OrderForExpertiseType">
+		<xs:annotation>
+			<xs:documentation>Поручение на производство экспертно-исследовательской работы</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="OrderForExpertiseType">
+		<xs:annotation>
+			<xs:documentation>Поручение на производство экспертно-исследовательской работы</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="OrderDate" type="clt_ru:DateCustType">
+						<xs:annotation>
+							<xs:documentation>Дата формирования поручения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ExpertiseNumber" type="cat_ru:GTDIDType">
+						<xs:annotation>
+							<xs:documentation>Номер экспертно- исследовательской работы</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="InitiatorOrder" type="ofp:InitiatorOrderType">
+						<xs:annotation>
+							<xs:documentation>Подразделение, сформировавшее поручение</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ReceivedDocument" type="clt_ru:FreeText250Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Документ-основание для проведения ЭИР</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ExpertiseMethod" type="clt_ru:LetterIndicatorType">
+						<xs:annotation>
+							<xs:documentation>Способ проведения ЭИР: 1 – Единоличная; 2 – Комиссионная; 3 – Комплексная</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ExpertiseKind" type="clt_ru:Text50Type" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Вид экспертно- исследовательской работы</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ResearchObjectsDate" type="clt_ru:DateCustType">
+						<xs:annotation>
+							<xs:documentation>Дата поступления объектов для исследования</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="EstimatedProdEndDate" type="clt_ru:DateCustType">
+						<xs:annotation>
+							<xs:documentation>Предполагаемая дата окончания производства</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ExpertiseCategory" type="ofp:ExpertiseCategoryType">
+						<xs:annotation>
+							<xs:documentation>Категория сложности ЭИР установленная вручную</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SuspectedExtremism" type="clt_ru:IndicatorType">
+						<xs:annotation>
+							<xs:documentation>Подозрение на экстремизм: 1 - да, 0 - нет</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomsExpertPerson" type="ofp:ExpertPersonType" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Эксперты/специалисты, назначенные на проведение ЭИР</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="InvolvedExpertPerson" type="RUSclt_ru:FreeText4000Type" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Привлеченные эксперты</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Notes" type="RUSclt_ru:FreeText4000Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Примечание к поручению</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomsPerson" type="ofp:CustomsPersonType">
+						<xs:annotation>
+							<xs:documentation>Информация о должностном лице, составившем Поручение</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentIDType" use="required" fixed="1051047E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="CustomsPersonType">
+		<xs:annotation>
+			<xs:documentation>Информация о должностном лице, составившем Поручение</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:PersonBaseType">
+				<xs:sequence>
+					<xs:element name="Customs" type="ofp:CustomsType">
+						<xs:annotation>
+							<xs:documentation>Таможенный орган</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Phone" type="clt_ru:PhoneNumberType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Номер служебного телефона</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="CustomsType">
+		<xs:annotation>
+			<xs:documentation>Таможенный орган</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Code" type="clt_ru:CustomsCodeType">
+				<xs:annotation>
+					<xs:documentation>Код таможенного органа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OfficeName" type="clt_ru:FreeText250Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование таможенного органа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ExpertPersonType">
+		<xs:annotation>
+			<xs:documentation>Сведения об эксперте</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:PersonBaseType">
+				<xs:sequence>
+					<xs:element name="Customs" type="ofp:CustomsType">
+						<xs:annotation>
+							<xs:documentation>Таможенный орган</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="AppointmentDate" type="clt_ru:DateCustType">
+						<xs:annotation>
+							<xs:documentation>Дата назначения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ExpertSign" type="clt_ru:IndicatorType">
+						<xs:annotation>
+							<xs:documentation>Признак основного эксперта: 1 - основной эксперт; 0 - не основной эксперт</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="InitiatorOrderType">
+		<xs:annotation>
+			<xs:documentation>Сведения о подразделении, сформировавшем поручение</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+				<xs:annotation>
+					<xs:documentation>Код подразделения, сформировавшего Поручение</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Name" type="clt_ru:FreeText250Type">
+				<xs:annotation>
+					<xs:documentation>Наименование подразделения, сформировавшего Поручение</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ExpertiseCategoryType">
+		<xs:annotation>
+			<xs:documentation>Категория ЭИР</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:IntegerCategoriesCust">
+			<xs:pattern value="[1-5]{1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

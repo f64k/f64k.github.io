@@ -1,0 +1,208 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:grn_cat="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeCommonAggregateTypesCust:5.21.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:BnkInf="urn:customs.ru:Information:GuaranteeDocuments:BankInfo:5.21.0" targetNamespace="urn:customs.ru:Information:GuaranteeDocuments:BankInfo:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeCommonAggregateTypesCust:5.21.0" schemaLocation="GuaranteeCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сведения о кредитной организации / Cведения об измененных максимальных сумм банковских гарантий, выдаваемых банком </xs:documentation>
+  </xs:annotation>
+  <xs:element name="BankInfo" type="BnkInf:BankInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о кредитной организации / Cведения об измененных максимальных сумм банковских гарантий, выдаваемых банком </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="BankInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о кредитной организации / Cведения об измененных максимальных сумм банковских гарантий, выдаваемых банком </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocType" type="clt_ru:Numeric1Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Тип документа; 0 - сведения о кредитной организации, 1 - сведения об измененных максимальных сумм банковских гарантий, выдаваемых банком </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BankInfo" type="BnkInf:BankInformationType">
+            <xs:annotation>
+              <xs:documentation>Сведения о кредитной организации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GuaranteeInformation" type="BnkInf:GuaranteeInformationType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения об установленных для банка максимальных суммах одной банковской гарантии и всех одновременно действующих на момент запроса банковских гарантий</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GuaranteeChange" type="BnkInf:GuaranteeChangeType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Cведения об измененных максимальных сумм банковских гарантий</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1050011E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="BankInformationType">
+    <xs:annotation>
+      <xs:documentation>Сведения о банке</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="BankINN" type="clt_ru:INNIDType">
+        <xs:annotation>
+          <xs:documentation>ИНН банка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BankName" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сокращенное наименование банка (филиала банка), учреждения Банка России</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Address" type="RUScat_ru:RUAddressType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Адрес организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BICID" type="clt_ru:BICIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>БИК</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CorrAccount" type="clt_ru:ForeignAccountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Корреспондентский счет</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BankAccount" type="clt_ru:ForeignAccountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Расчетный счет</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransitCurrencyAccount" type="clt_ru:ForeignAccountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Валютный счет</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OKPOID" type="clt_ru:OKPOIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ОКПО организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CBRLicense" type="cat_ru:DocumentBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Лицензия ЦБ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GuaranteeBankStatus" type="BnkInf:GuaranteeBankStatusType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Статус банка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GuaranteeBankStatusType">
+    <xs:annotation>
+      <xs:documentation>Информация о статусе банка</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="BankStatus" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Статус банка: 0 - документы на рассмотрении; 1 - включен; 2 - исключен</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FTSOrder" type="cat_ru:DocumentBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Приказ ФТС о включении/исключении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ChangeOrder" type="cat_ru:DocumentBaseType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Приказ о внесении изменений</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GuaranteeInformationType">
+    <xs:annotation>
+      <xs:documentation>Сведения по банковских гарантиях банка</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OneMaxAmount" type="grn_cat:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Максимальная сумма одной банковской гарантии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AllActualMaxAmount" type="grn_cat:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Максимальная сумма всех одновременно действующих банковских гарантий </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ActualReceiveAmount" type="grn_cat:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Общая сумма принятых и действующих на текущий момент банковских гарантий </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Amount15Start" type="grn_cat:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Cумма банковских гарантий, которые вступают в силу в течение 15 дней</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Amount15End" type="grn_cat:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>сумма банковских гарантий, которые прекращают свое действие в течение 
+15 дней</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RestAmount" type="grn_cat:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сумма, на которую банк может еще выдать гарантии (Максимальная сумма всех – (минус) общая сумма принятых) </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SoftQuantity" type="clt_ru:Quantity8Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество принятых банковских гарантий, выданных в электронном виде</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="HardQuantity" type="clt_ru:Quantity8Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество принятых банковских гарантий, выданных на бумажном носителе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GuaranteeChangeType">
+    <xs:annotation>
+      <xs:documentation>Cведения об измененных максимальных сумм банковских гарантий</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="StartDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата начала периода</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExpireDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата конца периода</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OneMaxAmount" type="grn_cat:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Максимальная сумма одной банковской гарантии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AllActualMaxAmount" type="grn_cat:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Максимальная сумма всех одновременно действующих банковских гарантий </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

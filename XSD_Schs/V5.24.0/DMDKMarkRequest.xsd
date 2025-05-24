@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:cltESAD_cu="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" xmlns:dmdk_req="urn:customs.ru:Information:SQDocuments:DMDKMarkRequest:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:DMDKMarkRequest:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" schemaLocation="CUESADCommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос на получение сведений из ГИИС ДМДК о ввозе и вывозе товаров</xs:documentation>
+  </xs:annotation>
+  <xs:element name="DMDKMarkRequest" type="dmdk_req:DMDKMarkRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос на получение сведений из ГИИС ДМДК о ввозе и вывозе товаров</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DMDKMarkRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос на получение сведений из ГИИС ДМДК о ввозе и вывозе товаров</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DateTimeRequest" type="clt_ru:DateTimeCustType">
+            <xs:annotation>
+              <xs:documentation>Дата и время запроса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GTDID" type="cat_ru:GTDIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Goods" type="dmdk_req:GoodsType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Маркированные товары</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009387E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="GoodsType">
+    <xs:annotation>
+      <xs:documentation>Маркированные товары</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsNumeric" type="clt_ru:Count3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер товара по ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsTNVEDCode" type="clt_ru:CUGoodsNomenclatuerCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код товара по ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdentifacationMeansUnitCharacterValueId" type="cltESAD_cu:CodeVariable100Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Код маркировки ДМДК</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,437 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:pfbpdr="urn:customs.ru:Information:SQDocuments:PassportFullByPersonDocResponse:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:PassportFullByPersonDocResponse:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Ответ на запрос паспортного досье по установочным данным или по реквизитам документа</xs:documentation>
+  </xs:annotation>
+  <xs:element name="PassportFullByPersonDocResponse" type="pfbpdr:PassportFullByPersonDocResponseType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос паспортного досье по установочным данным или по реквизитам документа</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="PassportFullByPersonDocResponseType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос паспортного досье по установочным данным или по реквизитам документа</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="PersonPassportFull" type="pfbpdr:PersonPassportFullType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Паспортные данные физического лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentIDType" use="required" fixed="1009372E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор электронного документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="BirthDateType">
+    <xs:annotation>
+      <xs:documentation>Дата рождения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="FullBirthDate" type="clt_ru:DateCustType">
+          <xs:annotation>
+            <xs:documentation>Полная дата рождения</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="NotFullBirthDate" type="pfbpdr:NotFullBirthDateType">
+          <xs:annotation>
+            <xs:documentation>Неполная дата рождения</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="YearBirthDate" type="clt_ru:DateYearCustType">
+          <xs:annotation>
+            <xs:documentation>Год рождения</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="BirthPlaceType">
+    <xs:annotation>
+      <xs:documentation>Место рождения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="BirthCountry" type="pfbpdr:string100type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование страны рождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BirthPlaceUnstructured" type="pfbpdr:string4000type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Место рождения текстом</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocumentType">
+    <xs:annotation>
+      <xs:documentation>Документы</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="PassportRFDoc" type="pfbpdr:PassportRFDocType">
+          <xs:annotation>
+            <xs:documentation>Паспорт гражданина РФ</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="SovietPassportDoc" type="pfbpdr:SovietPassportDocType">
+          <xs:annotation>
+            <xs:documentation>Паспорт гражданина CCCP</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="InternationalPassportRFDoc" type="pfbpdr:InternationalPassportRFDocType">
+          <xs:annotation>
+            <xs:documentation>Заграничный паспорт гражданина РФ</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FIOType">
+    <xs:annotation>
+      <xs:documentation>ФИО физического лица</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FirstName" type="pfbpdr:string100type">
+        <xs:annotation>
+          <xs:documentation>Имя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FamilyName" type="pfbpdr:string200type">
+        <xs:annotation>
+          <xs:documentation>Фамилия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Patronymic" type="pfbpdr:string100type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InternationalPassportRFDocType">
+    <xs:annotation>
+      <xs:documentation>Заграничный паспорт гражданина РФ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="InternationalPassportRF" type="pfbpdr:InternationalPassportRFType">
+        <xs:annotation>
+          <xs:documentation>Заграничный паспорт гражданина РФ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IssuerIndex" type="pfbpdr:string10type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код выдавшего подразделения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocStatus" type="pfbpdr:string10type">
+        <xs:annotation>
+          <xs:documentation>Статус документа. Справочник "Статус паспорта"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Invalidity" type="pfbpdr:InvalidityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о недействительности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InternationalPassportRFType">
+    <xs:annotation>
+      <xs:documentation>Заграничный паспорт гражданина РФ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Series" type="clt_ru:Count2Type">
+        <xs:annotation>
+          <xs:documentation>Серия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Number" type="clt_ru:Count8Type">
+        <xs:annotation>
+          <xs:documentation>Номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IssueDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата выдачи</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Issuer" type="pfbpdr:string200type">
+        <xs:annotation>
+          <xs:documentation>Кем выдан</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InvalidityType">
+    <xs:annotation>
+      <xs:documentation>Сведения о недействительности</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DateFrom" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата, с которой недействителен</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Reason" type="pfbpdr:string10type">
+        <xs:annotation>
+          <xs:documentation>Причина недействительности. Справочник "Причина недействительности"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="NotFullBirthDateType">
+    <xs:annotation>
+      <xs:documentation>Неполная дата рождения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Month" type="clt_ru:Count2Type">
+        <xs:annotation>
+          <xs:documentation>Месяц</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Year" type="clt_ru:DateYearCustType">
+        <xs:annotation>
+          <xs:documentation>Год</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PassportFullType">
+    <xs:annotation>
+      <xs:documentation>Паспортное досье</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonData" type="pfbpdr:PersonDataType">
+        <xs:annotation>
+          <xs:documentation>Установочные данные</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Document" type="pfbpdr:DocumentType">
+        <xs:annotation>
+          <xs:documentation>Документы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PassportRFDocType">
+    <xs:annotation>
+      <xs:documentation>Паспорт гражданина РФ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PassportRF" type="pfbpdr:PassportRFType">
+        <xs:annotation>
+          <xs:documentation>Паспорт гражданина РФ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IssuerIndex" type="pfbpdr:string10type">
+        <xs:annotation>
+          <xs:documentation>Код выдавшего подразделения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocStatus" type="pfbpdr:string10type">
+        <xs:annotation>
+          <xs:documentation>Статус документа. Справочник "Статус паспорта"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Invalidity" type="pfbpdr:InvalidityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о недействительности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PassportRFType">
+    <xs:annotation>
+      <xs:documentation>Паспорт гражданина РФ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Series" type="clt_ru:Count4Type">
+        <xs:annotation>
+          <xs:documentation>Серия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Number" type="clt_ru:Count6Type">
+        <xs:annotation>
+          <xs:documentation>Номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IssueDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата выдачи</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Issuer" type="pfbpdr:string200type">
+        <xs:annotation>
+          <xs:documentation>Кем выдан</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PersonDataType">
+    <xs:annotation>
+      <xs:documentation>Установочные данные</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FIO" type="pfbpdr:FIOType">
+        <xs:annotation>
+          <xs:documentation>ФИО физического лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Sex" type="clt_ru:Text10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Пол</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BirthDate" type="pfbpdr:BirthDateType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата рождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BirthPlace" type="pfbpdr:BirthPlaceType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Место рождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SNILS" type="clt_ru:CodeVariable11Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>СНИЛС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INN" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PersonPassportFullType">
+    <xs:annotation>
+      <xs:documentation>Паспортные данные физического лица</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonID" type="pfbpdr:string20type">
+        <xs:annotation>
+          <xs:documentation>Идентификатор физического лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PassportFull" type="pfbpdr:PassportFullType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Паспортное досье</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Comment" type="pfbpdr:string200type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Комментарий</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SovietPassportDocType">
+    <xs:annotation>
+      <xs:documentation>Паспорт гражданина CCCP</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SovietPassport" type="pfbpdr:SovietPassportType">
+        <xs:annotation>
+          <xs:documentation>Паспорт гражданина CCCP</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocStatus" type="pfbpdr:string10type">
+        <xs:annotation>
+          <xs:documentation>Статус документа. Справочник "Статус паспорта"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Invalidity" type="pfbpdr:InvalidityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о недействительности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SovietPassportType">
+    <xs:annotation>
+      <xs:documentation>Паспорт гражданина CCCP</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Series" type="clt_ru:CodeVariable20Type">
+        <xs:annotation>
+          <xs:documentation>Серия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Number" type="clt_ru:Count6Type">
+        <xs:annotation>
+          <xs:documentation>Номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IssueDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата выдачи</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Issuer" type="pfbpdr:string200type">
+        <xs:annotation>
+          <xs:documentation>Кем выдан</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="string10type">
+    <xs:annotation>
+      <xs:documentation>Текст. До 10 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="0" />
+      <xs:maxLength value="10" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="string20type">
+    <xs:annotation>
+      <xs:documentation>Текст. До 20 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="0" />
+      <xs:maxLength value="20" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="string100type">
+    <xs:annotation>
+      <xs:documentation>Текст. До 100 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="0" />
+      <xs:maxLength value="100" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="string200type">
+    <xs:annotation>
+      <xs:documentation>Текст. До 200 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="0" />
+      <xs:maxLength value="200" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="string4000type">
+    <xs:annotation>
+      <xs:documentation>Текст. До 4000 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="0" />
+      <xs:maxLength value="4000" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

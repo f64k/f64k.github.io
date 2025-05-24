@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cltESAD_cu="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:irw="urn:customs.ru:Information:CustomsDocuments:IBLRequestWriteOff:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:IBLRequestWriteOff:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" schemaLocation="CUESADCommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос на списание индикативных балансов</xs:documentation>
+  </xs:annotation>
+  <xs:element name="IBLRequestWriteOff" type="irw:IBLRequestWriteOffType">
+    <xs:annotation>
+      <xs:documentation>Запрос на списание индикативных балансов</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="IBLRequestWriteOffType">
+    <xs:annotation>
+      <xs:documentation>Запрос на списание индикативных балансов</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="ReqType" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Тип запроса: 0 - запрос на списание, 1- запрос на аннулирование списания, 2 - запрос на корректировку по КДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReqDateTime" type="clt_ru:DateTimeCustType">
+            <xs:annotation>
+              <xs:documentation>Дата и время запроса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DTNumber" type="cat_ru:GTDIDType">
+            <xs:annotation>
+              <xs:documentation>Номер ДТ </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DateYear" type="clt_ru:DateYearCustType">
+            <xs:annotation>
+              <xs:documentation>Год учета балансов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DeclarationKind" type="cltESAD_cu:CustomsDeclarationKindType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код особенности декларирования товаров по классификатору особенностей таможенного декларирования товаров. Гр.7 ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DestinationCountryCode" type="clt_ru:CountryA2CodeType">
+            <xs:annotation>
+              <xs:documentation>Страна назначения. Буквенный код страны в соответствии с классификатором стран мира </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DestinationCountryName" type="clt_ru:CountryNameType">
+            <xs:annotation>
+              <xs:documentation>Страна назначения. Краткое название страны в соответствии с классификатором стран мира </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Declarant" type="cat_ru:OrganizationBaseType">
+            <xs:annotation>
+              <xs:documentation>Сведения о декларанте</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Goods" type="irw:GoodsType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Товары ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="LastPVD" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Признак последней ПВД</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DecisionCode" type="clt_ru:Code2Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код решения в соответствии с классификатором решений,  принимаемых таможенными органами (**) - различно по товарам </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsPerson" type="RUScat_ru:CustomsPersonDetails" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1051014E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="GoodsType">
+    <xs:annotation>
+      <xs:documentation>Перечень балансов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsNumber" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Номер товара в ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsTNVEDCode" type="clt_ru:CUGoodsNomenclatuerCodeType">
+        <xs:annotation>
+          <xs:documentation>Код товара по ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DeclQuantity" type="irw:GQuantityType">
+        <xs:annotation>
+          <xs:documentation>Количество товара в ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="VTD" type="irw:PVDType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Предшествующие ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DecisionCode" type="clt_ru:Code2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код решения по товару</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PVDType">
+    <xs:annotation>
+      <xs:documentation>ПВД</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="VTDNumber" type="cat_ru:GTDIDType">
+        <xs:annotation>
+          <xs:documentation>Номер ВТД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsNumber" type="clt_ru:Count3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер товара в ВТД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GQuantityType">
+    <xs:annotation>
+      <xs:documentation>Количество товара</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="NetWeightQuantity" type="clt_ru:QuantityBasisType">
+          <xs:annotation>
+            <xs:documentation>Объём к списанию по ДТ в кг</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="GoodsQuantity" type="clt_ru:QuantityBasisType">
+          <xs:annotation>
+            <xs:documentation>Объём к списанию по ДТ в м3</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:ril="urn:customs.ru:Information:SQDocuments:RosbankInsuranceLicenseResponse:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:RosbankInsuranceLicenseResponse:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос сведений (из ЕГРССД), подтверждающих выдачу лицензии страховой организации на осуществление страхования (с приложением перечня правил страхования), заключившей договор страхования риска гражданской ответственности с заявителем-юридическим лицом, подавшим заявление на включение в реестр таможенных представителей (ответ)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="RosbankInsuranceLicenseResponse" type="ril:RosbankInsuranceLicenseResponseType" />
+  <xs:complexType name="RosbankInsuranceLicenseResponseType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений (из ЕГРССД), подтверждающих выдачу лицензии страховой организации на осуществление страхования (с приложением перечня правил страхования), заключившей договор страхования риска гражданской ответственности с заявителем-юридическим лицом, подавшим заявление на включение в реестр таможенных представителей (ответ)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="LicenseInfo" type="ril:LicenseInfoType">
+            <xs:annotation>
+              <xs:documentation>Описание лицензий на осуществление страхования и видов страхования</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009190E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор электронного документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="LicenseInfoType">
+    <xs:annotation>
+      <xs:documentation>Лицензия на осуществление страхования</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="InsuranceInfo" type="ril:InsuranceInfoType">
+        <xs:annotation>
+          <xs:documentation>Описание лицензии страховой организации на осуществление страхования</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InsuranceTypeInfo" type="ril:InsuranceTypeInfoType">
+        <xs:annotation>
+          <xs:documentation>Описание лицензии страховой организации по видам страхования</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InsuranceInfoType">
+    <xs:annotation>
+      <xs:documentation>Описание лицензии страховой организации на осуществление страхования</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="LicenseSeriesAndNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Серия, номер лицензии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LicenseOwnerInfo" type="RUScat_ru:RUOrganizationType">
+        <xs:annotation>
+          <xs:documentation>Описание юридического лица, на которое оформлена лицензия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер по единому государственному реестру субъектов страхового дела</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IssueOrganization" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Наименование органа, выдавшего лицензию</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LicenseState" type="ril:LicenseStateType">
+        <xs:annotation>
+          <xs:documentation>Состояние лицензии на осуществление страхования: "Действует"; "Приостановлена"; "Отозвана"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InsuranceTypeInfoType">
+    <xs:annotation>
+      <xs:documentation>Описание лицензии страховой организации по видам страхования</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="InsuranceType" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование вида страхования</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InsuranceRules" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование правил страхования</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LetterDateAndNumber" type="clt_ru:Text150Type">
+        <xs:annotation>
+          <xs:documentation>Дата и номер уведомительного письма о направлении правил страхования в орган страхового надзора</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="LicenseStateType">
+    <xs:annotation>
+      <xs:documentation>Кодировка состояния лицензии</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="clt_ru:Text50Type">
+      <xs:enumeration value="Действует" />
+      <xs:enumeration value="Приостановлена" />
+      <xs:enumeration value="Отозвана" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

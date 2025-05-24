@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" xmlns:pfm_res="urn:customs.ru:Information:SQDocuments:PermitForMovementOfLargeVehiclesResponse:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:PermitForMovementOfLargeVehiclesResponse:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сведения о результатах проверки наличия специального разрешения на движение крупногабаритных и (или) тяжеловесных транспортных средств</xs:documentation>
+  </xs:annotation>
+  <xs:element name="PermitForMovementOfLargeVehiclesResponse" type="pfm_res:PermitForMovementOfLargeVehiclesResponseType">
+    <xs:annotation>
+      <xs:documentation>Сведения о результатах проверки наличия специального разрешения на движение крупногабаритных и (или) тяжеловесных транспортных средств</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="PermitForMovementOfLargeVehiclesResponseType">
+    <xs:annotation>
+      <xs:documentation>Сведения о результатах проверки наличия специального разрешения на движение крупногабаритных и (или) тяжеловесных транспортных средств</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:choice>
+            <xs:element name="CheckResolutionResponse" type="pfm_res:ResponseType">
+              <xs:annotation>
+                <xs:documentation>Данные ответа на запрос проверки выданного разрешения на соответствие заданным параметрам</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="ResolutionNotificationResponse" type="pfm_res:ResponseType">
+              <xs:annotation>
+                <xs:documentation>Данные ответа на запрос-уведомление о принятом решении</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009276E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ResponseType">
+    <xs:annotation>
+      <xs:documentation>Описание ответа на запрос проверки выданного разрешения на соответствие заданным параметрам, а так же на запрос-уведомление о принятом решении</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RequestId" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор запроса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ResultCode" type="clt_ru:Numeric1Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код результата выполнения запроса: 1- Положительный результат проверки; 2- Параметры АТС, дата или место проезда не соответствуют указанным в разрешении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CheckResult" type="pfm_res:CheckResultType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Результат проверки параметров разрешения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CheckResultType">
+    <xs:annotation>
+      <xs:documentation>Результат проверки параметров разрешения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Code" type="clt_ru:Text40Type">
+        <xs:annotation>
+          <xs:documentation>Код результата проверки параметров разрешения. Значения:
+                        MultipleFound - Найдено несколько разрешений;
+                        
+ОК - Специальное разрешение действительно для проезда, параметры автопоезда соответствуют указанным в разрешении или Специальное разрешение действительно для проезда, параметры автопоезда соответствуют указанным в разрешении. Разрешение выдано в электронном виде.;                     
+                        DifferentPeriod - Специальное разрешение выдано на другой период времени;               
+                        DifferentVehicleNumber - Не соответствует номер государственной регистрации тягача;
+                        DifferentPost - Не соответствует код таможенного поста (наименование поста);
+                        WeightExceeded - Полная масса автопоезда превышает указанную в разрешении;
+                        LengthExceeded - Длина автопоезда превышает указанную в разрешении;
+                        WidthExceeded - Ширина автопоезда превышает указанную в разрешении;
+                        HeightExceeded - Высота автопоезда превышает указанную в разрешении;
+                        DifferentAxlesCount - Количество осей в разрешении не совпадает с количеством осей в запросе;
+                        AxisLoadExceeded - Осевые нагрузки превышают указанные в специальном разрешении;
+                        DifferentAxisInvervalsCount - Количество межосевых интервалов в разрешении не совпадает с количеством в запросе;
+                        AxisInvervalExceeded - Межосевые расстояния превышают указанные в специальном разрешении;
+                        DifferentTransporter - Не соответствует наименование перевозчика;
+                        DetainRequired - Сигнал на задержание ТС.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Description" type="RUSclt_ru:FreeText1000Type" minOccurs="0" maxOccurs="2">
+        <xs:annotation>
+          <xs:documentation>Описание результата проверки параметров разрешения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

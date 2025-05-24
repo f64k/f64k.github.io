@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:cltESAD_cu="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" xmlns:sd="urn:customs.ru:Information:CustomsDocuments:SamplingDecision:5.24.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:SamplingDecision:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" schemaLocation="CUESADCommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Разрешение/отказ в отборе проб/осмотре</xs:documentation>
+  </xs:annotation>
+  <xs:element name="SamplingDecision" type="sd:SamplingDecisionType">
+    <xs:annotation>
+      <xs:documentation>Разрешение/отказ в отборе проб/осмотре</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="SamplingDecisionType">
+    <xs:annotation>
+      <xs:documentation>Разрешение/отказ в отборе проб/осмотре</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocKind" type="clt_ru:LetterIndicatorType">
+            <xs:annotation>
+              <xs:documentation>Вид документа:
+1 - о разрешении; 
+2 - об отказе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocType" type="clt_ru:LetterIndicatorType">
+            <xs:annotation>
+              <xs:documentation>Тип документа:
+1 - отбора проб; 
+2 - осмотра;
+3 - в осмотре</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NotificationDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата уведомления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NotificationNumber" type="clt_ru:Text50Type">
+            <xs:annotation>
+              <xs:documentation>Номер уведомления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="LegalGrounds" type="clt_ru:FreeText500Type">
+            <xs:annotation>
+              <xs:documentation>Правовые основания</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Appeal" type="sd:AppealType">
+            <xs:annotation>
+              <xs:documentation>Обращение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Decision" type="sd:DecisionType">
+            <xs:annotation>
+              <xs:documentation>Решение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsInfo" type="sd:CustomsInfoType">
+            <xs:annotation>
+              <xs:documentation>Таможенный орган</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006373E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AppealType">
+    <xs:annotation>
+      <xs:documentation>Обращение</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ApplicantSign" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак заявителя:
+1 - декларант;
+2 - правообладатель (его представитель)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CopyrightHolderName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование декларанта/ правообладателя (его представителя)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AppealDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата обращения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AppealNumeric" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер обращения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CopyrightHolderE_mail" type="clt_ru:Text150Type">
+        <xs:annotation>
+          <xs:documentation>Адрес электрнной почты правообладателя (его представителя)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IPObjectRegistryNum" type="sd:IntellectualPropertyObjectsInfoType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения об объекте интеллектуальной собственности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CustomsInfoType">
+    <xs:annotation>
+      <xs:documentation>Таможенный орган</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:CustomsType">
+        <xs:sequence>
+          <xs:element name="CustomsE_mail" type="clt_ru:Text150Type">
+            <xs:annotation>
+              <xs:documentation>Адрес электронной почты таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DecisionType">
+    <xs:annotation>
+      <xs:documentation>Решение</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="Permission" type="sd:PermissionType">
+          <xs:annotation>
+            <xs:documentation>Разрешение (если DocKind=1)</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="RefusalJustification" type="clt_ru:FreeText250Type">
+          <xs:annotation>
+            <xs:documentation>Обоснование отказа (если DocKind=2)</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="IntellectualPropertyObjectsInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения об объекте интеллектуальной собственности</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="IntelPropertyObjectNumber" type="cltESAD_cu:IPORegistryNumberType">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер ОИС по Реестру</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OISName" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование ОИС. Товарный знак, место происхождения, объект авторского права, смежных прав, патент и т.д. Гр. 31.12</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IPOInfoDoc" type="cat_ru:DocumentBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер ОИС в Роспатенте/ВОИС/иное </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PermissionType">
+    <xs:annotation>
+      <xs:documentation>Разрешение</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DateTime" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата и время, до которых приостановлен срок выпуска товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Address" type="RUScat_ru:RUAddressType">
+        <xs:annotation>
+          <xs:documentation>Адрес местонахождения товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

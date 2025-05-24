@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:ntp="urn:customs.ru:Information:ExchangeDocuments:NotifTobaccoPrices:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:ExchangeDocuments:NotifTobaccoPrices:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Уведомление о розничных ценах на табачные изделия, ввозимые в РФ</xs:documentation>
+  </xs:annotation>
+  <xs:element name="NotifTobaccoPrices" type="ntp:NotifTobaccoPricesType" />
+  <xs:complexType name="NotifTobaccoPricesType">
+    <xs:annotation>
+      <xs:documentation>Уведомление о розничных ценах на табачные изделия, ввозимые в РФ</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="NewPriceStartDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата установления заявленных розничных цен на табачные изделия</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Customs" type="cat_ru:CustomsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код и наименование таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TaxPayer" type="ntp:TaxPayerType">
+            <xs:annotation>
+              <xs:documentation>Сведения о налогоплательщике</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ChiefSignature" type="cat_ru:PersonSignatureType">
+            <xs:annotation>
+              <xs:documentation>Руководитель организации (индивидуальный предприниматель)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Goods" type="ntp:GoodsType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о товарах</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1004117E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="GoodsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товарах</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsTNVEDCode" type="clt_ru:CUGoodsNomenclatuerCodeType">
+        <xs:annotation>
+          <xs:documentation>Код товара по ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" maxOccurs="4">
+        <xs:annotation>
+          <xs:documentation>Наименование (марка) товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsKind" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Вид табачного изделия: 0 - сигареты с фильтром; 1 - сигареты без фильтра; 2 - папиросы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MaxPrice" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Максимальная розничная цена за единицу потребительской упаковки (пачки)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CurrencyCode" type="clt_ru:CurrencyA3CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код валюты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="QuantityPerPackage" type="cat_ru:SupplementaryQuantityType">
+        <xs:annotation>
+          <xs:documentation>Количество в упаковке</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TaxPayerType">
+    <xs:annotation>
+      <xs:documentation>Сведения о налогоплательщике</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:SubjectDetailsType">
+        <xs:sequence>
+          <xs:element name="FactAddress" type="cat_ru:AddressType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Фактический адрес</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

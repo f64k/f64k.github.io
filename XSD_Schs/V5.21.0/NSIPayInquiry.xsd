@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:cltESAD_cu="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" xmlns:grn_cat="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeCommonAggregateTypesCust:5.21.0" xmlns:nsi_inq="urn:customs.ru:Information:NSIPayInquiry:5.21.0" targetNamespace="urn:customs.ru:Information:NSIPayInquiry:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" schemaLocation="CUESADCommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeCommonAggregateTypesCust:5.21.0" schemaLocation="GuaranteeCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос вариантов ставок по коду ТН ВЭД ЕАЭС на территории стран-членов ЕАЭС</xs:documentation>
+  </xs:annotation>
+  <xs:element name="NSIPayInquiry" type="nsi_inq:NSIPayInquiryType" />
+  <xs:complexType name="NSIPayInquiryType">
+    <xs:annotation>
+      <xs:documentation>Запрос вариантов ставок по коду ТН ВЭД ЕАЭС на территории стран-членов ЕАЭС</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="GoodsDirection" type="clt_ru:CUCustomsProcedureType">
+            <xs:annotation>
+              <xs:documentation>Направление перемещения товаров (ИМ, ЭК)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsModeCode" type="cltESAD_cu:CustomsModeCodeType">
+            <xs:annotation>
+              <xs:documentation>Код таможенной процедуры в соответствии с классификатором видов таможенных процедур</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CalcSign" type="clt_ru:DigitalIndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Признак особенностей выбора ставок: 0 - без особенностей (по умолчанию); 1 - физ. лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CheckDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата, на которую необходимо произвести выбор данных из НСИ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsInfo" type="nsi_inq:GoodsInfoType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Информация по товарам</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RouteInfo" type="grn_cat:RouteInfoType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Маршрут по странам-ЕАЭС при транзите для выбора ставок, действующих на территории указанных стран</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1040019E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="GoodsInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о товаре</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Numeric" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Номер товара по порядку</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TNVEDCode" type="clt_ru:GoodsNomenclatureCodeType">
+        <xs:annotation>
+          <xs:documentation>Код товара по ТН ВЭД ЕАЭС (указывается от 4 до 10 знаков)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsDescription" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TobaccoNaim" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание марки, упаковки табачного изделия для поиска в НСИ максимальных розничных цен</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryA2Code" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код страны происхождения (ИМ) /назначения (ЭК)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CheckDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата, на которую в производится выбор данных из НСИ по товару (если отличается от общей)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

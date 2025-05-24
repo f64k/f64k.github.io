@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--  Приложение № 1 к Порядку заполнения форм, порядка, сроков и способов представления отчетности УЭО  -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:catWH_ru="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonAggregateTypesCust:5.24.0" xmlns:dw="urn:customs.ru:Information:DragWH:5.24.0" targetNamespace="urn:customs.ru:Information:DragWH:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonAggregateTypesCust:5.24.0" schemaLocation="WarehouseCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сведения о маркированных лекарственных препаратах, размещенных на ВХ</xs:documentation>
+  </xs:annotation>
+  <xs:element name="DragWH" type="dw:DragWHType">
+    <xs:annotation>
+      <xs:documentation>Сведения о маркированных лекарственных препаратах, размещенных на ВХ</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DragWHType">
+    <xs:annotation>
+      <xs:documentation>Сведения о маркированных лекарственных препаратах, размещенных на ВХ</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="WarehouseOwner" type="catWH_ru:WarehouseOwnerType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Данные о владельце склада</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DO1Report" type="cat_ru:GTDIDType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер отчета ДО-1</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CommerceDoc" type="cat_ru:DocumentBaseType">
+            <xs:annotation>
+              <xs:documentation>Сведения о коммерческом документе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TotalQuantity" type="cat_ru:SupplementaryQuantityType" minOccurs="0" maxOccurs="2">
+            <xs:annotation>
+              <xs:documentation>Общее количество продукции</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Goods" type="dw:GoodsType" maxOccurs="25000">
+            <xs:annotation>
+              <xs:documentation>Список продукции</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1003018E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="GTINType">
+    <xs:annotation>
+      <xs:documentation>Идентификационный номер GS1 для идентификации товаров</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="14" />
+      <xs:pattern value="[0-9]{14}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SGTINType">
+    <xs:annotation>
+      <xs:documentation>Индивидуальный серийный номер вторичной упаковки</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="27" />
+      <xs:pattern value="[0-9]{14}[a-zA-Z0-9]{13}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SSCCType">
+    <xs:annotation>
+      <xs:documentation>Индивидуальный серийный номер третичной/транспортной упаковки</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{18}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="GTINDetailType">
+    <xs:annotation>
+      <xs:documentation>Содержимое транспортной упаковки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GTIN" type="dw:GTINType">
+        <xs:annotation>
+          <xs:documentation>Идентификационный номер GS1</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Quantity" type="cat_ru:SupplementaryQuantityType" minOccurs="0" maxOccurs="2">
+        <xs:annotation>
+          <xs:documentation>Количество товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Series" type="clt_ru:CodeVariable20Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер производственной серии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GoodsType">
+    <xs:annotation>
+      <xs:documentation>Список продукции</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="SGTIN" type="dw:SGTINType">
+          <xs:annotation>
+            <xs:documentation>Индивидуальный серийный номер вторичной упаковки</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Quantity" type="cat_ru:SupplementaryQuantityType" minOccurs="0" maxOccurs="2">
+          <xs:annotation>
+            <xs:documentation>Количество товара</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="SSCCDetail" type="dw:SSCCDetailType">
+          <xs:annotation>
+            <xs:documentation>Сведения о транспортной упаковке</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SSCCDetailType">
+    <xs:annotation>
+      <xs:documentation>Сведения о транспортной упаковке</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SSCC" type="dw:SSCCType">
+        <xs:annotation>
+          <xs:documentation>Номер транспортной упаковки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GTINDetail" type="dw:GTINDetailType" minOccurs="0" maxOccurs="100">
+        <xs:annotation>
+          <xs:documentation>Содержимое транспортной упаковки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

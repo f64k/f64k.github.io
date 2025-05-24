@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:dires="urn:customs.ru:Information:SQDocuments:FtsDeclarationInfoRes:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:FtsDeclarationInfoRes:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Предоставление сведений, содержащихся в таможенной декларации на товары и ТПО(ответ)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="FtsDeclarationInfoRes" type="dires:FtsDeclarationInfoResType" />
+  <xs:complexType name="FtsDeclarationInfoResType">
+    <xs:annotation>
+      <xs:documentation>Предоставление сведений, содержащихся в таможенной декларации на товары и ТПО(ответ)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="CustomDeclarationInfo" type="dires:CustomDeclarationInfoType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения из декларации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009159E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор электронного документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CustomDeclarationInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения из декларации</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ProductName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование продукции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TNVEDCode" type="clt_ru:GoodsNomenclatureCodeType">
+        <xs:annotation>
+          <xs:documentation>Код ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Sender" type="dires:SenderType">
+        <xs:annotation>
+          <xs:documentation>Отправитель</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Recipient" type="dires:RecipientType">
+        <xs:annotation>
+          <xs:documentation>Получатель</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProductCount" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество товара (в дополнительной единице измерения)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OtherMeasureUnitInfo" type="cat_ru:SupplementaryQuantityType" minOccurs="0" maxOccurs="2">
+        <xs:annotation>
+          <xs:documentation>Сведения о количестве в единицах измерения, отличных от основной и дополнительной</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RecipientType">
+    <xs:annotation>
+      <xs:documentation>Получатель</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RecipientName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Наименование получателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RecipientINN" type="clt_ru:INNIDType">
+        <xs:annotation>
+          <xs:documentation>ИНН получателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RecipientKPP" type="clt_ru:KPPCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>КПП получателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SenderType">
+    <xs:annotation>
+      <xs:documentation>Отправитель</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SenderName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Наименование отправителя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SenderINN" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН отправителя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SenderKPP" type="clt_ru:KPPCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>КПП отправителя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

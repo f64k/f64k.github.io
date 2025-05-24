@@ -1,0 +1,377 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:sripr="urn:customs.ru:Information:SQDocuments:SendResponseInfoProcessingResult:5.21.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:SendResponseInfoProcessingResult:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Результат обработки заявления на изменение срока представления документов (информации)  / поступивших документов или уведомлений при взаимодействии со СМЭВ</xs:documentation>
+  </xs:annotation>
+  <xs:element name="SendResponseInfoProcessingResult" type="sripr:SendResponseInfoProcessingResultType">
+    <xs:annotation>
+      <xs:documentation>Результат обработки заявления на изменение срока представления документов (информации)  / поступивших документов или уведомлений при взаимодействии со СМЭВ</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="SendResponseInfoProcessingResultType">
+    <xs:annotation>
+      <xs:documentation>Результат обработки заявления на изменение срока представления документов (информации)  / поступивших документов или уведомлений при взаимодействии со СМЭВ</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="OriginalSend" type="sripr:OriginalSendType">
+            <xs:annotation>
+              <xs:documentation>Сведения о запросе документов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Answer" type="sripr:AnswerType">
+            <xs:annotation>
+              <xs:documentation>Квитанция результатов обработки запроса / описи (уведомления) </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ClientOrganizationInfo" type="sripr:ClientOrganizationInfoType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Лицо, направившее заявление / опись (уведомления)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AuthorityExecutorInfo" type="sripr:AuthorityExecutorInfoType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Должностное лицо таможенного органа, подготовившее решение (исполнитель)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TermExtension" type="sripr:TermExtensionType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Решение о продлении срока представления документов </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AuthoritySigner" type="sripr:AuthoritySignerType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Должностное лицо таможенного органа, подписавшее решение (подписант)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:element name="FilesResult" type="sripr:FilesResultType" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>Сведения о передаваемом файле квитанции</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="Files" type="sripr:FilesType" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>Сведения о передаваемом файле решения</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009282E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AnswerType">
+    <xs:annotation>
+      <xs:documentation>Сведения о квитанции результатов обработки запроса / описи (уведомления) </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SendTM" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата и время окончания обработки </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Result" type="sripr:ResultType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Результат обработки </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AnswerId" type="RUSclt_ru:Text32Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор квитанции </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AnswerSendTM" type="clt_ru:DateTimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата квитанции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AuthorityRequestID" type="clt_ru:CodeVariable20Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер квитанции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AuthorityExecutorInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о должностном лице таможенного органа, подготовившем решение</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AuthorityExecutorLastName" type="sripr:NameType">
+        <xs:annotation>
+          <xs:documentation>Фамилия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AuthorityExecutorFirstName" type="sripr:NameType">
+        <xs:annotation>
+          <xs:documentation>Имя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AuthorityExecutorMiddleName" type="sripr:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AuthorityExecutorPhone" type="sripr:PhoneType">
+        <xs:annotation>
+          <xs:documentation>Контактный телефон (с кодом города)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AuthorityExecutorMail" type="sripr:MailType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Адрес электронной почты </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AuthoritySignerType">
+    <xs:annotation>
+      <xs:documentation>Сведения о должностном лице таможенного органа, подписавшем решение </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AuthoritySignerLastName" type="sripr:NameType">
+        <xs:annotation>
+          <xs:documentation>Фамилия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AuthoritySignerFirstName" type="sripr:NameType">
+        <xs:annotation>
+          <xs:documentation>Имя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AuthoritySignerMiddleName" type="sripr:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AuthoritySignerFunction" type="sripr:FunctionType">
+        <xs:annotation>
+          <xs:documentation>Должность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ClientOrganizationInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о лице, направившем заявление / опись (уведомления)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Name" type="RUSclt_ru:FreeText1000Type">
+        <xs:annotation>
+          <xs:documentation>Сокращенное наименование организации (в случае ЮЛ) или ФИО (в случае ИП))</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INN" type="clt_ru:INNIDType">
+        <xs:annotation>
+          <xs:documentation>ИНН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KPP" type="clt_ru:KPPCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>КПП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OGRN" type="clt_ru:OGRNIDType">
+        <xs:annotation>
+          <xs:documentation>ОГРН/ОГРНИП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FilesType">
+    <xs:annotation>
+      <xs:documentation>Сведения о передаваемом файле решения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FilesDocument" type="sripr:FileType">
+        <xs:annotation>
+          <xs:documentation>Файл с образом решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FilesSignature" type="sripr:FileType">
+        <xs:annotation>
+          <xs:documentation>Файл подписи с образом решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FilesResultType">
+    <xs:annotation>
+      <xs:documentation>Сведения о передаваемом файле квитанции</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FilesResultDocument" type="sripr:FileType">
+        <xs:annotation>
+          <xs:documentation>Файл с образом квитанции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FilesResultSignature" type="sripr:FileType">
+        <xs:annotation>
+          <xs:documentation>Файл подписи с образом квитанции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OriginalSendType">
+    <xs:annotation>
+      <xs:documentation>Сведения о запросе документов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OriginalRequestID" type="RUSclt_ru:Text32Type">
+        <xs:annotation>
+          <xs:documentation>Идентификатор запроса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AuthorityCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, направившего запрос</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AuthorityName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование таможенного органа, направившего запрос</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StatementRequestID" type="RUSclt_ru:Text32Type">
+        <xs:annotation>
+          <xs:documentation>Идентификатор обрабатываемого заявления / описи представляемых документов (уведомления невозможности предоставления) </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ResultType">
+    <xs:annotation>
+      <xs:documentation>Сведения о результате обработки заявления / описи (уведомления)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ResultCode" type="clt_ru:CodeVariable3Type">
+        <xs:annotation>
+          <xs:documentation>Код результата</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ResultDescription" type="sripr:FreeText1500">
+        <xs:annotation>
+          <xs:documentation>Описание результата</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TermExtensionType">
+    <xs:annotation>
+      <xs:documentation>Сведения о решении о продлении срока представления документов </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="IsTermExtensionUnApproved" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак решения:
+						0 – Продление срока одобрено
+						1 – Отказано в продлении срока
+					</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AddTerm" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата, по которую (включено) продлен срок представления подтверждающих документов (копий документов) и информации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RejectionReason" type="RUSclt_ru:FreeText1000Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Причина отказа в продлении срока</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FileType">
+    <xs:annotation>
+      <xs:documentation>Файлы</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FileName" type="sripr:FreeText255">
+        <xs:annotation>
+          <xs:documentation>Имя (идентификатор) файла вложения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FileType" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Тип (формат) файла вложения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IsZipped" type="CategoryCust:IndicatorCategoriesCust" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак, упакован ли файл в zip-архив</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FileData" type="CategoryCust:BinaryDataCategoriesCust">
+        <xs:annotation>
+          <xs:documentation>Данные файла в кодировке BASE64</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные простые прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="FreeText255">
+    <xs:annotation>
+      <xs:documentation>Текстовая строка. До 255 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="255" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FreeText1500">
+    <xs:annotation>
+      <xs:documentation>Текстовая строка. До 1500 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="1500" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PhoneType">
+    <xs:annotation>
+      <xs:documentation>Контактный телефон исполнителя (с кодом города)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="([0-9]|\+){1,20}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MailType">
+    <xs:annotation>
+      <xs:documentation>Адрес электронной почты исполнителя</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="45" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FunctionType">
+    <xs:annotation>
+      <xs:documentation>Должность подписанта</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="128" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NameType">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="70" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

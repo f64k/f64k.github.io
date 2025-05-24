@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:ata_ct="urn:customs.ru:Information:TransportDocuments:ATA:ATA_CommonTypes:5.24.0" xmlns:ata_crev="urn:customs.ru:Information:TransportDocuments:ATA:ATA_CarnetRevoke:5.25.0" targetNamespace="urn:customs.ru:Information:TransportDocuments:ATA:ATA_CarnetRevoke:5.25.0" elementFormDefault="qualified" version="5.25.0.0">
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:Information:TransportDocuments:ATA:ATA_CommonTypes:5.24.0" schemaLocation="ATA_CommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Решение об отзыве карнета АТА</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ATA_CarnetRevoke" type="ata_crev:ATA_CarnetRevokeType">
+		<xs:annotation>
+			<xs:documentation>Решение об отзыве карнета АТА</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ATA_CarnetRevokeType">
+		<xs:annotation>
+			<xs:documentation>Решение об отзыве карнета АТА</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="IssueDate" type="clt_ru:DateCustType">
+						<xs:annotation>
+							<xs:documentation>Дата создания запроса/ответа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CarnetNumber" type="ata_ct:ATACarnetNumberType">
+						<xs:annotation>
+							<xs:documentation>Номер карнета АТА</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Request" type="cat_ru:DocumentBaseType">
+						<xs:annotation>
+							<xs:documentation>Обращение держателя (представителя держателя)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomsPersonSignature" type="cat_ru:CustomsPersonType">
+						<xs:annotation>
+							<xs:documentation>Должностное лицо, запрашивающее отзыв/согласовавшее отзыв</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="AdditionalInformation" type="clt_ru:FreeText500Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Обоснование отзыва</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Decision" type="clt_ru:IndicatorType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Решение по запросу: 0 - отказ в отзыве, 1 - отозвать</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1003446E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

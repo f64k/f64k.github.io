@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:rcd="urn:customs.ru:Information:CustomsDocuments:ReqCorrectedDecision:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:ReqCorrectedDecision:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Требование на корректировку сведений, заявленных в документе-основании проведения экспертно-исследовательской работы</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ReqCorrectedDecision" type="rcd:ReqCorrectedDecisionType">
+    <xs:annotation>
+      <xs:documentation>Требование на корректировку сведений, заявленных в документе-основании проведения экспертно-исследовательской работы</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ReqCorrectedDecisionType">
+    <xs:annotation>
+      <xs:documentation>Требование на корректировку сведений, заявленных в документе-основании проведения экспертно-исследовательской работы</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocumentRegNumber" type="cat_ru:GTDIDType">
+            <xs:annotation>
+              <xs:documentation>Номер требования на корректировку</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TKPunkt" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер статьи, в соответствии с которой направляется документ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Uncertainty" type="rcd:UncertaintyType">
+            <xs:annotation>
+              <xs:documentation>Выявленные несоответствия</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Instruction" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Действия,  необходимые для устранения несоответствий</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CEKTUDivision" type="rcd:CEKTUDivisionInformationType">
+            <xs:annotation>
+              <xs:documentation>Подразделение ЦЭКТУ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsPerson" type="rcd:PersonType">
+            <xs:annotation>
+              <xs:documentation>Должностное лицо, принявший решение о корректировке</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DecisionNumber" type="rcd:DecisionNumberType">
+            <xs:annotation>
+              <xs:documentation>Номер документа-основания о проведении экспертно-исследовательской работы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1051004E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CEKTUDivisionInformationType">
+    <xs:annotation>
+      <xs:documentation>Сведения о подразделении ЦЭКТУ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код подразделения ЦЭКТУ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Name" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование подразделения ЦЭКТУ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Address" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Адрес подразделения ЦЭКТУ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DecisionNumberType">
+    <xs:annotation>
+      <xs:documentation>Номер решения</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:GTDID6Type">
+        <xs:sequence>
+          <xs:element name="ExpertisePoint" type="clt_ru:Code2Type">
+            <xs:annotation>
+              <xs:documentation>Момент назначения экспертизы (ДВ - до выпуска ДТ, ПВ - после выпуска ДТ) </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PersonType">
+    <xs:annotation>
+      <xs:documentation>Должностное лицо, принявший решение о корректировке</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonSurname" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Фамилия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Имя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonMiddleName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Отчество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonPost" type="clt_ru:PostType">
+        <xs:annotation>
+          <xs:documentation>Должность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Phone" type="clt_ru:PhoneNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер служебного телефона</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="UncertaintyType">
+    <xs:annotation>
+      <xs:documentation>Выявленные несоответствия</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="UncertDescription" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание выявленных несоответствий</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:ntvi="urn:customs.ru:Information:ExchangeDocuments:NotifViolation:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:ExchangeDocuments:NotifViolation:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Уведомление о несоблюдении условий выпуска товаров, информация о несоответствии заявленных сведений и нарушениях, выявленных в ходе проверки ДТ</xs:documentation>
+	</xs:annotation>
+	<xs:element name="NotifViolation" type="ntvi:NotifViolationType">
+		<xs:annotation>
+			<xs:documentation>Уведомление о несоблюдении условий выпуска товаров, информация о несоответствии заявленных сведений и нарушениях, выявленных в ходе проверки ДТ</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="NotifViolationType">
+		<xs:annotation>
+			<xs:documentation>Уведомление о несоблюдении условий выпуска товаров, информация о несоответствии заявленных сведений и нарушениях, выявленных в ходе проверки ДТ</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="ViolationNimber" type="clt_ru:DocumentNumberType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Исходящий номер уведомления/требования</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ViolationTime" type="clt_ru:TimeCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Время создания уведомления/требования</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ViolationDate" type="clt_ru:DateCustType">
+						<xs:annotation>
+							<xs:documentation>Дата  создания уведомления/требования</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="NotifLawArticle" type="clt_ru:FreeText250Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Статья ТК ЕАЭС, Номера нормативных актов и пунктов в них, в соответствии с которыми направляется информация о нарушении (несоответствии)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Comments" type="clt_ru:FreeText250Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Комментарий</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="NotificationRequest" type="clt_ru:Numeric1Type">
+						<xs:annotation>
+							<xs:documentation>Вид документа: 0 - требование, 1 - уведомление</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomsPerson" type="cat_ru:CustomsPersonType">
+						<xs:annotation>
+							<xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ViolationInfo" type="ntvi:ViolationInfoType" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Описание выявленных нарушений и несоответствий.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Instruction" type="ntvi:InstructionType" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Описание действий, необходимых для устранения выявленных нарушений и несоответствий.Требование предоставления документов, корректировки сведений и перехода на общий порядок декларирования.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Customs" type="cat_ru:CustomsType">
+						<xs:annotation>
+							<xs:documentation>Таможенный орган.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Applicant" type="cat_ru:OrganizationType">
+						<xs:annotation>
+							<xs:documentation>Информация о декларанте (наименование, ФИО для физических лиц)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="GTDNUmber" type="cat_ru:GTDIDType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Справочный номер ДТ.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006077E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы.</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="CorrectReqType">
+		<xs:annotation>
+			<xs:documentation>Описание сведений, которые необходимо скорректировать для устранения нарушений или соблюдения условий выпуска</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CorrectDescription" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Описание сведений, которые необходимо скорректировать</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CorrectDateLimit" type="clt_ru:DateTimeCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Срок до которого необходимо скорректировать сведения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocumentReqType">
+		<xs:annotation>
+			<xs:documentation>Документы и сведения, которые необходимо предоставить для устранения выявленных нарушений, соблюдения условий выпуска.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DocsDescription" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Описание сведений</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocDateLimit" type="clt_ru:DateTimeCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Срок предоставления требуемых сведений</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InstructionType">
+		<xs:annotation>
+			<xs:documentation>Описание действий, необходимых для устранения выявленных нарушений и несоответствий.Требование предоставления документов, корректировки сведений и перехода на общий порядок декларирования.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="InstrDescription" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Описание действий.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DateLimit" type="clt_ru:DateTimeCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Срок до которого необходимо выполнить действия.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CorrectReq" type="ntvi:CorrectReqType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Описание сведений, которые необходимо скорректировать для устранения нарушений или соблюдения условий выпуска</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocumentReq" type="ntvi:DocumentReqType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Документы и сведения, которые необходимо предоставить для устранения выявленных нарушений, соблюдения условий выпуска.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ViolationDocType">
+		<xs:annotation>
+			<xs:documentation>Документ, источник информации о выявленном нарушении. (протокол, акт досмотра и т.п.)</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:DocumentBaseType">
+				<xs:sequence>
+					<xs:element name="Comments" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Комментарии</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ViolationInfoType">
+		<xs:annotation>
+			<xs:documentation>Описание выявленных нарушений и несоответствий.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ViolationText" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Описание выявленных нарушений и несоответствий.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LawArticle" type="clt_ru:FreeText250Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Статья ТК ЕАЭС, Номера нормативных актов и пунктов в них, нарушенных при заявлении сведений.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ViolationDoc" type="ntvi:ViolationDocType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Документ, источник информации о выявленном нарушении. (протокол, акт досмотра и т.п.)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

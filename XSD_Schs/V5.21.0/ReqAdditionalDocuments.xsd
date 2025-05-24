@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:rad="urn:customs.ru:Information:CustomsDocuments:ReqAdditionalDocuments:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:ReqAdditionalDocuments:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос о представлении дополнительных документов</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ReqAdditionalDocuments" type="rad:ReqAdditionalDocumentsType" />
+  <xs:complexType name="ReqAdditionalDocumentsType">
+    <xs:annotation>
+      <xs:documentation>Запрос о представлении дополнительных документов</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="NumberDoc" type="clt_ru:Text10Type">
+            <xs:annotation>
+              <xs:documentation>Номер документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DateDoc" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Term" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Срок представить  дополнительные документы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsPerson" type="cat_ru:CustomsPersonType">
+            <xs:annotation>
+              <xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PersonSignature" type="cat_ru:PersonSignatureType">
+            <xs:annotation>
+              <xs:documentation>Подпись</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ListDocuments" type="rad:AddDocumtentType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Список запрашиваемых документов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Delcarant" type="rad:InfoDeclType">
+            <xs:annotation>
+              <xs:documentation>Декларант</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GTDID" type="cat_ru:GTDIDType">
+            <xs:annotation>
+              <xs:documentation>Номер ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006041E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AddDocumtentType">
+    <xs:annotation>
+      <xs:documentation>Дополнительные документы</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Position" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Description" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KindDocuments" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Вид документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CodeKindDocuments" type="clt_ru:CustomsDocumentCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код вида документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Notation" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Примечание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InfoDeclType">
+    <xs:annotation>
+      <xs:documentation>Декларант</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Organization" type="cat_ru:OrganizationType">
+        <xs:annotation>
+          <xs:documentation>Сведения об организации./ ФИО декларанта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdentityCard" type="RUScat_ru:RUIdentityCardType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Документ, удостоверяющий личность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

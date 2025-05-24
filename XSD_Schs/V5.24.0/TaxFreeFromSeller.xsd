@@ -1,0 +1,391 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:tfr_sl="urn:customs.ru:Information:CustomsDocuments:TaxFreeFromSeller:5.24.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:TaxFreeFromSeller:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Чек TaxFree от продавца</xs:documentation>
+  </xs:annotation>
+  <xs:element name="TaxFreeFromSeller" type="tfr_sl:TaxFreeFromSellerType">
+    <xs:annotation>
+      <xs:documentation>Чек TaxFree от продавца</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="TaxFreeFromSellerType">
+    <xs:annotation>
+      <xs:documentation>Чек TaxFree от продавца</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="TaxFreeID" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Уникальный номер чека TaxFree</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TaxFreeNumber" type="clt_ru:Text50Type">
+            <xs:annotation>
+              <xs:documentation>Порядковый номер чека TaxFree</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TaxFreeDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата чека TaxFree</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TaxFreeBuyer" type="tfr_sl:TaxFreeSlBuyerType">
+            <xs:annotation>
+              <xs:documentation>Сведения о покупателе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TaxFreeSeller" type="tfr_sl:OrganizationType">
+            <xs:annotation>
+              <xs:documentation>Сведения о продавце</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TaxFreeServiceProvider" type="tfr_sl:ServiceProviderType">
+            <xs:annotation>
+              <xs:documentation>Лицо оказывающее услуги по компенсации налога</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CashVoucher" type="tfr_sl:CashVoucherType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о кассовых чеках</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006263E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AddressType">
+    <xs:annotation>
+      <xs:documentation>Адрес</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PostalCode" type="clt_ru:PostalCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Почтовый индекс</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryCode" type="clt_ru:CountryA2CodeType">
+        <xs:annotation>
+          <xs:documentation>Буквенный код страны в соответствии с классификатором стран мира</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CounryName" type="clt_ru:CountryNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Краткое название страны в соответствии с классификатором стран мира</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Region" type="clt_ru:RegionType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Область (регион, край и т.п.)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="City" type="clt_ru:CityNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Населенный пункт</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StreetHouse" type="clt_ru:StreetHouseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Улица, номер дома, номер корпуса, номер офиса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CashVoucherType">
+    <xs:annotation>
+      <xs:documentation>Сведения о кассовых чеках</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CashVoucherNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер кассового чека</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CashVoucherDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата кассового чека</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TaxFreeSlGoods" type="tfr_sl:TaxFreeSlGoodsType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о товарах</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ContactType">
+    <xs:annotation>
+      <xs:documentation>Контактная информация</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Phone" type="clt_ru:PhoneNumberType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Номер телефона</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Fax" type="clt_ru:PhoneNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер факса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Telex" type="clt_ru:PhoneNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер телекса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="E_mail" type="clt_ru:Text50Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Адрес электронной почты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OrganizationType">
+    <xs:annotation>
+      <xs:documentation>Реквизиты организации</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OrganizationName" type="RUSclt_ru:FreeText1000Type">
+        <xs:annotation>
+          <xs:documentation>Наименование организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INN" type="clt_ru:Code10Type">
+        <xs:annotation>
+          <xs:documentation>ИНН организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KPP" type="clt_ru:KPPCodeType">
+        <xs:annotation>
+          <xs:documentation>КПП организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Address" type="tfr_sl:AddressType">
+        <xs:annotation>
+          <xs:documentation>Адрес организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="QuantityValueType">
+    <xs:annotation>
+      <xs:documentation>Количество в единице измерения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsQuantity" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Количество товара в единице измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeasureUnitQualifierName" type="clt_ru:MeasureUnitQualifierNameType">
+        <xs:annotation>
+          <xs:documentation>Условное обозначение единицы измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeasureUnitQualifierCode" type="clt_ru:MeasureUnitQualifierCodeType">
+        <xs:annotation>
+          <xs:documentation>Код единицы измерения в соответствии с единицами измерения, применяемыми в ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ServiceProviderIndividualType">
+    <xs:annotation>
+      <xs:documentation>Лицо, оказывающее услуги по компенсации налога на добавленную стоимость – индивидуальный предприниматель</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonName" type="RUSclt_ru:FreeText1000Type">
+        <xs:annotation>
+          <xs:documentation>Фамилия, имя, отчество (при наличии) индивидуального предпринимателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INN" type="tfr_sl:Code12Type">
+        <xs:annotation>
+          <xs:documentation>ИНН индивидуального предпринимателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ServiceProviderOrgType">
+    <xs:annotation>
+      <xs:documentation>Лицо, оказывающее услуги по компенсации налога на добавленную стоимость – организация</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OrganizationName" type="clt_ru:Text150Type">
+        <xs:annotation>
+          <xs:documentation>Наименование организации, оказывающей услуги по компенсации налога на добавленную стоимость </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ShortName" type="clt_ru:ShortNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Краткое наименование организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrganizationLanguage" type="clt_ru:LanguageCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код языка для заполнения наименования </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INN" type="clt_ru:Code10Type">
+        <xs:annotation>
+          <xs:documentation>ИНН организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KPP" type="clt_ru:KPPCodeType">
+        <xs:annotation>
+          <xs:documentation>КПП организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ServiceProviderType">
+    <xs:annotation>
+      <xs:documentation>Лицо оказывающее услуги по компенсации налога</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="ServiceProviderOrg" type="tfr_sl:ServiceProviderOrgType">
+          <xs:annotation>
+            <xs:documentation>Лицо, оказывающее услуги по компенсации налога на добавленную стоимость – организация</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="ServiceProviderIndividual" type="tfr_sl:ServiceProviderIndividualType">
+          <xs:annotation>
+            <xs:documentation>Лицо, оказывающее услуги по компенсации налога на добавленную стоимость – индивидуальный предприниматель</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TaxFreeSlBuyerType">
+    <xs:annotation>
+      <xs:documentation>Сведения о покупателе</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonSurname" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Фамилия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Имя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonMiddleName" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryPermanentResidence" type="tfr_sl:TfSlCountryType">
+        <xs:annotation>
+          <xs:documentation>Страна выдачи паспорта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdentityCardSeries" type="clt_ru:IdentityCardSeriesType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Серия паспорта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdentityCardNumber" type="clt_ru:IdentityCardNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер паспорта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdentityCardDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата выдачи паспорта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExpiryDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Срок действия паспорта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BirthDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата рождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonContact" type="tfr_sl:ContactType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Контактные данные покупателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TaxFreeSlGoodsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товаре</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsNumber" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер товара в кассовом чеке</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsArticul" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Артикул товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsDescription" type="RUSclt_ru:FreeText1000Type">
+        <xs:annotation>
+          <xs:documentation>Наименование товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsQuantity" type="tfr_sl:QuantityValueType">
+        <xs:annotation>
+          <xs:documentation>Количество товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="VAT" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма налога, исчисленная  организацией розничной торговли </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TotalCostGoods" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Стоимость товара c учетом налога</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TfSlCountryType">
+    <xs:annotation>
+      <xs:documentation>Информация о стране</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CountryName" type="clt_ru:CountryNameType">
+        <xs:annotation>
+          <xs:documentation>Наименование Страны</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryCode" type="clt_ru:CountryA2CodeType">
+        <xs:annotation>
+          <xs:documentation>Код страны alpha-2 (две буквы латинского алфавита)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="Code12Type">
+    <xs:annotation>
+      <xs:documentation>Код. Символьная строка (буквы, цифры, знаки) используемая для краткого (и (или) независимого от языка) представления или замены определенных значений или текстовых свойств. 12 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:length value="12" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

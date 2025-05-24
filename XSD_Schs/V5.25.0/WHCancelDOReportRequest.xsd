@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cdor="urn:customs.ru:Information:WarehouseDocuments:WHCancelDOReportRequest:5.24.0" xmlns:catWH_ru="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonAggregateTypesCust:5.24.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:WarehouseDocuments:WHCancelDOReportRequest:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonAggregateTypesCust:5.24.0" schemaLocation="WarehouseCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос на отмена подачи отчетности ДО-1 / ДО-2 / ДО-3</xs:documentation>
+  </xs:annotation>
+  <xs:element name="WHCancelDOReportRequest" type="cdor:WHCancelDOReportRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос на отмена подачи отчетности ДО-1 / ДО-2 / ДО-3</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="WHCancelDOReportRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос на отмена подачи отчетности ДО-1 / ДО-2 / ДО-3</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DOReportLinkData" type="catWH_ru:WareHouseReportLinkDataType">
+            <xs:annotation>
+              <xs:documentation>Сведения об отчете, в отношении которого составлен запрос</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RequestDetails" type="cdor:RequestDetailsType">
+            <xs:annotation>
+              <xs:documentation>Обоснование запроса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="WarehouseOwner" type="catWH_ru:WarehouseOwnerType">
+            <xs:annotation>
+              <xs:documentation>Данные о владельце склада</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1008037E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="CancelationSignType">
+    <xs:annotation>
+      <xs:documentation>Перечислимый тип причины для отмены подачи отчетности</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:IdentifierCategoriesCust">
+      <xs:enumeration value="cancel_StockOperation">
+        <xs:annotation>
+          <xs:documentation>Ошибочная подача отчета. Указанная в отчете операция (принятия или выдачи) не имела места</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cancel_ReportDuplication">
+        <xs:annotation>
+          <xs:documentation>Ошибочная подача дубликата отчета. Отчет по указанной в отчете операции (принятия или выдачи) уже подавался ранее</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cancel_ReportErrors">
+        <xs:annotation>
+          <xs:documentation>Отчет содержит ошибки, самостоятельно выявленные составителем. Указанная в отчете операция (принятия или выдачи) имела место, после исправления ошибок ожидается подача нового отчета с исправленными сведениями</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cancel_OtherReasons">
+        <xs:annotation>
+          <xs:documentation>Иные причины для отмены подачи отчетности</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="RequestDetailsType">
+    <xs:annotation>
+      <xs:documentation>Комплексный тип для описания оснований запроса</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CancelationSign" type="cdor:CancelationSignType">
+        <xs:annotation>
+          <xs:documentation>Индикатор обоснования отмены</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CancelationReasons" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Текстовое обоснование отмены подачи отчетности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

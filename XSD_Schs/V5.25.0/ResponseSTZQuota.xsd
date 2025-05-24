@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:catESAD_cu="urn:customs.ru:CUESADCommonAggregateTypesCust:5.24.0" xmlns:rstzq="urn:customs.ru:Information:CustomsDocuments:ResponseSTZQuota:5.24.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:ResponseSTZQuota:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonAggregateTypesCust:5.24.0" schemaLocation="CUESADCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Информация о об остатках сырья для переработки по предшествующим ДТ</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ResponseSTZQuota" type="rstzq:ResponseSTZQuotaType">
+    <xs:annotation>
+      <xs:documentation>Информация о об остатках сырья для переработки по предшествующим ДТ</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ResponseSTZQuotaType">
+    <xs:annotation>
+      <xs:documentation>Информация о об остатках сырья для переработки по предшествующим ДТ</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DTRegNumber" type="cat_ru:GTDIDType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер текущей ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DTGoods" type="rstzq:DTGoodsType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Товары текущей ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReleaseIndicator" type="clt_ru:IndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Признак успешного списания остатков </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006227E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DTGoodsType">
+    <xs:annotation>
+      <xs:documentation>Товар текущей ДТ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsNumeric" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Номер товара в текущей ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsTNVEDCode" type="clt_ru:CUGoodsNomenclatuerCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код товара по ТН ВЭД ЕАЭС. Гр.33 первый раздел</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="4">
+        <xs:annotation>
+          <xs:documentation>Описание товара текущей ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NetWeightQuantity" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вес товара, нетто (кг). Гр.38</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SupplementaryGoodsQuantity" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество товара в дополнительной единице измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsCost" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Таможенная стоимость товара текущей ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ESADout_CUCustomsPaymentCalculation" type="catESAD_cu:CUCustomsPaymentCalculationType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation> Исчисление таможенных платежей</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReleaseDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата принятия решения по товару</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DecisionCode" type="clt_ru:Code2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код решения по товару в соответствии с классификатором решений,  принимаемых таможенными органами</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PrecedingDT" type="rstzq:PrecedingDTType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Предшествующие ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PrecedingQuantityType">
+    <xs:annotation>
+      <xs:documentation>Количество остатков товара по предшествующей ДТ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="NetWeightQuantity" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Списываемый вес нетто товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NetWeightQuota" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Текущий остаток товара в кг</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SupplementaryGoodsQuantity" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Списываемое количество товара в дополнительной единице измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SupplementaryGoodsQuota" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Текущий остаток товара в дополнительной единице измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeasureIndicator" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак совпадения списываемых единиц измерения с единицами измерения остатка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="QuotaIndicator" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак достаточности остатков товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PrecedingDTType">
+    <xs:annotation>
+      <xs:documentation>Предшествующие ДТ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DTRegNumber" type="cat_ru:GTDIDType">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер предшествующей ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PrecedingDocumentFound" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак наличия в БД сведений о предшествущей ДТ / товаров ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LineNumber" type="clt_ru:Count5Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер строки в графе 40 текущей ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PrecedingDocumentGoodsNumeric" type="clt_ru:Count3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер товара в предшествующей ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsTNVEDCode" type="clt_ru:CUGoodsNomenclatuerCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код товара по ТН ВЭД ЕАЭС в предшествущей ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PrecedingGoodsDescription" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="4">
+        <xs:annotation>
+          <xs:documentation>Описание товара предшествущей ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NetWeightQuantity" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вес товара нетто в предшествущей ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SupplementaryGoodsQuantity" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество товара в дополнительной единице измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsCost" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Таможенная стоимость товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsCostIndicator" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак совпадения сведений о таможенной стоимости</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ESADout_CUCustomsPaymentCalculation" type="catESAD_cu:CUCustomsPaymentCalculationType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation> Исчисление таможенных платежей</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReleaseDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата принятия решения по товару</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DecisionCode" type="clt_ru:Code2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код решения по товару в соответствии с классификатором решений,  принимаемых таможенными органами</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PrecedingQuantity" type="rstzq:PrecedingQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Остатки товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

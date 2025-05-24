@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:isptrr="urn:customs.ru:Information:SQDocuments:InspectionReqRes:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:SQDocuments:InspectionReqRes:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сведения о необходимости предоставления дополнительных документов и сведений и о возможности принятия решения/Сведения о результатах контроля</xs:documentation>
+  </xs:annotation>
+  <xs:element name="InspectionReqRes" type="isptrr:InspectionReqResType" />
+  <xs:complexType name="InspectionReqResType">
+    <xs:annotation>
+      <xs:documentation>Сведения о необходимости предоставления дополнительных документов и сведений и о возможности принятия решения/Сведения о результатах контроля</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocSign" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Признак документа: 1 - Сведения о необходимости предоставления дополнительных документов и сведений и о возможности принятия решения; 2 - Сведения о результатах документального ветеринарного контроля; 3 - Сведения о результатах ветеринарного контроля (после осмотра/досмотра)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ConversationID" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Идентификатор взаимодействия</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="InspectionDecision" type="isptrr:InspectionDecisionType">
+            <xs:annotation>
+              <xs:documentation>Решение, принятое таможенным инспектором по результатам документарного контроля</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Violation" type="isptrr:ViolationType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Нарушение, выявленное при досмотре</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RestrictionList" type="isptrr:RestrictionListType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Накладываемые ограничения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Requirement" type="isptrr:RequirementType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Условие транспортировки груза через границу</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009057E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="InspectionDecisionType">
+    <xs:annotation>
+      <xs:documentation>Решение, принятое таможенным инспектором по результатам документарного контроля</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Type" type="clt_ru:Quantity2Type">
+        <xs:annotation>
+          <xs:documentation>Тип решения: 0 - Решение не определено; 1 - Ввоз разрешен (разрешение); 2 - Вывоз разрешен (разрешение); 3 - Транзит разрешен (разрешение); 4 - Ввоз запрещен (запрет); 5 - Вывоз запрещен (запрет); 6 - Транзит запрещен (запрет); 7 - Отправить на ветеринарный досмотр (запрет); 8 - Досмотр невозможен по техническим причинам (разрешение); 9 - Груз задержан (запрет)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Decision" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Текст решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RequirementType">
+    <xs:annotation>
+      <xs:documentation>Условие транспортировки груза через границу</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Type" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Тип условия: 1 - Необходимость разрешения; 2 - Необходимость аттестации предприятия-изготовителя; 3 - Дополнительное условие разрешения; 4 - Наличие регистрации лекарственных средств и кормовых добавок; 5 - Наличие документа подтверждающего качество и безопасность лекарственных средств и кормовых добавок химического и микробиологического синтеза, ввозимых без ветеринарного сертификата; 6 - Наличие документа, подтверждающего приобретение в розничной сети чучел всех видов животных и рыб или их фрагментов, прошедших полную таксидермическую обработку</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Description" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Условие</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Document" type="cat_ru:DocumentBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ViolationType">
+    <xs:annotation>
+      <xs:documentation>Нарушение, выявленное при досмотре</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Type" type="clt_ru:Count2Type">
+        <xs:annotation>
+          <xs:documentation>1 - Неизвестный тип; 2 - Предприятие не аттестовано для поставок в ТС; 3 - Отсутствие гарантий ветслужб стран экспортеров о полном соответствии продукции ветсантребованиям ТС; 4 - Отсутствие предварительной электронной информации о подтверждении факта отгрузки в адрес российского получателя; 5 - Отсутствие ветсопроводительных документов; 6 - Отсутствие разрешения Россельхознадзора на ввоз; 7 - Ветсертификаты оформлены с нарушениями действующих правил и ошибками, а так же с опечатками и техническими ошибками; 8 - Поступление продукции с предприятий, в отношении которых введены временные ограничения; 9 - Истечение срока реализации продукции; 10 - Несоответствие информации о продукции, указанной в ветсертификатах, и фактически выявленной на маркировочных этикетках; 11 - Отсутствие ветеринарных транзитных уведомлений; 12 - Отказ от права собственности фирмой-импортером на продукцию в пользу другой организации; 13 - Запрет на ввоз, транзит в РФ с территорий, неблагополучных по заразным болезням животных; 14 - Иные нарушения, не требующие принципиального решения Службы, не выходящие за пределы компетенции территориальных управлений Россельхознадзора</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Description" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Текст нарушения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RestrictionListType">
+    <xs:annotation>
+      <xs:documentation>Накладываемые ограничения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Type" type="clt_ru:Count2Type">
+        <xs:annotation>
+          <xs:documentation>Тип ограничения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Description" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Описание ограничения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

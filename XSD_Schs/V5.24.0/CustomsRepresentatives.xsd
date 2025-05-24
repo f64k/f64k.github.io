@@ -1,0 +1,1149 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CustRep="urn:customs.ru:Information:CustomsDocuments:CustomsRepresentatives:5.24.0" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:CustomsRepresentatives:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Государственная услуга ведения реестра таможенных представителей</xs:documentation>
+  </xs:annotation>
+  <xs:element name="CustomsRepresentatives" type="CustRep:CustomsRepresentativesType">
+    <xs:annotation>
+      <xs:documentation>Государственная услуга ведения реестра таможенных представителей</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="CustomsRepresentativesType">
+    <xs:annotation>
+      <xs:documentation>Государственная услуга ведения реестра таможенных представителей</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="ApplicationInfo" type="CustRep:ApplicationInfoType">
+            <xs:annotation>
+              <xs:documentation>Общая информация о заявлении</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Applicant" type="CustRep:ApplicantType">
+            <xs:annotation>
+              <xs:documentation>Общая информация о заявителе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:element name="RegistryInclusion" type="CustRep:RegistryInclusionType">
+              <xs:annotation>
+                <xs:documentation>Включение российского юридического лица в реестр таможенных представителей</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="RegistryPreliminaryDecision" type="CustRep:RegistryPreliminaryDecisionType">
+              <xs:annotation>
+                <xs:documentation>Принятие предварительного решения о соблюдении иных условий включения юридического лица в реестр таможенных представителей</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="RegistryAlteration" type="CustRep:RegistryAlterationType">
+              <xs:annotation>
+                <xs:documentation>Внесение изменений в реестр таможенных представителей</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="RegistryExclusion" type="CustRep:RegistryExclusionType">
+              <xs:annotation>
+                <xs:documentation>Исключение юридического лица из реестра таможенных представителей</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+          <xs:element name="AppliedDocuments" type="CustRep:AppliedDocumentsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Блок прилагаемых документов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentIDType" use="required" fixed="1006262E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные  типы</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="String256Type">
+    <xs:annotation>
+      <xs:documentation>Текст от 1 до 256 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="256" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="AccountsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о банковских счетах</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RurAccount" type="CustRep:AccountType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о банковских счетах в РФ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ForeignAccount" type="CustRep:AccountType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о иностранных банковских счетах</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AccountType">
+    <xs:annotation>
+      <xs:documentation>Сведения об банковском счете</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BankInformationType">
+        <xs:sequence>
+          <xs:element name="OpenAccountDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата открытия счета</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BankINN" type="clt_ru:INNIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>ИНН - Индивидуальный номер налогоплательщика.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BankLegalLocation" type="RUScat_ru:RUAddressType">
+            <xs:annotation>
+              <xs:documentation>Юридический адрес банка</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BankRealLocation" type="RUScat_ru:RUAddressType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Адрес расположения банка</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ApplicantType">
+    <xs:annotation>
+      <xs:documentation>Данные о заявителе</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SigningDetails" type="CustRep:SigningDetailsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Физлицо (руководитель организации или уполномоченное лицо), подписавшее документ </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LegalEntity" type="CustRep:LegalEntityType">
+        <xs:annotation>
+          <xs:documentation>Заявитель</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ApplicationInfoType">
+    <xs:annotation>
+      <xs:documentation>Общая информация о заявлении</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ApplicantID" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор заявителя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ApplicationSourceSystemID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Номер заявления на ЕПГУ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ApplicationSourceSystemDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата заявления на ЕПГУ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ApplicationID" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер заявления на АПС "Электронные Госуслуги-2"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ApplicationDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации заявления на АПС "Электронные Госуслуги-2"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Department" type="cat_ru:CustomsType">
+        <xs:annotation>
+          <xs:documentation>Код подразделения, в которое предоставляется заявка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AppliedDocumentsType">
+    <xs:annotation>
+      <xs:documentation>Блок прилагаемых документов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AppliedDocument" type="CustRep:AppliedDocumentType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Прилагаемый документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AppliedDocumentType">
+    <xs:annotation>
+      <xs:documentation>Прилагаемый документ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Code" type="clt_ru:Code2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код вида документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Name" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Имя файла документа (без расширения)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Number" type="clt_ru:Quantity5Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер файла документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Extension" type="clt_ru:CodeVariable4Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Расширение файла</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Base" type="clt_ru:Text3MB" minOccurs="0" maxOccurs="2">
+        <xs:annotation>
+          <xs:documentation>Файл в формате base64</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Description" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Комментарий</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="BankGuaranteeInfoType">
+    <xs:annotation>
+      <xs:documentation>Реквизиты банковской гарантии</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата выдачи банковской гарантии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер банковской гарантии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CashDepositInfoType">
+    <xs:annotation>
+      <xs:documentation>Реквизиты денежного залога</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата платежного поручения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocNumber" type="clt_ru:CodeVariable6Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ChangedApplicantInfo">
+    <xs:annotation>
+      <xs:documentation>Сведения об изменении информации о заявителе (для услуг ведения реестров)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ApplicantInfo" type="CustRep:ApplicantType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Изменения в информации о заявителе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ChangeInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения, подлежащие изменению</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="CustRep:ChangedApplicantInfo">
+        <xs:sequence>
+          <xs:element name="InformationAboutSecuring" type="CustRep:InformationAboutSecuringType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения об обеспечении уплаты таможенных пошлин, налогов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RiskInsurance" type="CustRep:RiskInsuranceType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о договоре страхования риска гражданской ответственности</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Specialists" type="CustRep:SpecialistsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о специалистах по таможенным операциям</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="LimitsData" type="CustRep:LimitsDataType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения об ограничениях деятельности в качестве таможенного представителя</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ContractOfGuaranteeInfoType">
+    <xs:annotation>
+      <xs:documentation>Реквизиты договора поручительства</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата заключения договора поручительства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocNumber" type="CustRep:String256Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер договора поручительства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CustomsReceiptRegNumberType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер таможенной расписки</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:GTDIDType">
+        <xs:sequence>
+          <xs:element name="DocNumberPrefix" type="clt_ru:Code2Type">
+            <xs:annotation>
+              <xs:documentation>Префикс порядкового номера таможенной расписки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DirectorsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о членах совета директоров (наблюдательного совета), членах коллегиального исполнительного органа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Director" type="cat_ru:PersonBaseType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Член совета директоров (наблюдательного совета)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Collegial" type="cat_ru:PersonBaseType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Член коллегиального исполнительного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EmployeesType">
+    <xs:annotation>
+      <xs:documentation>Сведения о работниках, в чьи должностные обязанности входят организация таможенных операций и (или) их осуществление</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Employee" type="CustRep:EmployeeType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Работник</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EmployeeType">
+    <xs:annotation>
+      <xs:documentation>Работник</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="CustRep:PersonDutiesType">
+        <xs:sequence>
+          <xs:element name="InfoAboutEmployees" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Дополнительные сведения о работнике</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FilialsType">
+    <xs:annotation>
+      <xs:documentation>Обособленные структурные подразделения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Filial" type="CustRep:FilialType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Информация о подразделениях</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FilialType">
+    <xs:annotation>
+      <xs:documentation>Обособленное структурное подразделение</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:SubjectBaseDetailsType">
+        <xs:sequence>
+          <xs:element name="FilialLocation" type="RUScat_ru:RUAddressType">
+            <xs:annotation>
+              <xs:documentation>Место нахождения структурного подразделения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="FilialManager" type="CustRep:OrganisationHeadType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о руководителе структурного подразделения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegularStaffQuantity" type="clt_ru:Quantity5Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о штатной численности подразделения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Communications" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о контактной информации филиала</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Specialists" type="CustRep:SpecialistsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о специалистах по таможенным операциям в обособленных подразделениях
+							</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FNSInfoType">
+    <xs:annotation>
+      <xs:documentation>Свидетельство о постановке на налоговый учет</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FNSDocumentSeries" type="clt_ru:CodeVariable10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Серия свидетельства о постановке на налоговый учет</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FNSDocumentNumber" type="clt_ru:CodeVariable20Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер свидетельства о постановке на налоговый учет</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FNSDocumentDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата выдачи свидетельства о постановке на налоговый учет</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IFNSInfo" type="CustRep:IFNSType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация об ИФНС выдавшем свидетельство</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FoundersType">
+    <xs:annotation>
+      <xs:documentation>Сведения об учредителях и (или) участниках заявителя и о доле их участия в уставном (складском) капитале заявителя</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Founder" type="CustRep:FounderType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения об учредителе (участнике) и о доле его участия в уставном (складском) капитале</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Note" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дополнительная информация об учредителях (участниках)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FounderType">
+    <xs:annotation>
+      <xs:documentation>Учредитель и (или) участник</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ParticipationType" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>01 - Учредитель, 02 - Участник</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:choice>
+        <xs:element name="PersonFounder" type="CustRep:PhysicalPersonType">
+          <xs:annotation>
+            <xs:documentation>Учредитель (участник) - физлицо</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="LegalEntityFounder" type="RUScat_ru:SubjectBaseDetailsType">
+          <xs:annotation>
+            <xs:documentation>Учредитель (участник) - юрлицо</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+      <xs:element name="Share" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Доля участия в уставном (складском) капитале</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FullContactInfoType">
+    <xs:annotation>
+      <xs:documentation>Полная контактная информация</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Address" type="RUScat_ru:RUAddressType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Адрес</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PostalAddress" type="RUScat_ru:RUAddressType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Почтовый адрес</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CommunicationDetails" type="cat_ru:ContactType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Контактная информация</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WebSite" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Интернет-сайт</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Teletype" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Телетайп</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="IFNSType">
+    <xs:annotation>
+      <xs:documentation>Сведения об ИФНС</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="IFNSName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование ИФНС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IFNSContacts" type="CustRep:FullContactInfoType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Контактная информация ИФНС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InformationAboutSecuringType">
+    <xs:annotation>
+      <xs:documentation>Сведения об обеспечении уплаты таможенных пошлин, налогов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SupportSum" type="clt_ru:CodeVariable20Type">
+        <xs:annotation>
+          <xs:documentation>Общая сумма обеспечения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Support" type="CustRep:SupportType" maxOccurs="10">
+        <xs:annotation>
+          <xs:documentation>Подтверждение предоставления обеспечения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LegalEntityType">
+    <xs:annotation>
+      <xs:documentation>Данные о заявителе - юрлице</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:SubjectBaseDetailsType">
+        <xs:sequence>
+          <xs:element name="DateRegistration" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата регистрации организации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OKPO" type="clt_ru:OKPOIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код организации по ОКПО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OGRNInfo" type="CustRep:OGRNInfoType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Свидетельство о внесении записи в Единый государственный реестр юридических лиц
+							</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="FNSInfo" type="CustRep:FNSInfoType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Свидетельство о постановке на налоговый учет</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OrganisationHead" type="CustRep:OrganisationHeadType" minOccurs="0" maxOccurs="10">
+            <xs:annotation>
+              <xs:documentation>Сведения о руководителе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OrganisationChiefAccountant" type="CustRep:OrganisationHeadType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о главном бухгалтере</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Filials" type="CustRep:FilialsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Обособленные структурные подразделения, через которые заявитель планирует осуществлять деятельность в качестве таможенного представителя</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CharterCapital" type="clt_ru:ForeignAccountType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Уставный капитал</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Founders" type="CustRep:FoundersType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения об учредителях и (или) участниках и о доле их участия в уставном (складском) капитале</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Directors" type="CustRep:DirectorsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о членах совета директоров (наблюдательного совета), членах коллегиального исполнительного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Employees" type="CustRep:EmployeesType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о работниках, в чьи должностные обязанности входят организация таможенных операций и (или) их осуществление</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="EconomicActivity" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о сфере хозяйственной деятельности</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Structure" type="clt_ru:FreeText500Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Описание организационной структуры, включая функции и комплектацию каждого структурного подразделения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TotalStaffQuantity" type="clt_ru:Quantity5Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения об общей штатной численности</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="InfoAboutEmployees" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о работниках, в чьи должностные обязанности входят организация таможенных операций и (или) их осуществление, в том числе сведения об их знаниях и навыках в использовании информационных технологий при совершении таможенных операций, а также знании общих коммерческих операций и операций бухгалтерского и налогового учета</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="InformationSecurity" type="clt_ru:FreeText500Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о принимаемых мерах защиты информации, содержащейся в автоматизируемой системе организации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Accounts" type="CustRep:AccountsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения об открытых банковских счетах</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="FullContactInfo" type="CustRep:FullContactInfoType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Полная контактная информация</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="LimitDataType">
+    <xs:annotation>
+      <xs:documentation>Подробности ограничений при совершении таможенных операций в отношении отдельных категорий товаров</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="LimitsRegionList" type="clt_ru:Code8Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Код региона деятельности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LimitsRegionText" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Текстовое описание региона деятельности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LimitsCategoryText" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Категории товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LimitsTransportList" type="clt_ru:TransportModeCodeType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Код вида транспорта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LimitsTransportText" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Текстовое описание вида транспорта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LimitsCustomText" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Таможенные операции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LimitsDataType">
+    <xs:annotation>
+      <xs:documentation>Сведения об ограничениях деятельности в качестве таможенного представителя</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="KindLimitData" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Вид ограничения: 1 - Совершение таможенных операций в отношении отдельных категорий товаров; 2 - Совершение таможенных операций в отношении товаров, не облагаемых вывозными таможенными пошлинами и помещаемых под таможенную процедуру экспорта; 3 - Совершение таможенных операций в отдельном регионе деятельности таможенного органа; 4 - Осуществление деятельности без ограничений</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LimitData" type="CustRep:LimitDataType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Подробности ограничений (с кодом вида ограничений 1 или 3)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OGRNInfoType">
+    <xs:annotation>
+      <xs:documentation>Свидетельство о внесении записи в Единый государственный реестр юридических лиц</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OGRNDocumentNumber" type="clt_ru:CodeVariable20Type">
+        <xs:annotation>
+          <xs:documentation>Номер свидетельства о внесении записи в Единый государственный реестр юриидических лиц</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OGRNDocumentDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата выдачи свидетельства о внесении записи в Единый государственный реестр юридических лиц</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OrganisationHeadType">
+    <xs:annotation>
+      <xs:documentation>Сведения о руководителе</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="CustRep:PersonDutiesType">
+        <xs:sequence>
+          <xs:element name="Proxy" type="CustRep:PersonDutiesType" minOccurs="0" maxOccurs="10">
+            <xs:annotation>
+              <xs:documentation>Сведения о заместителях</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PersonDutiesType">
+    <xs:annotation>
+      <xs:documentation>Расширенный тип сведений о должностном лице</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:PersonBaseType">
+        <xs:sequence>
+          <xs:element name="AbsenceDuties" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Описание порядка исполнения обязанностей в случае временного отсутствия указанного должностного лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PersonBirthday" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата рождения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PersonBirthplace" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Место рождения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PersonLocation" type="RUScat_ru:RUAddressType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Адрес регистрации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PersonEmail" type="clt_ru:Text50Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Адрес электронной почты</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PhysicalPersonType">
+    <xs:annotation>
+      <xs:documentation>Данные о физлице</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonFIO" type="cat_ru:PersonBaseType">
+        <xs:annotation>
+          <xs:documentation>ФИО физлица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BirthDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата рождения физлица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BirthPlace" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Место рождения физлица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ApplicantCitizenship" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Гражданство</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INN" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН физлица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OGRNIP" type="clt_ru:OGRNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ОГРН ИП физлица-ИП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdentityCard" type="RUScat_ru:RUIdentityCardType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Документ, удостоверяющий личность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegistryAlterationType">
+    <xs:annotation>
+      <xs:documentation>Процедура внесения изменений в реестр таможенных представителей</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RegistryDocumentInfo" type="CustRep:RegistryDocumentInfoType">
+        <xs:annotation>
+          <xs:documentation>Сведения о включении в реестр таможенных представителей</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Base" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Суть обращения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ChangeInfo" type="CustRep:ChangeInfoType">
+        <xs:annotation>
+          <xs:documentation>Сведения, подлежащие изменению</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegistryDocumentInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения из свидетельства о включении в реестр (для услуг ведения реестров)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OpfFullName" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Организационно-правовая форма и наименование</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FullAddress" type="RUScat_ru:RUAddressType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Адрес местонахождения организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CertificateNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер в реестре таможенных представителей</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CertificateDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата принятия решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegistryExclusionType">
+    <xs:annotation>
+      <xs:documentation>Процедура исключения юридического лица из реестра таможенных представителей</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RegistryDocumentInfo" type="CustRep:RegistryDocumentInfoType">
+        <xs:annotation>
+          <xs:documentation>Сведения о включении в реестр таможенных представителей</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegistryInclusionType">
+    <xs:annotation>
+      <xs:documentation>Процедура включения российского юридического лица в реестр таможенных представителей</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="InformationAboutSecuring" type="CustRep:InformationAboutSecuringType">
+        <xs:annotation>
+          <xs:documentation>Сведения об обеспечении уплаты таможенных пошлин, налогов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RiskInsurance" type="CustRep:RiskInsuranceType">
+        <xs:annotation>
+          <xs:documentation>Сведения о договоре страхования риска гражданской ответственности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Specialists" type="CustRep:SpecialistsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о специалистах по таможенным операциям</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LimitsData" type="CustRep:LimitsDataType">
+        <xs:annotation>
+          <xs:documentation>Сведения об ограничениях деятельности в качестве таможенного представителя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegistryPreliminaryDecisionType">
+    <xs:annotation>
+      <xs:documentation>Принятие предварительного решения о соблюдении иных условий включения юридического лица в реестр таможенных представителей</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RiskInsurance" type="CustRep:RiskInsuranceType">
+        <xs:annotation>
+          <xs:documentation>Сведения о договоре страхования риска гражданской ответственности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Specialists" type="CustRep:SpecialistsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о специалистах по таможенным операциям</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LimitsData" type="CustRep:LimitsDataType">
+        <xs:annotation>
+          <xs:documentation>Сведения об ограничениях деятельности в качестве таможенного представителя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RiskInsuranceType">
+    <xs:annotation>
+      <xs:documentation>Сведения о договоре страхования риска гражданской ответственности</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PriceInsurance" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Общая сумма страхования</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NumInsurance" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер договора</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateInsurance" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата договора</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateOnInsurance" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Срок действия с</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateOffInsurance" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Срок действия по</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InsuranceCompanyName" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование страховой компании</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LiabilityInsurance" type="cat_ru:DocumentBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Лицензия на право страхования ответственности владельцев таможенных складов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SigningDetailsType">
+    <xs:annotation>
+      <xs:documentation>Информация о подписании документа</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:SigningDetailsType">
+        <xs:sequence>
+          <xs:element name="AttorneyNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер доверенности (в случае подписания уполномоченным лицом)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AttorneyDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата доверенности (в случае подписания уполномоченным лицом)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SpecialistsType">
+    <xs:annotation>
+      <xs:documentation>Информация о сведениях о специалистах по таможенным операциям</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice maxOccurs="2">
+        <xs:element name="Specialist" type="CustRep:SpecialistType" maxOccurs="100">
+          <xs:annotation>
+            <xs:documentation>Сведения о специалистах по таможенным операциям</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="NewFilialSpecialist" type="CustRep:SpecialistType" maxOccurs="100">
+          <xs:annotation>
+            <xs:documentation>Сведения о новых специалистах</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="DismissedFilialSpecialist" type="CustRep:SpecialistType" maxOccurs="100">
+          <xs:annotation>
+            <xs:documentation>Сведения об уволенных специалистах</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SpecialistType">
+    <xs:annotation>
+      <xs:documentation>Сведения о специалистах по таможенным операциям</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonFIO" type="cat_ru:PersonBaseType">
+        <xs:annotation>
+          <xs:documentation>ФИО заявителя-физлица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonBirthday" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата рождения заявителя-физлица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NumBlank" type="clt_ru:CodeVariable20Type">
+        <xs:annotation>
+          <xs:documentation>Номер бланка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrganizationName" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Кем выдан</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProfessionalDevelopment" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Повышение квалификации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateWithProfessionalDevelopment" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата начала срока обучения по программам повышения квалификации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DataByProfessionalDevelopment" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата окончания срока обучения по программам повышения квалификации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NumReceipt" type="clt_ru:CodeVariable20Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер приказа/договора о принятии на работу</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateReceipt" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата принятия на работу</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdentityCard" type="RUScat_ru:RUIdentityCardType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Данные документа, удостоверяющего личность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SupportType">
+    <xs:annotation>
+      <xs:documentation>Подтверждение предоставления обеспечения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TypeSupport" type="clt_ru:CodeVariable2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код способа обеспечения (01-Денежный залог, 02 - Банковская гарантия, 03 - Договор поручительства)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:choice>
+        <xs:element name="BankGuaranteeInfo" type="CustRep:BankGuaranteeInfoType">
+          <xs:annotation>
+            <xs:documentation>Реквизиты банковской гарантии</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="CashDepositInfo" type="CustRep:CashDepositInfoType">
+          <xs:annotation>
+            <xs:documentation>Реквизиты денежного залога</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="ContractOfGuaranteeInfo" type="CustRep:ContractOfGuaranteeInfoType">
+          <xs:annotation>
+            <xs:documentation>Реквизиты договора поручительства</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+      <xs:element name="TypeSupportSum" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сумма</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TypeSupportCurrency" type="clt_ru:CurrencyA3CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Валюта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SupportWith" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Срок действия с</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SupportPeriod" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Срок действия до</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GuaranteeCustomsReceiptNum" type="CustRep:CustomsReceiptRegNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер таможенной расписки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--SQ.01201-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" xmlns:ryfs_res="urn:customs.ru:Information:SQDocuments:RosstatYearFinancialStatementsResponse:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:RosstatYearFinancialStatementsResponse:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Ответ на запрос о предоставлении данных годовой бухгалтерской (финансовой) отчетности организаций</xs:documentation>
+  </xs:annotation>
+  <xs:element name="RosstatYearFinancialStatementsResponse" type="ryfs_res:RosstatYearFinancialStatementsResponseType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос о предоставлении данных годовой бухгалтерской (финансовой) отчетности организаций</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RosstatYearFinancialStatementsResponseType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос о предоставлении данных годовой бухгалтерской (финансовой) отчетности организаций</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Report" type="ryfs_res:ReportType">
+            <xs:annotation>
+              <xs:documentation>Корневой элемент отчета в формате XML</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009278E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ReportType">
+    <xs:annotation>
+      <xs:documentation>Корневой элемент отчета в формате XML</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Indicator" type="ryfs_res:IndicatorType" maxOccurs="5000">
+        <xs:annotation>
+          <xs:documentation>Данные показателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="IndicatorType">
+    <xs:annotation>
+      <xs:documentation>Данные показателя</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Name" type="RUSclt_ru:FreeText1000Type" maxOccurs="5">
+        <xs:annotation>
+          <xs:documentation>Наименование показателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Code" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Код показателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Value" type="ryfs_res:Text1000Type">
+        <xs:annotation>
+          <xs:documentation>Значение показателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="Text1000Type">
+    <xs:annotation>
+      <xs:documentation>Значение показателя. От 0 до 1000 символов. Текстовый</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="0" />
+      <xs:maxLength value="1000" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

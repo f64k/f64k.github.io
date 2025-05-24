@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:catSCVV="urn:customs.ru:SCVVCommonAggregateTypesCust:5.24.0" xmlns:GFact="urn:customs.ru:Information:CustomsDocuments:GoodsFactInfo:5.24.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:GoodsFactInfo:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:SCVVCommonAggregateTypesCust:5.24.0" schemaLocation="SCVVCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Информация о фактически вывозимых товарах</xs:documentation>
+  </xs:annotation>
+  <xs:element name="GoodsFactInfo" type="GFact:GoodsFactInfoType" />
+  <xs:complexType name="GoodsFactInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о фактически вывозимых товарах</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="ProcessNumber" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Уникальный идентификатор процесса.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ShipmentFactInfo" type="catSCVV:SCVVConsignmentType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Информация о фактическом вывозе по товарной партии</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1020005E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

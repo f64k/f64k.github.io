@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:rorreq="urn:customs.ru:Information:SQDocuments:RegOgRequest:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:RegOgRequest:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос сведений из реестра "Специальные разрешения на перевозку ОГ" по запросу данных отдельно взятого разрешения</xs:documentation>
+  </xs:annotation>
+  <xs:element name="RegOgRequest" type="rorreq:RegOgRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений из реестра "Специальные разрешения на перевозку ОГ" по запросу данных отдельно взятого разрешения</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RegOgRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений из реестра "Специальные разрешения на перевозку ОГ" по запросу данных отдельно взятого разрешения</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="PermitNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер разрешения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AutoNumber" type="rorreq:DRtnTrAutoNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер ТС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CountryList" type="rorreq:CountryListType">
+            <xs:annotation>
+              <xs:documentation>Страна</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009289E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CountryListType">
+    <xs:annotation>
+      <xs:documentation>Перечень стран Евразийского экономического союза</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Country" type="clt_ru:CountryA2CodeType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Страна Евразийского экономического союза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные простые прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="DRtnTrAutoNumberType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер ТС</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="12" />
+      <xs:pattern value="[0-9a-zA-Zа-яА-Я \-]*" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

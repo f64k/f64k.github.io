@@ -1,0 +1,556 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="urn:customs.ru:Information:TreatmentDocuments:TreatmentCommonAggregateTypes:5.24.0" version="5.24.0.0" xmlns:catTreat_ru="urn:customs.ru:Information:TreatmentDocuments:TreatmentCommonAggregateTypes:5.24.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Общие сложные типы документов на переработку товаров вне таможенной территории.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="BaseTreatmentDocsType">
+    <xs:annotation>
+      <xs:documentation>Контракт или иные документы, в соответствии с которыми товары ввозятся   на переработку</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="CompanyName" type="clt_ru:NameType">
+            <xs:annotation>
+              <xs:documentation>Наименование иностранной организации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DateLimitType">
+    <xs:annotation>
+      <xs:documentation>Срок переработки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GeneralTerm" type="clt_ru:CodeVariable3Type">
+        <xs:annotation>
+          <xs:documentation>Общий срок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="StartTerm" type="catTreat_ru:StartTermType">
+        <xs:annotation>
+          <xs:documentation>Начало срока переработки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="ExtensionTerm" type="catTreat_ru:ExtensionTermType">
+        <xs:annotation>
+          <xs:documentation>Продление срока переработки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ExtensionTermType">
+    <xs:annotation>
+      <xs:documentation>Продление срока переработки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TermExtensionAt" type="clt_ru:CodeVariable3Type">
+        <xs:annotation>
+          <xs:documentation>Срок продлен на</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GeneralTermAfterExtension" type="clt_ru:CodeVariable3Type">
+        <xs:annotation>
+          <xs:documentation>Общий срок переработки после продления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonSignature" type="cat_ru:PersonSignatureType">
+        <xs:annotation>
+          <xs:documentation>Подпись</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HeelsType">
+    <xs:annotation>
+      <xs:documentation>Остатки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="HeelsInfo" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Дополнительные сведения к  гр. "Остатки"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="HeelsOutProcedure" type="clt_ru:Text4Type">
+        <xs:annotation>
+          <xs:documentation>Режим выпуска остатков</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="HeelsItem" type="catTreat_ru:TreatProductsType">
+        <xs:annotation>
+          <xs:documentation>Остатки - описание товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LossType">
+    <xs:annotation>
+      <xs:documentation>Производственные потери</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="LossInfo" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Дополнительная информация к графе "Производственные потери"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="LossItem" type="catTreat_ru:TreatProductsType">
+        <xs:annotation>
+          <xs:documentation>Производственные потери - описание товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ProcOrganizationType">
+    <xs:annotation>
+      <xs:documentation>Организация переработчик</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:OrganizationBaseType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Phone" type="clt_ru:PhoneNumberType">
+            <xs:annotation>
+              <xs:documentation>Телефон иностранной организации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Fax" type="clt_ru:PhoneNumberType">
+            <xs:annotation>
+              <xs:documentation>Номер факса.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Telex" type="clt_ru:PhoneNumberType">
+            <xs:annotation>
+              <xs:documentation>Номер телекса.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="FactoryPlace" type="cat_ru:AddressType">
+            <xs:annotation>
+              <xs:documentation>Местонахождение производственных  мощностей </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Address" type="cat_ru:AddressType">
+            <xs:annotation>
+              <xs:documentation>Адрес </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Contract" type="cat_ru:DocumentBaseType">
+            <xs:annotation>
+              <xs:documentation>Сведения о контракте</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="TrResult" type="catTreat_ru:TrResultType">
+            <xs:annotation>
+              <xs:documentation>Продукты переработки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="WasteProducts" type="catTreat_ru:WasteProductsType">
+            <xs:annotation>
+              <xs:documentation>Отходы переработки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="StartTermType">
+    <xs:annotation>
+      <xs:documentation>Начало срока переработки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="StartWith" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Начало с</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TermTo" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Срок до</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonSignature" type="cat_ru:PersonSignatureType">
+        <xs:annotation>
+          <xs:documentation>Подпись</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GTDID" type="cat_ru:GTDIDType">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер таможенного документа.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SubstituteType">
+    <xs:annotation>
+      <xs:documentation>Информация о замене товаров для переработки эквивалентными товарами</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="Substitute" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Дополнительная информация</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="SubstituteItem" type="catTreat_ru:TreatProductsType">
+        <xs:annotation>
+          <xs:documentation>Описание товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TrResultType">
+    <xs:annotation>
+      <xs:documentation>Продукты переработки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="TrResultInfo" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Дополнительная информация о продуктах переработки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" name="IdentificationMethod" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Способы идентификации товаров в продуктах переработки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="TrResultItem" type="catTreat_ru:TreatProductsType">
+        <xs:annotation>
+          <xs:documentation>Описание товара - продукта переработки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TreatProductsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товаре для переработки.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="Name" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TNVED" type="clt_ru:GoodsNomenclatureCodeType">
+        <xs:annotation>
+          <xs:documentation>Код по ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RubCost" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Стоимость, руб.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="QuantityKg" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Количество в кг </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="AddUnit" type="clt_ru:Code3Type">
+        <xs:annotation>
+          <xs:documentation>Код дополнительной нестандартной единицы измерения (980-комплект; 981-рулон; 982-ящик; 983-километр; 984-бобина; 985-упаковка)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="AddQuantity" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Количество товара в нестандартных дополнительных единицах измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="GoodsQuantity" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Количество товара в единице измерения.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="MeasureUnitQualifierName" type="clt_ru:MeasureUnitQualifierNameType">
+        <xs:annotation>
+          <xs:documentation>Краткое наименование единицы измерения.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="MeasureUnitQualifierCode" type="clt_ru:MeasureUnitQualifierCodeType">
+        <xs:annotation>
+          <xs:documentation>Код единицы измерения в соответствии с единицами измерения, применяемыми в Таможенном тарифе Российской Федерации..</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код  таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CurrencyCost" type="catTreat_ru:TreatmentCurrencyCostType">
+        <xs:annotation>
+          <xs:documentation>Сведения о стоимости в валюте</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="Contract" type="cat_ru:DocumentBaseType">
+        <xs:annotation>
+          <xs:documentation>Сведения о контракте</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TreatmentBankAccountType">
+    <xs:annotation>
+      <xs:documentation>Сведения о счете</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="BankAccount" type="clt_ru:ForeignAccountType">
+        <xs:annotation>
+          <xs:documentation>Номер банковского счета</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="BankAccountDescription" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Описание типа счета: расчетный, валютный,...</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TreatmentBankInformationType">
+    <xs:annotation>
+      <xs:documentation>Переработка товаров - банковские сведения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="BankName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Название банка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BankOKPO" type="clt_ru:OKPOIDType">
+        <xs:annotation>
+          <xs:documentation>ОКПО банка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="BankMFO" type="clt_ru:BankMFOType">
+        <xs:annotation>
+          <xs:documentation>МФО банка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" name="BankAccount" type="catTreat_ru:TreatmentBankAccountType">
+        <xs:annotation>
+          <xs:documentation>Сведения о счете</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TreatmentCurrencyCostType">
+    <xs:annotation>
+      <xs:documentation>Сведения о стоимости в валюте</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CurrencyCost" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Стоимость  товара в валюте</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CurrencyCode" type="clt_ru:CurrencyA3CodeType">
+        <xs:annotation>
+          <xs:documentation>Буквенный код валюты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CurrencyRate" type="clt_ru:CurrencyRateType">
+        <xs:annotation>
+          <xs:documentation>Курс валюты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TreatmentGoodsType">
+    <xs:annotation>
+      <xs:documentation>Товары для переработки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="TreatmentsGoodsInfo" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Дополнительные сведения к гр. "Товары для переработки"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="TrGoodsItem" type="catTreat_ru:TreatProductsType">
+        <xs:annotation>
+          <xs:documentation>Описание товара для переработки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TreatmentOperationsType">
+    <xs:annotation>
+      <xs:documentation>Операции по переработке товаров и способы их совершения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OperationName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Название операции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="OperationMethod" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Способ совершения операции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="OperationEndDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Срок завершения операции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TreatmentOrganizationType">
+    <xs:annotation>
+      <xs:documentation>Организация</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:OrganizationBaseType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Phone" type="clt_ru:PhoneNumberType">
+            <xs:annotation>
+              <xs:documentation>Телефон иностранной организации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Fax" type="clt_ru:PhoneNumberType">
+            <xs:annotation>
+              <xs:documentation>Номер факса.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Telex" type="clt_ru:PhoneNumberType">
+            <xs:annotation>
+              <xs:documentation>Номер телекса.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="OKPOID" type="clt_ru:OKPOIDType">
+            <xs:annotation>
+              <xs:documentation>Код организации по ОКПО.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="OKATOCode" type="clt_ru:OKATOCodeType">
+            <xs:annotation>
+              <xs:documentation>Код ОКАТО.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="TreatmentOrganizationAddress" type="cat_ru:AddressType">
+            <xs:annotation>
+              <xs:documentation>Адрес организации-переработчика</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="FactAddress" type="cat_ru:AddressType">
+            <xs:annotation>
+              <xs:documentation>Фактический адрес</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="LegalAddress" type="cat_ru:AddressType">
+            <xs:annotation>
+              <xs:documentation>Юридический адрес</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="RubBankInformation" type="catTreat_ru:TreatmentBankInformationType">
+            <xs:annotation>
+              <xs:documentation>Информация о банке а котором находится рублевый счет</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="ValBankInformation" type="catTreat_ru:TreatmentBankInformationType">
+            <xs:annotation>
+              <xs:documentation>Информация о банке а котором находится валютный счет</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TreatmentType">
+    <xs:annotation>
+      <xs:documentation>Описание переработки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="YieldNorm" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Норма выхода</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ProcessingCost" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Стоимость  переработки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CostCurrencyCode" type="clt_ru:CurrencyN3CodeType">
+        <xs:annotation>
+          <xs:documentation>Код валюты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="ReplaceInf" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Описание возможной замены продуктов переработки иностранными товарами</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateLimit" type="catTreat_ru:DateLimitType">
+        <xs:annotation>
+          <xs:documentation>Срок переработки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" name="TreatmentOperations" type="catTreat_ru:TreatmentOperationsType">
+        <xs:annotation>
+          <xs:documentation>Операции по переработке товаров и способы их совершения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TreatmentGoods" type="catTreat_ru:TreatmentGoodsType">
+        <xs:annotation>
+          <xs:documentation>Товары для переработки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TrResult" type="catTreat_ru:TrResultType">
+        <xs:annotation>
+          <xs:documentation>Продукты переработки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="WasteProducts" type="catTreat_ru:WasteProductsType">
+        <xs:annotation>
+          <xs:documentation>Отходы переработки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Loss" type="catTreat_ru:LossType">
+        <xs:annotation>
+          <xs:documentation>Производственные потери</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Heels" type="catTreat_ru:HeelsType">
+        <xs:annotation>
+          <xs:documentation>Остатки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Substitute" type="catTreat_ru:SubstituteType">
+        <xs:annotation>
+          <xs:documentation>Информация о замене товаров для переработки эквивалентными товарами</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="ProcOrganization" type="catTreat_ru:ProcOrganizationType">
+        <xs:annotation>
+          <xs:documentation>Организация переработчик</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="WasteProductsType">
+    <xs:annotation>
+      <xs:documentation>Отходы переработки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="WasteProductsInfo" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Дополнительная информация к графе "Отходы переработки"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" name="WasteIdentMethod" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Способы идентификации товаров в отходах</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="WasteOutProcedure" type="clt_ru:Text4Type">
+        <xs:annotation>
+          <xs:documentation>Режим выпуска отходов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="WasteProductsItem" type="catTreat_ru:TreatProductsType">
+        <xs:annotation>
+          <xs:documentation>Отходы переработки - описание товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

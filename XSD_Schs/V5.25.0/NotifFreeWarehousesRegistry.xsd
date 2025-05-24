@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:notif_RegFW="urn:customs.ru:Information:RegistrationDocuments:NotifFreeWarehousesRegistry:5.24.0" targetNamespace="urn:customs.ru:Information:RegistrationDocuments:NotifFreeWarehousesRegistry:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Уведомление по ведению реестра «Владельцы свободных складов»</xs:documentation>
+  </xs:annotation>
+  <xs:element name="NotifFreeWarehousesRegistry" type="notif_RegFW:NotifFreeWarehousesRegistryType">
+    <xs:annotation>
+      <xs:documentation>Уведомление по ведению реестра «Владельцы свободных складов»</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="NotifFreeWarehousesRegistryType">
+    <xs:annotation>
+      <xs:documentation>Уведомление по ведению реестра «Владельцы свободных складов»</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="NotificationType" type="clt_ru:Code3Type">
+            <xs:annotation>
+              <xs:documentation>Идентификатор вида уведомления: ВИЗ - Уведомление о внесении изменений в Реестр владельцев свободных складов; ОИЗ - Уведомление об отказе во внесении изменений в Реестр владельцев свободных складов; ВИС - Уведомление об исключении из Реестра владельцев свободных складов по желанию лица; ОИС - Уведомление об отказе в исключении из Реестра владельцев свободных складов по желанию лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AppOrganizationInfo" type="notif_RegFW:AppOrganizationInfoType">
+            <xs:annotation>
+              <xs:documentation>Владелец свободного склада</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegistrationNumberString" type="clt_ru:CodeVariable20Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер уведомления (одной строкой)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegistrationNumber" type="notif_RegFW:RegistrationNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер уведомления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:element name="ChangeDetails" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>Сведения о внесении изменений в реестр</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="RefChangeReasons" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>Причины отказа во внесении изменений в реестр</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="Exception" type="notif_RegFW:ExceptionType">
+              <xs:annotation>
+                <xs:documentation>Сведения об исключении лица из реестра и действия, которые необходимо совершить лицу в отношении товаров</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="RefExceptionReasons" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>Причины отказа в исключении лица из реестра</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+          <xs:element name="CustomsPerson" type="cat_ru:PersonBaseType">
+            <xs:annotation>
+              <xs:documentation>Руководитель структурного подразделения ФТС России</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006324E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="CodeVariable12Type">
+    <xs:annotation>
+      <xs:documentation>Код. Символьная строка (буквы, цифры, знаки) используемая для краткого (и (или) независимого от языка) представления или замены определенных значений или текстовых свойств. От 1 до 12 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="12" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="AppOrganizationInfoType">
+    <xs:annotation>
+      <xs:documentation>Владелец свободного склада</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:SubjectBaseDetailsType">
+        <xs:sequence>
+          <xs:element name="FreeWHOwnersRegistryCertificate" type="notif_RegFW:CertificateType">
+            <xs:annotation>
+              <xs:documentation>Свидетельство о включении в реестр</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CertificateType">
+    <xs:annotation>
+      <xs:documentation>Реквизиты свидетельства</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CertificateSeries" type="clt_ru:CodeVariable2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Серия свидетельства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CertificateNumber" type="notif_RegFW:CodeVariable12Type">
+        <xs:annotation>
+          <xs:documentation>Номер свидетельства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CertificateDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата выдачи свидетельства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CertificateAgency" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование органа, выдавшего документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CertificateTerm" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Срок действия свидетельства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ExceptionType">
+    <xs:annotation>
+      <xs:documentation>Сведения об исключении лица из реестра и действия, которые необходимо совершить лицу в отношении товаров</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ExceptionDetails" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Сведения об исключении лица из реестра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Actions" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Действия, которые необходимо совершить лицу в отношении товаров, помещенных под таможенную процедуру свободного склада</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegistrationNumberType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер уведомления</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Date" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SerialNumber" type="clt_ru:Code8Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый регистрационный номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentType" type="clt_ru:Code5Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Аббревиатура вида документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

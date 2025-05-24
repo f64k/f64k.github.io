@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:catESAD_cu="urn:customs.ru:CUESADCommonAggregateTypesCust:5.21.0" xmlns:ngpr="urn:customs.ru:Information:CustomsDocuments:NotifGoodsPresent:5.21.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:NotifGoodsPresent:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonAggregateTypesCust:5.21.0" schemaLocation="CUESADCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Информация о местонахождении товаров / Уведомление о предоставлении товаров</xs:documentation>
+  </xs:annotation>
+  <xs:element name="NotifGoodsPresent" type="ngpr:NotifGoodsPresentType">
+    <xs:annotation>
+      <xs:documentation>Информация о местонахождении товаров / Уведомление о предоставлении товаров</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="NotifGoodsPresentType">
+    <xs:annotation>
+      <xs:documentation>Информация о местонахождении товаров / Уведомление о предоставлении товаров</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="NotifDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата формирования уведомления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NotifTime" type="clt_ru:TimeCustType">
+            <xs:annotation>
+              <xs:documentation>Время формирования уведомления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocSign" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Признак документа: 0 - информация о местонахождении товаров; 1- уведомление о предоставлении товаров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Customs" type="cat_ru:CustomsType">
+            <xs:annotation>
+              <xs:documentation>Код и наименование таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PersonBase" type="cat_ru:PersonBaseType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>ФИО декларанта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GTDID" type="cat_ru:GTDIDType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Номер ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsLocation" type="ngpr:GoodsLocationType">
+            <xs:annotation>
+              <xs:documentation>Местонахождение товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006130E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="GoodsLocationType">
+    <xs:annotation>
+      <xs:documentation>Местонахождение товара</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="LocationType" type="clt_ru:LetterIndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Адрес местонахождения товаров: 0 - сведения не найдены (в случае отсутствия факта наличия товаров); 1 - место доставки (при завершении транзита); 2 - ЗТК в пункте пропуска (в случае нахождения товаров в пункте пропуска); 3 - СВХ (в случае нахождения товаров на временном хранении)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsOffice" type="clt_ru:CustomsCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsCountryCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код страны таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:choice minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Choice - Местонахождение товара </xs:documentation>
+        </xs:annotation>
+        <xs:element name="CUTransport" type="catESAD_cu:CUTransportType">
+          <xs:annotation>
+            <xs:documentation>Сведения о местонахождении товаров - транспортное средство</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="GoodsLocationWarehouse" type="ngpr:GoodsLocationWarehouseType">
+          <xs:annotation>
+            <xs:documentation>Сведения о местонахождении товаров: таможенный склад, склад временного хранения, свободный склад, склад получателя, иные</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="CUGoodsLocationPlace" type="catESAD_cu:CUGoodsLocationPlaceType">
+          <xs:annotation>
+            <xs:documentation>Сведения о местонахождении товара.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+      <xs:element name="Address" type="cat_ru:AddressType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Точный адрес местонахождения товаров (адрес места доставки/ адрес ЗТК/ адрес СВХ)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GoodsLocationWarehouseType">
+    <xs:annotation>
+      <xs:documentation>Сведения о местонахождении товаров: таможенный склад, склад временного хранения, свободный склад, склад получателя, иные</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="DocumentModeCode" type="clt_ru:LetterIndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Тип документа:1-Лицензия 2-Свидетельство</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrimeVue пример</title>
+    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/themes/saga-blue/theme.css">
+    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/primevue.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css">
+</head>
+<body>
+    <div id="app">
+        <p-button label="Кнопка" @click="showMessage"></p-button>
+        <p-toast></p-toast>
+    </div>
+
+    <script src="https://unpkg.com/vue@3"></script>
+    <!--<script src="https://unpkg.com/primevue/core/core.min.js"></script>-->
+    <script src="https://unpkg.com/primevue@4.3.3/umd/primevue.min.js"></script>
+  
+    <script src="https://unpkg.com/primevue/button/button.min.js"></script>
+    <script src="https://unpkg.com/primevue/toast/toast.min.js"></script>
+    <script src="https://unpkg.com/primevue/toastservice/toastservice.min.js"></script>
+
+    <script>
+        const { createApp, ref } = Vue;
+        const ToastService = primevue.toastservice;
+
+        const App = {
+            setup() {
+                const toast = ref(null);
+
+                const showMessage = () => {
+                    toast.value.add({ severity: 'info', summary: 'Информация', detail: 'Привет, мир!' });
+                };
+
+                return {
+                    showMessage,
+                    toast
+                }
+            }
+        };
+
+        const app = createApp(App);
+        app.use(ToastService);
+        app.component('p-button', primevue.button);
+        app.component('p-toast', primevue.toast);
+        app.mount('#app');
+    </script>
+</body>
+</html>

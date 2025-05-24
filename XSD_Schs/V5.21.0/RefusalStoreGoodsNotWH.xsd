@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+Проект Приказа ФТС "Об утверждении формы обращения о выдаче разрешения на хранение товаров в местах, не являющихся таможенными складами и форм решений таможенного органа по результатам рассмотрения указанного обращения"
+Приложение № 3 - Решение таможенного органа об отказе в выдаче разрешения на хранение товаров в местах, не являющихся таможенными складами
+-->
+<xs:schema xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:ref_snw="urn:customs.ru:Information:WarehouseDocuments:RefusalStoreGoodsNotWH:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:WarehouseDocuments:RefusalStoreGoodsNotWH:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Решение таможенного органа об отказе в выдаче разрешения на хранение товаров в иных местах временного хранения товаров</xs:documentation>
+  </xs:annotation>
+  <xs:element name="RefusalStoreGoodsNotWH" type="ref_snw:RefusalStoreGoodsNotWHType">
+    <xs:annotation>
+      <xs:documentation>Решение таможенного органа об отказе в выдаче разрешения на хранение товаров в иных местах временного хранения товаров</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RefusalStoreGoodsNotWHType">
+    <xs:annotation>
+      <xs:documentation>Решение таможенного органа об отказе в выдаче разрешения на хранение товаров в иных местах временного хранения товаров</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="ResDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата решения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Customs" type="cat_ru:CustomsType">
+            <xs:annotation>
+              <xs:documentation>Код и наименование таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Applicant" type="RUScat_ru:SubjectDetailsType">
+            <xs:annotation>
+              <xs:documentation>Сведения о заявителе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AppDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата заявления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NotProlongReasons" type="ref_snw:NotProlongReasonsType">
+            <xs:annotation>
+              <xs:documentation>Причина отказа в выдаче разрешения со ссылкой на норму (статья 120) ФЗ от 3 августа 2018 г. № 289-ФЗ «О таможенном регулировании в Российской Федерации и о внесении изменений в отдельные
+законодательные акты Российской Федерации», в соответствии с которой принято решение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsChief" type="cat_ru:CustomsPersonType">
+            <xs:annotation>
+              <xs:documentation>Подпись начальника (заместителя начальника) таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1008034E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="NotProlongReasonsType">
+    <xs:annotation>
+      <xs:documentation>Причина отказа в выдаче разрешения со ссылкой на норму (статья 120) ФЗ от 3 августа 2018 г. № 289-ФЗ «О таможенном регулировании в Российской Федерации и о внесении изменений в отдельные
+законодательные акты Российской Федерации», в соответствии с которой принято решение</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ReferenceNormFederalLaw" type="clt_ru:LetterIndicatorType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Ссылка на норму ФЗ (1 - наличие задолженности по уплате таможенных пошлин, налогов, специальных, антидемпинговых, компенсационных пошлин; 2 - привлечение лица два и более раз в течение одного года до дня обращения в таможенный орган к административной ответственности за административные правонарушения в области таможенного дела, предусмотренные частью 1 статьи 16.9, статьями 16.13, 16.14 и частями 2 и 3 статьи 16.23 Кодекса Российской Федерации об административных правонарушениях.)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Reason" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="2">
+        <xs:annotation>
+          <xs:documentation>Доп. сведения о причине отказа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

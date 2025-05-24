@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:mpco="urn:customs.ru:Information:CustomsDocuments:MPOCommon:5.21.0" xmlns:mpsi="urn:customs.ru:Information:ExchangeDocuments:MPOStatInfo:5.21.0" targetNamespace="urn:customs.ru:Information:ExchangeDocuments:MPOStatInfo:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:CustomsDocuments:MPOCommon:5.21.0" schemaLocation="MPOCommon.xsd" />
+  <xs:annotation>
+    <xs:documentation>Статистика товаров в МПО</xs:documentation>
+  </xs:annotation>
+  <xs:element name="MPOStatInfo" type="mpsi:MPOStatInfoType">
+    <xs:annotation>
+      <xs:documentation>Статистика товаров в МПО</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="MPOStatInfoType">
+    <xs:annotation>
+      <xs:documentation>Статистика товаров в МПО</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Reestr_ID" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Уникальный номер реестра</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MPOList" type="mpsi:MPOListType" maxOccurs="5000">
+            <xs:annotation>
+              <xs:documentation>Строки реестра МПО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1004134E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="MPOListType">
+    <xs:annotation>
+      <xs:documentation>Строка реестра МПО</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="MPO_ID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Уникальный номер записи</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RecNum" type="clt_ru:Count4Type">
+        <xs:annotation>
+          <xs:documentation>Номер по порядку в списке</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MPONumber" type="clt_ru:Code13Type">
+        <xs:annotation>
+          <xs:documentation>Номер МПО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StatMonth" type="mpco:StatMonthType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Статистика по товарам, ранее поступивших получателю</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

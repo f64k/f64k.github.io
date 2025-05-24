@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Advanced Dashboard</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@mui/material@5.14.2/umd/material-ui.production.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+        .dashboard-layout {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+        .main-content {
+            flex: 1;
+            margin-top: 64px;
+            padding: 24px;
+            transition: margin 225ms cubic-bezier(0.4, 0, 0.6, 1);
+        }
+        .system-info-item {
+            margin: 8px 0;
+            padding: 8px;
+            background: #f5f5f5;
+            border-radius: 4px;
+        }
+        .tree-node {
+            padding-left: 20px;
+            border-left: 1px dashed #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script>
+        const { createElement, useState, useEffect } = React;
+        const {
+            Box,
+            AppBar,
+            Toolbar,
+            IconButton,
+            Typography,
+            Drawer,
+            List,
+            ListItem,
+            ListItemIcon,
+            ListItemText,
+            CssBaseline,
+            Accordion,
+            AccordionSummary,
+            AccordionDetails,
+            Chip,
+            Divider,
+            useTheme
+        } = MaterialUI;
+
+        const defaultConfig = {
+            leftOpen: true,
+            rightOpen: true,
+            drawerWidth: 300
+        };
+
+        // Генератор Lorem Ipsum
+        const loremIpsum = Array(20).fill().map(() => 
+            `Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+            Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+            ${Math.random().toString(36).substring(7)}`
+        ).join('\n\n');
+
+        // Компонент для отображения дерева объектов
+        function ObjectTree({ obj, depth = 0 }) {
+            const [expanded, setExpanded] = useState({});
+            
+            if (depth > 3) return null; // Ограничиваем глубину
+            
+            return createElement(List, { disablePadding: true },
+                Object.entries(obj).map(([key, value]) => {
+                    const isObject = typeof value === 'object' && value !== null;
+                    
+                    return createElement(ListItem, {
+                        key: key,
+                        sx: { pl: depth * 2 },
+                        onClick: () => isObject && setExpanded(p => ({ ...p, [key]: !p[key] }))
+                    },
+                        createElement(ListItemIcon, {}, isObject ? '📁' : '📄'),
+                        createElement(ListItemText, { primary: key }),
+                        isObject && createElement(Chip, {
+                            label: `${Object.keys(value).length} items`,
+                            size: "small"
+                        }),
+                        expanded[key] && isObject && createElement(Box, { className: "tree-node" },
+                            createElement(ObjectTree, { obj: value, depth: depth + 1 })
+                                                                   )
+                    );
+                })
+            );
+        }
+
+        // Компонент системной информации
+        function SystemInfo() {
+            const [systemInfo, setSystemInfo] = useState({});
+            
+            useEffect(() => {
+                const info = {
+                    navigator: {
+                        userAgent: navigator.userAgent,
+                        platform: navigator.platform,
+                        language: navigator.language
+                    },
+                    screen: {
+                        width: screen.width,
+                        height: screen.height,
+                        colorDepth: screen.colorDepth
+                    },
+                    window: {
+                        innerWidth: window.innerWidth,
+                        innerHeight: window.innerHeight
+                    },
+                    performance: {
+                        memory: performance.memory,
+                        timing: performance.timing
+                    },
+                    date: new Date().toISOString()
+                };
+                setSystemInfo(info);
+            }, []);
+
+            return createElement(Box, null,
+                Object.entries(systemInfo).map(([category, data]) =>
+                    createElement(Accordion, { key: category },
+                        createElement(AccordionSummary, {}, category.toUpperCase()),
+                        createElement(AccordionDetails, {},
+                            createElement(Box, { component: "pre", sx: { overflowX: 'auto' } },
+                                JSON.stringify(data, null, 2)
+                            )
+                        )
+                    )
+                )
+            );
+        }
+
+        function Dashboard() {
+            const [config, setConfig] = useState(() => {
+                const saved = localStorage.getItem('dashboard-config');
+                return saved ? JSON.parse(saved) : defaultConfig;
+            });
+
+            const theme = MaterialUI.useTheme();
+            const isMobile = MaterialUI.useMediaQuery(theme.breakpoints.down('sm'));
+
+            useEffect(() => {
+                localStorage.setItem('dashboard-config', JSON.stringify(config));
+            }, [config]);
+
+            const handleDrawerToggle = (side) => () => {
+                setConfig(prev => ({
+                    ...prev,
+                    [side]: !prev[side]
+                }));
+            };
+
+            const drawer = (anchor) => createElement(Drawer, {
+                variant: isMobile ? 'temporary' : 'persistent',
+                anchor: anchor,
+                open: config[`${anchor}Open`],
+                onClose: handleDrawerToggle(`${anchor}Open`),
+                sx: {
+                    width: config.drawerWidth,
+                    flexShrink: 0,
+                    '& .MuiDrawer-paper': {
+                        width: config.drawerWidth,
+                        boxSizing: 'border-box'
+                    }
+                }
+            },
+                createElement(Box, { sx: { overflow: 'auto', p: 2 } },
+                    anchor === 'left' 
+                        ? createElement(ObjectTree, { obj: self })
+                        : createElement(SystemInfo)
+                )
+            );
+
+            return createElement(Box, { className: 'dashboard-layout' },
+                createElement(CssBaseline),
+                
+                // Header
+                createElement(AppBar, { 
+                    position: 'fixed',
+                    sx: { zIndex: theme.zIndex.drawer + 1 }
+                },
+                    createElement(Toolbar, {},
+                        createElement(IconButton, {
+                            color: 'inherit',
+                            edge: 'start',
+                            onClick: handleDrawerToggle('leftOpen'),
+                            sx: { mr: 2 }
+                        }, '☰'),
+                        createElement(Typography, 
+                            { variant: 'h6', noWrap: true, component: 'div' },
+                            'Advanced Dashboard'
+                        ),
+                        createElement(Box, { sx: { flexGrow: 1 } }),
+                        createElement(IconButton, {
+                            color: 'inherit',
+                            onClick: handleDrawerToggle('rightOpen')
+                        }, '⚙️')
+                    )
+                ),
+
+                // Left Drawer (Object Tree)
+                drawer('left'),
+
+                // Right Drawer (System Info)
+                drawer('right'),
+
+                // Main Content
+                createElement(Box, {
+                    component: 'main',
+                    className: 'main-content',
+                    sx: {
+                        marginLeft: !isMobile && config.leftOpen ? `${config.drawerWidth}px` : 0,
+                        marginRight: !isMobile && config.rightOpen ? `${config.drawerWidth}px` : 0
+                    }
+                },
+                    loremIpsum.split('\n\n').map((text, i) =>
+                        createElement(Typography, { key: i, paragraph: true }, text)
+                    )
+                ),
+
+                // Footer
+                createElement(Box, {
+                    component: 'footer',
+                    sx: {
+                        bgcolor: theme.palette.background.paper,
+                        p: 2,
+                        textAlign: 'center'
+                    }
+                }, 'System Monitoring Dashboard')
+            );
+        }
+
+        ReactDOM.createRoot(document.getElementById('root'))
+            .render(createElement(Dashboard));
+    </script>
+</body>
+</html>

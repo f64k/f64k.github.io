@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>XML Tree Viewer</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/antd@4.24.8/dist/antd.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/antd@4.24.8/dist/antd.min.css">
+    <style>
+        .container { padding: 20px; max-width: 1200px; margin: 0 auto; }
+        .xml-table .ant-table-row { font-family: monospace; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script>
+        const { createElement, useState } = React;
+        const ReactDOM = window.ReactDOM;
+        const antd = window.antd;
+        
+        const Table = antd.Table;
+        const Typography = antd.Typography;
+        const Upload = antd.Upload;
+
+        function parseXML(xmlText) {
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+            
+            function processNode(node, parentKey = 'root', index = 0) {
+                const key = `${parentKey}-${index}`;
+                const children = Array.from(node.children);
+                const attributes = Array.from(node.attributes);
+                
+                return {
+                    key,
+                    tag: node.nodeName,
+                    value: children.length ? null : node.textContent?.trim(),
+                    prefix: node.prefix || '',
+                    attributes: attributes.map(attr => `${attr.name}="${attr.value}"`).join(' '),
+                    children: children.map((child, i) => processNode(child, key, i))
+                };
+            }
+
+            return [processNode(xmlDoc.documentElement, 'root', 0)];
+        }
+
+        const columns = [
+            {
+                title: 'Tag',
+                dataIndex: 'tag',
+                key: 'tag',
+            },
+            {
+                title: 'Value',
+                dataIndex: 'value',
+                key: 'value',
+            },
+            {
+                title: 'Namespace Prefix',
+                dataIndex: 'prefix',
+                key: 'prefix',
+            },
+            {
+                title: 'Attributes',
+                dataIndex: 'attributes',
+                key: 'attributes',
+            }
+        ];
+
+        function XMLViewer() {
+            const [data, setData] = useState([]);
+            
+            const beforeUpload = file => {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    try {
+                        const parsedData = parseXML(e.target.result);
+                        setData(parsedData);
+                    } catch (error) {
+                        console.error('Error parsing XML:', error);
+                    }
+                };
+                reader.readAsText(file);
+                return false;
+            };
+
+            return createElement('div', null,
+                createElement(Upload, {
+                    beforeUpload: beforeUpload,
+                    showUploadList: false,
+                    accept: '.xml'
+                },
+                    createElement('div', { className: 'container' },
+                        createElement(Typography.Title, { level: 3 }, 'XML Tree Viewer'),
+                        createElement('div', { 
+                            style: { 
+                                border: '2px dashed #ddd',
+                                padding: 20,
+                                textAlign: 'center',
+                                marginBottom: 20
+                            }
+                        }, 'Click or drag XML file to upload')
+                    )
+                ),
+                data.length > 0 && createElement(Table, {
+                    columns: columns,
+                    dataSource: data,
+                    bordered: true,
+                    size: "middle",
+                    className: 'xml-table',
+                    pagination: false,
+                    expandable: {
+                        childrenColumnName: 'children',
+                        defaultExpandAllRows: true
+                    }
+                })
+            );
+        }
+
+        ReactDOM.createRoot(document.getElementById('root'))
+            .render(createElement(XMLViewer));
+    </script>
+</body>
+</html>

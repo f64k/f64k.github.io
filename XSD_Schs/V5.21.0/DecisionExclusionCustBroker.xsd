@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Проект приказа ФТС России "Об утверждении Порядка действий должностных лиц ФТС России при принятии решений об исключении юридических лиц из реестра таможенных предстаителей"
+Письмо ГУФТДиТР от 25.12.2017 № 05-34/73722
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:decb="urn:customs.ru:Information:SQDocuments:DecisionExclusionCustBroker:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:DecisionExclusionCustBroker:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Уведомление об исключении из реестра таможенных представителей/уведомление об отмене решения об исключении из реестра таможенных представителей</xs:documentation>
+  </xs:annotation>
+  <xs:element name="DecisionExclusionCustBroker" type="decb:DecisionExclusionCustBrokerType">
+    <xs:annotation>
+      <xs:documentation>Уведомление об исключении из реестра таможенных представителей/уведомление об отмене решения об исключении из реестра таможенных представителей</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DecisionExclusionCustBrokerType">
+    <xs:annotation>
+      <xs:documentation>Уведомление об исключении из реестра таможенных представителей/уведомление об отмене решения об исключении из реестра таможенных представителей</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocKind" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>1- Решение об исключении из реестра таможенных представителей; 2- Решение об отмене решения об исключении из реестра таможенных представителей</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DecisionExclusion" type="decb:DocumentType">
+            <xs:annotation>
+              <xs:documentation>Номер и дата решения об исключении из реестра таможенных представителей</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Reason" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Основание для исключения из реестра таможенных представителей</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Organization" type="RUScat_ru:SubjectBaseDetailsType">
+            <xs:annotation>
+              <xs:documentation>Наименование организации с указанием организационно-правовой формы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:element name="IncludionBroker" type="decb:IncludionBrokerType">
+              <xs:annotation>
+                <xs:documentation>Сведения о включении в реестр таможенных представителей</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="DecisionRevoke" type="decb:DocumentType">
+              <xs:annotation>
+                <xs:documentation>Решение об отмене  решения об исключении из реестра таможенных представителей</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+          <xs:element name="Customs" type="cat_ru:CustomsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Таможенный орган</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PersonSignature" type="cat_ru:PersonSignatureType">
+            <xs:annotation>
+              <xs:documentation>Подпись уполномоченного лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009219E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DocumentType">
+    <xs:annotation>
+      <xs:documentation>Реквизиты документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Number" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Date" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="IncludionBrokerType">
+    <xs:annotation>
+      <xs:documentation>Сведения о включении в реестр таможенных представителей</xs:documentation>
+    </xs:annotation>
+    <xs:choice>
+      <xs:element name="DecisionIncludion" type="decb:DocumentType">
+        <xs:annotation>
+          <xs:documentation>Решения о включении в реестр таможенных представителей</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Order" type="decb:DocumentType">
+        <xs:annotation>
+          <xs:documentation>Дата и номер приказа ФТС Росии о включении в реестр таможенных представителей</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+</xs:schema>

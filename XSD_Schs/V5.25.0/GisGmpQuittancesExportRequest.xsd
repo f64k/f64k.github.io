@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Схемы ГИС ГМП -  аналог SQ.05020 -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:gcqe_req="urn:customs.ru:Information:SQDocuments:GisGmpQuittancesExportRequest:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:GisGmpQuittancesExportRequest:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Предоставление информации о результатах квитирования (запрос)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="GisGmpQuittancesExportRequest" type="gcqe_req:GisGmpQuittancesExportRequestType">
+    <xs:annotation>
+      <xs:documentation>Предоставление информации о результатах квитирования (запрос)</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GisGmpQuittancesExportRequestType">
+    <xs:annotation>
+      <xs:documentation>Предоставление информации о результатах квитирования (запрос)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="OriginatorID" type="clt_ru:Code6Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>УРН участника косвенного взаимодействия, сформировавшего запрос</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Paging" type="gcqe_req:PagingType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Параметры постраничного предоставления из ГИС ГМП информации (при больших объемах предоставляемых данных)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="QuittancesExportConditions" type="gcqe_req:QuittancesExportConditionsType">
+            <xs:annotation>
+              <xs:documentation>Условия для предоставления информации о результатах квитирования</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009258E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="BeneficiaryType">
+    <xs:annotation>
+      <xs:documentation>Элементы идентификации получателя средств</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="INN" type="clt_ru:INNIDType">
+        <xs:annotation>
+          <xs:documentation>ИНН получателя средств</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KPP" type="clt_ru:KPPCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>КПП получателя средств</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ChargesConditionsType">
+    <xs:annotation>
+      <xs:documentation>Условия для получения информации о результатах квитирования по УИН</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SupplierBillID" type="gcqe_req:SupplierBillIDType" maxOccurs="100">
+        <xs:annotation>
+          <xs:documentation>УИН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PagingType">
+    <xs:annotation>
+      <xs:documentation>Параметры постраничной выдачи</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PageNumber" type="gcqe_req:PageNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер страницы выдачи</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PageLength" type="gcqe_req:Integer1-100Type">
+        <xs:annotation>
+          <xs:documentation>Количество элементов на странице выдачи</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="QuittancesExportConditionsType">
+    <xs:annotation>
+      <xs:documentation>Условия для предоставления информации о результатах квитирования</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Kind" type="gcqe_req:KindType">
+        <xs:annotation>
+          <xs:documentation>Тип запроса на предоставление информации о результатах квитирования</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:choice>
+        <xs:element name="ChargesConditions" type="gcqe_req:ChargesConditionsType">
+          <xs:annotation>
+            <xs:documentation>Условия для получения информации о результатах квитирования по УИН</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="TimeConditions" type="gcqe_req:TimeConditionsType">
+          <xs:annotation>
+            <xs:documentation>Условия для получения результатов квитирования за временной интервал с указанием дополнительных параметров (при необходимости)</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TimeConditionsType">
+    <xs:annotation>
+      <xs:documentation>Фильтр для получения сущностей ГИС ГМП</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TimeInterval" type="gcqe_req:TimeIntervalType">
+        <xs:annotation>
+          <xs:documentation>Временной интервал, за который запрашиваются сведения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Beneficiary" type="gcqe_req:BeneficiaryType" minOccurs="0" maxOccurs="10">
+        <xs:annotation>
+          <xs:documentation>Идентификация получателя средств</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KBK" type="gcqe_req:KBKType" minOccurs="0" maxOccurs="10">
+        <xs:annotation>
+          <xs:documentation>КБК</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TimeIntervalType">
+    <xs:annotation>
+      <xs:documentation>Временной интервал, за который запрашиваются сведения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="StartDate" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Начальная дата временного интервала запроса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EndDate" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Конечная дата временного интервала запроса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="IntegerType">
+    <xs:annotation>
+      <xs:documentation>Цифры от 1 до 2147483647</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:IntegerCategoriesCust">
+      <xs:minInclusive value="1" />
+      <xs:maxInclusive value="2147483647" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="KBKType">
+    <xs:annotation>
+      <xs:documentation>КБК</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:pattern value="[0-9a-zA-Zа-яА-Я]{20}" />
+      <xs:pattern value="0" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="KindType">
+    <xs:annotation>
+      <xs:documentation>Тип запроса на предоставление информации о результатах квитирования. Допустимые значения:
+							QUITTANCE - для запросов результатов квитирования, за исключением неактивных (возвращается результат квитирования с последним полученным платежом);
+							ALLQUITTANCE - для запросов всех результатов квитирования;
+							QUITTANCEMAINCHARGE - для запросов результатов квитирования по связанным начислениям (используется только ФССП);
+							ALLPOSSIBLE – предоставление результата квитирования с указанием дополнительных сведений об извещениях о приеме к исполнению распоряжений, которые несквитированы с извещением о начислении, но совпали с ним по нескольким реквизитам квитирования (доступно только для участников взаимодействия с полномочием ГАН/АН).</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:enumeration value="QUITTANCE">
+        <xs:annotation>
+          <xs:documentation>для запросов результатов квитирования, за исключением неактивных (возвращается результат квитирования с последним полученным платежом)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ALLQUITTANCE">
+        <xs:annotation>
+          <xs:documentation>для запросов всех результатов квитирования</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="QUITTANCEMAINCHARGE">
+        <xs:annotation>
+          <xs:documentation>для запросов результатов квитирования по связанным начислениям (используется только ФССП)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ALLPOSSIBLE">
+        <xs:annotation>
+          <xs:documentation>предоставление результата квитирования с указанием дополнительных сведений об извещениях о приеме к исполнению распоряжений, которые несквитированы с извещением о начислении, но совпали с ним по нескольким реквизитам квитирования (доступно только для участников взаимодействия с полномочием ГАН/АН)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="KPPType">
+    <xs:annotation>
+      <xs:documentation>КПП юр. лица</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:pattern value="([^0^\D]\d|\d[^0^\D])\d{2}[A-Z0-9]{2}\d{3}">
+        <xs:annotation>
+          <xs:documentation>9 символов, пятый и шестой из которых могут быть прописными (заглавными) латинскими буквами или цифрами, а все остальные только цифрами, и при этом первый и второй знаки (цифры) не могут одновременно принимать значение ноль ("0").</xs:documentation>
+        </xs:annotation>
+      </xs:pattern>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SupplierBillIDType">
+    <xs:annotation>
+      <xs:documentation>УИН</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:pattern value="\w{20}" />
+      <xs:pattern value="\d{25}" />
+      <xs:pattern value="\d{15}" />
+      <xs:pattern value="0" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PageNumberType">
+    <xs:annotation>
+      <xs:documentation>Формат номеров страниц</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:IntegerCategoriesCust">
+      <xs:minInclusive value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Integer1-100Type">
+    <xs:annotation>
+      <xs:documentation>Целочисленное от 1 до 100</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:IntegerCategoriesCust">
+      <xs:minInclusive value="1" />
+      <xs:maxInclusive value="100" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

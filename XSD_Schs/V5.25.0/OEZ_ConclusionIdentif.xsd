@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Приказ Минфина России от 29 мая 2024 года № 71н-->
+<!--Приказ Минфина России от 29 мая 2024 года № 74н-->
+<!--Приказ Минфина России от 29 июня 2023 года № 103н-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:oez_ci="urn:customs.ru:Information:CustomsDocuments:OEZ_ConclusionIdentif:5.25.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:OEZ_ConclusionIdentif:5.25.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.25.0.0">
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Заключение о возможности идентификации ввозимых товаров</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OEZ_ConclusionIdentif" type="oez_ci:OEZ_ConclusionIdentifType">
+		<xs:annotation>
+			<xs:documentation>Заключение о возможности идентификации ввозимых товаров</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="OEZ_ConclusionIdentifType">
+		<xs:annotation>
+			<xs:documentation>Заключение о возможности идентификации ввозимых товаров</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="ZoneKind" type="clt_ru:Numeric1Type">
+						<xs:annotation>
+							<xs:documentation>Вид территории: 1 - ОЭЗ (Приказ 74н); 2 - ПОЭЗ; 3 -  ТОР (Приказ 71н); 4 - СЭЗ (Приказ 103н)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Customs" type="cat_ru:CustomsType">
+						<xs:annotation>
+							<xs:documentation>Сведения о таможенном органе</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ImportNoticeRegNumber" type="oez_ci:RegNumType">
+						<xs:annotation>
+							<xs:documentation>Регистрационный номер Уведомления о ввозе товаров </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ConclusionRegNumber" type="oez_ci:RegNumType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Регистрационный номер Заключения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ConclusionIssueDate" type="clt_ru:DateCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дата принятия решения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Rezident" type="oez_ci:OrganizationType">
+						<xs:annotation>
+							<xs:documentation>Сведения о лице, которому направляется уведомление</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="GoodsList" type="oez_ci:GoodsListType" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Перечень товаров</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomsSignature" type="cat_ru:PersonSignatureType">
+						<xs:annotation>
+							<xs:documentation>Подпись должностного лица таможенного органа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006363E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="GoodsListType">
+		<xs:annotation>
+			<xs:documentation>Сведения, указанные в Заявлении</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Position" type="clt_ru:Count3Type">
+				<xs:annotation>
+					<xs:documentation>Порядковый номер позиции</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Наименование товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NoticeSequenceNumber" type="clt_ru:Count3Type">
+				<xs:annotation>
+					<xs:documentation>Порядковый номер товара из Уведомления о ввозе </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IdentificationSign" type="clt_ru:LetterIndicatorType">
+				<xs:annotation>
+					<xs:documentation>Возможность идентификации: 1 - идентификация возможна; 2 - идентификация не возможна </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IdentificationMethod" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Способ идентификации </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IdentificationMeans" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Описание средств идентификации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BasisOfImpossibility" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Обоснование невозможности осуществления идентификации товаров </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Comment" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Примечание</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OrganizationType">
+		<xs:annotation>
+			<xs:documentation>Сведения об организацци или ИП</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:OrganizationBaseType">
+				<xs:sequence>
+					<xs:element name="Address" type="RUScat_ru:RUAddressType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Адрес организации / физического лица</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CertificateNumber" type="cat_ru:DocumentBaseType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Реквизиты свидетельства о включении в реестр</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RegNumType">
+		<xs:annotation>
+			<xs:documentation>Регистрационный номер документа</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+				<xs:annotation>
+					<xs:documentation>Код таможенного органа, зарегистрировавшего документ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegistrationDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата регистрации документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Number" type="clt_ru:CodeVariable10Type">
+				<xs:annotation>
+					<xs:documentation>Порядковый номер документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AbbrDoc" type="clt_ru:CodeVariable5Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>4-ая часть номера</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

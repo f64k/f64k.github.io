@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:fdpi="urn:customs.ru:Information:SQDocuments:FtsDeclarationProductInfoRes:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:FtsDeclarationProductInfoRes:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Предоставление сведений о товаре, содержащихся в таможенной декларации на товары и ТПО (ответ)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="FtsDeclarationProductInfoRes" type="fdpi:FtsDeclarationProductInfoResType" />
+  <xs:complexType name="FtsDeclarationProductInfoResType">
+    <xs:annotation>
+      <xs:documentation>Предоставление сведений о товаре, содержащихся в таможенной декларации на товары и ТПО (ответ)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DTNumber" type="cat_ru:GTDIDType">
+            <xs:annotation>
+              <xs:documentation>Номер ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ProductInfo" type="fdpi:ProductInfoType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о товарах</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009157E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор электронного документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ProductInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товарах</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ProductName" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование (торговое, коммерческое или традиционное наименование) товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код страны происхождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Weight" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вес нетто (кг)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProductCount" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество товара (в дополнительной единице измерения)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReleaseDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата выпуска груза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

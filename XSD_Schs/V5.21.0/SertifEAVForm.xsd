@@ -1,0 +1,306 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:seav="urn:customs.ru:Information:SertifDocuments:SertifEAVForm:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:catSert_ru="urn:customs.ru:Information:SertifDocuments:SertifCommonAggregateTypesCust:5.21.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" targetNamespace="urn:customs.ru:Information:SertifDocuments:SertifEAVForm:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:SertifDocuments:SertifCommonAggregateTypesCust:5.21.0" schemaLocation="SertifCommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сертификат о происхождении товара формы "EAV"</xs:documentation>
+  </xs:annotation>
+  <xs:element name="SertifEAVForm" type="seav:SertifEAVFormType">
+    <xs:annotation>
+      <xs:documentation>Сертификат о происхождении товара формы "EAV"</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="SertifEAVFormType">
+    <xs:annotation>
+      <xs:documentation>Сертификат о происхождении товара формы "EAV"</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Exporter" type="catSert_ru:SertifOrgBaseType">
+            <xs:annotation>
+              <xs:documentation>Экспортер</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Importer" type="catSert_ru:SertifOrgBaseType">
+            <xs:annotation>
+              <xs:documentation>Импортер</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Recipient" type="catSert_ru:SertifOrgBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Грузополучатель</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TransportMeansRoute" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Средства транспорта и маршрут следования (насколько это известно)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SertifSeries" type="clt_ru:DocumentNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер и серия сертификата</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SertifNumber" type="clt_ru:DocumentNumberType">
+            <xs:annotation>
+              <xs:documentation>Индивидуальный регистрационный номер сертификата</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IssueCountryName" type="clt_ru:CountryNameType">
+            <xs:annotation>
+              <xs:documentation>Наименование страны, выдавшей сертификат</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DestinCountryName" type="clt_ru:CountryNameType">
+            <xs:annotation>
+              <xs:documentation>Наименование страны, для которой предназначен сертификат</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SpecialComments" type="seav:SpecialComments" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Служебные отметки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Goods" type="seav:GoodsType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Товары</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SertifInf" type="seav:SertifInfType">
+            <xs:annotation>
+              <xs:documentation>Сведения о выдаче сертификата</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AppDeclaration" type="seav:AppDeclarationType">
+            <xs:annotation>
+              <xs:documentation>Декларация заявителя </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009214E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="GoodsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товарах</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsNumeric" type="clt_ru:Count3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" maxOccurs="4">
+        <xs:annotation>
+          <xs:documentation>Описание товара текстовое (коммерческое наименование товара, его модель, марка, модификация, артикул, другие данные, позволяющие провести однозначную идентификацию товара с заявленным для целей таможенного оформления)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TradeMark" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Торговая марка товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Model" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Модель товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsQuantity" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeasureUnitQualifierCode" type="clt_ru:MeasureUnitQualifierNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Единица измерения товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SupplementaryGoodsQuantity" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество товара в дополнительных единицах измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SupplementaryMeasureUnitQualifierCode" type="clt_ru:MeasureUnitQualifierNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дополнительная единица измерения товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsPlacesQuantity" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество упаковок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PlacesDescription" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Вид упаковок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OriginCriterionCode" type="clt_ru:Text5Type">
+        <xs:annotation>
+          <xs:documentation>Критерий происхождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GrossWeightQuantity" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Вес товара, брутто (кг)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NetWeightQuantity" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вес товара, нетто (кг)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsInvoice" type="seav:GoodsInvoice" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Инвойс, представленный в уполномоченный орган для выдачи Сертификата</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="HarmonizedCode" type="clt_ru:CodeVariable10Type">
+        <xs:annotation>
+          <xs:documentation>Код ГС </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SertifInfType">
+    <xs:annotation>
+      <xs:documentation>Сведения о выдаче сертификата</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OrganizationName" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование органа, уполномоченного в соответствии с национальным законодательством удостоверять происхождение товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateInf" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата выдачи Сертификата о происхождении товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FIO" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ФИО лица, удостоверившего сертификат</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Place" type="RUScat_ru:RUAddressType">
+        <xs:annotation>
+          <xs:documentation>Место выдачи Сертификата</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LNPSign" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак наличия оттиска штампа уполномоченного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AppDeclarationType">
+    <xs:annotation>
+      <xs:documentation>Декларация заявителя</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DateInf" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата заявления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AppCountry" type="clt_ru:CountryNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование страны в декларации заявителя сертификата</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FIO" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ФИО заявителя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Place" type="RUScat_ru:RUAddressType">
+        <xs:annotation>
+          <xs:documentation>Место заявления </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AppStampSign" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак наличия оттиска штампа заявителя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SpecialComments">
+    <xs:annotation>
+      <xs:documentation>Служебные отметки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Comments" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Примечание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SertificatKindInfo" type="seav:SertificatKindInfoType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о замене оригинала, дубликате или невыдаче сертификата</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SertificatKindInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о замене оригинала, дубликате или невыдаче сертификата</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SertificatKind" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Тип Сертификата: 1-дубликат Сертификата; 2- была замена оригинала Сертификата; 3- Сертификат не был выдан</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Date" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата выдачи дубликата / замененного Сертификата</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Number" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер дубликата / замененного Сертификата</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GoodsInvoice">
+    <xs:annotation>
+      <xs:documentation>Инвойс</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TCI" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак выдачи инвойса в третьей стране: 0 - Нет; 1 - Да, инвойс доступен; 2 - Да, инвойс НЕдоступен.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Invoice" type="cat_ru:DocumentBaseType">
+        <xs:annotation>
+          <xs:documentation>Инвойс</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Country" type="clt_ru:CountryNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Страна выдачи инвойса TCI</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TCICompany" type="catSert_ru:SertifOrgBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Компания выдачи инвойса TCI</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

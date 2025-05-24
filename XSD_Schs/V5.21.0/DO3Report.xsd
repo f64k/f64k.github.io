@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:cltWH_ru="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonLeafTypesCust:5.16.0" xmlns:catWH_ru="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonAggregateTypesCust:5.21.0" xmlns:do3r="urn:customs.ru:Information:WarehouseDocuments:DO3Report:5.21.0" targetNamespace="urn:customs.ru:Information:WarehouseDocuments:DO3Report:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonLeafTypesCust:5.16.0" schemaLocation="WarehouseCommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonAggregateTypesCust:5.21.0" schemaLocation="WarehouseCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Отчет по разовому требованию таможенного органа о товарах, помещенных на склад временного хранения (иное место временного хранения) и выданных с него по форме ДО-3</xs:documentation>
+  </xs:annotation>
+  <xs:element name="DO3Report" type="do3r:DO3ReportType">
+    <xs:annotation>
+      <xs:documentation>Отчет по разовому требованию таможенного органа о товарах, помещенных на склад временного хранения (иное место временного хранения) и выданных с него по форме ДО-3</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DO3ReportType">
+    <xs:annotation>
+      <xs:documentation>Отчет по разовому требованию таможенного органа о товарах, помещенных на склад временного хранения (иное место временного хранения) и выданных с него по форме ДО-3</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="ReportBegingDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата начала отчетного периода</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReportEndDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата окончания отчетного периода</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AddSheetsNumber" type="clt_ru:Count3Type">
+            <xs:annotation>
+              <xs:documentation>Количество добавочных листов отчета</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReportNumber" type="clt_ru:GTDIDType">
+            <xs:annotation>
+              <xs:documentation>Номер отчета. Присваивается оформляющей системой владельца СВХ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReportDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата составления отчета</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReportTime" type="clt_ru:TimeCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Время составления отчета</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:element name="EmptyGoodsFlag" type="clt_ru:IndicatorType">
+              <xs:annotation>
+                <xs:documentation>Признак пустого списка товаров; "1" - в указанный в исходном запросе отчетный период на временном хранении не было ни одного товара, принятого в рамках указанного в исходном запросе разрешительного документа</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="DO3Goods" type="do3r:DO3GoodsType">
+              <xs:annotation>
+                <xs:documentation>Сведения о товарах</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+          <xs:element name="CustomRegistration" type="catWH_ru:WHCustomRegisterDocumentDataType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Данные о регистрации отчета в таможенном органе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="WarehouseOwner" type="catWH_ru:WarehouseOwnerType">
+            <xs:annotation>
+              <xs:documentation>Данные о владельце склада</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1008013E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DO3DO1GoodLinkType">
+    <xs:annotation>
+      <xs:documentation>Комплексный тип для указания товара из ДО-3 на товар отчета ДО-1</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DO1Date" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата отчета ДО-1, товар из которого выдается</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DO1Number" type="clt_ru:GTDIDType">
+        <xs:annotation>
+          <xs:documentation>Номер отчета ДО-1, присвоенный оформляющей системой владельца СВХ, товар из которого выдается</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DO1GoodNumber" type="clt_ru:Count10Type">
+        <xs:annotation>
+          <xs:documentation>Валовый номер товара в отчете ДО-1</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DO3DO2GoodLinkType">
+    <xs:annotation>
+      <xs:documentation>Комплексный тип для указания товара из ДО-3 на товар отчета ДО-2</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DO2Date" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата отчета ДО-2</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DO2Number" type="clt_ru:GTDIDType">
+        <xs:annotation>
+          <xs:documentation>Номер отчета ДО-2, присвоенный оформляющей системой владельца СВХ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DO2GoodNumber" type="clt_ru:Count10Type">
+        <xs:annotation>
+          <xs:documentation>Валовый номер товара в отчете ДО-2</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DO3GoodInputType">
+    <xs:annotation>
+      <xs:documentation>Комплексный тип для описания товара в графе приход по отчету ДО-3</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="catWH_ru:WhGoodType">
+        <xs:sequence>
+          <xs:element name="GoodsWHNumber" type="cltWH_ru:SVHGoodsNum">
+            <xs:annotation>
+              <xs:documentation>Складской номер товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="KeepingLimit" type="do3r:DO3KeepingLimitType">
+            <xs:annotation>
+              <xs:documentation>Сведения о сроке хранения товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TransportDocument" type="cat_ru:DocumentBaseType">
+            <xs:annotation>
+              <xs:documentation>Транспортный документ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Recipient" type="cat_ru:OrganizationBaseType">
+            <xs:annotation>
+              <xs:documentation>Получатель</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DO1GoodLink" type="do3r:DO3DO1GoodLinkType">
+            <xs:annotation>
+              <xs:documentation>Указание на товар отчета ДО-1,который помещен на склад</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DO3GoodOutputType">
+    <xs:annotation>
+      <xs:documentation>Комплексный тип для описания товара в графе расход по отчету ДО-3</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Cost" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Стоимость товара </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CurrencyCode" type="clt_ru:CurrencyA3CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Буквенный код валюты  стоимости</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OutputDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата фактической выдачи  со склада</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OutputTime" type="clt_ru:TimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Время фактической выдачи МПО/ со склада</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CargoPlace" type="catWH_ru:WHCargoPlaceType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о грузовых  местах</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BruttoVolQuant" type="catWH_ru:WHSuppQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вес брутто / объем</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BruttoVolQuant2" type="catWH_ru:WHSuppQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вес брутто (в кг) или объем товара (в куб. м), исключая контейнеры и другое транспортное оборудование</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeasureQuantity" type="catWH_ru:WHSuppQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Кол-во в дополнительных  единицах измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WhGoodOutRegisterNumber" type="cat_ru:GTDIDType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Уведомление о возможности выдачи товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrderCustDoc" type="cat_ru:DocumentBaseType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Документ, по которому разрешена выдача товара со склада</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DO2GoodLink" type="do3r:DO3DO2GoodLinkType">
+        <xs:annotation>
+          <xs:documentation>Указание на выдаваемый товар из отчета ДО-2</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DO3KeepingLimitType">
+    <xs:annotation>
+      <xs:documentation>Сведения о сроке хранения товаров</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AcceptDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата приема товара на хранение </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AcceptTime" type="clt_ru:TimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Время приема товара на хранение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StoringDateType" type="clt_ru:CodeVariable3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Тип срока хранения по справочнику. Резерв</xs:documentation>
+          <xs:documentation>Заполняется только для товаров, принятых на ВХ до начала действия нового Порядка ВХ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DeadLineDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата истечения срока хранения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GoodsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товарах</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Input" type="do3r:DO3GoodInputType">
+        <xs:annotation>
+          <xs:documentation>Приход</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Output" type="do3r:DO3GoodOutputType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Расход</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DO3GoodsType">
+    <xs:annotation>
+      <xs:documentation>Товары ДО3</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Goods" type="do3r:GoodsType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Приход</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

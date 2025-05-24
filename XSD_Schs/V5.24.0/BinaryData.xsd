@@ -1,0 +1,244 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:bd="urn:customs.ru:Information:SQDocuments:BinaryData:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:BinaryData:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Универсальные сведения для предоставления информации в бинарном виде</xs:documentation>
+  </xs:annotation>
+  <xs:element name="BinaryData" type="bd:BinaryDataType">
+    <xs:annotation>
+      <xs:documentation>Универсальные сведения для предоставления информации в бинарном виде</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="BinaryDataType">
+    <xs:annotation>
+      <xs:documentation>Универсальные сведения для предоставления информации в бинарном виде</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:annotation>
+            <xs:documentation>Список вложений</xs:documentation>
+          </xs:annotation>
+          <xs:element name="MessageID" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Уникальный идентификатор сообщения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="LifecycleID" type="bd:UFODIdType">
+            <xs:annotation>
+              <xs:documentation>Уникальный идентификатор процесса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Attachments" type="bd:AttachmentsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Вложение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PriorityInfo" type="bd:PriorityInfoType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о приоритете сообщения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RecipientCode" type="bd:Text100Type">
+            <xs:annotation>
+              <xs:documentation>Код объекта получателя в СМЭВ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:element name="EncryptedMessage" type="bd:EncryptedMessageType">
+              <xs:annotation>
+                <xs:documentation>Зашифрованное сообщение</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="NonEncryptedMessage" type="bd:NonEncryptedMessageType">
+              <xs:annotation>
+                <xs:documentation>Незашифрованное сообщение</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009395E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AttachmentsType">
+    <xs:annotation>
+      <xs:documentation>Блок сведений о вложениях</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Attachment" type="bd:AttachmentType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание вложения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AttachmentType">
+    <xs:annotation>
+      <xs:documentation>Описание вложения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RelatesToMessageId" type="bd:Text100Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>MessageId сообщения, от которого зависит обработка направляемого сообщения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RelatesToNonEncryptedDataHash" type="bd:DataHashType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Хэш от незашифрованных данных вложения сообщения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FileName" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Имя (идентификатор) файла вложения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FileType" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Тип (формат) файла вложения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IsZipped" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак, упакован ли файл в zip-архив</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FileSchema" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Имя схемы, по которой сформирован файл вложения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FileData" type="CategoryCust:BinaryDataCategoriesCust">
+        <xs:annotation>
+          <xs:documentation>Данные файла в кодировке BASE64</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DataHashType">
+    <xs:annotation>
+      <xs:documentation>Хэш от незашифрованных данных вложения сообщения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Algorithm" type="bd:Text70Type">
+        <xs:annotation>
+          <xs:documentation>Идентификатор алгоритма хэширования в виде унифицированного идентификатора ресурса (URI)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Data" type="CategoryCust:BinaryDataCategoriesCust">
+        <xs:annotation>
+          <xs:documentation>Тип данных для передачи вычисленного значения хэш-функции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="NonEncryptedMessageType">
+    <xs:annotation>
+      <xs:documentation>Незашифрованное сообщение</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AttachmentId" type="clt_ru:Text150Type">
+        <xs:annotation>
+          <xs:documentation>Имя файла вложения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NonEncryptedDataHash" type="bd:DataHashType">
+        <xs:annotation>
+          <xs:documentation>Хэш от незашифрованных данных вложения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EncryptedMessageType">
+    <xs:annotation>
+      <xs:documentation>Зашифрованное сообщение</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AttachmentId" type="clt_ru:Text150Type">
+        <xs:annotation>
+          <xs:documentation>Имя файла вложения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NonEncryptedDataHash" type="bd:DataHashType">
+        <xs:annotation>
+          <xs:documentation>Хэш от незашифрованных данных вложения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EncryptedDataHash" type="bd:DataHashType">
+        <xs:annotation>
+          <xs:documentation>Хэш от зашифрованных данных вложения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CipherKey" type="CategoryCust:BinaryDataCategoriesCust">
+        <xs:annotation>
+          <xs:documentation>Симметричный ключ шифрования</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Certificate" type="CategoryCust:BinaryDataCategoriesCust">
+        <xs:annotation>
+          <xs:documentation>Сертификат, на котором зашифровано вложение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PriorityInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о приоритете сообщения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Priority" type="clt_ru:CodeVariable4Type">
+        <xs:annotation>
+          <xs:documentation>Приоритет</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PriorityBasis" type="bd:PriorityBasisType">
+        <xs:annotation>
+          <xs:documentation>Основание приоритета</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="PriorityBasisType">
+    <xs:annotation>
+      <xs:documentation>Основание приоритета</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="clt_ru:FreeText500Type">
+      <xs:maxLength value="255" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text100Type">
+    <xs:annotation>
+      <xs:documentation>Текстовое описание. До 100 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="100" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text70Type">
+    <xs:annotation>
+      <xs:documentation>Текстовое описание. До 70 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="70" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UFODIdType">
+    <xs:annotation>
+      <xs:documentation>Формат УФОД</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="clt_ru:IdentityCardNumberType">
+      <xs:pattern value="\d{25}" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

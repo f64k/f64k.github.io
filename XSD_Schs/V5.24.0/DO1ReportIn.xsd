@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:catWH_ru="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonAggregateTypesCust:5.24.0" xmlns:do1r_in="urn:customs.ru:Information:WarehouseDocuments:DO1ReportIn:5.24.0" targetNamespace="urn:customs.ru:Information:WarehouseDocuments:DO1ReportIn:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonAggregateTypesCust:5.24.0" schemaLocation="WarehouseCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Отчет о помещении товар на СВХ по форме ДО-1 (внутренний)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="DO1ReportIn" type="do1r_in:DO1ReportInType" />
+  <xs:complexType name="DO1ReportInType">
+    <xs:annotation>
+      <xs:documentation>Отчет о помещении товар на СВХ по форме ДО-1 (внутренний)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="catWH_ru:WareHouseCustomsRegisteredReportType">
+        <xs:sequence>
+          <xs:element name="Carrier" type="catWH_ru:WHCarrierType">
+            <xs:annotation>
+              <xs:documentation>Перевозчик</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Transports" type="catWH_ru:WhTransportType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Описание транспортных  средств</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsShipment" type="do1r_in:DO1GoodsShipmentType">
+            <xs:annotation>
+              <xs:documentation>Сведения о грузах, помещаемых на временное хранение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DO1GoodKeepingLimit" type="catWH_ru:DO1GoodKeepingLimitType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Данные о сроке временного хранения товара из отчета ДО-1</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1008010E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DO1CostTypeType">
+    <xs:annotation>
+      <xs:documentation>Сведения об общей стоимости товаров в отчете</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Amount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Общая фактурная стоимость</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CurrencyCode" type="clt_ru:CurrencyA3CodeType">
+        <xs:annotation>
+          <xs:documentation>Буквенный код валюты фактурной стоимости</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DO1GoodsShipmentType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товарной партии, помещаемой на хранение</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TotalPackageNumber" type="clt_ru:Quantity8Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Общее количество грузовых мест</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MPOSign" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак оформления международных постовых отправлений</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MasterAirWayBill" type="cat_ru:DocumentBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения об общей "Мастер" авиа-накладной, заполняются в случае прибытия груза на воздушном транспорте</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransportDocs" type="catWH_ru:WHShipmentInfoType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Транспортные  документы -  партии товаров, помещаемых на ВХ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsDocs" type="catWH_ru:WhCustomDocumentType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Таможенные документы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CommerceDocs" type="catWH_ru:WhPresentDocType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Коммерческие документы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:choice minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация о документах, представленных для помещения товаров на ВХ. Указывается либо регистрационный номер Представления (Элемент PresentedDocuments), либо устанавливается признак того, что Отчет о принятии выступает в качестве Представления (элемент DO1AccompanyingDocument)</xs:documentation>
+        </xs:annotation>
+        <xs:element name="PresentedDocuments" type="cat_ru:GTDIDType">
+          <xs:annotation>
+            <xs:documentation>Регистрационный номер представления документов для помещения товаров на ВХ</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="DO1AccompanyingDocument" type="clt_ru:IndicatorType">
+          <xs:annotation>
+            <xs:documentation>Признак использованоя отчета по форме ДО-1 в качестве документов, предоставляемых для помещения на СВХ/ЗТК согласно абзацу 4 п.9 порядка №2688; 1 - документ используется в качестве документов, предоставляемых для помещения на СВХ/ЗТК</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+      <xs:element name="OverallCost" type="do1r_in:DO1CostTypeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения об общей стоимости товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

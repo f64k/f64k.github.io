@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:cltESAD_cu="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" xmlns:catESAD_cu="urn:customs.ru:CUESADCommonAggregateTypesCust:5.21.0" xmlns:lpc_id="urn:customs.ru:Information:CustomsDocuments:LongProcConclusionIdentify:5.21.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:LongProcConclusionIdentify:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" schemaLocation="CUESADCommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonAggregateTypesCust:5.21.0" schemaLocation="CUESADCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Уведомление о применении способа(ов) идентификации</xs:documentation>
+  </xs:annotation>
+  <xs:element name="LongProcConclusionIdentify" type="lpc_id:LongProcConclusionIdentifyType">
+    <xs:annotation>
+      <xs:documentation>Уведомление о применении способа(ов) идентификации</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="LongProcConclusionIdentifyType">
+    <xs:annotation>
+      <xs:documentation>Уведомление о применении способа(ов) идентификации</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Customs" type="cat_ru:CustomsType">
+            <xs:annotation>
+              <xs:documentation>Таможенный орган</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AppIdentifNumber" type="cat_ru:GTDIDType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер заявления о проведении идентификации товаров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsIdentif" type="lpc_id:GoodsIdentifType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о товарах и способах их идентификации и решение таможенного органа о возможности применения заявленного способа идентификации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsPerson" type="lpc_id:CustomsPersonSignatureType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Подпись должностного лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006340E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CustomsPersonSignatureType">
+    <xs:annotation>
+      <xs:documentation>Подпись должностного лица</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:CustomsPersonType">
+        <xs:sequence>
+          <xs:element name="IssueDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата подписания</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DestinationCountryType">
+    <xs:annotation>
+      <xs:documentation>Сведения о стране происхождения товара</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:CountryDetailsType">
+        <xs:sequence>
+          <xs:element name="TerritoryCode" type="RUSclt_ru:TerritoryCodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Кодовое обозначение единицы административно-территориального деления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GoodsIdentifType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товарах и способах их идентификации</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Position" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер товара в заявлении о проведении идентификации товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsDescription" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование (фирменное, коммерческое или иное традиционное наименование) товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TrademarkDescription" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование товарного знака, объекта авторского права, смежных прав, патента</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsMark" type="cltESAD_cu:GoodsArticulType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование марки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsModel" type="cltESAD_cu:GoodsArticulType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование модели</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsMarking" type="cltESAD_cu:GoodsArticulType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Артикул товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsSort" type="cltESAD_cu:GoodsArticulType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование сорта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsStandard" type="cltESAD_cu:GoodsArticulType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование стандарта (международного, межгосударственного, государственного, отраслевого или организации) или технических условий на товар</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SerialNumber" type="clt_ru:Text50Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор (серийный номер, код) экземпляра товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProductionDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата производства (изготовления) товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ManufacturerPerson" type="lpc_id:ManufacturerPersonType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о производителе (изготовителе)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OtherCharacteristics" type="RUSclt_ru:FreeText4000Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения об иных технических и коммерческих характеристиках товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DestinationCountry" type="lpc_id:DestinationCountryType">
+        <xs:annotation>
+          <xs:documentation>Сведения о стране происхождения товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsTNVEDCode" type="clt_ru:GoodsNomenclatureCodeType">
+        <xs:annotation>
+          <xs:documentation>Десятизначный код товара в соответствии с единой ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GrossWeightQuantity" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Вес товара, брутто</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NetWeightQuantity" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Вес товара, нетто</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsQuantity" type="catESAD_cu:SupplementaryQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество товара с указанием дополнительной единицы измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdentifMean" type="lpc_id:IdentifMeanType">
+        <xs:annotation>
+          <xs:documentation>Сведения о способе идентификации товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Decision" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Решение таможенного органа о (не)возможности применения заявленного способа идентификации: 0 - идентификация заявленным способом невозможна; 1 - идентификация заявленным способом возможна</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RefusalReason" type="lpc_id:RefusalReasonType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание причины принятия таможенным органом решения о невозможности идентификации товара в соответствии с заявленным способом идентификации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="IdentifMeanType">
+    <xs:annotation>
+      <xs:documentation>Сведения о способе идентификации товара</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="IdentifMeanPunkt" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Номер (буквенное значение) подпункта пункта 5 Порядка проведения идентификации товаров, помещаемых под таможенные процедуры (утверждается проектом приказа): А - использование имеющейся маркировки товаров, в том числе в виде серийных номеров; Б - подробное описание товаров; В - использование товаросопроводительной и (или) иной документации; Г - сопоставление результатов исследований товаров, в том числе их проб и (или) образцов; Д - изготовление декларантом масштабных изображений; Е - изготовление декларантом фотографий; Ж - изготовление декларантом иллюстраций; З - составление декларантом чертежей; И - иной способ, который может быть применен исходя из характера товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdentifMeanName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Наименование используемого способа идентификации, предусмотренного соответствующим подпунктом пункта 5 Порядка идентификации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdentifMeanDescription" type="RUSclt_ru:FreeText4000Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Подробное описание способа идентификации при применении способа идентификации, указанного в подпункте «и» пункта 5 Порядка идентификации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ManufacturerPersonType">
+    <xs:annotation>
+      <xs:documentation>Сведения о производителе (изготовителе)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ManufacturerName" type="RUSclt_ru:Name300Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Полное наименование производителя (изготовителя)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ManufacturerShortName" type="clt_ru:ShortNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сокращенное наименование производителя (изготовителя)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ManufacturerINN" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор субъекта в реестре налогоплательщиков страны регистрации налогоплательщика (для российских лиц – ИНН)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RefusalReasonType">
+    <xs:annotation>
+      <xs:documentation>Описание причины принятия таможенным органом решения о невозможности идентификации товара в соответствии с заявленным способом идентификации</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ReasonDescription" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Описание причины отказа заявления в соответствии с Порядком проведения идентификации товаров, помещаемых под таможенные процедуры</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Note" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Примечание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

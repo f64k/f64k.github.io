@@ -1,0 +1,229 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:ndfl3res="urn:customs.ru:Information:SQDocuments:Fns3NDFLInfoRes:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:Fns3NDFLInfoRes:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Ответ на запрос сведений из декларации о доходах физических лиц 3-НДФЛ</xs:documentation>
+  </xs:annotation>
+  <xs:element name="Fns3NDFLInfoRes" type="ndfl3res:Fns3NDFLInfoResType" />
+  <xs:complexType name="Fns3NDFLInfoResType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос сведений из декларации о доходах физических лиц 3-НДФЛ</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="FiscalYear" type="clt_ru:DateYearCustType">
+            <xs:annotation>
+              <xs:documentation>Отчетный налоговый период</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PersonFio" type="cat_ru:PersonBaseType">
+            <xs:annotation>
+              <xs:documentation>ФИО физического лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Address" type="ndfl3res:AddressType">
+            <xs:annotation>
+              <xs:documentation>Сведения об адресе физического лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:element name="INN" type="clt_ru:INNIDType">
+              <xs:annotation>
+                <xs:documentation>ИНН физического лица</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="IdentityCard" type="ndfl3res:IdentityCardType">
+              <xs:annotation>
+                <xs:documentation>Сведения из документа, удостоверяющего личность</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+          <xs:element name="Base13" type="ndfl3res:BaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Расчет налоговой базы и суммы налога по доходам, облагаемым по ставке 13%</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Base30" type="ndfl3res:BaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Расчет налоговой базы и суммы налога по доходам, облагаемым по ставке 30%</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Base35" type="ndfl3res:BaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Расчет налоговой базы и суммы налога по доходам, облагаемым по ставке 35%</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Base9" type="ndfl3res:BaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Расчет налоговой базы и суммы налога по доходам, облагаемым по ставке 9%</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Base15" type="ndfl3res:BaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Расчет налоговой базы и суммы налога по доходам, облагаемым по ставке 15%</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Total" type="clt_ru:Text50Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Итоговая общая сумма дохода</xs:documentation>
+              <xs:documentation>
+                                Сведения о доходах (вычетах). Доходы, полученные от предпринимательской деятельности,
+                                адвокатской деятельности и частной практики (В)
+                            </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Activities" type="ndfl3res:ActivitiesType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Показатели, используемые для расчёта налоговой базы и суммы налога по виду деятельности</xs:documentation>
+              <xs:documentation>
+                                Сведения о доходах (вычетах). Доходы, полученные от предпринимательской деятельности,
+                                адвокатской деятельности и частной практики (В)
+                            </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ErrorMessage" type="clt_ru:Text150Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Информация об ошибке данных</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009177E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ActivityType">
+    <xs:annotation>
+      <xs:documentation>Показатель, используемый для расчёта налоговой базы и суммы налога по виду деятельности</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Code" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код вида деятельности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OKVED" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код вида предпринимательской деятельности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Income" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сумма дохода</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ActivitiesType">
+    <xs:annotation>
+      <xs:documentation>Показатели, используемые для расчёта налоговой базы и суммы налога по виду деятельности</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Activity" type="ndfl3res:ActivityType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Показатель, используемый для расчёта налоговой базы и суммы налога по виду деятельности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AddressType">
+    <xs:annotation>
+      <xs:documentation>Адрес организации / физического лица</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:RUAddressType">
+        <xs:sequence>
+          <xs:element name="AddressSign" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Признак адреса налогоплательщика</xs:documentation>
+              <xs:documentation>1 – адрес места жительства в Российской Федерации</xs:documentation>
+              <xs:documentation>2 – адрес места пребывания в Российской Федерации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AddressSignTitle" type="clt_ru:Text150Type">
+            <xs:annotation>
+              <xs:documentation>Текстовое значение признака адреса налогоплательщика</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IntracityDistrict" type="clt_ru:Text50Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Внутригородской район</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AdditionalTerritory" type="clt_ru:Text50Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Доп. территория</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="StreetAdditionalTerritory" type="clt_ru:Text50Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Улица на доп.территории</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Building" type="clt_ru:Text5Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Корпус</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Structure" type="clt_ru:Text5Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Строение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="BaseType">
+    <xs:annotation>
+      <xs:documentation>Расчет налоговой базы и суммы налога по доходам, облагаемым по ставке</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Income" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Общая сумма дохода</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Base" type="clt_ru:Text150Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Налоговая база</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="IdentityCardType">
+    <xs:annotation>
+      <xs:documentation>Сведения о документе, удостоверяющем личность физического лица</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:RUIdentityCardType">
+        <xs:sequence>
+          <xs:element name="DocumentSeriesNumber" type="clt_ru:DocumentNumberType">
+            <xs:annotation>
+              <xs:documentation>Серия и номер документа (в одну строку)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BirthDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата рождения физического лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BirthPlace" type="clt_ru:Text150Type">
+            <xs:annotation>
+              <xs:documentation>Место рождения физического лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

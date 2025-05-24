@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Информационное взаимодействие между АПС "Задолженность" и АС "Авто-Транспорт" в части передачи сведений задолженности, возникшей в следствие принятия решений по контролю в отношении ТСЛП -->
+<xs:schema xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:dacd="urn:customs.ru:Information:DebtAutoDecision:5.21.0" xmlns:catESAD_cu="urn:customs.ru:CUESADCommonAggregateTypesCust:5.21.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:DebtAutoDecision:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CUESADCommonAggregateTypesCust:5.21.0" schemaLocation="CUESADCommonAggregateTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Решение по результатам таможенного контроля в отношении транспортного средства личного пользования</xs:documentation>
+	</xs:annotation>
+	<xs:element name="DebtAutoDecision" type="dacd:DebtAutoDecisionType">
+		<xs:annotation>
+			<xs:documentation>Решение по результатам таможенного контроля в отношении транспортного средства личного пользования</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="DebtAutoDecisionType">
+		<xs:annotation>
+			<xs:documentation>Решение по результатам таможенного контроля в отношении транспортного средства личного пользования</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="CustomCode" type="cat_ru:CustomsType">
+						<xs:annotation>
+							<xs:documentation>Таможенный орган, вынесший решение</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DecisionNumber" type="cat_ru:DocumentBaseType">
+						<xs:annotation>
+							<xs:documentation>Регистрационный номер решения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="KorrNumber" type="clt_ru:Quantity3Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Порядковый номер корректировки решения. При направлении самого решения тег не заполняется.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DTNumber" type="cat_ru:GTDIDType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Регистрационный номер декларации (при наличии)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="StateInfo" type="dacd:StateInfoType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Сведения об изменении состояния</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="VechileInfo" type="dacd:VechileInfoType">
+						<xs:annotation>
+							<xs:documentation>Сведения о транспортном средстве</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ViolatorInfo" type="dacd:ViolatorType">
+						<xs:annotation>
+							<xs:documentation>Сведения о нарушителе</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="LiableTrader" type="dacd:ViolatorType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Сведения о лицах, несущих солидарную обязанность</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DayExecutePay" type="clt_ru:DateCustType">
+						<xs:annotation>
+							<xs:documentation>Дата исполнения обязанности по уплате (срок уплаты)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="EnterDate" type="clt_ru:DateCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дата временного ввоза ТСЛП</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DebtReason" type="clt_ru:Code3Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Причина возникновения задолженности:
+                                A19 - Невывоз иностранным физическим лицом временно ввезенного транспортного средства
+                                A20 - Нарушение иностранным физическим лицом установленного таможенным органом срока вывоза временно ввезенного транспортного средства (вывоз с нарушением срока)
+                                A22 - Передача иностранным физическим лицом временно ввезенного транспортного средства другим лицам без разрешения таможенного органа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ControlDept" type="clt_ru:CodeVariable5Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Проверяющее подразделение: 1 - таможенный пост,
+                                2.1 - направление контроля таможенной стоимости,
+                                2.2 - направление товарной номенклатуры, происхождения товаров и торговых ограничений,
+                                2.3 - направление таможенных платежей,
+                                2.4.1 - подразделение после выпуска товаров (без правоохранительного блока),
+                                2.4.2 - подразделение после выпуска товаров (правоохранительный блок),
+                                2.5 - направление таможенных процедур и таможенного контроля</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ObligDocNumber" type="cat_ru:DocumentBaseType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Сведения о предоставленном обеспечении уплаты таможенных пошлин, налогов - Номер документа обеспечения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PersonPerformControl" type="dacd:PersonType">
+						<xs:annotation>
+							<xs:documentation>Сведения о должностном лице, проводившем проверку</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="AddDocs" type="dacd:ViolatorDocType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Прилагаемые документы</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1051026E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы.</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="PersonType">
+		<xs:annotation>
+			<xs:documentation>Лицо, проводившее таможенный контроль./принявшее решение</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:CustomsPersonType">
+				<xs:sequence>
+					<xs:element name="PersonPost" type="clt_ru:PostType">
+						<xs:annotation>
+							<xs:documentation>Должность</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DepartmentCode" type="cat_ru:CustomsType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Структурное подразделение</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="VechileInfoType">
+		<xs:annotation>
+			<xs:documentation>Сведения об автомобиле</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="catESAD_cu:AutomobileBaseType">
+				<xs:sequence>
+					<xs:element name="TransportRegNumber" type="clt_ru:Text50Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Номер свидетельства о регистрации транспортного средства</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TNVEDInfo" type="cat_ru:GoodsBaseType">
+						<xs:annotation>
+							<xs:documentation>Информация о товаре по ТН ВЭД</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustCost" type="clt_ru:AmountType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Таможенная стоимость для ТС, до 3х лет</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="StateInfoType">
+		<xs:annotation>
+			<xs:documentation>Сведения об изменении сотсояния</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="State" type="clt_ru:Numeric1Type">
+				<xs:annotation>
+					<xs:documentation>Состояние: 1 - отменён</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Reason" type="clt_ru:FreeText250Type">
+				<xs:annotation>
+					<xs:documentation>Причина изменения состояния решения.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ViolatorType">
+		<xs:annotation>
+			<xs:documentation>Лицо, в отношении которого вынесено решение</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:PersonBaseType">
+				<xs:sequence>
+					<xs:element name="PassInfo" type="catESAD_cu:CUIdentityCardType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Сведения о документе, удостоверяющем личность</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TaxPayID" type="clt_ru:INNIDType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>ИНН</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SurnameLat" type="clt_ru:Text50Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Фамилия латиницей</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="NameLat" type="clt_ru:Text50Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Имя латиницей</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PatronymicLat" type="clt_ru:Text50Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Отчество латиницей</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="BirthPlace" type="clt_ru:FreeText250Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Место рождения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="BirthDate" type="clt_ru:DateCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дата рождения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Gender" type="clt_ru:IndicatorType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Пол: 0 - мужской, 1 - женский</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RegAddress" type="cat_ru:AddressType" minOccurs="0" maxOccurs="3">
+						<xs:annotation>
+							<xs:documentation>Адрес проживания (с возможностью указания 2х дополнительных адресов)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="AddInformation" type="clt_ru:FreeText250Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дополнительная информация</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Contacts" type="cat_ru:ContactType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дополнительная информация</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ViolatorDocType">
+		<xs:annotation>
+			<xs:documentation>Прилагаемые документы</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:DocumentBaseType">
+				<xs:sequence>
+					<xs:element name="DocumentURL" type="clt_ru:FreeText250Type">
+						<xs:annotation>
+							<xs:documentation>Ссылка на просмотр документа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

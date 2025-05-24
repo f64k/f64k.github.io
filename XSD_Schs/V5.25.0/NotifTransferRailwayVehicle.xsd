@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Решение Коллегии ЕЭК от 7 ноября 2017 г. №140 
+Порядок уведомления таможенного органа государства-члена ЕАЭС о передаче временно ввезенного жд транспортного средства международной перевозки и(или) перевозимых на жд транспортных средствах контейнеров
+. п.3  -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:ntrv="urn:customs.ru:Information:CustomsDocuments:NotifTransferRailwayVehicle:5.24.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:NotifTransferRailwayVehicle:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Уведомление о передаче временно ввезенного железнодорожного транспортного средства международной перевозки и (или) перевозимых на железнодорожных транспортных средствах контейнеров
+</xs:documentation>
+  </xs:annotation>
+  <xs:element name="NotifTransferRailwayVehicle" type="ntrv:NotifTransferRailwayVehicleType" />
+  <xs:complexType name="NotifTransferRailwayVehicleType">
+    <xs:annotation>
+      <xs:documentation>Уведомление о передаче временно ввезенного железнодорожного транспортного средства международной перевозки и (или) перевозимых на железнодорожных транспортных средствах контейнеров
+</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="PersonSource" type="ntrv:PersonType">
+            <xs:annotation>
+              <xs:documentation>Лицо, осуществившее передачу временно ввезенного транспортного средства международной перевозки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PersonRecipient" type="ntrv:PersonType">
+            <xs:annotation>
+              <xs:documentation>Лицо, которому передано временно ввезенное транспортное средство международной перевозки;</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NotifierCommunicationDetails" type="cat_ru:ContactType">
+            <xs:annotation>
+              <xs:documentation>Контактная информация лица, направившего уведомление</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TransportIdentifier" type="clt_ru:TransportMeansIDType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный (идентификационный) номер временно ввезенного транспортного средства международной перевозки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PeriodTempImp" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Cрок временного ввоза</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TDTSNumber" type="ntrv:ETDTSNumberType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер ТДТС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BillNumber" type="cat_ru:DocumentBaseType">
+            <xs:annotation>
+              <xs:documentation>Реквизиты договора перевозки (номер и дата железнодорожной накладной или международной товарно-транспортной накладной «CMR») (в случае передачи временно ввезенного транспортного средства международной перевозки автомобильному перевозчику)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006920E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="PersonType">
+    <xs:annotation>
+      <xs:documentation>Сведения о лице</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:SubjectBaseDetailsType">
+        <xs:sequence>
+          <xs:element name="SubjectAddressDetails" type="RUScat_ru:RUAddressType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Адрес местонахождения юридического лица, организации, либо места жительства физического лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RWstation" type="ntrv:RWstationType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Железнодорожная станция</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ETDTSNumberType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер ЭТДТС</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:GTDIDType">
+        <xs:sequence>
+          <xs:element name="TransportModeCode" type="clt_ru:TransportModeCodeType">
+            <xs:annotation>
+              <xs:documentation>Код вида транспорта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RWstationType">
+    <xs:annotation>
+      <xs:documentation>ЖД станция</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="StationCode" type="clt_ru:RailwayStationCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код станции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StationName" type="clt_ru:PlaceNameType">
+        <xs:annotation>
+          <xs:documentation>Наименование станции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RailwayCode" type="clt_ru:CodeVariable4Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код железной дороги</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Place" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Местонахождение железнодорожной станции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

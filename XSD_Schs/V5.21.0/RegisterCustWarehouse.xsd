@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Аналог EEC_R_CA_CC_09_RegisterCustomsWarehouse_v1.0.0.xsd альбома ЕЭК (R.CA.CC.09.001: Общий реестр владельцев таможенных складов (Общий реестр владельцев таможенных складов))-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:RUDECLcat="urn:customs.ru:RUDeclCommonAggregateTypesCust:5.21.0" xmlns:rcwar="urn:customs.ru:Information:SQDocuments:RegisterCustWarehouse:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:RegisterCustWarehouse:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:RUDeclCommonAggregateTypesCust:5.21.0" schemaLocation="RUDeclCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Общий реестр владельцев таможенных складов </xs:documentation>
+  </xs:annotation>
+  <xs:element name="RegisterCustWarehouse" type="rcwar:RegisterCustWarehouseType">
+    <xs:annotation>
+      <xs:documentation>Сведения из общего реестра владельцев таможенных складов</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RegisterCustWarehouseType">
+    <xs:annotation>
+      <xs:documentation>Сведения из общего реестра владельцев таможенных складов</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="EECEDocHeaderAddInfo" type="RUScat_ru:EECEDocHeaderAddInfoType">
+            <xs:annotation>
+              <xs:documentation>Дополнительные технологические реквизиты электронного документа (сведений)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegisterCustWarehouseDetails" type="rcwar:RegisterCustWarehouseDetailsType">
+            <xs:annotation>
+              <xs:documentation>Сведения об объекте реестра владельцев таможенных складов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="UpdatedCustWarehouseDetails" type="rcwar:RegisterCustWarehouseDetailsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения об объекте реестра владельцев таможенных складов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009126E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="RegisterCustWarehouseDetailsType">
+    <xs:annotation>
+      <xs:documentation>Сведения об объекте реестра владельцев таможенных складов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RegisterCountryCode" type="clt_ru:CountryA2CodeType">
+        <xs:annotation>
+          <xs:documentation>Кодовое обозначение страны, предоставившей информацию</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegisterDocumentDetails" type="RUDECLcat:RegisterDocumentDetailsType">
+        <xs:annotation>
+          <xs:documentation>Сведения о документе, подтверждающем включение юридического лица в реестр</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsOfficeCode" type="clt_ru:CustomsCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа в соответствии с классификаторами таможенных органов, применяемыми в государствах – членах ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegisterOrganizationDetails" type="RUScat_ru:RegisterOrganizationDetailsType">
+        <xs:annotation>
+          <xs:documentation>Сведения о реквизитах юридического лица, включенного в реестр</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsWarehouseDetails" type="RUScat_ru:WarehouseDetailsType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о таможенном складе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StayActivityDateDetails" type="rcwar:StayActivityDateType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о временном прекращении (приостановлении) осуществления деятельности юридического лица в качестве владельца таможенного склада</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StartActivityDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата начала осуществления деятельности (1-й день действия, в том числе после временного прекращения (приостановления))</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EndActivityDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата окончания осуществления деятельности (последний день действия, в том числе по причине временного прекращения)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ResourceItemStatusDetails" type="RUScat_ru:ResourceItemStatusDetailsType">
+        <xs:annotation>
+          <xs:documentation>Совокупность технологических сведений о записи общего ресурса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="StayActivityDateType">
+    <xs:annotation>
+      <xs:documentation>Сведения о временном прекращении (приостановлении) осуществления деятельности</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="LastDayActivity" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Последний день осуществления деятельности по причине временного прекращения (приостановления)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FirstDayActivity" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Первый день осуществления деятельности после временного прекращения (приостановления)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

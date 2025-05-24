@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="urn:customs.ru:Information:CommercialFinanceDocuments:ExtractFromOrder:5.21.0" version="5.21.0.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:efo="urn:customs.ru:Information:CommercialFinanceDocuments:ExtractFromOrder:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Выписка из приказа о приеме на работу / о переводе на другую работу</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ExtractFromOrder" type="efo:ExtractFromOrderType" />
+  <xs:complexType name="ExtractFromOrderType">
+    <xs:annotation>
+      <xs:documentation>Выписка из приказа о приеме на работу / о переводе на другую работу</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="BeginDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата приема / перевода</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="EndDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата увольнения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="WorkKind" type="clt_ru:Text10Type">
+            <xs:annotation>
+              <xs:documentation>Вид приема / перевода (постоянно, временно)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="TransferReason" type="clt_ru:FreeText250Type">
+            <xs:annotation>
+              <xs:documentation>Причина перевода</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="EmployeeLNP" type="clt_ru:LNPIDType">
+            <xs:annotation>
+              <xs:documentation>Личная номерная печать сотрудника</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="TermsKindWork" type="clt_ru:FreeText250Type">
+            <xs:annotation>
+              <xs:documentation>Условия приема, характер работы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="TrialPeriod" type="clt_ru:Code3Type">
+            <xs:annotation>
+              <xs:documentation>Испытательный срок</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OrderEmploymentTransfer" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Выписка из приказа: 1 - о приеме на работу,  0 - о переводе на другую работу</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocumentReference" type="cat_ru:DocumentBaseType">
+            <xs:annotation>
+              <xs:documentation>Реквизиты документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Organization" type="cat_ru:OrganizationType">
+            <xs:annotation>
+              <xs:documentation>Организация-работодатель</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Employee" type="efo:EmployeeInfoType">
+            <xs:annotation>
+              <xs:documentation>Сотрудник</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="LastEmployeePlace" type="efo:EmploymentPlaceType">
+            <xs:annotation>
+              <xs:documentation>Прежнее место работы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NewEmployeePlace" type="efo:EmploymentPlaceType">
+            <xs:annotation>
+              <xs:documentation>Новое место работы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Ground" type="cat_ru:DocumentBaseType">
+            <xs:annotation>
+              <xs:documentation>Документ-основание для приема / перевода</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PersonSignature" type="cat_ru:PersonSignatureType">
+            <xs:annotation>
+              <xs:documentation>Подпись должностного лица на документе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute fixed="1002005E" name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="EmployeeInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения  о сотруднике</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:PersonSignatureType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ClockNumber" type="clt_ru:Code6Type">
+            <xs:annotation>
+              <xs:documentation>Табельный номер</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="EmploymentPlaceType">
+    <xs:annotation>
+      <xs:documentation>Место работы</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DepartmentName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Наименование структурного подразделения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="PersonPost" type="clt_ru:PostType">
+        <xs:annotation>
+          <xs:documentation>Наименование профессии (должности), разряд, класс (категория) квалификации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="MounthlyWage" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Оклад (тарифная ставка)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ExtraPay" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Надбавка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

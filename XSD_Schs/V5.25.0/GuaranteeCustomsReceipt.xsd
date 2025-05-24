@@ -1,0 +1,361 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:grn_cr="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeCustomsReceipt:5.24.0" targetNamespace="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeCustomsReceipt:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Таможенная расписка</xs:documentation>
+  </xs:annotation>
+  <xs:element name="GuaranteeCustomsReceipt" type="grn_cr:GuaranteeCustomsReceiptType">
+    <xs:annotation>
+      <xs:documentation>Таможенная расписка/сведения для формирования таможенной расписки</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GuaranteeCustomsReceiptType">
+    <xs:annotation>
+      <xs:documentation>Таможенная расписка/сведения для формирования таможенной расписки</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="ProccessID" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Уникальный идентификатор процедуры взаимодействия</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ParticipantID" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Идентификатор участника взаимодействия</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocumentDateTime" type="clt_ru:DateTimeCustType">
+            <xs:annotation>
+              <xs:documentation>Дата и время формирования электронного документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocSign" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Тип документа: 0 - сведения для формирования ТР, 1 - принятая ТР</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsReceiptRegNumber" type="grn_cr:CustomsReceiptRegNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер ТР (гр.1)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DTRegNumber" type="cat_ru:GTDIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер таможенного документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="WayEnsure" type="grn_cr:WayEnsureType">
+            <xs:annotation>
+              <xs:documentation>Способ обеспечения (гр.2)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GeneralEnsure" type="clt_ru:CodeVariable2Type" minOccurs="0">
+            <xs:annotation>
+              <!-- В случае предоставления генерального обеспечения уплаты таможенных пошлин, налогов указывается значение "ГО" -->
+              <xs:documentation>Генеральное обеспечение (гр.3)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PayerDutiesAndTaxes" type="grn_cr:PersonType">
+            <xs:annotation>
+              <!-- гр.4.1 - значение PersonModeCode из PayerDutiesAndTaxes -->
+              <xs:documentation>Плательщик таможенных пошлин, налогов (гр.4)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PersonEnsuring" type="grn_cr:PersonType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Лицо, предоставившее обеспечение уплаты таможенных пошлин, налогов (гр.5)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Guarantor" type="grn_cr:PersonType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Гарант/поручитель/залогодатель (гр.6)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PresentedDocuments" type="grn_cr:DocumentsType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Дополнительная информация/Предоставляемые документы (гр.7)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DetailsEnsure" type="grn_cr:DetailsEnsureType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о принятом обеспечении уплаты таможенных пошлин, налогов (гр.8)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReEnsureSign" type="grn_cr:ReEnsureSignType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Признак возврата или зачета залога</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsReceiptOfficialMark" type="grn_cr:CustomsReceiptOfficialMarkType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Отметки таможенного органа (гр.9)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsReceiptCorrectMark" type="grn_cr:CustomsReceiptCorrectMarkType">
+            <xs:annotation>
+              <xs:documentation>Признак корректировки (гр.10)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1050009E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="PersonModeCodeType">
+    <xs:annotation>
+      <xs:documentation>Статус лица (юрид.-"О",физич.-"Ф")</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="clt_ru:LetterIndicatorType">
+      <xs:enumeration value="О" />
+      <xs:enumeration value="Ф" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ReEnsureSignType">
+    <xs:annotation>
+      <xs:documentation>Признак снятия с учета: "1" - возврат, "2" - зачет</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="clt_ru:Numeric1Type">
+      <xs:enumeration value="1" />
+      <xs:enumeration value="2" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="CustomsReceiptRegNumberType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер таможенной расписки</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:GTDIDType">
+        <xs:sequence>
+          <xs:element name="DocNumberPrefix" type="clt_ru:Code2Type">
+            <xs:annotation>
+              <xs:documentation>Префикс порядкового номера таможенной расписки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="WayEnsureType">
+    <xs:annotation>
+      <xs:documentation>Способ обеспечения уплаты таможенных пошлин, налогов по по классификатору способов обеспечения уплаты таможенных пошлин, налогов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="WayEnsureCode" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Код способа обеспечения уплаты таможенных пошлин, налогов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WayEnsureName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование способа обеспечения уплаты таможенных пошлин, налогов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PersonType">
+    <xs:annotation>
+      <xs:documentation>Тип лиц - возможных участников разных граф таможенной расписки</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:RUOrganizationBaseType">
+        <xs:sequence>
+          <xs:element name="Address" type="RUScat_ru:RUAddressType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Адрес организации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="FactAddress" type="RUScat_ru:RUAddressType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Место нахождения организации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IdentityCard" type="RUScat_ru:RUIdentityCardType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Документ, удостоверяющий личность</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Contact" type="cat_ru:ContactType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Контактная информация</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PersonModeCode" type="grn_cr:PersonModeCodeType">
+            <xs:annotation>
+              <xs:documentation>Статус лица (юрид.-"О", физич.-"Ф")</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ResidentRFSign" type="clt_ru:LetterIndicatorType">
+            <xs:annotation>
+              <xs:documentation>Резидент РФ: true или 1 - Да; false или 0 - Нет</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OrganizationForm" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <!-- Указывается для юр.лиц и физ.лиц ИП -->
+              <xs:documentation>Организационно-правовая форма</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <!-- Указывается для физ.лиц - резидентов -->
+          <xs:element name="BirthDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата рождения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OKPOID" type="clt_ru:OKPOIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код организации или ИП по ОКПО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegCountry" type="clt_ru:CountryNameType" minOccurs="0">
+            <xs:annotation>
+              <!-- Указывается для иностранных лиц -->
+              <xs:documentation>Страна регистрации (инкорпорации)/Гражданство</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AddressRFForForeign" type="cat_ru:AddressType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Место жительства в РФ для иностранных граждан</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="UITN" type="RUScat_ru:UITN40Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Уникальный идентификационный таможенный номер, присвоенный юридическому или физическому лицу</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+      <!-- В элементе Address: для орг. указывается адрес (для иностранных - по учредительным док-там), для физ.лиц - место жительства в гос-ве регистрации, если нет, то место пребывания в РФ -->
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CustomsReceiptOfficialMarkType">
+    <xs:annotation>
+      <xs:documentation>Отметки таможенного органа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsReceiptCompletDateTime" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата и время завершения формирования таможенной расписки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsPerson" type="cat_ru:CustomsPersonType">
+        <xs:annotation>
+          <xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CustomsReceiptCorrectMarkType">
+    <xs:annotation>
+      <xs:documentation>Данные о корректировке</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CorrectSign" type="clt_ru:IndicatorType" default="0">
+        <xs:annotation>
+          <xs:documentation>Признак проведения корректировки: true или 1 - Да; false или 0 - Нет</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LastCorrectDateTime" type="clt_ru:DateTimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата и время проведения последней корректировки таможенной расписки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsPerson" type="cat_ru:CustomsPersonType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DetailsEnsureType">
+    <xs:annotation>
+      <xs:documentation>Сведения о принятом обеспечении уплаты таможенных пошлин, налогов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RecDetailsEnsure" type="grn_cr:RecDetailsEnsureType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Строка сведений о принятом обеспечении уплаты таможенных пошлин, налогов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TotalAmount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Полная сумма в рублях</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RecDetailsEnsureType">
+    <xs:annotation>
+      <xs:documentation>Строка сведений о принятом обеспечении уплаты таможенных пошлин, налогов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PaymentModeCode" type="clt_ru:CUCustomsPaymentCodeType">
+        <xs:annotation>
+          <xs:documentation>Код вида платежа по классификатору видов налогов, сборов и иных платежей, взимание которых возложено на таможенные органы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentAmount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentMethodCode" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Код способа платежа по классификатору способов уплаты таможенных и иных платежей, взимание которых возложено на таможенные органы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DetailsDocuments" type="grn_cr:DetailsDocumentsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Реквизиты документов обеспечения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocumentsType">
+    <xs:annotation>
+      <xs:documentation>Реквизиты документов обеспечения для гр.7</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="DocCode" type="clt_ru:CustomsDocumentCodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код вида документа (заполняется в соответствии с классификатором видов документов, используемых при заявлении сведений в графе 44 ДТ)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocumentKind" type="clt_ru:Numeric1Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Тип документа, идентифицирующего обеспечиваемое обязательство: 0 - ДТ; 1 - Обязательство о подаче ДТ; 2 - Заявление на условный выпуск; 3 - Разрешение на врем.хранение в иных местах; 4 - Акт отбора проб и образцов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DetailsDocumentsType">
+    <xs:annotation>
+      <xs:documentation>Реквизиты документов обеспечения для гр.8</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="DocAmount" type="clt_ru:AmountType">
+            <xs:annotation>
+              <xs:documentation>Сумма по документу</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

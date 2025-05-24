@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:fpir_req="urn:customs.ru:Information:SQDocuments:FnsPaspInnRequest:5.21.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:FnsPaspInnRequest:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос сведений о соответствии паспортных данных и ИНН физического лица</xs:documentation>
+  </xs:annotation>
+  <xs:element name="FnsPaspInnRequest" type="fpir_req:FnsPaspInnRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений о соответствии паспортных данных и ИНН физического лица</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="FnsPaspInnRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений о соответствии паспортных данных и ИНН физического лица</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="INN" type="clt_ru:INNIDType" minOccurs="1" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation>ИНН физического лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="FIO" type="fpir_req:PersonType">
+            <xs:annotation>
+              <xs:documentation>Фамилия, имя, отчество физического лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IdentityCard" type="RUScat_ru:RUIdentityCardType">
+            <xs:annotation>
+              <xs:documentation>Сведения о документе, удостоверяющем личность физического лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009273E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="PersonType">
+    <xs:annotation>
+      <xs:documentation>Фамилия, имя, отчество физического лица</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonSurname" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Фамилия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Имя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonMiddleName" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

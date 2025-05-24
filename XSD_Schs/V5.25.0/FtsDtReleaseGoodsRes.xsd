@@ -1,0 +1,278 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+SQ.00221, СМЭВ - ftsFtsDtReleaseGoodsResDomesticConsumption-root.xsd (Предоставление сведений из ДТ, включающих прослеживаемые товары, выпущенные в соответствии с таможенными процедурами «Выпуск для внутреннего потребления», регламентный режим)
+SQ.00231, СМЭВ - ftsFtsDtReleaseGoodsResExport-root.xsd (Предоставление сведений из ДТ, включающих прослеживаемые товары, выпущенные в соответствии с таможенными процедурами «Экспорт», регламентный режим)
+SQ.00241, СМЭВ - ftsFtsDtReleaseGoodsResReExport-root.xsd (Предоставление сведений из ДТ, включающих прослеживаемые товары, выпущенные в соответствии с таможенными процедурами «Реэкспорт», регламентный режим)
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:drg_res="urn:customs.ru:Information:SQDocuments:FtsDtReleaseGoodsRes:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:FtsDtReleaseGoodsRes:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Ответ на запрос на предоставление сведений из ДТ о товарах, выпущенных в соответствии с таможенными процедурами «Выпуск для внутреннего потребления», «Реэкспорт», «Экспорт»</xs:documentation>
+  </xs:annotation>
+  <xs:element name="FtsDtReleaseGoodsRes" type="drg_res:FtsDtReleaseGoodsResType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос на предоставление сведений из ДТ о товарах, выпущенных в соответствии с таможенными процедурами «Выпуск для внутреннего потребления», «Реэкспорт», «Экспорт»</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="FtsDtReleaseGoodsResType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос на предоставление сведений из ДТ о товарах, выпущенных в соответствии с таможенными процедурами «Выпуск для внутреннего потребления», «Реэкспорт», «Экспорт»</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Description" type="clt_ru:FreeText500Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дополнительное описание сведений</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Row" type="drg_res:RowType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Cведения из таможенных деклараций, по которым осуществлен выпуск для внутреннего потребления, через СМЭВ, либо включающих прослеживаемые товары, выпущенные в соответствии с таможенными процедурами «Экспорт»</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1060011E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор электронного документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="DeclarNumType">
+    <xs:annotation>
+      <xs:documentation>Номер декларации на товары (ДТ) / Номер заявления о выпуске товара до подачи декларации</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="23" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="RowType">
+    <xs:annotation>
+      <xs:documentation>Cведения из таможенных деклараций, по которым осуществлен выпуск для внутреннего потребления, через СМЭВ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DeclarNum" type="drg_res:DeclarNumType">
+        <xs:annotation>
+          <xs:documentation>Номер декларации на товары (ДТ) / Номер заявления о выпуске товара до подачи декларации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Numbering" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер товара в ДТ / Заявления о выпуски товара до подачи ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ModifyDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата ввода / дата последней модификации информации таблиц электронной копии ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Recipient" type="drg_res:PersonType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Получатель</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Sender" type="drg_res:PersonType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отправитель</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FinancialRegulation" type="drg_res:PersonType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Лицо, ответственное за финансовое регулирование</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CodeTnVedEaec" type="clt_ru:CUGoodsNomenclatuerCodeType">
+        <xs:annotation>
+          <xs:documentation>Код товара по ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NameGoods" type="clt_ru:FreeText250Type" maxOccurs="4">
+        <xs:annotation>
+          <xs:documentation>Наименование товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="QuantGoods" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Количество товара (в единице измерения из перечня)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="UnitCode" type="clt_ru:MeasureUnitQualifierCodeType">
+        <xs:annotation>
+          <xs:documentation>Код единицы измерения (в соответствии с перечнем)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdentNum" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификационный номер (идентификатор) контрольных (идентификационных) знаков</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CodeCoProd" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код страны происхождения товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FactPrice" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Фактурная стоимость товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsPrice" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Таможенная стоимость товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StatPrice" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Статистическая стоимость товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SummaNachPaym" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сумма начисленных таможенных платежей (по ДТ)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SummaUplatPaym" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сумма уплаченных таможенных платежей (по ДТ)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsProc" type="clt_ru:CUCustomsProcedureType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Таможенная процедура</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KodCurDog" type="clt_ru:CurrencyA3CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код валюты договора</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PrecedingDocument" type="drg_res:PrecedingDocumentType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Предшествующие документы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:choice>
+        <xs:element name="InternalConsumer" type="drg_res:InternalConsumerType">
+          <xs:annotation>
+            <xs:documentation>Выпуск для внутреннего потребления</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="ExportReexport" type="drg_res:ExportReexportType">
+          <xs:annotation>
+            <xs:documentation>Экспорт/Реэкспорт</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InternalConsumerType">
+    <xs:annotation>
+      <xs:documentation>Выпуск для внутреннего потребления</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Importer" type="drg_res:PersonType">
+        <xs:annotation>
+          <xs:documentation>Импортер (декларант)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateImp" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата ввоза (выпуска)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ImpCo" type="clt_ru:CountryA2CodeType">
+        <xs:annotation>
+          <xs:documentation>Страна ввоза (страна отправления)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ExportReexportType">
+    <xs:annotation>
+      <xs:documentation>Экспорт/Реэкспорт</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Exporter" type="drg_res:PersonType">
+        <xs:annotation>
+          <xs:documentation>Экспортер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateExp" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата вывоза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExpCo" type="clt_ru:CountryA2CodeType">
+        <xs:annotation>
+          <xs:documentation>Страна вывоза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PersonType">
+    <xs:annotation>
+      <xs:documentation>Описание лица/организации</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Name" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INN" type="clt_ru:INNIDType">
+        <xs:annotation>
+          <xs:documentation>ИНН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KPP" type="clt_ru:KPPCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>КПП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PrecedingDocumentType">
+    <xs:annotation>
+      <xs:documentation>Предшествующий документ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="LineNumber" type="clt_ru:SheetNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер строки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PrecedingDocumentCustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа предшествующего документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PrecedingDocumentDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Предшествующий документ - дата </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PrecedingDocumentNumber" type="clt_ru:PrecedingDocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Предшествующий документ - регистрационный номер декларации на товары, заявления о выпуске товаров до подачи декларации на товары </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AddNumberPart" type="clt_ru:CodeVariable2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Предшествующий документ - дополнительная составляющая 3ей части номера </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PrecedingDocumentGoodsNumeric" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Номер товара в предшествующем документе </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

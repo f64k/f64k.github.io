@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:pfr="urn:customs.ru:Information:SQDocuments:PfrSalaryInsuranceRequest:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:PfrSalaryInsuranceRequest:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Получение сведений о заработной плате или доходе, на который начислены страховые взносы (запрос)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="PfrSalaryInsuranceRequest" type="pfr:PfrSalaryInsuranceRequestType">
+    <xs:annotation>
+      <xs:documentation>Получение сведений о заработной плате или доходе, на который начислены страховые взносы (запрос)</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="PfrSalaryInsuranceRequestType">
+    <xs:annotation>
+      <xs:documentation>Получение сведений о заработной плате или доходе, на который начислены страховые взносы (запрос)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="FIO" type="pfr:PersonFIOType">
+            <xs:annotation>
+              <xs:documentation>ФИО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Snils" type="pfr:SNILSType">
+            <xs:annotation>
+              <xs:documentation>СНИЛС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Year" type="clt_ru:DateYearCustType">
+            <xs:annotation>
+              <xs:documentation>Год, за который необходимо предоставить сведения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009396E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PersonFIOType">
+    <xs:annotation>
+      <xs:documentation>ФИО физического лица</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonSurname" type="pfr:rus-100">
+        <xs:annotation>
+          <xs:documentation>Фамилия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonName" type="pfr:rus-100">
+        <xs:annotation>
+          <xs:documentation>Имя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonMiddleName" type="pfr:rus-100" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="SNILSType">
+    <xs:annotation>
+      <xs:documentation>СНИЛС</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:length value="11" />
+      <xs:pattern value="\d{11}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="rus">
+    <xs:annotation>
+      <xs:documentation>Русский текст. Допускаются также пробелы, точки, запятые, тире, апострофы. Цифры не допускаются.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:pattern value="[а-яА-ЯёЁ\-0-9][а-яА-ЯёЁ\-\s',.]*" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="rus-100">
+    <xs:annotation>
+      <xs:documentation>Русский текст, длиной до 100 символов, цифры не допускаются.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="pfr:rus">
+      <xs:maxLength value="100" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

@@ -1,0 +1,1001 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:mav_req="urn:customs.ru:Information:SQDocuments:MvdAdmViolationRequest:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:MvdAdmViolationRequest:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Передача сведений об административных правонарушениях (Запрос)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="MvdAdmViolationRequest" type="mav_req:MvdAdmViolationRequestType" />
+  <xs:complexType name="MvdAdmViolationRequestType">
+    <xs:annotation>
+      <xs:documentation>Передача сведений об административных правонарушениях (Запрос)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="id" type="clt_ru:Text50Type">
+            <xs:annotation>
+              <xs:documentation>Идентификатор записи. Должен сохраняться при всех последующих действиях с записью</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="createdAtRegion" type="mav_req:ClassifierValueType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Территориальный орган, создавший дело. Словарь «Регион инициатор постановки на учет»</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ownerRegion" type="mav_req:ClassifierValueType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Текущий территориальный орган. Словарь «Регион инициатор постановки на учет»</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="case" type="clt_ru:Text50Type">
+            <xs:annotation>
+              <xs:documentation>Номер дела</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="createdAt" type="clt_ru:DateTimeCustType">
+            <xs:annotation>
+              <xs:documentation>Дата создания записи</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="updatedAt" type="clt_ru:DateTimeCustType">
+            <xs:annotation>
+              <xs:documentation>Дата обновления записи</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="writtenAt" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата заполнения карточки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="restriction" type="mav_req:RestrictionType" maxOccurs="2">
+            <xs:annotation>
+              <xs:documentation>Постановление</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="offenceInfo" type="mav_req:OffenceInfoType">
+            <xs:annotation>
+              <xs:documentation>Сведения о правонарушении</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="offender" type="mav_req:OffenderType">
+            <xs:annotation>
+              <xs:documentation>Лицо, совершившее административное правонарушение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="regionCode" type="mav_req:ClassifierValueType">
+            <xs:annotation>
+              <xs:documentation>Регион инициатор постановки на учет</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="archive" type="mav_req:ConditionType">
+            <xs:annotation>
+              <xs:documentation>Статус документа: активный или архив</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009195E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ClassifierValueType">
+    <xs:annotation>
+      <xs:documentation>Значение из словаря</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="code" type="clt_ru:Text10Type">
+        <xs:annotation>
+          <xs:documentation>Код</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="value" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Значение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RestrictionType">
+    <xs:annotation>
+      <xs:documentation>Постановление</xs:documentation>
+    </xs:annotation>
+    <xs:choice>
+      <xs:element name="order" type="mav_req:OrderType">
+        <xs:annotation>
+          <xs:documentation>Сведения о возбуждении дела</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="preTrialRestrictions" type="mav_req:PreTrialRestrictionsType">
+        <xs:annotation>
+          <xs:documentation>Постановление по делу об АПН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="OrderType">
+    <xs:annotation>
+      <xs:documentation>Сведения о протоколе. При отсутствии номера протокола (например, для вида документа «Определение о возбуждении дела») поле «Номер документа» (number) должно быть заполнено значением «Без номера».При невозможности определить значение поля «Населенный пункт, в котором составлен документ» (regPlace) поле необходимо заполнять следующим образом: regPlace/country/code=«4404»; regPlace/country/value=«РОССИЯ»; regPlace/region/code = код региона, в котором работает оператор;       regPlace/region/value = расшифровка кода региона, в котором работает оператор.
+            </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="id" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Идентификатор записи</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="type" type="mav_req:ClassifierValueType">
+        <xs:annotation>
+          <xs:documentation>Вид документа об административном правонарушении. Словарь «Вид документа»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="number" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="date" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата составления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="regPlace" type="mav_req:CityAddressType">
+        <xs:annotation>
+          <xs:documentation>Населенный пункт, в котором составлен документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="regByService" type="mav_req:ClassifierValueType">
+        <xs:annotation>
+          <xs:documentation>Служба, составившая документ об АПН. Словарь «Служба»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="policeman" type="mav_req:PolicemanType">
+        <xs:annotation>
+          <xs:documentation>Составитель</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="summary" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Протокол составлен со слов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="createdBy" type="mav_req:PolicemanType">
+        <xs:annotation>
+          <xs:documentation>Сотрудник, который ввел сведения в систему</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Resolution" type="mav_req:ResolutionType">
+        <xs:annotation>
+          <xs:documentation>Решение, принятое по возбужденному делу об АПН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ResolutionType">
+    <xs:annotation>
+      <xs:documentation>Решение, принятое по возбужденному делу об АПН</xs:documentation>
+    </xs:annotation>
+    <xs:choice>
+      <xs:element name="resolution" type="mav_req:ResolytionType">
+        <xs:annotation>
+          <xs:documentation>Принятое решение по протоколу, если не было вынесено постановление о наказании</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="restriction" type="mav_req:PreTrialRestrictionsType">
+        <xs:annotation>
+          <xs:documentation>Постановление о назначенном наказании по протоколу</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="ResolytionType">
+    <xs:annotation>
+      <xs:documentation>Решение, принятое по возбужденному делу об АПН</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="resolytionIssued" type="mav_req:ClassifierValueType">
+        <xs:annotation>
+          <xs:documentation>Вид принятого решения. Словарь «Принятое решение»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="resolutionDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата принятия решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="resolutionIssuedBy" type="mav_req:PolicemanType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сотрудник, принявший решение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="resolutionRegion" type="mav_req:ClassifierValueType">
+        <xs:annotation>
+          <xs:documentation>Территориальный орган</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="resolutionService" type="mav_req:ClassifierValueType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Служба, принявшая решение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PolicemanType">
+    <xs:annotation>
+      <xs:documentation>Сведения о сотруднике МВД России.Поле «Подразделение» (division) заполняется в соответствии с ОШС:division/code - идентификатор подразделения из ОШС; division/value - название подразделения из ОШС.
+            </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="personName" type="mav_req:PersonalNameType">
+        <xs:annotation>
+          <xs:documentation>ФИО сотрудника</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="rank" type="mav_req:ClassifierValueType">
+        <xs:annotation>
+          <xs:documentation>Звание. Словарь «Звания»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="division" type="mav_req:ClassifierValueType">
+        <xs:annotation>
+          <xs:documentation>Подразделение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PersonalNameType">
+    <xs:annotation>
+      <xs:documentation>ФИО лица и его идентификатор</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:PersonBaseType">
+        <xs:sequence>
+          <xs:element name="id" type="clt_ru:Text50Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Идентификатор лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="created_at" type="clt_ru:DateTimeCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата создания записи в БД</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="updated_at" type="clt_ru:DateTimeCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата обновления записи в БД</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PreTrialRestrictionsType">
+    <xs:annotation>
+      <xs:documentation>Постановление по делу об АП</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="id" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Идентификатор записи</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="resolutionDoc" type="mav_req:ClassifierValueType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вид документа о назначенном наказании. Словарь «Вид документа»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="resolutionDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата вынесения постановления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="archiveNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер постановления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="issuedByService" type="mav_req:ClassifierValueType">
+        <xs:annotation>
+          <xs:documentation>Территориальный орган, где вынесено постановление. Словарь «Регион инициатор постановки на учет»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="issuedByName" type="clt_ru:Text150Type">
+        <xs:annotation>
+          <xs:documentation>Наименование территориального органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="issuedBy" type="clt_ru:Text150Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Кем вынесено постановление (служба)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="offenceKind" type="mav_req:ClassifierValueType">
+        <xs:annotation>
+          <xs:documentation>Характер правонарушения, по которому вынесено решение о мере пресечения. Словарь «Характер нарушения»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="codex" type="mav_req:CodexArticleType">
+        <xs:annotation>
+          <xs:documentation>Статья КоАП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="punishment" type="mav_req:PunishmentType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о наказании</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="startDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата вступления постановления в силу.
+                        Если нет, то равно «дата вынесения постановления»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="additionalText" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дополнительная информация</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="policeman" type="mav_req:PolicemanType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сотрудник, вынесший постановление</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CodexArticleType">
+    <xs:annotation>
+      <xs:documentation>Статья правонарушения.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="codexType" type="mav_req:ClassifierValueType">
+        <xs:annotation>
+          <xs:documentation>Вид кодекса. Словарь «Вид кодекса»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="codexTitle" type="clt_ru:Text150Type">
+        <xs:annotation>
+          <xs:documentation>Название кодекса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="countryIssued" type="mav_req:ClassifierValueType">
+        <xs:annotation>
+          <xs:documentation>Страна, выпустившая кодекс. Словарь «Страна рождения»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="edition" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Редакция кодекса, дата</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="offenceArticle" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Наименование статьи</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="articleNum" type="clt_ru:Text10Type">
+        <xs:annotation>
+          <xs:documentation>Статья номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="articleNote" type="clt_ru:Text10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Статья примечание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="articlePart" type="clt_ru:Text10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Статья часть</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="articleParagraph" type="clt_ru:Text10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Статья пункт</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PunishmentType">
+    <xs:annotation>
+      <xs:documentation>Основное наказание</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="main" type="mav_req:ClassifierValueType">
+        <xs:annotation>
+          <xs:documentation>Вид основного наказания. Словарь «Вид административного наказания»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="additional" type="mav_req:ClassifierValueType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дополнительное наказание. Словарь «Вид административного наказания»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="penalty" type="mav_req:AdministrativePenaltyType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Размер штрафа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="arrest" type="mav_req:DisqualificationType" minOccurs="0" maxOccurs="2">
+        <xs:annotation>
+          <xs:documentation>Срок административного наказания</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AdministrativePenaltyType">
+    <xs:annotation>
+      <xs:documentation>Административный штраф</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="amount" type="xs:nonNegativeInteger">
+        <xs:annotation>
+          <xs:documentation>Размер штрафа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="paymentId" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код платежа в ГИС ГМП для проверки поступления оплаты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="payedOut" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Штраф оплачен?</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DisqualificationType">
+    <xs:annotation>
+      <xs:documentation>Срок административного наказания</xs:documentation>
+    </xs:annotation>
+    <xs:choice>
+      <xs:element name="day" type="xs:nonNegativeInteger">
+        <xs:annotation>
+          <xs:documentation>Сутки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="month" type="xs:nonNegativeInteger">
+        <xs:annotation>
+          <xs:documentation>Месяц</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="hour" type="xs:nonNegativeInteger">
+        <xs:annotation>
+          <xs:documentation>Час</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="CityAddressType">
+    <xs:annotation>
+      <xs:documentation>Страна, регион, район, город. Поле «Регион» (region) заполняется в соответствии с учетом заполнения поля «Страна» (country): если страна «РОССИЯ» (код = «4404»), то используется интервал кодов «1101» - «1237»; если страна «НЕИЗВЕСТНО» (код = «4004»), то используется значение «БОМЖ» (код = «4575»);  в остальных случаях значение поля соответствует полю "Страна".
+            </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="country" type="mav_req:ClassifierValueType">
+        <xs:annotation>
+          <xs:documentation>Страна. Словарь «Страна рождения»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="region" type="mav_req:ClassifierValueType">
+        <xs:annotation>
+          <xs:documentation>Регион. Словарь «Регион регистрации иностранного гражданина»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="area" type="mav_req:AddressObjectType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Автономный округ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="district" type="mav_req:AddressObjectType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Район</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="city" type="mav_req:AddressObjectType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Город</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="okato" type="clt_ru:OKATOCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код ОКАТО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="latitude" type="xs:decimal" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Широта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="longitude" type="xs:decimal" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Долгота</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="kladr" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код КЛАДР</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AddressObjectType">
+    <xs:annotation>
+      <xs:documentation>Значение из ФИАС</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="code" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор записи</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="shortName" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Краткое наименование типа объекта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="value" type="clt_ru:Text150Type">
+        <xs:annotation>
+          <xs:documentation>Официальное наименование</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OffenderType">
+    <xs:annotation>
+      <xs:documentation>Сведения о нарушителе</xs:documentation>
+    </xs:annotation>
+    <xs:choice>
+      <xs:element name="person" type="mav_req:OffenderPersonType">
+        <xs:annotation>
+          <xs:documentation>Физическое лицо</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="organization" type="mav_req:OffenderOrganizationType">
+        <xs:annotation>
+          <xs:documentation>Юридическое лицо</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="OffenderPersonType">
+    <xs:annotation>
+      <xs:documentation>Сведения о физическом лице. Если нарушитель относится к категории лиц без определенного места жительства (БОМЖ), то поле registrationAddress необходимо заполнять следующим образом: в поле cityAddress/country/code передавать значение «4004»; в поле cityAddress/country/value передавать значение «НЕИЗВЕСТНО»;  в поле cityAddress/region/code передавать значение «4547»; в поле cityAddress/region/value передавать значение «БОМЖ». Поле «Информация о прибытии» (arrival) обязательно для заполнения, если поле «Гражданство» (person/citizenship) не соответствует значению «РОССИЯ» (code = «4404») или лицо имеет более одного гражданства.
+            </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="person" type="mav_req:PersonType">
+        <xs:annotation>
+          <xs:documentation>Физическое лицо</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="registrationAddress" type="mav_req:FullAddressType">
+        <xs:annotation>
+          <xs:documentation>Адрес регистрации по месту жительства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="realAddress" type="mav_req:FullAddressType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Адрес фактического места жительства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="identityCard" type="mav_req:IdentityCardType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Данные документа, удостоверяющего личность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="snils" type="clt_ru:CodeVariable11Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>СНИЛС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="arrival" type="mav_req:ArrivalType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация о прибытии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="work" type="mav_req:WorkType">
+          <xs:annotation>
+            <xs:documentation>Информация о месте работы</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="study" type="mav_req:WorkType">
+          <xs:annotation>
+            <xs:documentation>Информация о месте учебы</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PersonType">
+    <xs:annotation>
+      <xs:documentation>Информация о лице</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="personName" type="mav_req:PersonalNameType">
+        <xs:annotation>
+          <xs:documentation>ФИО лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="birthDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата рождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sex" type="mav_req:ClassifierValueType">
+        <xs:annotation>
+          <xs:documentation>Пол. Словарь «Пол»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="birthCountry" type="mav_req:ClassifierValueType">
+        <xs:annotation>
+          <xs:documentation>Страна рождения. Словарь «Страна рождения»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="birthPlaceSingleLine" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Место рождения одной строкой</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="citizenship" type="mav_req:ClassifierValueType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Гражданство. Словарь «Гражданство»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FullAddressType">
+    <xs:annotation>
+      <xs:documentation>Полный адрес</xs:documentation>
+      <xs:documentation>При использовании справочника ФИАС все уровни ниже улицы, должны передаваться в поле «Улица» (street) в виде одной строки, объединяющей все названия нижележащих уровней.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="cityAddress" type="mav_req:CityAddressType">
+        <xs:annotation>
+          <xs:documentation>Страна, регион, район, город</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="cityArea" type="mav_req:AddressObjectType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Внутригородская территория / Микрорайон</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="street" type="mav_req:AddressObjectType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Улица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="house" type="mav_req:AddressObjectType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дом</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="building" type="mav_req:AddressObjectType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Корпус</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="construction" type="mav_req:AddressObjectType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Строение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="appartment" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Квартира</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="postalCode" type="clt_ru:PostalCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код почтового отделения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="IdentityCardType">
+    <xs:annotation>
+      <xs:documentation>Данные документа, удостоверяющего личность</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="type" type="mav_req:ClassifierValueType">
+        <xs:annotation>
+          <xs:documentation>Вид документа. Словарь «Тип документа»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="series" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Серия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="number" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="givenAt" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата выдачи</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="givenBy" type="clt_ru:Text150Type">
+        <xs:annotation>
+          <xs:documentation>Кем выдан</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="validPeriod" type="mav_req:DatePeriodType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Период действия документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DatePeriodType">
+    <xs:annotation>
+      <xs:documentation>Диапазон дат</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="startDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Начальная дата</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="endDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Конечная дата</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrivalType">
+    <xs:annotation>
+      <xs:documentation>Информация о прибытии</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="departure" type="mav_req:ClassifierValueType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Страна выбытия. Словарь «Страна рождения»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="departureDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата въезда</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="reason" type="mav_req:ClassifierValueType">
+        <xs:annotation>
+          <xs:documentation>Цель въезда. Словарь «Цель въезда»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="state" type="mav_req:ClassifierValueType">
+        <xs:annotation>
+          <xs:documentation>Статус. Словарь «Статус»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="WorkType">
+    <xs:annotation>
+      <xs:documentation>Информация о месте работы или учебы</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="type" type="mav_req:ClassifierValueType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Тип предприятия (учреждения). Словарь «Тип организации, предприятия»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="title" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование предеприятия (учреждения)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OffenderOrganizationType">
+    <xs:annotation>
+      <xs:documentation>Сведения о юридическом адресе и адресе местанахождения лица</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="organization" type="mav_req:OrganizationType">
+        <xs:annotation>
+          <xs:documentation>Информация о юридическом лице</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="registrationAddress" type="mav_req:FullAddressType">
+        <xs:annotation>
+          <xs:documentation>Юридический адрес</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="realAddress" type="mav_req:FullAddressType">
+        <xs:annotation>
+          <xs:documentation>Адрес местонахождения юр лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="person" type="mav_req:OfficialOrganizationPerson">
+        <xs:annotation>
+          <xs:documentation>Законный представитель юридического лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OrganizationType">
+    <xs:annotation>
+      <xs:documentation>Информация о юридическом лице</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="title" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Название организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="kind" type="mav_req:ClassifierValueType">
+        <xs:annotation>
+          <xs:documentation>Организационно-правовая форма. Словарь «Общероссийский классификатор организационно-правовых форм»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="inn" type="clt_ru:INNIDType">
+        <xs:annotation>
+          <xs:documentation>ИНН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ogrn" type="clt_ru:OGRNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ОГРН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="kpp" type="clt_ru:KPPCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>КПП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OfficialOrganizationPerson">
+    <xs:annotation>
+      <xs:documentation>Сведения о законном представителе юридического лица</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="person" type="mav_req:PersonType">
+        <xs:annotation>
+          <xs:documentation>ФИО законного представителя юридического лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="identityCard" type="mav_req:IdentityCardType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ДУЛ законного представителя юридического лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OffenceInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о правонарушении</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="id" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Идентификатор записи</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="offenceKind" type="mav_req:ClassifierValueType">
+        <xs:annotation>
+          <xs:documentation>Характер правонарушения. Словарь «Характер нарушения»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="article" type="mav_req:CodexArticleType">
+        <xs:annotation>
+          <xs:documentation>Статья</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="address" type="mav_req:FullAddressType">
+        <xs:annotation>
+          <xs:documentation>Адрес совершения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="date" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата совершения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="time" type="clt_ru:TimeCustType">
+        <xs:annotation>
+          <xs:documentation>Время совершения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="alcoholicIntoxicationDetection" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Направлен на медицинское освидетельствование</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="alcoholicIntoxication" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Алкогольное опьянение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="drugIntoxication" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наркотическое опьянение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="intoxicatedWith" type="clt_ru:Text150Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Тип наркотического вещества</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="fan" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Фанатская статья</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="additionalText" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дополнительная информация</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="vehicle" type="mav_req:VehicleDataType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения об АМТ, если необходимо</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="VehicleDataType">
+    <xs:annotation>
+      <xs:documentation>Сведения об АМТ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="vehicleNumber" type="clt_ru:TransportStateSignIDType">
+        <xs:annotation>
+          <xs:documentation>Государственный регистрационный номер АМТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="vehicleNumberRegion" type="mav_req:ClassifierValueType">
+        <xs:annotation>
+          <xs:documentation>Регион регистрации АМТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="vehicleBrand" type="mav_req:ClassifierValueType">
+        <xs:annotation>
+          <xs:documentation>Марка АМТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="vehicleModel" type="clt_ru:TransportNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Модель АМТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="vehicleOwner" type="mav_req:PersonalNameType">
+        <xs:annotation>
+          <xs:documentation>Лицо, на которое зарегистрировано АМТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ConditionType">
+    <xs:annotation>
+      <xs:documentation>Статус документа: основной учет или архив</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="inArchive" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Принадлежность архиву: true — если документ в архиве, false — если документ в основном учете</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="reason" type="mav_req:ClassifierValueType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Значение из словаря «Основание для переноса в архив». В случае, если запись была удалена на стороне сервиса–поставщика сведений, в ИБД-М отправляется обновление записи, значение поля «Запись удалена»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="archiveDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата переноса записи в архив</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

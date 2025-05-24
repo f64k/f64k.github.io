@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:grn_cat="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeCommonAggregateTypesCust:5.24.0" xmlns:grn_bnk="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeBank:5.24.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" targetNamespace="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeBank:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeCommonAggregateTypesCust:5.24.0" schemaLocation="GuaranteeCommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сведения о банковской гарантии / Решение по ЭБГ</xs:documentation>
+  </xs:annotation>
+  <xs:element name="GuaranteeBank" type="grn_bnk:GuaranteeBankType">
+    <xs:annotation>
+      <xs:documentation>Сведения о банковской гарантии / Решение по ЭБГ</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GuaranteeBankType">
+    <xs:annotation>
+      <xs:documentation>Сведения о банковской гарантии / Решение по ЭБГ</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Decision" type="clt_ru:LetterIndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Решение: 0 - решение об отказе в приеме ЭБГ; 1 - решение о приеме ЭБГ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DecisionDateTime" type="clt_ru:DateTimeCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата и время решения о приеме ЭБГ/ Дата и время решения об отказе в приеме ЭБГ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GuaranteeInformation" type="grn_bnk:GuaranteeInformationType">
+            <xs:annotation>
+              <xs:documentation>Сведения по банковской гарантии</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Guarantor" type="grn_cat:BankOrganizationType">
+            <xs:annotation>
+              <xs:documentation>Сведения о гаранте</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Principal" type="grn_bnk:PrincipalType">
+            <xs:annotation>
+              <xs:documentation>Сведения о принципале</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Beneficiary" type="cat_ru:CustomsType">
+            <xs:annotation>
+              <xs:documentation>Сведения о бенефициаре (таможенном органе)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Comments" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Комментарии / Причина отказа в приеме банковской гарантии</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MarkDetails" type="grn_bnk:MarkDetailsType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о марках</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1050004E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AppExciseStampType">
+    <xs:annotation>
+      <xs:documentation>Сведения о Заявлении о выдаче акцизных марок </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RegDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации таможенным органом </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GuaranteeInformationType">
+    <xs:annotation>
+      <xs:documentation>Сведения по банковской гарантии</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="grn_cat:GuaranteeInformationType">
+        <xs:sequence>
+          <xs:element name="Address" type="RUScat_ru:RUAddressType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Место выдачи</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReduceObligationsGuarantor" type="clt_ru:DigitalIndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Согласие с условиями уменьшения размера обязательств гаранта по банковской гарантии (1- согласен)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TransferRight" type="clt_ru:DigitalIndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Согласие с условием передачи прав по банковской гарантии (1- согласен)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DueDate" type="clt_ru:DigitalIndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Срок рассмотрения гарантом требования бенефициара об уплате денежной суммы по банковской гарантии</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegistrationTerms" type="clt_ru:DigitalIndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Согласие с условием об оформлении требования бенефициара об уплате денежной суммы по банковской гарантии (1- согласен)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PresentForm" type="clt_ru:DigitalIndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Согласие с условием о форме представления требования бенефициара об уплате денежной суммы по банковской гарантии (1- согласен)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BKI" type="clt_ru:DigitalIndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Условие о передаче банком сведений в бюро кредитных историй содержится в банковской гарантии (1 - да; 0 -  нет)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="MarkDetailsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о марках</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Deadline" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Срок исполнения обязательства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ObligationName" type="RUSclt_ru:Name300Type">
+        <xs:annotation>
+          <xs:documentation>Наименование обязательства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ObligationDetails" type="grn_bnk:ObligationDetailsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Обязательство импортера об использовании приобретенных акцизных марок  </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AppExciseStamp" type="grn_bnk:AppExciseStampType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Заявление о выдаче акцизных марок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ObligationDetailsType">
+    <xs:annotation>
+      <xs:documentation>Сведения об обязательстве импортера об использовании приобретенных акцизных марок </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocumentNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PrincipalType">
+    <xs:annotation>
+      <xs:documentation>Сведения о принципале</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="grn_cat:BankOrganizationType">
+        <xs:sequence>
+          <xs:element name="PrincipalType" type="clt_ru:LetterIndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Тип принципала (1- организация, 2-физическое лицо)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:cltESAD_cu="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" xmlns:frmireq="urn:customs.ru:Information:SQDocuments:FtsRawMaterialsImportRes:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:FtsRawMaterialsImportRes:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" schemaLocation="CUESADCommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Предоставление сведений о ввозе сырья, этилового спирта, алкогольной и спиртосодержащей продукции(ответ)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="FtsRawMaterialsImportRes" type="frmireq:FtsRawMaterialsImportResType" />
+  <xs:complexType name="FtsRawMaterialsImportResType">
+    <xs:annotation>
+      <xs:documentation>Предоставление сведений о ввозе сырья, этилового спирта, алкогольной и спиртосодержащей продукции(ответ)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Importer" type="frmireq:ImporterType">
+            <xs:annotation>
+              <xs:documentation>Организация-импортер</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RecipientINN" type="clt_ru:INNIDType">
+            <xs:annotation>
+              <xs:documentation>ИНН получателя</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TNVEDCode" type="clt_ru:GoodsNomenclatureCodeType">
+            <xs:annotation>
+              <xs:documentation>Код ТН ВЭД ЕАЭС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsProcedure" type="frmireq:CustomsProcedureType">
+            <xs:annotation>
+              <xs:documentation>Таможенная процедура</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DeclarationInfo" type="frmireq:DeclarationInfoType" minOccurs="1" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения из декларации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009149E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор электронного документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CountryOriginType">
+    <xs:annotation>
+      <xs:documentation>Сведения о стране происхождения товара</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CountryCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код страны происхождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryName" type="clt_ru:CountryNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование страны происхождения </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CustomsProcedureType">
+    <xs:annotation>
+      <xs:documentation>Сведения о таможенной процедуре</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsModeCode" type="cltESAD_cu:CustomsModeCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенной процедуры</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsProcedureName" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование таможенной процедуры</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeclarationInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения из декларации</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DeclarationNumber" type="cat_ru:GTDIDType">
+        <xs:annotation>
+          <xs:documentation>Номер таможенной декларации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProductInfo" type="frmireq:ProductInfoType" minOccurs="1" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Информация о товаре</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ImporterType">
+    <xs:annotation>
+      <xs:documentation>Сведения об организации-импортёре</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OrganizationName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование организации-импортера</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrganizationAddress" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Адрес местонахождения и осуществления деятельности организации-импортера</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ProductInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о товаре</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ProductName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование сырья, этилового спирта, алкогольной и спиртосодержащей продукции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProductIssueDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата выпуска товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProductCount" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество товара (в дополнительной единице измерения)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OtherMeasureUnitInfo" type="cat_ru:SupplementaryQuantityType" minOccurs="0" maxOccurs="2">
+        <xs:annotation>
+          <xs:documentation>Сведения о единицах измерения отличной от основной и дополнительной</xs:documentation>
+        </xs:annotation>
+        <!--если не пришли от ЕАИС - передавать "-"-->
+      </xs:element>
+      <xs:element name="CountryOrigin" type="frmireq:CountryOriginType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Страна происхождения товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExternalContract" type="cat_ru:DocumentBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Внешнеторговый контракт</xs:documentation>
+        </xs:annotation>
+        <!--если не пришли необязательные - передать "-"-->
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

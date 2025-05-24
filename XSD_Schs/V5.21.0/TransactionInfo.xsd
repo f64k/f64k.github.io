@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_crd="urn:customs.ru:CardCommonAggregateTypes:5.21.0" xmlns:cltComFin_ru="urn:customs.ru:Information:CommercialFinanceDocuments:CommercialFinanceCommonLeafTypesCust:5.8.0" xmlns:trinf="urn:customs.ru:CustomsCardDoc:TransactionInfo:5.21.0" targetNamespace="urn:customs.ru:CustomsCardDoc:TransactionInfo:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CardCommonAggregateTypes:5.21.0" schemaLocation="CardCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:CommercialFinanceDocuments:CommercialFinanceCommonLeafTypesCust:5.8.0" schemaLocation="CommercialFinanceCommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сведения о движении денежных средств на лицевом счете владельца таможенной карты</xs:documentation>
+  </xs:annotation>
+  <xs:element name="TransactionInfo" type="trinf:TransactionInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о движении денежных средств на лицевом счете владельца таможенной карты</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="TransactionInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о движении денежных средств на лицевом счете владельца таможенной карты</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_crd:BaseDocType">
+        <xs:sequence>
+          <xs:element name="TYPEDOC" type="clt_ru:Code2Type">
+            <xs:annotation>
+              <xs:documentation>Тип информации: «ПУ» –  подтверждение уплаты таможенных пошлин, налогов; «АО» –   отчет о расходовании денежных средств, внесенных в качестве авансовых платежей</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsOffice" type="clt_ru:CustomsCodeType">
+            <xs:annotation>
+              <xs:documentation>Код таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Payer" type="cat_crd:OrganizationBaseType">
+            <xs:annotation>
+              <xs:documentation>Информация о плательщике</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PeroidBegin" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Начало запрашиваемого периода</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PeroidEnd" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Конец запрашиваемого периода</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReportDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата отчета/ подтверждения уплаты таможенных пошлин, налогов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DebitAmount" type="clt_ru:AmountType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сумма, поступившая за указанный период</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CreditAmount" type="clt_ru:AmountType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сумма, зачтенная за указанный период</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BalanceIn" type="clt_ru:AmountType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Входящий остаток денежных средств</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BalanceOut" type="clt_ru:AmountType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Исходящий остаток денежных средств</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PaymentInformation" type="trinf:PaymentInformationType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о платеже</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1040006E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="PaymentInformationType">
+    <xs:annotation>
+      <xs:documentation>Сведения о платеже</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OperationType" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Тип операции: 0 - списание; 1 - начисление</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentBaseDocument" type="trinf:PaymentBaseDocumentType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Документ, на основании которого уплачены таможенные пошлины, налоги</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OperationDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата операции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Amount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма денежных средств по документу</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CBC" type="cltComFin_ru:CBCType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код бюджетной классификации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentDocument" type="cat_crd:DocumentBaseType">
+        <xs:annotation>
+          <xs:documentation>Платежный документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AgentName" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование таможенного представителя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ErrorInfo" type="trinf:ErrorInfoType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения об ошибке</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaymentBaseDocumentType">
+    <xs:annotation>
+      <xs:documentation>Документ основание</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PrDocumentNumber" type="clt_ru:Text150Type">
+        <xs:annotation>
+          <xs:documentation>Номер документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PrDocumentDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentList" type="trinf:CustomsDutiesType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Платежи по видам</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CustomsDutiesType">
+    <xs:annotation>
+      <xs:documentation>Таможенные платежи, подлежащие уплате</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PaymentModeCode" type="clt_ru:CUCustomsPaymentCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код вида платежа  по классификатору видов налогов, сборов и иных платежей, взимание которых возложено на таможенные органы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Duties" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сумма платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ErrorInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения об ошибке</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ErrorCode" type="clt_ru:CodeVariable11Type">
+        <xs:annotation>
+          <xs:documentation>Код ошибки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ErrorDescription" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Описание ошибки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TrabsactionName" type="clt_ru:Text40Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование загружаемой транзакции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

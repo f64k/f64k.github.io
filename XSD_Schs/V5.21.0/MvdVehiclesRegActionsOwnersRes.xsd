@@ -1,0 +1,319 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:ro_res="urn:customs.ru:Information:SQDocuments:MvdVehiclesRegActionsOwnersRes:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:MvdVehiclesRegActionsOwnersRes:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Ответ на запрос сведений о регистрационных действиях транспортных средств и их владельцах</xs:documentation>
+  </xs:annotation>
+  <xs:element name="MvdVehiclesRegActionsOwnersRes" type="ro_res:MvdVehiclesRegActionsOwnersResType" />
+  <xs:complexType name="MvdVehiclesRegActionsOwnersResType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос сведений о регистрационных действиях транспортных средств и их владельцах</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Operations" type="ro_res:OperationsType">
+            <xs:annotation>
+              <xs:documentation>Список найденных операций</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009199E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="OperationsType">
+    <xs:annotation>
+      <xs:documentation>Список найденных операций</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Operation" type="ro_res:OperationType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Найденная операция</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OperationType">
+    <xs:annotation>
+      <xs:documentation>Найденная операция</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PrivateOwnerInfo" type="ro_res:PrivateOwnerInfoType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о владельце (ФЛ)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LegalOwnerInfo" type="cat_ru:OrganizationBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о владельце (ЮЛ)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentType" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование документа, удостоверяющего личность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Серия, номеp документа, удостоверяющего личность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата выдачи документа, удостоверяющего личность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentSource" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Кем выдан документ, удостоверяющий личность владельца</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Address" type="ro_res:AddressType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Адрес</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PrimaryPTS" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Первичный ПТС (уникальный номер регистрации)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OperationCode" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование технологической операции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OperationDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата операции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DepartmentCode" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование подразделения ГИБДД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationPlate" type="clt_ru:CodeVariable10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Государственный регистрационный знак</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PreviousRegistrationPlate" type="clt_ru:CodeVariable10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Прежний регистрационный знак</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="VIN" type="clt_ru:CodeVariable20Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификационный номер (VIN)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BrandAndModel" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Марка, модель (модификация)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="VehicleType" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование типа ТС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="VehicleCategory" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Категория ТС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SpecialPurpose" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код специального назначения ТС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProductionYear" type="clt_ru:DateYearCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Год выпуска</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EngineNumber" type="clt_ru:CodeVariable20Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер двигателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ChassisNumber" type="clt_ru:CodeVariable20Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер шасси(рамы)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BodyNumber" type="clt_ru:CodeVariable20Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер кузова(прицепа)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="HorsePower" type="clt_ru:CodeVariable10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Мощность двигателя, л.с.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Power" type="clt_ru:CodeVariable10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Мощность двигателя, кВт</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EngineVolume" type="clt_ru:CodeVariable10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Объём двигателя, см куб.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationDocumentCode" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование регистрационного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationDocumentNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Серия и номер регистрационного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationDocumentDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата выдачи регистрационного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Restrictions" type="ro_res:RestrictionsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Ограничения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RestrictionsType">
+    <xs:annotation>
+      <xs:documentation>Ограничения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Restriction" type="ro_res:RestrictionType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Ограничение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RestrictionType">
+    <xs:annotation>
+      <xs:documentation>Ограничение</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="VIN" type="clt_ru:CodeVariable20Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификационный номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BodyNumber" type="clt_ru:CodeVariable20Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер кузова (прицепа)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ChassisNumber" type="clt_ru:CodeVariable20Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер шасси (рамы)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EngineNumber" type="clt_ru:CodeVariable20Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер двигателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegNo" type="clt_ru:CodeVariable10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Государственный регистрационный знак</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Model" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Модель</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Color" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Цвет</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Foundation" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Основание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PrivateOwnerInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о владельце (ФЛ)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:PersonBaseType">
+        <xs:sequence>
+          <xs:element name="BirthDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата рождения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="INN" type="clt_ru:INNIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>ИНН</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IdentityCard" type="RUScat_ru:RUIdentityCardType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Документ, удостоверяющий личность</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AddressType">
+    <xs:annotation>
+      <xs:documentation>Адрес организации / физического лица</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:RUAddressType">
+        <xs:sequence>
+          <xs:element name="IntracityDistrict" type="clt_ru:Text50Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Внутригородской район</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AdditionalTerritory" type="clt_ru:Text50Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Доп. территория</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="StreetAdditionalTerritory" type="clt_ru:Text50Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Улица на доп.территории</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Building" type="clt_ru:Text5Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Корпус</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Structure" type="clt_ru:Text5Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Строение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

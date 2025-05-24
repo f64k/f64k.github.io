@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>good t3 |XML Table Tree</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.jsdelivr.net/npm/localforage@1.10.0/dist/localforage.min.js"></script>
+  <style>
+    .hidden {
+      display: none;
+    }
+
+    table {
+      border: 0px solid #ddd;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: large;
+    }
+
+    .toggle {
+      cursor: pointer;
+      padding-right: 10px;
+    }
+
+    .twister {
+      background-color: #0003;
+      margin: 0;
+    }
+
+    :not(.span-leaf-node)>.twister {
+      /*border: 1px solid #AAA;*/
+      box-shadow: inset 0 0 3px #FFF;
+      border-radius: 8px;
+      padding: 0px 1px;
+    }
+
+    .span-leaf-node {
+      background-image: linear-gradient(0deg, #DDD, #DFE);
+    }
+
+    .node-is-open .node-text1 {
+      margin-left: 2px;
+      background-image: linear-gradient(0deg, #EEE, #AEE);
+    }
+
+    .node-is-closed {
+      background-image: linear-gradient(180deg, #EEE, #AEE);
+    }
+
+    td {
+      border: 1px solid #888;
+      text-align: left;
+      vertical-align: top;
+      /* необходимо для растягивания дочерних элементов */
+      padding: 0;
+      /* убираем внутренние отступы */
+    }
+
+    td.xml-name-tree-cell {
+      white-space: nowrap;
+      position: relative;
+      /* для абсолютного позиционирования */
+    }
+
+    td.xml-value-cell, td.xml-attr-cell { max-width: 32em; overflow-x: hidden; }
+
+    .xml-name-container {
+      background: repeating-linear-gradient(45deg, #66B4, #66B4 10px, #4594 10px, #4594 20px);
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .left-shift {
+      background: repeating-linear-gradient(135deg, #F8B4, #F8B9 2px, #B8F9 2px, #B8F4 4px);
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+    }
+
+    .parent-width-1 { width: 0.99em; }
+    .parent-width-2 { width: 1.99em; }
+    .parent-width-3 { width: 2.99em; }
+    .parent-width-4 { width: 3.99em; }
+    .parent-width-5 { width: 4.99em; }
+    .parent-width-6 { width: 5.99em; }
+    .parent-width-7 { width: 6.99em; }
+    .parent-width-8 { width: 7.99em; }
+    .parent-width-9 { width: 8.99em; }
+    .parent-width-10 { width: 9.99em; }
+    .parent-shift-1 { margin-left: 1em; }
+    .parent-shift-2 { margin-left: 2em; }
+    .parent-shift-3 { margin-left: 3em; }
+    .parent-shift-4 { margin-left: 4em; }
+    .parent-shift-5 { margin-left: 5em; }
+    .parent-shift-6 { margin-left: 6em; }
+    .parent-shift-7 { margin-left: 7em; }
+    .parent-shift-8 { margin-left: 8em; }
+    .parent-shift-9 { margin-left: 9em; }
+    .parent-shift-10 { margin-left: 10em; }
+
+    /*
+    .parent-width-1 { width: 0.99em; }
+    .parent-width-2 { width: 1.99em; }
+    .parent-width-3 { width: 2.99em; }
+    .parent-width-4 { width: 3.99em; }
+    .parent-width-5 { width: 4.99em; }
+    .parent-width-6 { width: 5.99em; }
+    .parent-width-7 { width: 6.99em; }
+    .parent-width-8 { width: 7.99em; }
+    .parent-width-9 { width: 8.99em; }
+    .parent-width-10 { width: 9.99em; }
+    .parent-shift-1 { margin-left: 1em; }
+    .parent-shift-2 { margin-left: 2em; }
+    .parent-shift-3 { margin-left: 3em; }
+    .parent-shift-4 { margin-left: 4em; }
+    .parent-shift-5 { margin-left: 5em; }
+    .parent-shift-6 { margin-left: 6em; }
+    .parent-shift-7 { margin-left: 7em; }
+    .parent-shift-8 { margin-left: 8em; }
+    .parent-shift-9 { margin-left: 9em; }
+    .parent-shift-10 { margin-left: 10em; }
+    */
+  </style>
+</head>
+
+<script src="/xml-manager.js"></script>
+
+<body>
+
+  <section>
+    <button popovertarget="mainpopover" popovertargetaction="toggle">
+      Toggle popover
+    </button>
+    <div id="mainpopover" popover>
+      <nav class="listcontainer">
+        <a href="https://html.spec.whatwg.org/multipage/popover.html">Go To Spec of popover</a>
+        <div class="subcontainer" tabindex="0">
+          <button popovertarget="subpopover" popovertargetaction="toggle">
+            Toggle popover 2
+          </button>
+          <div id="subpopover" popover>
+            <nav class="listcontainer">
+              <a href="#">Margherita</a>
+              <a href="#">Pepperoni</a>
+              <a href="#">Ham & Shroom</a>
+              <a href="#">Vegan</a>
+            </nav>
+          </div>
+        </div>
+        <a href="#">Music</a>
+        <a href="#">Wombats</a>
+        <a href="#">Finland</a>
+      </nav>
+    </div>
+  </section>
+
+  <!--<p>Почти получилось. если сворачивать с самых вложенных то оно и нормально, но если есть не свернутые потомки то сбой.</p>-->
+
+  <input type="file" id="fileInput" accept=".xml, .xsd" title="xml | xsd" /><br />
+
+  <div id="output"></div>
+
+  <hr />
+
+  <div id="output_1"></div>
+
+  <hr />
+
+  <table border="1" cellspacing="0" cellpadding="0" id="xmlTable">
+    <thead>
+      <tr>
+        <th>Tag</th>
+        <th>Value</th>
+        <th>Prefix</th>
+        <th>Attributes</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+
+  <hr />
+
+  <details>
+  <summary>Таблица с растяжкой в TD</summary>
+  <table>
+    <tr>
+      <td style="position: relative; padding: 10px; white-space: nowrap;">
+        <span style="background-color: #2222;
+          position: absolute; top: 10px; left: 10px; bottom: 10px; width: 3em;
+          display: flex; align-items: end; justify-content: right;
+          ">
+        </span>
+        <span style="margin-left: 4em; margin-right: 1em;">Вторая колонка!</span>
+        <span>Ещё текст.</span>
+      </td>
+      <td>
+        Первая колонка
+        <hr>Первая колонка
+        <hr>Первая колонка
+        <hr>Первая колонка
+        <hr>Первая колонка
+        <hr>Первая колонка
+        <hr>Первая колонка
+      </td>
+      <td>
+        Третья <br/> колонка
+        <hr>Третья <br/> колонка
+        <hr>Третья <br/> колонка
+        <hr>Третья <br/> колонка
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Первая колонка<hr>
+        Первая колонка<hr>
+        Первая колонка<hr>
+        Первая колонка
+      </td>
+      <td>Третья колонка<hr>Третья колонка</td>
+      <td style="position: relative; padding: 0px;">
+        <div style="background-color: #1111; white-space: nowrap;
+        position: absolute; top: 10px; left: 10px; bottom: 10px;
+        display: flex;
+        ">
+          <span style="height: 100%; display: inline-block; background-color: #2222;"> ID </span>
+          <span style="margin-left: 1em; margin-right: 1em;">Вторая колонка!</span>
+          <span>Ещё текст.</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Первая колонка<hr>
+        Первая колонка<hr>
+        Первая колонка<hr>
+        Первая колонка
+      </td>
+      <td style="position: relative; padding: 0px;">
+        <span style="background-color: #1111; white-space: nowrap;
+        position: absolute; top: 10px; left: 10px; bottom: 10px;
+        display: flex;
+        ">
+          <span style="height: 100%; display: inline-block; background-color: #2222;"> ID </span>
+          <span style="margin-left: 1em; margin-right: 1em;">Вторая колонка!</span>
+          <span>Ещё текст.</span>
+        </span>
+        <span style="margin-left: 14em;">!!!</span>
+      </td>
+      <td>Третья</td>
+    </tr>
+  </table>
+  </details>
+  <hr />
+
+
+</body>
+<script>
+  const objXMLParser = new XMLParser_3();
+
+  document.getElementById("fileInput").addEventListener("change", function (e) {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      renderXML(e.target.result);
+    };
+    reader.readAsText(file);
+  });
+
+  function renderXML(xmlText) {
+    const tableBody = document.getElementById("tableBody");
+    try {
+      objXMLParser.setLastXML(xmlText);
+      tableBody.innerHTML = "";
+      objXMLParser.appendNodeRecursively(objXMLParser.rootTreeObject, tableBody);
+    } catch (e) {
+      tableBody.textContent = "Ошибка парсинга XML : " + e.message;
+    }
+  }
+
+  function renderXML_Orig(xmlText) {
+
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+    const tbody = document.getElementById("tableBody");
+    tbody.innerHTML = "";
+
+    let counter = 0;
+    const stack = [];
+
+    processNode(xmlDoc.documentElement, 0);
+
+    function processNode(node, level) {
+      const id = counter++;
+      const hasChildren = node.children.length > 0;
+      const prefix = node.prefix || "";
+      const attributes = Array.from(node.attributes)
+        .map((attr) => `${attr.name}="${attr.value}"`)
+        .join(" ");
+
+      // Создаем строку
+      const row = document.createElement("tr");
+      row.dataset.id = id;
+      row.dataset.level = level;
+      if (stack.length > 0) row.dataset.parent = stack[stack.length - 1];
+
+      row.innerHTML = `
+          <td style="padding-left: ${level * 20}px">
+              ${hasChildren
+          ? `<span class="toggle">▼</span>`
+          : '<span style="padding-left:16px"></span>'
+        }
+              ${node.localName}
+          </td>
+          <td>${hasChildren ? "" : node.textContent?.trim() || ""}</td>
+          <td>${prefix}</td>
+          <td>${attributes}</td>
+      `;
+
+      tbody.appendChild(row);
+      stack.push(id);
+
+      // Обрабатываем детей
+      if (hasChildren) {
+        Array.from(node.children).forEach((child) => {
+          processNode(child, level + 1);
+        });
+        row
+          .querySelector(".toggle")
+          .addEventListener("click", toggleChildren);
+      }
+
+      stack.pop();
+      return row;
+    }
+  }
+
+  function toggleChildren(e) {
+    const parentId = e.target.closest("tr").dataset.id;
+    const allRows = Array.from(
+      document.querySelectorAll("tr[data-parent]")
+    );
+
+    // Находим всех детей
+    const children = allRows.filter(
+      (row) =>
+        row.dataset.parent === parentId &&
+        parseInt(row.dataset.level) ===
+        parseInt(e.target.closest("tr").dataset.level) + 1
+    );
+
+    // Переключаем видимость
+    const isHidden = children[0]?.classList.contains("hidden");
+    children.forEach((child) => {
+      child.classList.toggle("hidden", !isHidden);
+      if (isHidden) {
+        // Если показываем - рекурсивно показываем всех родителей
+        showParents(child);
+      }
+    });
+
+    // Меняем иконку
+    e.target.textContent = isHidden ? "▼" : "▶";
+  }
+
+  function showParents(child) {
+    let parentId = child.dataset.parent;
+    while (parentId) {
+      const parent = document.querySelector(`tr[data-id="${parentId}"]`);
+      if (parent) {
+        parent.classList.remove("hidden");
+        parentId = parent.dataset.parent;
+      } else {
+        break;
+      }
+    }
+  }
+
+  renderXML();
+</script>
+
+</html>

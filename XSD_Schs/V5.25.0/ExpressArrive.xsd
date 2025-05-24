@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:catESAD_cu="urn:customs.ru:CUESADCommonAggregateTypesCust:5.24.0" xmlns:ea="urn:customs.ru:Information:WarehouseDocuments:ExpressArrive:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:WarehouseDocuments:ExpressArrive:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonAggregateTypesCust:5.24.0" schemaLocation="CUESADCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Уведомление о прибытии экспресс-грузов</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ExpressArrive" type="ea:ExpressArriveType">
+    <xs:annotation>
+      <xs:documentation>Уведомление о прибытии экспресс-грузов</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ExpressArriveType">
+    <xs:annotation>
+      <xs:documentation>Уведомление о прибытии экспресс-грузов</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="NotifDate" type="clt_ru:DateTimeCustType">
+            <xs:annotation>
+              <xs:documentation>Дата и время уведомления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ExpressCargoDeclarationIdDetails" type="cat_ru:GTDIDType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер предварительной декларации на товары для экспресс-грузов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Customs" type="cat_ru:CustomsType">
+            <xs:annotation>
+              <xs:documentation>Код и наименование таможенного органа расположенного в месте хранения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsLocation" type="ea:GoodsLocationType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о местонахождении товаров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PresentedDoc" type="ea:AttachedDocumentType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Прилагаемые документы о прибытии</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ArriveShipment" type="ea:GoodsShipmentType">
+            <xs:annotation>
+              <xs:documentation>Сведения о товарной партии</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1008045E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AttachedDocumentType">
+    <xs:annotation>
+      <xs:documentation>Прилагаемый документ</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:DocBaseV4Type">
+        <xs:sequence>
+          <xs:element name="ArchID" type="clt_ru:ArchiveIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Идентификатор хранилища электронных документов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ArchDocID" type="clt_ru:ArchiveDocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Идентификатор электронного документа в хранилище</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GoodsLocationType">
+    <xs:annotation>
+      <xs:documentation>Местонахождение товаров</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsLocationCode" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Кодовое обозначение места нахождения товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsOfficeCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Кодовое обозначение таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PlaceName" type="clt_ru:ShortNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование места нахождения товаров (железнодорожной станции, морского (речного) порта, воздушного пункта пропуска)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsControlZoneId" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер (регистрационный номер) зоны таможенного контроля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegisterDocumentIdDetails" type="catESAD_cu:AEORegistryIdDetailsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Свидетельство о включении в : реестр уполномоченных экономических операторов, реестр владельцев складов временного хранения, складов хранения собственных товаров, таможенных складов, свободных складов или магазинов беспошлинной торговли</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodLocationTransportMeansDetails" type="catESAD_cu:CUTransportType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о транспортном средстве, на котором находятся товары</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SubjectAddressDetails" type="RUScat_ru:RUAddressType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Адрес места нахождения товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GoodsShipmentType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товарной партии</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="HouseShipment" type="ea:HouseShipmentDetailsType" maxOccurs="500">
+        <xs:annotation>
+          <xs:documentation>Сведения о товарной партии по индивидуальной накладной</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HouseShipmentDetailsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товарной партии по индивидуальной накладной</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="WayBillID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор партии товаров в текущем реестре</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ObjectOrdinal" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер индивидуальной накладной</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransportDocumentDetails" type="ea:AttachedDocumentType">
+        <xs:annotation>
+          <xs:documentation>Сведения об общей накладной</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="HouseWaybillDetails" type="ea:AttachedDocumentType">
+        <xs:annotation>
+          <xs:documentation>Сведения об индивидуальной накладной</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SignChange" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак изменения сведений относительно ПРЕД ПТДЭГ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

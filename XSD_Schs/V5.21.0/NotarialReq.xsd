@@ -1,0 +1,300 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:ndreq="urn:customs.ru:Information:SQDocuments:NotarialReq:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:NotarialReq:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос на представление сведений ЕИС нотариата</xs:documentation>
+  </xs:annotation>
+  <xs:element name="NotarialReq" type="ndreq:NotarialReqType">
+    <xs:annotation>
+      <xs:documentation>Запрос на представление сведений ЕИС нотариата</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="NotarialReqType">
+    <xs:annotation>
+      <xs:documentation>Запрос на представление сведений ЕИС нотариата</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="ApplicationID" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Идентификатор заявки в АПС "Электронные Госуслуги" (Для запросов, совершаемых в рамках исполнения госуслуг)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Date" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата удостоверения документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegCode" type="clt_ru:DocumentNumberType">
+            <xs:annotation>
+              <xs:documentation>Реестровый номер документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Kind" type="ndreq:KindType">
+            <xs:annotation>
+              <xs:documentation>Тип документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Notary" type="cat_ru:PersonBaseType">
+            <xs:annotation>
+              <xs:documentation>Нотариус</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Assistant" type="cat_ru:PersonBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>ВРИО нотариуса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Blank" type="ndreq:BlankType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Бланки документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Sample" type="clt_ru:LetterIndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Запрос приложений в отчете. Допустимые значения: 0 - Образец подписи нотариуса; 1 - Образец печати подписи</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Attach" type="ndreq:AttachType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Электронная копия нотариально оформленного документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009108E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор электронного документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="KindType">
+    <xs:annotation>
+      <xs:documentation>
+				Тип документа
+			</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="18001">
+        <xs:annotation>
+          <xs:documentation>Удостоверение доверенности</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18002">
+        <xs:annotation>
+          <xs:documentation>Удостоверение распоряжения об отмене доверенности</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18003">
+        <xs:annotation>
+          <xs:documentation>Удостоверение завещания</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18004">
+        <xs:annotation>
+          <xs:documentation>Распоряжение об отмене завещания</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18005">
+        <xs:annotation>
+          <xs:documentation>Брачный договор</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18006">
+        <xs:annotation>
+          <xs:documentation>Договор инвестиционного товарищества</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18007">
+        <xs:annotation>
+          <xs:documentation>Удостоверение прочих договоров и соглашений</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18008">
+        <xs:annotation>
+          <xs:documentation>Удостоверение прочих односторонних сделок и волеизъявлений</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18009">
+        <xs:annotation>
+          <xs:documentation>Выдача свидетельства о праве на наследство по закону</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18010">
+        <xs:annotation>
+          <xs:documentation>Выдача свидетельства о праве на наследство по завещанию</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18011">
+        <xs:annotation>
+          <xs:documentation>Выдача свидетельства о праве собственности на долю в общем имуществе по заявлению пережившего супруга</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18012">
+        <xs:annotation>
+          <xs:documentation>Удостоверение фактов</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18013">
+        <xs:annotation>
+          <xs:documentation>Свидетельствование подлинности подписи</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18014">
+        <xs:annotation>
+          <xs:documentation>Удостоверение равнозначности</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18015">
+        <xs:annotation>
+          <xs:documentation>Совершение исполнительных надписей</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18016">
+        <xs:annotation>
+          <xs:documentation>Выдача дубликатов</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18017">
+        <xs:annotation>
+          <xs:documentation>Предоставление заявлений на государственную регистрацию</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18018">
+        <xs:annotation>
+          <xs:documentation>Свидетельствование верности копий документов и выписок из них</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18019">
+        <xs:annotation>
+          <xs:documentation>Обеспечение доказательств</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18020">
+        <xs:annotation>
+          <xs:documentation>Принятие в депозит денежных средств и ценных бумаг</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18021">
+        <xs:annotation>
+          <xs:documentation>Принятие на хранение документов</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18022">
+        <xs:annotation>
+          <xs:documentation>Совершение протеста векселя</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18023">
+        <xs:annotation>
+          <xs:documentation>Совершение морского протеста</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18024">
+        <xs:annotation>
+          <xs:documentation>Направление запросов в центральный каталог кредитных историй</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18025">
+        <xs:annotation>
+          <xs:documentation>Предъявление чеков к платежу и удостоверение неоплаты чеков</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18026">
+        <xs:annotation>
+          <xs:documentation>Удостоверение тождественности собственноручной подписи инвалида по зрению с её факсимильным воспроизведением</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18027">
+        <xs:annotation>
+          <xs:documentation>Удостоверение тождественности гражданина с лицом, изображенным на фотографии</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18028">
+        <xs:annotation>
+          <xs:documentation>Удостоверение времени предъявления документа</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18029">
+        <xs:annotation>
+          <xs:documentation>Удостоверение решения органов управления юр.лиц, участников юр.лиц</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18030">
+        <xs:annotation>
+          <xs:documentation>Наложение и снятие запрещения отчуждения имущества</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18031">
+        <xs:annotation>
+          <xs:documentation>Направление уведомления залогодателю об обращении взыскания на заложенное имущество</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18032">
+        <xs:annotation>
+          <xs:documentation>Принятие закрытого завещания</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18033">
+        <xs:annotation>
+          <xs:documentation>Принятие мер по охране наследственного имущества и управлению им</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18034">
+        <xs:annotation>
+          <xs:documentation>Свидетельствование верности перевода нотариусом документов с одного языка на другой</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="18035">
+        <xs:annotation>
+          <xs:documentation>Иное нотариальное действие</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="BlankType">
+    <xs:annotation>
+      <xs:documentation>Бланк документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Series" type="clt_ru:Text10Type">
+        <xs:annotation>
+          <xs:documentation>Серия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Number" type="clt_ru:Text10Type">
+        <xs:annotation>
+          <xs:documentation>Номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Id" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Идентификатор</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AttachType">
+    <xs:annotation>
+      <xs:documentation>Электронная копия нотариально оформленного документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Name" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Имя файла документа с расширением</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Base" type="clt_ru:Text3MB">
+        <xs:annotation>
+          <xs:documentation>Файл в формате base64</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

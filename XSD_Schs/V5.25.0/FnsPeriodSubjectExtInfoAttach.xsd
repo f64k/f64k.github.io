@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+VS01550v001-FNS001 (Сведения о текущем отчетном периоде расширенных сведений, передаваемым в отношении субъектов - налогоплательщиков и участников ВЭД), вложение VO_PERIOD_2_015_23_04_01_01.xsd
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:psei_att="urn:customs.ru:Information:SQDocuments:FnsPeriodSubjectExtInfoAttach:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:FnsPeriodSubjectExtInfoAttach:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Ответ на запрос сведений о текущем отчетном периоде расширенных сведений, передаваемым в отношении субъектов - налогоплательщиков и участников ВЭД (содержимое вложения)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="FnsPeriodSubjectExtInfoAttach" type="psei_att:FnsPeriodSubjectExtInfoAttachType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос сведений о текущем отчетном периоде расширенных сведений, передаваемым в отношении субъектов - налогоплательщиков и участников ВЭД (содержимое вложения)</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="FnsPeriodSubjectExtInfoAttachType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос сведений о текущем отчетном периоде расширенных сведений, передаваемым в отношении субъектов - налогоплательщиков и участников ВЭД (содержимое вложения)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="File" type="psei_att:FileType">
+            <xs:annotation>
+              <xs:documentation>Файл обмена</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1060023E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="FileType">
+    <xs:annotation>
+      <xs:documentation>Файл обмена</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FileId" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Идентификатор файла</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProgVer" type="clt_ru:Text40Type">
+        <xs:annotation>
+          <xs:documentation>Версия программы, с помощью которой сформирован файл</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FormatVer" type="clt_ru:CodeVariable5Type">
+        <xs:annotation>
+          <xs:documentation>Версия формата</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PeriodInfo" type="psei_att:PeriodInfoType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о периоде</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="INNPersonsType">
+    <xs:annotation>
+      <xs:documentation>Идентификатор субъекта</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="INN" type="clt_ru:INNIDType">
+          <xs:annotation>
+            <xs:documentation>ИНН организации</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="INNIP" type="clt_ru:INNIDType">
+          <xs:annotation>
+            <xs:documentation>ИНН физического лица</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PeriodInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о периоде</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="INNPersons" type="psei_att:INNPersonsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор субъекта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReportingPeriod" type="psei_att:ReportingPeriodType">
+        <xs:annotation>
+          <xs:documentation>Значение отчетного период</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReportingPeriodType">
+    <xs:annotation>
+      <xs:documentation>Значение отчетного период</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DateBegin" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата начала отчетного периода</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateEnd" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата конца отчетного периода</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

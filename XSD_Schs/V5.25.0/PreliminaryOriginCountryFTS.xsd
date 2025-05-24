@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:cltESAD_cu="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:porc_fts="urn:customs.ru:Information:CustomsDocuments:PreliminaryOriginCountryFTS:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:PreliminaryOriginCountryFTS:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" schemaLocation="CUESADCommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Предварительное решение о стране происхождения товара (выдано до 18.02.2018 г.)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="PreliminaryOriginCountryFTS" type="porc_fts:PreliminaryOriginCountryFTSType" />
+  <xs:complexType name="PreliminaryOriginCountryFTSType">
+    <xs:annotation>
+      <xs:documentation>Предварительное решение о стране происхождения товара (выдано до 18.02.2018 г.)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Date" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата принятия решения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OriginCountryName" type="clt_ru:CountryNameType">
+            <xs:annotation>
+              <xs:documentation>Страна происхождения товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Mark" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Служебные отметки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ManagementName" type="clt_ru:FreeText250Type">
+            <xs:annotation>
+              <xs:documentation>Наименование Управления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Declarant" type="porc_fts:DeclarantType">
+            <xs:annotation>
+              <xs:documentation>Сведения о заявителе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegistrationNumber" type="porc_fts:RegistrationNumberType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Goods" type="porc_fts:GoodsType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Товар</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsInfoOriginCountry" type="porc_fts:GoodsInfoOriginCountryType">
+            <xs:annotation>
+              <xs:documentation>Сведения о товаре, необходимые для определения страны происхождения </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Document" type="cat_ru:DocumentBaseType">
+            <xs:annotation>
+              <xs:documentation>Документ, регламентирующий правила определения страны происхождения товара из конкретной страны или группы стран.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PersonSignature" type="cat_ru:PersonSignatureType">
+            <xs:annotation>
+              <xs:documentation>Подпись должностного лица таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006261E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DeclarantType">
+    <xs:annotation>
+      <xs:documentation>Сведения о заявителе</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:OrganizationType">
+        <xs:sequence>
+          <xs:element name="Chief" type="cat_ru:PersonBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Руководитель (заместителя руководителя)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GoodsInfoOriginCountryType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товаре, необходимые для определения страны происхождения </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Manufacturer" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Производитель товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PlaceManufactur" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Место производства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Contract" type="cat_ru:DocumentBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Конкретный документ, на основании которого принято решение.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GoodsInformationType">
+    <xs:annotation>
+      <xs:documentation>Характеристика товара</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsMark" type="cltESAD_cu:GoodsArticulType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Марка (модель) товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsMarking" type="cltESAD_cu:GoodsArticulType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Артикул товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsStandard" type="cltESAD_cu:GoodsArticulType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Стандарт (ГОСТ, ОСТ, СПП, СТО, ТУ)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsSort" type="cltESAD_cu:GoodsArticulType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сорт / Сорт или группа сортов (для лесо- и пиломатериалов)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WoodSortiment" type="cltESAD_cu:WoodAssortiment" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование сортимента (для лесоматериалов товарной позиции 4403)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WoodKind" type="cltESAD_cu:WoodKindType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Порода древесины</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Dimensions" type="cltESAD_cu:GoodsArticulType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Размеры</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GoodsType">
+    <xs:annotation>
+      <xs:documentation>Товар</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodDescription" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Наименование товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsInformation" type="porc_fts:GoodsInformationType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Характеристика товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegistrationNumberType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="IndexManagement" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Индекс Управления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CaseNumber" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Номер дела по номенклатуре дел Управления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SerialNumber" type="clt_ru:Code4Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый исходящий номер предварительного решения в Управлении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

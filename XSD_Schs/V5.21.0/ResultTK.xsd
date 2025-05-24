@@ -1,0 +1,1024 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:rstk="urn:customs.ru:Information:SQDocuments:ResultTK:5.21.0" xmlns:sq_clt="urn:customs.ru:Information:SQDocuments:SQCommonLeafTypesCust:5.0.10" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:SQDocuments:ResultTK:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:SQDocuments:SQCommonLeafTypesCust:5.0.10" schemaLocation="SQCommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сведения из транспортного контроля</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ResultTK" type="rstk:ResultTKType">
+    <xs:annotation>
+      <xs:documentation>Сведения из транспортного контроля</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ResultTKType">
+    <xs:annotation>
+      <xs:documentation>Сведения из транспортного контроля</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="RequestID" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Идентификатор пакета данных</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Inspection" type="rstk:InspectionType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Данные транспортного контроля/инспекции</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009038E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AccountCodeType">
+    <xs:annotation>
+      <xs:documentation>Учетный талон</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AccountCodeID" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор учетного талона</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AccountCodeNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер учетного талона</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AccountCodeCreateDate" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата/время выдачи учетного талона</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InspectionID" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор листа учета (связь с документом "Сведения из транспортного контроля")</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Information" type="sq_clt:FreeText4000Type">
+        <xs:annotation>
+          <xs:documentation>Примечание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Driver" type="cat_ru:PersonBaseType">
+        <xs:annotation>
+          <xs:documentation>Водитель</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AccountCodeEmployee" type="cat_ru:PersonBaseType">
+        <xs:annotation>
+          <xs:documentation>Инспектор, выдавший Учетный талон</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AutoType">
+    <xs:annotation>
+      <xs:documentation>Регистрационные данные ТС</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:TransportMeansBaseType">
+        <xs:sequence>
+          <xs:element name="TransportMarkName" type="clt_ru:CodeVariable20Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Марка ТС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BodyTypeName" type="clt_ru:Text10Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Тип ТС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="BankRequisType">
+    <xs:annotation>
+      <xs:documentation>Реквизиты банка</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="BankName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Наименование банка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BIC" type="clt_ru:BICIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>БИК</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CorrespAccount" type="clt_ru:AccountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер корреспондентского счета (субсчета)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BankPlace" type="clt_ru:PlaceNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Местонахождение банка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonalAccount" type="clt_ru:AccountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Лицевой счет клиента</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CheckPointType">
+    <xs:annotation>
+      <xs:documentation>Пост (пункт пропуска), где осуществлялся транспортный контроль</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CheckPointCode" type="clt_ru:CodeVariable8Type">
+        <xs:annotation>
+          <xs:documentation>Код поста (пункта пропуска)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CheckPointName" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование поста (пункта пропуска)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryCode" type="clt_ru:CountryA3CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код страны</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CheckType">
+    <xs:annotation>
+      <xs:documentation>Квитанция</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="Sum" type="clt_ru:AmountType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сумма дорожных сборов/штрафа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CheckViolationType">
+    <xs:annotation>
+      <xs:documentation>Данные проверки/наличия нарушения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RequirementInfo" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание требования/условия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ViolationName" type="clt_ru:CodeVariable20Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование нарушения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ControlStatusName" type="clt_ru:CodeVariable11Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Статус проверки/наличия нарушения (YES - Да; NO - Нет; NOTREQUIRED - Не требуется; NOTVERIFIED - Не проверялось)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NotifNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер уведомления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CorrectionDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата устранения замечания</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CountryRegionType">
+    <xs:annotation>
+      <xs:documentation>Код страны, код региона, наименование пункта</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CountryCode" type="clt_ru:CodeVariable4Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код страны</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegionCode" type="clt_ru:RegionCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код региона</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PlaceName" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование пункта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocumentalControlType">
+    <xs:annotation>
+      <xs:documentation>Сведения из документального контроля</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="NotificationNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер уведомления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NotificationDate" type="clt_ru:DateTimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата уведомления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransportationTypeName" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вид перевозки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CargoLocation" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Страна происхождения товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AccountCode" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер учетного талона</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StartDateTime" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата/время начала документального контроля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NumberUNO" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер/код опасного груза по ООН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MassTSFull" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Полная масса ТС / состава ТС, тонн</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IsRoadPayment" type="clt_ru:DigitalIndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Грузоподъемность (больше 3.5 тонн - 1, меньше 3.5 тонн - 0)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DangerClass" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Класс опасного груза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IsRoadPayed" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак наличия оплаты дорожного сбора</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentalEmployee" type="cat_ru:CustomsPersonType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Инспектор, проводивший инструментальный контроль</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FirstDriver" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Водитель</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Requirement" type="rstk:CheckViolationType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о соответствии/выполнении требованию/условия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Carrier" type="RUScat_ru:SubjectDetailsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Перевозчик</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CarrierName" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование перевозчика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Consignor" type="RUScat_ru:SubjectDetailsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отправитель</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ConsignorName" type="rstk:Text255Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование отправителя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Consignee" type="RUScat_ru:SubjectDetailsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Получатель</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ConsigneeName" type="rstk:Text255Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование получателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PassTG" type="rstk:UsingPassType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наличие разрешения на перевозку ТГ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PassKG" type="rstk:UsingPassType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наличие разрешения на перевозку КГ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PassOG" type="rstk:UsingPassType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наличие разрешения на перевозку ОГ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PassSPS" type="rstk:UsingPassType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наличие разрешения на перевозку СПС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PassCard" type="rstk:LicenceCardType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Карточка допуска</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LicenceCard" type="rstk:LicenceCardType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Лицензионная карточка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransitPermit" type="rstk:UsingPassType">
+        <xs:annotation>
+          <xs:documentation>Использование разрешения на поездку</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DispatchLocation" type="rstk:CountryRegionType">
+        <xs:annotation>
+          <xs:documentation>Место отправления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DestinationLocation" type="rstk:CountryRegionType">
+        <xs:annotation>
+          <xs:documentation>Место назначения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TahogData" type="rstk:TahogDataType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Данные цифрового тахографа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InspectionType">
+    <xs:annotation>
+      <xs:documentation>Данные транспортного контроля/инспекции</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="InspectionID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор инспекции/транспортного контроля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InspectionDateTime" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата/время инспекции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InstrumentalControlID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор инструментального контроля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentalControlID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор документального контроля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ViolationControlID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор листа контроля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BelarusControlID" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор белорусского контроля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KazakhControlID" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор казахстанского контроля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DecisionName" type="clt_ru:CodeVariable10Type">
+        <xs:annotation>
+          <xs:documentation>Решение, принятое по результатам контроля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EndDateTime" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата/время окончания транспортного контроля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Information" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Примечание инспектора транспортного контроля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IsInstrumental" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак инструментального контроля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IsVisual" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак визуального контроля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IsDocumental" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак документального контроля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Violation" type="clt_ru:CodeVariable20Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Выявленные в контроле нарушения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CheckPoint" type="rstk:CheckPointType">
+        <xs:annotation>
+          <xs:documentation>Пост (пункт пропуска), где осуществлялся транспортный контроль</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InstrumentalControl" type="rstk:InstrumentalControlType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения из инструментального контроля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="VisualControl" type="rstk:VisualControlType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения из визуального контроля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentalControl" type="rstk:DocumentalControlType">
+        <xs:annotation>
+          <xs:documentation>Сведения из документального контроля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BelarusControl" type="rstk:RBKZControlType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения из листа транспортного контроля Республики Беларусь</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KazakhControl" type="rstk:RBKZControlType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения из листа транспортного контроля Республики Казахстан</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NotifDocument" type="rstk:NotifDocumentType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения из уведомления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AccountCode" type="rstk:AccountCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Учетный талон</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PostPenalty" type="rstk:PostPenaltyType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения об оплате штрафа с ПК</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InstrumentalControlType">
+    <xs:annotation>
+      <xs:documentation>Сведения из инструментального контроля</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Number" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер листа учета</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateTime" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата/время начала инструментального контроля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PassNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер талона контроля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Course" type="clt_ru:CodeVariable3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Шифр поездки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InstrumentalEmployee" type="rstk:InstrumentalEmployeeType">
+        <xs:annotation>
+          <xs:documentation>Инспектор, проводивший инструментальный контроль</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Weight" type="rstk:WeightType">
+        <xs:annotation>
+          <xs:documentation>Весовые параметры ТС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Size" type="rstk:SizeType">
+        <xs:annotation>
+          <xs:documentation>Габаритные параметры ТС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Auto" type="rstk:AutoType">
+        <xs:annotation>
+          <xs:documentation>Регистрационные данные ТС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ViolSmokeNoise" type="rstk:CheckViolationType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Соответствие дымности (токсичности)/уровню шумности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PassWeight" type="rstk:UsingPassType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>МСВТС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InstrumentalEmployeeType">
+    <xs:annotation>
+      <xs:documentation>Инспектор, проводивший инструментальный контроль</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FIO" type="rstk:Text255Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ФИО инспектора, проводившего инструментальный контроль. В одну строку длиной 255 символов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LNP" type="clt_ru:LNPIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ЛНП должностного лица таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LicenceCardType">
+    <xs:annotation>
+      <xs:documentation>Данные карточки допуска/лицензионной карточки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PassKind" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вид спецразрешения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Number" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер карточки допуска/лицензионной карточки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ControlStatusName" type="clt_ru:CodeVariable11Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Статус проверки карточки допуска/лицензионной карточки (YES - Да; NO - Нет; NOTREQUIRED - Не требуется; NOTVERIFIED - Не проверялось)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Duration" type="clt_ru:DateTimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Срок действия карточки допуска/лицензионной карточки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LicenceStatusName" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Статус карточки допуска/лицензионной карточки (Действует / Истек срок действия / Приостановлено / Аннулировано / Действие прекращено)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Certificate" type="cat_ru:DocumentBaseType">
+        <xs:annotation>
+          <xs:documentation>Номер сертификата на карточку допуска/лицензионную карточки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="NotifDocumentType">
+    <xs:annotation>
+      <xs:documentation>Сведения из уведомления</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="NotifID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор уведомления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NotifNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер уведомления </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryCode" type="clt_ru:CountryA3CodeType">
+        <xs:annotation>
+          <xs:documentation>Код страны</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Customs" type="cat_ru:CUCustomsType">
+        <xs:annotation>
+          <xs:documentation>Контрольный пункт, в который необходимо предоставить документы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsPerson" type="cat_ru:CustomsPersonType">
+        <xs:annotation>
+          <xs:documentation>Инспектор, выдавший уведомление</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Driver" type="cat_ru:PersonBaseType">
+        <xs:annotation>
+          <xs:documentation>Водитель</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PenaltyType">
+    <xs:annotation>
+      <xs:documentation>Сведения об оплате штрафа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PenaltyCreateDateTime" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата/время внесения платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PayDateTime" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата/время оплаты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Organization" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код КП, где были внесены данные об оплате</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PayDoc" type="cat_ru:DocumentBaseType">
+        <xs:annotation>
+          <xs:documentation>Платежный документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Payer" type="RUScat_ru:SubjectDetailsType">
+        <xs:annotation>
+          <xs:documentation>Плательщик</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BankRequis" type="rstk:BankRequisType">
+        <xs:annotation>
+          <xs:documentation>Реквизиты банка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TSInfo" type="cat_ru:TransportMeansBaseType">
+        <xs:annotation>
+          <xs:documentation>Сведения о транспортном средстве</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PostPenaltyType">
+    <xs:annotation>
+      <xs:documentation>Сведения об оплате штрафа с ПК</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="IsPaid" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Отметка об оплате</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ViolatorID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор записи в реестре нарушителей</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PenaltySum" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма штрафа в рублях</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Resolution" type="cat_ru:DocumentBaseType">
+        <xs:annotation>
+          <xs:documentation>Постановление</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Penalty" type="rstk:PenaltyType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения об оплате штрафа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RBKZControlType">
+    <xs:annotation>
+      <xs:documentation>Сведения из листа транспортного контроля</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="IsTG" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак тяжеловесного груза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IsKG" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак крупно-габаритного груза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IsOG" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак опасного груза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AccountCode" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер учетного талона</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PermitSeries" type="clt_ru:Code4Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Серия разрешения (FREE - Б(бесплатный); PAID - П(платный))</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Currency" type="clt_ru:CurrencyA3CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Валюта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransitPermit" type="rstk:UsingPassType">
+        <xs:annotation>
+          <xs:documentation>Наличие разрешения на поездку</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RoadCheck" type="rstk:CheckType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Квитанция об оплате дорожных сборов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PenaltyCheck" type="rstk:CheckType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Квитанция об оплате штрафа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Resolution" type="cat_ru:DocumentBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Постановление</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Suitability" type="rstk:CheckViolationType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Наличие разрешений/документов об оплате/соответствие параметрам, указанным в разрешении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PassTG" type="rstk:UsingPassType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наличие разрешения на перевозку ТГ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PassKG" type="rstk:UsingPassType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наличие разрешения на перевозку КГ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PassOG" type="rstk:UsingPassType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наличие разрешения на перевозку ОГ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SizeType">
+    <xs:annotation>
+      <xs:documentation>Габаритные параметры ТС</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Height" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Высота ТС, м</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Width" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Ширина ТС, м</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Length" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Длина ТС, м</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TahogDataType">
+    <xs:annotation>
+      <xs:documentation>Данные цифрового тахографа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ApprovalDateTime" type="clt_ru:DateTimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата/время официального утверждения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TahogInspectDateTime" type="clt_ru:DateTimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата/время последней инспекции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DriveDuration" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Продолжительность управления ТС за предыдущий период</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DriveDurationWeek" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Продолжительность управления ТС за предыдущую неделю</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RestDuration" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Продолжительность отдыха за предыдущие сутки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RestDurationWeek" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Продолжительность отдыха за предыдущую неделю</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BreakDuration" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Продолжительность перерывов в течение смены</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TransportType">
+    <xs:annotation>
+      <xs:documentation>Регистрационные данные ТС</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Number" type="clt_ru:TransportMeansIDType">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер прицепа/полуприцепа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Country" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Страна регистрации прицепа/полуприцепа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="UsingPassType">
+    <xs:annotation>
+      <xs:documentation>Использование спец.разрешения на поездку</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="ControlStatusName" type="clt_ru:CodeVariable11Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Статус проверки разрешения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Requirement" type="rstk:CheckViolationType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о соответствии/выполнении требованию/условия</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="VisualControlType">
+    <xs:annotation>
+      <xs:documentation>Сведения из визуального контроля</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ShipmentType" type="clt_ru:CodeVariable20Type">
+        <xs:annotation>
+          <xs:documentation>Вид перевозки (CONVEY - Перевозка пассажиров; NO_PASSENGER - Без пассажиров; NO_CARGO - Без груза; FREIGHT - Перевозка грузов)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TripKind" type="clt_ru:CodeVariable20Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вид поездки (REGULAR - Регулярная; IRREGULAR - Нерегулярная)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IsTG" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак тяжеловесного груза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IsKG" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак крупно-габаритного груза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IsOG" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак опасного груза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IsSPS" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак скоропортящегося груза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IsMAP" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак международной автомобильной перевозки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PassengerCount" type="clt_ru:Quantity8Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество пассажиров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IsTransit" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак транзитной поездки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CargoTypeName" type="clt_ru:GoodsNomenclatureCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код товара по ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FirstTrailer" type="rstk:TransportType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Регистрационные данные первого прицепа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SecondTrailer" type="rstk:TransportType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Регистрационные данные второго прицепа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Requirement" type="rstk:CheckViolationType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о наличии/соответствии/выполнении требования/условия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="WeightType">
+    <xs:annotation>
+      <xs:documentation>Весовые параметры ТС</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Pin" type="clt_ru:Quantity14point2Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Список нагрузок на каждую ось, т</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Total" type="clt_ru:Quantity14point2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Суммарная нагрузка на оси ТС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PinCount" type="clt_ru:Count4Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество осей ТС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Distance" type="clt_ru:Quantity14point2Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Список расстояний между осями, м</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Cargo" type="clt_ru:Quantity14point2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вес груза, т</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="Text255Type">
+    <xs:annotation>
+      <xs:documentation>Текстовая строка длиной до 255 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="255" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

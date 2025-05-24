@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:rfmb="urn:customs.ru:Information:SQDocuments:RosFinMonitoringBroadcasts:5.25.0" targetNamespace="urn:customs.ru:Information:SQDocuments:RosFinMonitoringBroadcasts:5.25.0" elementFormDefault="qualified" version="5.25.0.0">
+	<xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Запрос на рассылку перечня организаций и физических лиц, в отношении которых имеются сведения об их причастности к экстремистской деятельности или терроризму, об их причастности к распространению оружия массового уничтожения, а также перечня лиц, в отношении которых действует решение Комиссии о замораживании (блокировании) принадлежащих им денежных средств или иного имущества</xs:documentation>
+	</xs:annotation>
+	<xs:element name="RosFinMonitoringBroadcasts" type="rfmb:RosFinMonitoringBroadcastsType">
+		<xs:annotation>
+			<xs:documentation>Запрос на рассылку перечня организаций и физических лиц, в отношении которых имеются сведения об их причастности к экстремистской деятельности или терроризму, об их причастности к распространению оружия массового уничтожения, а также перечня лиц, в отношении которых действует решение Комиссии о замораживании (блокировании) принадлежащих им денежных средств или иного имущества</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="RosFinMonitoringBroadcastsType">
+		<xs:annotation>
+			<xs:documentation>Запрос на рассылку перечня организаций и физических лиц, в отношении которых имеются сведения об их причастности к экстремистской деятельности или терроризму, об их причастности к распространению оружия массового уничтожения, а также перечня лиц, в отношении которых действует решение Комиссии о замораживании (блокировании) принадлежащих им денежных средств или иного имущества  </xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="IdList" type="clt_ru:DocumentIDType" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Уникальный идентификатор (номер)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Version" type="clt_ru:Code3Type" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Версия формата</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Date" type="clt_ru:DateCustType" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Дата выпуска</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ZipFullName" type="clt_ru:FreeText500Type" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Полное наименование архива с расширением</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ZipAttachments" type="rfmb:ZipAttachmentsType" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Вложения в архиве</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009412E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="AttachmentType">
+		<xs:annotation>
+			<xs:documentation>Описание вложения</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="FileName" type="clt_ru:FreeText250Type">
+				<xs:annotation>
+					<xs:documentation>Имя (идентификатор) файла вложения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FileType" type="clt_ru:FreeText250Type">
+				<xs:annotation>
+					<xs:documentation>Тип (формат) файла вложения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IsZipped" type="CategoryCust:IndicatorCategoriesCust" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Признак, упакован ли файл в zip-архив</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FileSchema" type="clt_ru:FreeText250Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Имя схемы, по которой сформирован файл вложения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FileData" type="CategoryCust:BinaryDataCategoriesCust">
+				<xs:annotation>
+					<xs:documentation>Данные файла в кодировке BASE64</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ZipAttachmentsType">
+		<xs:annotation>
+			<xs:documentation>Блок сведений о вложениях</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Attachment" type="rfmb:AttachmentType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Описание вложения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

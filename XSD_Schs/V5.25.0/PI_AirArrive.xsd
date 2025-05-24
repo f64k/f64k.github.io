@@ -1,0 +1,477 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:cltTrans_ru="urn:customs.ru:Information:TransportDocuments:TransportCommonLeafTypesCust:5.14.3" xmlns:catTrans_ru="urn:customs.ru:Information:TransportDocuments:TransportCommonAgregateTypesCust:5.24.0" xmlns:catpi_ru="urn:customs.ru:Information:PriorInformation:PriorCommonAggregateTypes:5.24.0" xmlns:piair="urn:customs.ru:Information:PriorInformation:PI_AirArrive:5.24.0" targetNamespace="urn:customs.ru:Information:PriorInformation:PI_AirArrive:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:TransportDocuments:TransportCommonLeafTypesCust:5.14.3" schemaLocation="TransportCommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:TransportDocuments:TransportCommonAgregateTypesCust:5.24.0" schemaLocation="TransportCommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:PriorInformation:PriorCommonAggregateTypes:5.24.0" schemaLocation="PriorCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Предварительное уведомление о прибытии товаров, перевозимых воздушным транспортом</xs:documentation>
+  </xs:annotation>
+  <xs:element name="PI_AirArrive" type="piair:PI_AirArriveType" />
+  <xs:complexType name="PI_AirArriveType">
+    <xs:annotation>
+      <xs:documentation>Предварительное уведомление о прибытии товаров, перевозимых воздушным транспортом.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="MPOSign" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Признак оформления МПО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ProhobitedGoodsIndicator" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Признак наличия товаров, ввоз которых запрещен или ограничен</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NumberCrewMembers" type="clt_ru:Count2Type">
+            <xs:annotation>
+              <xs:documentation>Количество членов экипажа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PI_URN" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Уникальный идентификатор товарной партии. Формат - URN</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="UINP" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>УИНП, присвоенный после подачи плана полетов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код таможенного органа прибытия</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TransportMeans" type="piair:TransportMeansType">
+            <xs:annotation>
+              <xs:documentation>Сведения о транспортном средстве</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AirCrewInfo" type="cat_ru:PersonBaseType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения об экипаже воздушного судна</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AirCarrierInfo" type="piair:AirCarrierInfoType">
+            <xs:annotation>
+              <xs:documentation>Сведения об авиаперевозчике</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RoutingInfo" type="piair:RoutingInfoType">
+            <xs:annotation>
+              <xs:documentation>Сведения о маршруте воздушного судна</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="StoresInfo" type="piair:StoresInfoType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о перевозимых припасах</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SparePartsInfo" type="piair:SuppliesStocksDescriptionType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о перевозимых частях и оборудовании, предназначенных для ремонта и эксплуатации воздушного судна</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PassengerList" type="piair:PassengerListType">
+            <xs:annotation>
+              <xs:documentation>Сведения о пассажирах</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:element name="CargoManifest" type="piair:CargoManifestType" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>Описание товарных партий</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="GTDID" type="cat_ru:GTDIDType" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>Регистрационный номер ДТ/ТД</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006813E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AirCarrierInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения об авиаперевозчике</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="NameAirCarrier" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Полное наименование перевозчика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IATACode" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Код ИАТА перевозчика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RepresentativeCarrier" type="cat_ru:PersonBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Представитель авиаперевозчика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AirportInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения об аэропорте</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AirportName" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Название </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IATACode" type="clt_ru:Code3Type">
+        <xs:annotation>
+          <xs:documentation>Код ИАТА</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CargoManifestType">
+    <xs:annotation>
+      <xs:documentation>Описание товарных партий</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CargoPlaceNumber" type="clt_ru:PakageNumberType">
+        <xs:annotation>
+          <xs:documentation>Количество мест по грузовой накладной</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TotalWeight" type="clt_ru:WeighQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Общий вес по грузовой накладной</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateExpectedArrival" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата ожидаемого прибытия товаров и транспортных средств в пограничный пункт пропуска</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TimeExpectedArrival" type="clt_ru:TimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Время ожидаемого прибытия товаров и транспортных средств в пограничный пункт пропуска</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsInfo" type="piair:GoodsInfoType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о перевозимом грузе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LoadingPoint" type="piair:AirportInfoType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Пункт погрузки товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="UnloadingPoint" type="piair:AirportInfoType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Пункт выгрузки товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BorderCustoms" type="cat_ru:CUCustomsType">
+        <xs:annotation>
+          <xs:documentation>Таможенный орган (пограничный пункт пропуска), в который ожидается прибытие товаров и транспортных средств.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CargoManifestNumber" type="catTrans_ru:AWBNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер грузовой накладной</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CountryInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о стране</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CountryName" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Название </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryCode" type="clt_ru:CountryA2CodeType">
+        <xs:annotation>
+          <xs:documentation>Код страны</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GoodsInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о перевозимом грузе</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="WeightUnitQualifierCode" type="clt_ru:LetterIndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код измерения веса товара(килограммы или фунты)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsVolume" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Объем товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsTNVEDCode" type="clt_ru:GoodsNomenclatureCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код товара по ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CargoDescription" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание груза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Торговое название товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GrossWeightQuantity" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Вес товара брутто (кг)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NettoWeightQuantity" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Вес товара нетто (кг)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PackingInfo" type="piair:PackingInfoType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения об упаковке и грузовых местах</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ControlNoCustoms" type="catpi_ru:ControlNoCustomsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения об иных видах контроля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OriginCountry" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Страна происхождения </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PIId" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор ПИ товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsId" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PackingInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения об упаковке и грузовых местах</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PackingCode" type="clt_ru:PackageCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код вида упаковки/грузового места товаров в соответствии с классификатором видов груза, упаковки и упаковочных материалов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PackingQuantity" type="clt_ru:PackagesQuantityType">
+        <xs:annotation>
+          <xs:documentation>Количество грузовых мест/упаковок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PackingDescription" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание грузовых мест/ упаковки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PackagePartQuantity" type="clt_ru:PakageNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество грузовых мест/упаковки, частично занятых товаром</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PassengerInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о пассажире</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PassengersName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>ФИО пассажира</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DepatureAirport" type="piair:AirportInfoType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Пункт посадки пассажира(аэропорт вылета)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DestinationAirport" type="piair:AirportInfoType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Пункт высадки пассажира (аэропорт назначения)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PassengerListType">
+    <xs:annotation>
+      <xs:documentation>Сведения о пассажирах</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Passengers" type="clt_ru:Quantity5Type">
+        <xs:annotation>
+          <xs:documentation>Количество пассажиров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PassengerInfo" type="piair:PassengerInfoType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о пассажире</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RoutingInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о маршруте воздушного судна</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ArrivalDateTime" type="clt_ru:DateTimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата и время прибытия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PlannedDateTime" type="clt_ru:DateTimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Планируемые дата и время обратного въезда.выезда</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DepartureDateTime" type="clt_ru:DateTimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата и время убытия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DepartureAirport" type="piair:AirportInfoType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Аэропорт отправления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Interim" type="piair:AirportInfoType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Следующий аэропорт</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DestinationCountry" type="piair:CountryInfoType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Cтрана назначения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DepartureCountry" type="piair:CountryInfoType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Страна отправления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DestinationAirport" type="piair:AirportInfoType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Аэропорт назначения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="StoresInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о перевозимых припасах</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Operating" type="piair:SuppliesStocksDescriptionType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Эксплуатационные припасы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Sold" type="piair:SuppliesStocksDescriptionType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Продаваемые припасы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Consumer" type="piair:SuppliesStocksDescriptionType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Потребительские припасы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SuppliesStocksDescriptionType">
+    <xs:annotation>
+      <xs:documentation>Описание перевозимых запасных частей и припасов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Description" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Quantity" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Количество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeasureUnitQualifier" type="clt_ru:MeasureUnitQualifierNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование единицы измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TransportMeansType">
+    <xs:annotation>
+      <xs:documentation>Сведения о транспортном средстве</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AirModification" type="clt_ru:Text40Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование и модификация воздушного судна</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AirClass" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Категория воздушного судна: 1- ВП(воздушно-пассажирское) 2 - ВГ(воздушно-грузовое) 3 - ВС (воздушно-грузопассажирское)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AirRegNumber" type="clt_ru:CodeVariable11Type">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер воздушного судна (номер борта или название)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AirNationalityCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код страны принадлежности транспорта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AirOwerInfo" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о владельце воздушного судна</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FlightNumber" type="cltTrans_ru:FlightNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер рейса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

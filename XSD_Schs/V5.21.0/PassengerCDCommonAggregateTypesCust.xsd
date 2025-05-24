@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:catESAD_cu="urn:customs.ru:CUESADCommonAggregateTypesCust:5.21.0" xmlns:cat_pcd="urn:customs.ru:Information:CustomsDocuments:PassengerCDCommonAggregateTypesCust:5.21.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:PassengerCDCommonAggregateTypesCust:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonAggregateTypesCust:5.21.0" schemaLocation="CUESADCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Общие сложные типы документов пассажирской таможенной декларации (ПТД)</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CountryType">
+    <xs:annotation>
+      <xs:documentation>Информация о стране</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CountryName" type="clt_ru:CountryNameType">
+        <xs:annotation>
+          <xs:documentation>Наименование Страны</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код страны alpha-2 (две буквы латинского алфавита)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CustomsMarkType">
+    <xs:annotation>
+      <xs:documentation>Служебные отметки</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:CustomsPersonType">
+        <xs:sequence>
+          <xs:element name="Mark" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Служебные отметки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DeclarantPersonType">
+    <xs:annotation>
+      <xs:documentation>Декларант ПТД (физ.лицо)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonSurname" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Фамилия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Имя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonMiddleName" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryPermanentResidence" type="cat_pcd:CountryType">
+        <xs:annotation>
+          <xs:documentation>Страна постоянного проживания декларанта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegCountry" type="cat_pcd:CountryType">
+        <xs:annotation>
+          <xs:documentation>Гражданство/Подданство декларанта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonIdCard" type="RUScat_ru:RUIdentityCardType">
+        <xs:annotation>
+          <xs:documentation>Реквизиты документа, удостоверяющего личность декларанта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegAddress" type="cat_ru:AddressType" minOccurs="0">
+        <xs:annotation>
+          <!-- Указывается основном формуляре в случае типа декларации 3 - Транзит и в дополнительном формуляре -->
+          <xs:documentation>Адрес места пребывания (регистрации) на таможенной территории Таможенного союза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INN" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <!-- Указывается основном формуляре в случае типа декларации 3 - Транзит и в дополнительном формуляре -->
+          <xs:documentation>ИНН декларанта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MoveMoneyType">
+    <xs:annotation>
+      <xs:documentation>Сведения о стоимости перемещаемых денежных средств, товаров</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CurrencyCode" type="clt_ru:CurrencyA3CodeType">
+        <xs:annotation>
+          <xs:documentation>Буквенный код валюты в соответствии с классификатором валют</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CurrencyName" type="clt_ru:CurrencyNameType">
+        <xs:annotation>
+          <xs:documentation>Наименование валюты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Amount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма в валюте</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SignerType">
+    <xs:annotation>
+      <xs:documentation>Информация о лице, заявляющем сведения (Декларант или уполномоченное лицо Таможенного представителя)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:PersonBaseType">
+        <xs:sequence>
+          <xs:element name="PersonMode" type="clt_ru:LetterIndicatorType">
+            <xs:annotation>
+              <xs:documentation>Сведения заявляет и подписывает: 1 - декларант; 2 - таможенный представитель</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IssueDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата подписания</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsRepresCertificate" type="catESAD_cu:CUESADCustomsRepresCertificateType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер Таможенного представителя по реестру таможенных представителей</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ContractRepresDecl" type="cat_ru:DocumentBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Документ, на основании которого таможенный представитель совершает от имени декларанта таможенные операции</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

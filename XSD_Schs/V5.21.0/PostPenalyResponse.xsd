@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:pprres="urn:customs.ru:Information:SQDocuments:PostPenalyResponse:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:PostPenalyResponse:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Ответ на запрос сведений обоплате штрафов - данные с КП</xs:documentation>
+  </xs:annotation>
+  <xs:element name="PostPenalyResponse" type="pprres:PostPenalyResponseType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос сведений обоплате штрафов - данные с КП</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="PostPenalyResponseType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос сведений обоплате штрафов - данные с КП</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="RequestID" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Идентификатор пакета данных</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PostPenaltiesList" type="pprres:PostPenaltiesListType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Список сведений об оплате штрафов с КП</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009292E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="PostPenaltiesListType">
+    <xs:annotation>
+      <xs:documentation>Список сведений об оплате штрафов с КП</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PostPenalty" type="pprres:PostPenaltyType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения об оплате штрафа с КП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PostPenaltyType">
+    <xs:annotation>
+      <xs:documentation>Сведения об оплате штрафа с КП</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Sum" type="pprres:DMoneyType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сумма оплаты штрафа в руб.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Name" type="pprres:Text255Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Плательщик</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PayDate" type="clt_ru:DateTimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата оплаты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PayDocNumber" type="pprres:Text255Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер платежного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BankRequis" type="pprres:Text255Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Реквизиты банка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ViolatorID" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор записи в реестре нарушителей</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AutoNumber" type="pprres:DRtnTrAutoNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер ТС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ResolutionNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер постановления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ResolutionDate" type="clt_ru:DateTimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата постановления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PenaltyDocTypeName" type="pprres:DRtnTrPenDocNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вид платёжного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BankName" type="pprres:Text255Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование банка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Organization" type="pprres:DRtnTrOrgPostTypeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код КП или УГАДН, где были внесены данные об оплате</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные простые прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="DMoneyType">
+    <xs:annotation>
+      <xs:documentation>Число. Всего 15 цифр из них до 2 знаков после запятой</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="15" />
+      <xs:fractionDigits value="2" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DRtnTrAutoNumberType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер ТС</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="12" />
+      <xs:pattern value="[0-9a-zA-Zа-яА-Я \-]*" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DRtnTrOrgPostTypeType">
+    <xs:annotation>
+      <xs:documentation>Код КП или УГАДН, где были внесены данные об оплате</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="7" />
+      <xs:pattern value="[0-9]*" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DRtnTrPenDocNameType">
+    <xs:annotation>
+      <xs:documentation>Вид платежного документа</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="0" />
+      <xs:maxLength value="12" />
+      <xs:pattern value="[A-Z]*" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text255Type">
+    <xs:annotation>
+      <xs:documentation>Текстовая строка длиной до 255 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="0" />
+      <xs:maxLength value="255" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

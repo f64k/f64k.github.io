@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:pdres="urn:customs.ru:Information:CustomsDocuments:PresentedDocInfoRes:5.24.0" xmlns:catESAD_cu="urn:customs.ru:CUESADCommonAggregateTypesCust:5.24.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:PresentedDocInfoRes:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonAggregateTypesCust:5.24.0" schemaLocation="CUESADCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Информация о разрешительных документах, указанных в графе 44</xs:documentation>
+  </xs:annotation>
+  <xs:element name="PresentedDocInfoRes" type="pdres:PresentedDocInfoResType" />
+  <xs:complexType name="PresentedDocInfoResType">
+    <xs:annotation>
+      <xs:documentation>Информация о разрешительных документах, указанных в графе 44</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="PresentedDoc" type="pdres:PresentedDocType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о разрешительных документах</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006184E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="PresentedDocType">
+    <xs:annotation>
+      <xs:documentation>Сведения о разрешительных документах</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TransitStatus" type="clt_ru:Numeric1Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Статус таможенного транзита: 1 - транзит открыт и товары не поступили; 2 - транзит закрыт; 3 - транзит открыт и товары поступили</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateTransitClosed" type="clt_ru:DateTimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата и время завершения процедуры таможенного транзита</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:choice>
+        <xs:element name="TIRID" type="pdres:TIRIDType">
+          <xs:annotation>
+            <xs:documentation>Номер книжки МДП</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="TDNumber" type="cat_ru:GTDIDType">
+          <xs:annotation>
+            <xs:documentation>Номер транзитной декларации</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+      <xs:element name="PresentedDocument" type="pdres:PresentedDocumentType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Информация о разрешительных  документах</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PresentedDocumentType">
+    <xs:annotation>
+      <xs:documentation>Информация о разрешительных  документах</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="DocumentKind" type="clt_ru:CustomsDocumentCodeType">
+            <xs:annotation>
+              <xs:documentation>Тип представленного документа.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocArchIdDetails" type="catESAD_cu:RFBasePresentedDocIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Идентификаторы, присвоенные документу (сведениям) при размещении в хранилище электронных документов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TIRIDType">
+    <xs:annotation>
+      <xs:documentation>Номер книжки МДП</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TIRID" type="clt_ru:Code8Type">
+        <xs:annotation>
+          <xs:documentation>Номер книжки МДП.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TIRSeries" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Серия книжки МДП.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TIRPageNumber" type="clt_ru:Count5Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер листа книжки МДП.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

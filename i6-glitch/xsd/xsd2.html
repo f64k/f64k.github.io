@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XML Validation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xsd-schema-validator/1.0.1/xsd-schema-validator.min.js"></script>
+</head>
+<body>
+    <input type="file" id="xmlFileInput" accept=".xml">
+    <input type="file" id="xsdFileInput" accept=".xsd">
+    <button onclick="validateXML()">Validate XML</button>
+    <pre id="result"></pre>
+
+    <script>
+        async function validateXML() {
+            const xmlFileInput = document.getElementById('xmlFileInput');
+            const xsdFileInput = document.getElementById('xsdFileInput');
+            const resultElement = document.getElementById('result');
+
+            if (!xmlFileInput.files.length || !xsdFileInput.files.length) {
+                resultElement.textContent = 'Please select both XML and XSD files.';
+                return;
+            }
+
+            const xmlFile = xmlFileInput.files[0];
+            const xsdFile = xsdFileInput.files[0];
+
+            try {
+                const xmlText = await fileToText(xmlFile);
+                const xsdText = await fileToText(xsdFile);
+
+                const validator = new XSD.Validator();
+                const result = validator.validate(xmlText, xsdText);
+
+                if (result.valid) {
+                    resultElement.textContent = 'XML is valid!';
+                } else {
+                    resultElement.textContent = 'XML is invalid:\n' + JSON.stringify(result.errors, null, 2);
+                }
+            } catch (error) {
+                resultElement.textContent = 'Error: ' + error.message;
+            }
+        }
+
+        function fileToText(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (event) => resolve(event.target.result);
+                reader.onerror = (error) => reject(error);
+                reader.readAsText(file);
+            });
+        }
+    </script>
+</body>
+</html>

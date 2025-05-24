@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:rsezc="urn:customs.ru:Information:RegistrationDocuments:ResidentSEZSertificate:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:RegistrationDocuments:ResidentSEZSertificate:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Свидетельство, удостоверяющее регистрацию лица в качестве резидента особой экономической зоны </xs:documentation>
+  </xs:annotation>
+  <xs:element name="ResidentSEZSertificate" type="rsezc:ResidentSEZSertificateType" />
+  <xs:complexType name="ResidentSEZSertificateType">
+    <xs:annotation>
+      <xs:documentation>Свидетельство, удостоверяющее регистрацию лица в качестве резидента особой экономической зоны </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="SertificateNumber" type="rsezc:CodeVariable15Type">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер свидетельства </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IssueDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата выдачи свидетельства </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegistrationDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата регистрации </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SEZType" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Тип ОЭЗ: 1 - промышленно-производственная, 0 - технико-внедренческая </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegistratorAuthority" type="rsezc:RegistratorAuthorityType">
+            <xs:annotation>
+              <xs:documentation>Сведения об органе, выдавшем свидетельство, и подпись уполномоченного лица этого органа </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ResidentOrganisation" type="rsezc:ResidentOrganisationType">
+            <xs:annotation>
+              <xs:documentation>Сведения о юридическом лице или об индивидуальном предпринимателе - резиденте ОЭЗ </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Form" type="rsezc:FormType">
+            <xs:annotation>
+              <xs:documentation>Серия и номер бланка</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1001203E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="FormType">
+    <xs:annotation>
+      <xs:documentation>Серия и номер бланка</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FormSerial" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Серия бланка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FormNumber" type="clt_ru:Code5Type">
+        <xs:annotation>
+          <xs:documentation>Номер бланка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegistratorAuthorityType">
+    <xs:annotation>
+      <xs:documentation>Сведения об органе, выдавшем свидетельство, и подпись уполномоченного лица этого органа </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Organisation" type="cat_ru:OrganizationBaseType">
+        <xs:annotation>
+          <xs:documentation>Реквизиты организации </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AuthorisdPersonSignature" type="cat_ru:PersonSignatureType">
+        <xs:annotation>
+          <xs:documentation>Подпись уполномоченного лица органа, выдавшее свидетельство </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ResidentOrganisationType">
+    <xs:annotation>
+      <xs:documentation>Сведения о юридическом лице или об индивидуальном предпринимателе - резиденте ОЭЗ </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OrganizationName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Наименование</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ShortName" type="clt_ru:ShortNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Краткое наименование </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FullName" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Полное наименование </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FirmName" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Фирменное наименование </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Type" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Тип резидента: 1 - юр. лицо, 0 - ИП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OGRN" type="clt_ru:OGRNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ОГРН/ОГРНИП. Основной государственный регистрационный  номер.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INN" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН - Индивидуальный номер налогоплательщика.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KPP" type="clt_ru:KPPCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>КПП - Код причины постановки на учет. </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="CodeVariable15Type">
+    <xs:annotation>
+      <xs:documentation>Код. Символьная строка (буквы, цифры, знаки) используемая для краткого (и (или) независимого от языка) представления или замены определенных значений или текстовых свойств.  От 1 до 15 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="15" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

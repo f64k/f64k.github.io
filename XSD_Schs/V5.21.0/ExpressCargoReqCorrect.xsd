@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Отметки таможенного органа декларации на товары для экспресс-грузов/ пассажирской таможенной декларации для экспресс-грузов-->
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:ecrc="urn:customs.ru:Information:CustomsDocuments:ExpressCargoReqCorrect:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:ExpressCargoReqCorrect:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Требование на внесение изменений в реестр экспресс-грузов</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ExpressCargoReqCorrect" type="ecrc:ExpressCargoReqCorrectType">
+		<xs:annotation>
+			<xs:documentation>Требование на внесение изменений в реестр экспресс-грузов</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ExpressCargoReqCorrectType">
+		<xs:annotation>
+			<xs:documentation>Требование на внесение изменений в реестр экспресс-грузов</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="ApplicationRegNumber" type="cat_ru:GTDIDType">
+						<xs:annotation>
+							<xs:documentation>Регистрационный номер декларации на товары для экспресс-грузов/ пассажирской таможенной декларации для экспресс-грузов</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DecisionDateTime" type="clt_ru:DateTimeCustType">
+						<xs:annotation>
+							<xs:documentation>Дата и время принятого решения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="LimitDateTime" type="clt_ru:DateTimeCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Предельный срок подачи изменений</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="IdentifiedViolations" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Выявленные нарушения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Consignment" type="ecrc:ConsignmentType" minOccurs="0" maxOccurs="500">
+						<xs:annotation>
+							<xs:documentation>Сведения по индивидуальным накладным</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomsPerson" type="cat_ru:CustomsPersonType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006348E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="ChangeDetailsType">
+		<xs:annotation>
+			<xs:documentation>Изменение в накладной</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GRNumber" type="clt_ru:Text50Type">
+				<xs:annotation>
+					<xs:documentation>Описание типа корректируемых сведений</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PreviousData" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Ранее указанные сведения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CorrectData" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Измененные и (или) дополненные сведения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ChangeGoods" type="ecrc:ChangeGoodsType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Изменение в товарах</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ChangeGoodsType">
+		<xs:annotation>
+			<xs:documentation>Изменение в товаре</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GoodsNumeric" type="clt_ru:Count3Type">
+				<xs:annotation>
+					<xs:documentation>Номер товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GRNumber" type="clt_ru:Text50Type">
+				<xs:annotation>
+					<xs:documentation>Описание корректируемых сведений</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PreviousData" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Ранее указанные сведения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CorrectData" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Измененные и (или) дополненные сведения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Amount" type="RUScat_ru:AmountType" minOccurs="0" maxOccurs="3">
+				<xs:annotation>
+					<xs:documentation>Измененная стоимость товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConsignmentType">
+		<xs:annotation>
+			<xs:documentation>Сведения поиндивидуальным накладным</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="IndividualWayBill" type="ecrc:WayBillType">
+				<xs:annotation>
+					<xs:documentation>Сведения об индивидуальной накладной</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Reason" type="clt_ru:FreeText250Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Описание необходимости внесения изменений</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ChangeDetails" type="ecrc:ChangeDetailsType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Вносимые изменения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WayBillType">
+		<xs:annotation>
+			<xs:documentation>Сведения об индивидуальной накладной</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:DocumentBaseType">
+				<xs:sequence>
+					<xs:element name="WayBillID" type="clt_ru:DocumentIDType">
+						<xs:annotation>
+							<xs:documentation>Уникальный идентификатор накладной в реестре</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ObjectOrdinal" type="clt_ru:Count3Type">
+						<xs:annotation>
+							<xs:documentation>Порядковый номер накладной</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

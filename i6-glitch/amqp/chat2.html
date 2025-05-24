@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CloudAMQP Chat 2</title>
+    <script src="https://cdn.jsdelivr.net/npm/ @cloudamqp/amqp-client@3.2.1/lib/cjs/index.min.js"></script>
+    <style>
+        body {
+            font-family: monospace;
+            margin: 20px;
+        }
+
+        input,
+        button {
+            margin: 5px;
+            padding: 8px;
+        }
+
+        #messages {
+            border: 1px solid #ccc;
+            padding: 10px;
+            height: 300px;
+            overflow-y: scroll;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>CloudAMQP Chat Setup</h2>
+    <div>
+        <label>CloudAMQP URL (wss://...):</label>
+        <input id="url" value="wss://your-instance-url/ws/amqp" style="width:300px">
+    </div>
+    <div>
+        <label>Queue Name:</label>
+        <input id="queue" value="chat_queue" style="width:200px">
+    </div>
+    <div>
+        <label>Message:</label>
+        <input id="message" style="width:300px">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+    <div id="chat" style="margin-top:20px;white-space:pre-wrap;"></div>
+
+    <script>
+        let connection, channel, queueName;
+
+        async function connect() {
+            const url = document.getElementById('url').value;
+            queueName = document.getElementById('queue').value;
+            try {
+                // 1. Создаем подключение
+                connection = new AMQPWebSocketClient(url);
+                await connection.connect();
+
+                // 2. Создаем канал
+                channel = await connection.openChannel();
+
+                // 3. Объявляем очередь
+                await channel.declareQueue({ queue: queueName });
+
+                // 4. Подписываемся на сообщения
+                await channel.consume({ queue: queueName }, (msg) => {
+                    if (msg && msg.content) {
+                        document.getElementById('chat').innerHTML +=
+                            `User: ${new TextDecoder().decode(msg.content)}\n`;
+                    }
+                });
+            } catch (e) {
+                console.error("Connection error:", e);
+                alert("Failed to connect. Check URL and instance settings.");
+            }
+        }
+
+        async function sendMessage() {
+            const msg = document.getElementById('message').value;
+            if (!msg || !channel) return;
+
+            // Отправляем сообщение в очередь
+            await channel.publish({
+                exchange: "",
+                routingKey: queueName,
+                mandatory: false,
+                immediate: false,
+                content: new TextEncoder().encode(msg)
+            });
+            document.getElementById('message').value = "";
+        }
+
+        // Подключаемся при загрузке страницы
+        window.onload = connect;
+    </script>
+</body>
+
+</html>

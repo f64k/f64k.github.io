@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:catWH_ru="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonAggregateTypesCust:5.21.0" xmlns:cwd="urn:customs.ru:Information:WarehouseDocuments:CWDeclaration:5.21.0" targetNamespace="urn:customs.ru:Information:WarehouseDocuments:CWDeclaration:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonAggregateTypesCust:5.21.0" schemaLocation="WarehouseCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Заявление на проведение операций над товарами </xs:documentation>
+  </xs:annotation>
+  <xs:element name="CWDeclaration" type="cwd:CWDeclarationType" />
+  <xs:complexType name="CWDeclarationType">
+    <xs:annotation>
+      <xs:documentation>Заявление на проведение операций над товарами </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="catWH_ru:CWDocType">
+        <xs:sequence>
+          <xs:element name="Header" type="cwd:DeclarationHeaderType">
+            <xs:annotation>
+              <xs:documentation>Информация о реквизитах документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Commodity" type="cwd:CommodityType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Информация о товаре</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1008008E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CommodityType">
+    <xs:annotation>
+      <xs:documentation>Информация о товаре</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:GoodsBaseType">
+        <xs:sequence>
+          <xs:element name="GoodsNumberInStorageQuitance" type="clt_ru:Count5Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Порядковый номер товара в складской квитанции, по которой товар помещен на склад</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsNumberInGTD" type="clt_ru:Count5Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Порядковый номер товара в ДТ, по которой принят груз</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IndividualCharacteristics" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Индивидуальные признаки товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsValue" type="catWH_ru:WHSuppQuantityType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Количество принятого товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DeclarationHeaderType">
+    <xs:annotation>
+      <xs:documentation>Информация о реквизитах  документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OwnerName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Наименование лица, обладающего правами в отношении товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OwnerNameFull" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Полное наименование лица, обладающего правами в отношении товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomName" type="clt_ru:CustomsOfficeNameType">
+        <xs:annotation>
+          <xs:documentation>Наименование таможенного органа, осуществляющего хранение товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrderNumberOfEdition" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер редакции электронного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PeriodStart" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Начало срока проведения операции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PeriodFinish" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Окончание срока проведения операции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Materials" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Материалы, используемые при проведении операции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TechnicalFacilities" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Технические средства, используемые при проведении операции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OperationName" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование операции над товарами</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OperationID" type="clt_ru:Count2Type">
+        <xs:annotation>
+          <xs:documentation>Тип операции над товарами</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DeclarationNumber" type="catWH_ru:AISTSDocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Номер заявления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StorageQuitanceNumber" type="catWH_ru:AISTSDocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер складской квитанции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FormularNumber" type="catWH_ru:AISTSDocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер формуляра контроля товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GTDNumber" type="cat_ru:GTDIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер ДТ, по которой товары помещены под таможенный режим таможенного склада</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

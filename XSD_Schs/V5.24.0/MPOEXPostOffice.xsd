@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:mpco="urn:customs.ru:Information:CustomsDocuments:MPOCommon:5.24.0" xmlns:mpopo="urn:customs.ru:Information:CustomsDocuments:MPOEXPostOffice:5.24.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:MPOEXPostOffice:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:CustomsDocuments:MPOCommon:5.24.0" schemaLocation="MPOCommon.xsd" />
+  <xs:annotation>
+    <xs:documentation>Уведомление о поступлении МПО в ОПС при экспорте</xs:documentation>
+  </xs:annotation>
+  <xs:element name="MPOEXPostOffice" type="mpopo:MPOEXPostOfficeType">
+    <xs:annotation>
+      <xs:documentation>Уведомление о поступлении МПО в ОПС при экспорте</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="MPOEXPostOfficeType">
+    <xs:annotation>
+      <xs:documentation>Уведомление о поступлении МПО в ОПС при экспорте</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Reestr_ID" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Уникальный номер реестра</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MPOReestr" type="mpco:MPO_RegistrationType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер реестра МПО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MPO_Registration" type="mpopo:MPO_RegistrationType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер МПО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DTReg" type="cat_ru:GTDIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер ЭДТ (декларации на товары)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocDate" type="clt_ru:DateTimeCustType">
+            <xs:annotation>
+              <xs:documentation>Дата и время формирования документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="FactDate" type="clt_ru:DateTimeCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата и время принятия МПО в ОПС </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="FeedBillAgency" type="clt_ru:NameType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Учреждение  подачи / Номер ОПС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OPSWeight" type="clt_ru:QuantityBasisType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Вес брутто МПО при приеме в отделении почтовой связи</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006371E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="MPO_RegistrationType">
+    <xs:annotation>
+      <xs:documentation>Сведения о регистрационном номере МПО</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, зарегистрировавшего документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MPO_Number" type="clt_ru:Code13Type">
+        <xs:annotation>
+          <xs:documentation>Уникальный номер МПО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

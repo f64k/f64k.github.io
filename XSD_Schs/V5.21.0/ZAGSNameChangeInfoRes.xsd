@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:znci_res="urn:customs.ru:Information:SQDocuments:ZAGSNameChangeInfoRes:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:ZAGSNameChangeInfoRes:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Ответ на запрос на поиск актовой записи о перемене имени для получения сведений в объеме свидетельства о перемене имени</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ZAGSNameChangeInfoRes" type="znci_res:ZAGSNameChangeInfoResType" />
+  <xs:complexType name="ZAGSNameChangeInfoResType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос на поиск актовой записи о перемене имени для получения сведений в объеме свидетельства о перемене имени</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="RequestStatus" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Статус обработки запроса: 1 - Обработано; 2 - Обработано с ошибкой; 3 - Не обработано</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SearchResult" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Результат поиска актовой записи: 1 - Актовая запись найдена; 2 - Актовая запись не найдена; 3 - Поиск не завершен; 4 - Уточните параметры поиска, найдено более одной актовой записи; 5 - Ошибка при поиске; 6 - Сведения не могут быть предоставлены;</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RetentionArchivalFund" type="znci_res:RetentionArchivalFundType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Информация о сохранности архивного фонда</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AktInfo" type="znci_res:AktInfoType">
+            <xs:annotation>
+              <xs:documentation>Информация о записи акта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PersonInfo" type="znci_res:PersonInfoType">
+            <xs:annotation>
+              <xs:documentation>Информация о лице</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CertificateRequisites" type="cat_ru:DocumentBaseType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Реквизиты сертификата</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009164E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AktInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о записи акта</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ActRecordStatus" type="clt_ru:Numeric1Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Текущее состояние актовой записи: 1 - Актовая запись актуальна; 2 - Актовая запись аннулирована; 3 - Составлена новая запись акта;</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ActRecordNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер записи акта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ActRecordDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации записи акта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ZAGSAuthorityName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование органа ЗАГС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IsRecovered" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак восстановленности записи акта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FIOType">
+    <xs:annotation>
+      <xs:documentation>ФИО</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Surname" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Фамилия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Имя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonMiddleName" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PersonInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о лице</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonNameBeforeChange" type="znci_res:FIOType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о лице до перемены имени</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonNameAfterChange" type="znci_res:FIOType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о лице после перемены имени</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonCitizenship" type="clt_ru:CountryNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование государства гражданства лица, в отношении которого зарегистрирована перемена имени, до перемены имени</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonNationality" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Национальность лица, в отношении которого зарегистрирована перемена имени, до перемены имени</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonBirthDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата рождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BirthPlace" type="RUScat_ru:RUAddressType">
+        <xs:annotation>
+          <xs:documentation>Место рождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RetentionArchivalFundType">
+    <xs:annotation>
+      <xs:documentation>Информация о сохранности архивного фонда</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="IsFullyStored" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак полного сохранения архивного фонда</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StartDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата или год начала периода сохранности архивного фонда</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EndDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата или год окончания периода сохранности архивного фонда</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

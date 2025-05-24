@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:mpc="urn:customs.ru:Information:RegistrationDocuments:MPODispatchCustomsMark:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:RegistrationDocuments:MPODispatchCustomsMark:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Решение ТО по депеше с МПО</xs:documentation>
+  </xs:annotation>
+  <xs:element name="MPODispatchCustomsMark" type="mpc:MPODispatchCustomsMarkType">
+    <xs:annotation>
+      <xs:documentation>Решение ТО по депеше с МПО</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="MPODispatchCustomsMarkType">
+    <xs:annotation>
+      <xs:documentation>Решение ТО по депеше с МПО</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="CustomsProcedure" type="clt_ru:CUCustomsProcedureType">
+            <xs:annotation>
+              <xs:documentation>Направление перемещения: ИМ - ввоз МПО, ЭК - вывоз МПО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DispatchNum" type="clt_ru:DocumentNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер депеши</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReleaseDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата депеши</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MPOList" type="mpc:MPOListType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Перечень МПО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Decision" type="clt_ru:CodeVariable2Type">
+            <xs:annotation>
+              <xs:documentation>Решение:  12 - убытие разрешено; 13 - в убытии отказано</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Reason" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Причина отказа в убытии</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006285E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="MPORegType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер ЭД МПО </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, зарегистрировавшего документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MPO_Number" type="clt_ru:CodeVariable14Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер по сквозной нумерации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MPOListType">
+    <xs:annotation>
+      <xs:documentation>Перечень МПО</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Number" type="clt_ru:Count8Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер в депеше</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MPORegNum" type="clt_ru:Code13Type">
+        <xs:annotation>
+          <xs:documentation>Номер МПО по ВПС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MPOReg" type="mpc:MPORegType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер ЭД МПО </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Decision" type="clt_ru:CodeVariable2Type">
+        <xs:annotation>
+          <xs:documentation>Решение: 1 - отказ в выпуске товаров; 2 - выпуск товаров без уплаты таможенных платежей; 3 - требуется уплата таможенных платежей; 4 - подлежит таможенному контролю в рамках СУР; 5 - резерв;  6 - выпуск товаров приостановлен в соответствии со ст. 124 ТК ЕАЭС; 7 - cрок выпуска товаров продлен; 8 - выпуск разрешен товаров (таможенные платежи уплачены); 9 - автоматический выпуск возвращаемых товаров; 10 -  выпуск возвращаемых товаров; 11 - отказе в
+автоматичсеком выпуске, проводится проверка ОИС; 12 - убытие разрешено; 13 - в убытии отказано</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

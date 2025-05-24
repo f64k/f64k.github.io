@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:catProc_ru="urn:customs.ru:Information:ProcessingDocuments:ProcessingCommonAggregateTypes:5.21.0" xmlns:lpid_notif="urn:customs.ru:Information:CustomsDocuments:LongProcIdentifyNotif:5.21.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:LongProcIdentifyNotif:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:ProcessingDocuments:ProcessingCommonAggregateTypes:5.21.0" schemaLocation="ProcessingCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Уведомления по идентификации товаров</xs:documentation>
+  </xs:annotation>
+  <xs:element name="LongProcIdentifyNotif" type="lpid_notif:LongProcIdentifyNotifType">
+    <xs:annotation>
+      <xs:documentation>Уведомления по идентификации товаров</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="LongProcIdentifyNotifType">
+    <xs:annotation>
+      <xs:documentation>Уведомления по идентификации товаров</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="TypeDoc" type="clt_ru:LetterIndicatorType">
+            <xs:annotation>
+              <xs:documentation>Тип документа: 1 - Уведомление об идентификации (невозможности идентификации) товаров заявленным способом; 2 - Требование о представлении Заявления о проведении идентификации товаров; 3 - Уведомление о невозможности идентификации товаров в продуктах их переработки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Customs" type="cat_ru:CustomsType">
+            <xs:annotation>
+              <xs:documentation>Таможенный орган</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:element name="DeclaredMethod" type="lpid_notif:DeclaredMethodType">
+              <xs:annotation>
+                <xs:documentation>Сведения, необходимые для Уведомления об идентификации (невозможности идентификации) товаров заявленным способом</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="ApplicationSubmission" type="lpid_notif:ApplicationSubmissionType">
+              <xs:annotation>
+                <xs:documentation>Сведения, необходимые для Требования о представлении Заявления о проведении идентификации товаров</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="ProductOfProcessing" type="lpid_notif:ProductOfProcessingType">
+              <xs:annotation>
+                <xs:documentation>Сведения, необходимые для Уведомления о невозможности идентификации товаров в продуктах их переработки</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+          <xs:element name="CustomsPerson" type="lpid_notif:CustomsPersonSignatureType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Подпись должностного лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006341E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ApplicationSubmissionType">
+    <xs:annotation>
+      <xs:documentation>Сведения, необходимые для Требования о представлении Заявления о проведении идентификации товаров</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DTNumber" type="cat_ru:GTDIDType">
+        <xs:annotation>
+          <xs:documentation>Номер ДТ, в которой заявлены товары, в отношении которых требуется представление Заявления о проведении идентификации товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsNumeric" type="clt_ru:Count3Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер товара в ДТ, в отношении которого требуется представление Заявления о проведении идентификации товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AppGoodType">
+    <xs:annotation>
+      <xs:documentation>Товарная позиция</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:GTDIDType">
+        <xs:sequence>
+          <xs:element name="GoodsNumeric" type="clt_ru:Count3Type" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Порядковый номер товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CustomsPersonSignatureType">
+    <xs:annotation>
+      <xs:documentation>Подпись должностного лица</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:CustomsPersonType">
+        <xs:sequence>
+          <xs:element name="IssueDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата подписания</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DecisionProcessType">
+    <xs:annotation>
+      <xs:documentation>Решение таможенного органа об идентификации продуктов переработки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsNumeric" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер товара в ДТ, в которой заявлен идентифицируемый товар (продукты переработки)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DecisionText" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Решение таможенного органа об идентификации товара: 1 - товар идентифицирован;  3 - товар не идентифицирован в продуктах переработки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Justification" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Обоснование решения таможенного органа о невозможности идентификации товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeclaredGoodType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товарах</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsNumeric" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер товара в ДТ, в которой заявлен идентифицируемый товар (продукты переработки)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AppIdentif" type="lpid_notif:AppGoodType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер Заявления о проведении идентификации товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PreviousDT" type="lpid_notif:AppGoodType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Номер предшествующей ДТ, в которой были заявлены идентифицируемые товары при помещении под предшествующую таможенную процедуру</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DecisionText" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Решение таможенного органа об идентификации товара: 1 - товар идентифицирован; 2 - товар не идентифицирован;</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Justification" type="clt_ru:Text150Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Обоснование решения таможенного органа о невозможности идентификации товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeclaredMethodType">
+    <xs:annotation>
+      <xs:documentation>Сведения, необходимые для Уведомления об идентификации (невозможности идентификации) товаров заявленным способом</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CurrentDT" type="cat_ru:GTDIDType">
+        <xs:annotation>
+          <xs:documentation>Номер ДТ, в которой заявлены идентифицируемые товары</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DeclaredGood" type="lpid_notif:DeclaredGoodType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о товарах</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ProductOfProcessingType">
+    <xs:annotation>
+      <xs:documentation>Сведения, необходимые для Уведомления о невозможности идентификации товаров в продуктах их переработки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PermitNumber" type="catProc_ru:PermitNumberType">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер Разрешения на переработку товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PreviousDT" type="cat_ru:GTDIDType">
+        <xs:annotation>
+          <xs:documentation>Номер предшествующей ДТ, в которой были заявлены идентифицируемые товары при помещении под предшествующую таможенную процедуру</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProductOfProcessingDT" type="cat_ru:GTDIDType">
+        <xs:annotation>
+          <xs:documentation>Номер ДТ, в которой заявлены продукты переработки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Decision" type="lpid_notif:DecisionProcessType">
+        <xs:annotation>
+          <xs:documentation>Решение таможенного органа о невозможности идентификации товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

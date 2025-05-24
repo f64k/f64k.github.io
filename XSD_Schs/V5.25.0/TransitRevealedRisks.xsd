@@ -1,0 +1,334 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:trr="urn:customs.ru:Information:CustomsDocuments:TransitRevealedRisks:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:TransitRevealedRisks:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Результат выявления рисков по информации о транзитных товарах</xs:documentation>
+  </xs:annotation>
+  <xs:element name="TransitRevealedRisks" type="trr:TransitRevealedRisksType" />
+  <xs:complexType name="TransitRevealedRisksType">
+    <xs:annotation>
+      <xs:documentation>Результат выявления рисков по информации о транзитных товарах</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="TransportID" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Идентификатор сообщения с информацией о транзитных товарах, по которым выявлялись риски</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Profiles" type="trr:ProfilesType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Выявленные ПР/ЦПР</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Consignments" type="trr:ConsignmentsType">
+            <xs:annotation>
+              <xs:documentation>Партии товаров, на которых были выявлены риски</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Containers" type="trr:ContainersType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Список контейнеров для применения мер по минимизации рисков</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006180E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ConsignmentType">
+    <xs:annotation>
+      <xs:documentation>Партия товаров, на которой были выявлены риски</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Sequence" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер накладной из сообщения с информацией о транзитных товарах</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProfileRef" type="trr:ProfileRefType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Ссылки на ПР/ЦПР, которые сработали на партию товара в целом</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Goods" type="trr:GoodsType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Товар, на котором были выявлены риски</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ConsignmentsType">
+    <xs:annotation>
+      <xs:documentation>Партии товаров, на которых были выявлены риски</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ProfileRef" type="trr:ProfileRefType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Ссылки на ПР/ЦПР, которые сработали на ТС в целом (т.е. на все партии товаров)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Consignment" type="trr:ConsignmentType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Партия товаров, на которой были выявлены риски</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ContainersType">
+    <xs:annotation>
+      <xs:documentation>Тип, описывающий список случайных контейнеров, для применения мер выявленных ПР</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ProfileRef" type="trr:ProfileRefType">
+        <xs:annotation>
+          <xs:documentation>Ссылки на ПР/ЦПР, которые сработали на ТС в целом (т.е. на все партии товаров)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MinimizeMeasureCode" type="clt_ru:Code3Type">
+        <xs:annotation>
+          <xs:documentation>Код мер по минимизации рисков (значение указывается в соответствии с классификатором "Мер по минимизации рисков" rsk_mera.dbf)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Sequence" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер накладной из сообщения с информацией о транзитных товарах</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsNumber" type="clt_ru:Count3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ContainerIdentificator" type="clt_ru:ContainerIdentityType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Номер (идентификатор) контейнера</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CriterionCodeInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о типовом критерии</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CriterionCode" type="clt_ru:Code4Type">
+        <xs:annotation>
+          <xs:documentation>Код типового критерия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CriterionDescription" type="clt_ru:Text3MB">
+        <xs:annotation>
+          <xs:documentation>Описание типового критерия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GoodsType">
+    <xs:annotation>
+      <xs:documentation>Товар, на котором были выявлены риски</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsNumber" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Номер товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProfileRef" type="trr:ProfileRefType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Ссылки на ПР/ЦПР, которые сработали на конкретный товар</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MeasureAttributeType">
+    <xs:annotation>
+      <xs:documentation>Характеристики досмотра/осмотра</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="MeasureAttributeCode" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Код характеристики досмотра/осмотра. Для досмотра указывается в соответствии со значениями классификатора "Характеристик таможенного досмотра товаров" - rskxdosm.dbf.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeasureAttributeValue" type="clt_ru:CodeVariable6Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Значение характеристики досмотра/осмотра. Для досмотра указывается в соответствии со значениями классификатора "Допустимых значений характеристик таможенного досмотра товаров" - rskzdosm.dbf.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeasureAttributeNecessary" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Признак, определяющий возможность выбора значения характеристики таможенного досмотра. 0 - возможно выбирать значения характеристик таможенного досмотра, 1 - возможность выбора отсутствует (досмотр применяется в соответствии со значениями характеристик, установленных профилем риска)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MinimizeMeasuresInfoType">
+    <xs:annotation>
+      <xs:documentation>Набор информации о каждой мере по минимизации рисков</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="MinimizeMeasureCode" type="clt_ru:Code3Type">
+        <xs:annotation>
+          <xs:documentation>Код мер по минимизации рисков (значение указывается в соответствии с классификатором "Мер по минимизации рисков" rsk_mera.dbf)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MinimizeMeasureNecessary" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Обязательность применения меры. Возможные значения: 0 - необязательное применение меры, 1 - обязательное применение меры</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TakeMeasuresSign" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Признак применения мер по минимизации рисков (уровень системы):
+« » - поле не заполняется;
+«0» - мера не применяется согласно результатам случайной выборки;
+«1» – мера должна быть применена согласно профилю риска;
+«2» - мера не применяется из-за несоответствия этапа применения меры и этапа выявления ПР;
+«3» - резерв;
+«4» - мера не применяется в связи с включением субъекта ВЭД в Перечень лиц, в отношении которых принято решение об идентификации категории уровня риска применения мер по минимизации рисков;
+«5» - мера не применяется в связи с неприменением главной меры (проставляется АИС «АИСТ-М» в автоматическом режиме);
+«6» - мера не применялась по причине упрощенного контроля таможенной стоимости идентичных товаров.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeasureDescription" type="clt_ru:Text3MB" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Примечание к мере по минимизации рисков</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeasurePrescription" type="clt_ru:Text3MB" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Особенности применения меры по минимизации рисков</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="QuestionText" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Вопросы, поставленные эксперту</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MainActionCode" type="clt_ru:Code3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код главной меры по минимизации рисков</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeasureAttribute" type="trr:MeasureAttributeType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Характеристики досмотра/осмотра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MinimizeMeasuresType">
+    <xs:annotation>
+      <xs:documentation>Меры по минимизации риска</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="MinimizeMeasuresNote" type="clt_ru:Text3MB" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Примечание к мерам</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MinimizeMeasuresInfo" type="trr:MinimizeMeasuresInfoType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Набор информации о каждой мере по минимизации рисков</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ProfileRefType">
+    <xs:annotation>
+      <xs:documentation>Ссылки на ПР/ЦПР, которые сработали на ТС в целом (т.е. на все партии товаров)</xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="URI" type="clt_ru:DocumentIDType" use="required">
+      <xs:annotation>
+        <xs:documentation>Указывается #ID</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="ProfilesType">
+    <xs:annotation>
+      <xs:documentation>Выявленные ПР/ЦПР</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DivisionCode" type="clt_ru:Code5Type">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, разработавшего ПР/ЦПР</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentSignCode" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Код вида профиля риска. Возможные значения: 
+11 – общероссийский профиль риска;
+12 – региональный профиль риска;
+13 – зональный профиль риска;
+20 – целевой профиль риска;
+21 – целевой правоохранительный профиль риска;
+32 – профиль риска на основе моделей;
+55 – профиль риска, обязательный к применению;                                                   70 - информационная;
+77 – профиль риска для идентификации категории уровня риска;
+88 – зависимый профиль риска. </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistryDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации ПР/ЦПР</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SequenceNumber" type="RUSclt_ru:RiskProfileNumType">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер ПР/ЦПР</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="VersionNumber" type="clt_ru:Quantity3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер версии ПР/ЦПР</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BeginDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата начала действия версии ПР/ЦПР</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentDescription" type="clt_ru:Text3MB" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание риска (заполняется только для автоматических ориентировок)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PRNote" type="clt_ru:Text3MB" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Примечание к ПР/ЦПР</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CriterionCodeInfo" type="trr:CriterionCodeInfoType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация о типовом критерии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ActivityCode" type="clt_ru:Code4Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код направления деятельности подразделения, по направлению которого выявлен риск</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MinimizeMeasures" type="trr:MinimizeMeasuresType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Меры по минимизации риска</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="ID" type="clt_ru:DocumentIDType" use="required">
+      <xs:annotation>
+        <xs:documentation>Уникальный идентификатор, который присваивается профилю риска в СВР "ПП"</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+</xs:schema>

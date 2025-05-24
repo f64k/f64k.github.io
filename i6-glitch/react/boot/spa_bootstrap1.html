@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>React SPA with Layout</title>
+    <!-- React и ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- React-Bootstrap -->
+    <script src="https://unpkg.com/react-bootstrap@2.7.2/dist/react-bootstrap.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script>
+        const { createElement, useState, useEffect } = React;
+        const { Container, Navbar, Button, Offcanvas, Row, Col } = ReactBootstrap;
+
+        // Начальные настройки
+        const defaultConfig = {
+            leftPanel: { open: true, position: 0 },
+            rightPanel: { open: true, position: 0 },
+            headerText: 'My Application',
+            footerText: '© 2023 All rights reserved'
+        };
+
+        function App() {
+            const [config, setConfig] = useState(() => {
+                const saved = localStorage.getItem('app-config');
+                return saved ? JSON.parse(saved) : defaultConfig;
+            });
+
+            // Сохраняем настройки при изменении
+            useEffect(() => {
+                localStorage.setItem('app-config', JSON.stringify(config));
+            }, [config]);
+
+            const togglePanel = (side) => () => {
+                setConfig(prev => ({
+                    ...prev,
+                    [side]: { ...prev[side], open: !prev[side].open }
+                }));
+            };
+
+            return createElement(Container, { fluid: true },
+                // Хедер
+                createElement(Navbar, { bg: 'dark', variant: 'dark' },
+                    createElement(Container, {},
+                        createElement(Navbar.Brand, {}, config.headerText),
+                        createElement(Button, {
+                            variant: 'outline-light',
+                            onClick: togglePanel('leftPanel')
+                        }, 'Toggle Left'),
+                        createElement(Button, {
+                            variant: 'outline-light',
+                            onClick: togglePanel('rightPanel')
+                        }, 'Toggle Right')
+                    )
+                ),
+
+                // Основной контент
+                createElement(Row, { style: { marginTop: '20px' } },
+                    // Левая панель
+                    config.leftPanel.open && createElement(Col, { md: 3 },
+                        createElement(Offcanvas, {
+                            show: true,
+                            onHide: togglePanel('leftPanel')
+                        },
+                            createElement(Offcanvas.Header, { closeButton: true },
+                                createElement(Offcanvas.Title, {}, 'Left Panel')
+                            ),
+                            createElement(Offcanvas.Body, {},
+                                'Left panel content'
+                            )
+                        )
+                    ),
+
+                    // Центральная область
+                    createElement(Col, { md: config.leftPanel.open && config.rightPanel.open ? 6 : 9 },
+                        createElement('main', { style: { padding: '20px' } },
+                            'Main content area'
+                        )
+                    ),
+
+                    // Правая панель
+                    config.rightPanel.open && createElement(Col, { md: 3 },
+                        createElement(Offcanvas, {
+                            show: true,
+                            placement: 'end',
+                            onHide: togglePanel('rightPanel')
+                        },
+                            createElement(Offcanvas.Header, { closeButton: true },
+                                createElement(Offcanvas.Title, {}, 'Right Panel')
+                            ),
+                            createElement(Offcanvas.Body, {},
+                                'Right panel content'
+                            )
+                        )
+                    )
+                ),
+
+                // Футер
+                createElement('footer', {
+                    style: {
+                        position: 'fixed',
+                        bottom: 0,
+                        width: '100%',
+                        backgroundColor: '#f8f9fa',
+                        padding: '10px'
+                    }
+                }, config.footerText)
+            );
+        }
+
+        // Рендерим приложение
+        ReactDOM.createRoot(document.getElementById('root'))
+            .render(createElement(App));
+    </script>
+</body>
+</html>

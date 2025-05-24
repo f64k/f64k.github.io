@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:cltESAD_cu="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:expas="urn:customs.ru:Information:CustomsDocuments:OEZ_ExportPass:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:OEZ_ExportPass:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+	<xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" schemaLocation="CUESADCommonLeafTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Решение на выезд средства транспорта с территории особой экономической зоны/разрешение на вывоз товаров с территории портовой особой экономической зоны/разрешение на вывоз товаров и транспортных средств с территории участка территории опережающего социально-экономического развития</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OEZ_ExportPass" type="expas:OEZ_ExportPassType">
+		<xs:annotation>
+			<xs:documentation>Решение на выезд средства транспорта с территории особой экономической зоны/разрешение на вывоз товаров с территории портовой особой экономической зоны/разрешение на вывоз товаров и транспортных средств с территории участка территории опережающего социально-экономического развития</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="OEZ_ExportPassType">
+		<xs:annotation>
+			<xs:documentation>Решение на выезд средства транспорта с территории особой экономической зоны/разрешение на вывоз товаров с территории портовой особой экономической зоны/разрешение на вывоз товаров и транспортных средств с территории участка территории опережающего социально-экономического развития</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="PassKind" type="clt_ru:IndicatorType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Тип документа: 0 - разовый пропуск, 1 - многоразовый пропуск</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="BeginDate" type="clt_ru:DateCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Начало срока действия пропуска (для многоразовых)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="LimitDate" type="clt_ru:DateCustType">
+						<xs:annotation>
+							<xs:documentation>Окончание срока действия пропуска </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DocSign" type="clt_ru:Numeric1Type">
+						<xs:annotation>
+							<xs:documentation>Признак документа: 0 - Решение на выезд средства транспорта с территории ОЭЗ; 1 - Разрешение на вывоз товаров с территории ПОЭЗ; 2 - Разрешение на вывоз товаров и транспортных средств с территории участка ТОСЭР</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RegistrationNumber" type="expas:RegistrationNumberType">
+						<xs:annotation>
+							<xs:documentation>Регистрационный номер разрешения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Consignor" type="expas:ConsignorType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Отправитель</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TransportMeans" type="expas:TransportMeansType">
+						<xs:annotation>
+							<xs:documentation>Описания транспортного средства </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="GoodsList" type="expas:GoodsListType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Перечень товаров</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DocumentExp" type="cat_ru:DocumentBaseType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Документы на основание, которых разрешен выезд</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomsPerson" type="cat_ru:CustomsPersonType">
+						<xs:annotation>
+							<xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Resident" type="RUScat_ru:SubjectDetailsType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Резидент (ПОЭЗ)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006143E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="ConsignorType">
+		<xs:annotation>
+			<xs:documentation>Отправитель</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:OrganizationBaseType">
+				<xs:sequence>
+					<xs:element name="Address" type="cat_ru:AddressType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Адрес организации / физического лица</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GoodsListType">
+		<xs:annotation>
+			<xs:documentation>Перечень товаров</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Описание товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="WeighQuantity" type="clt_ru:QuantityBasisType">
+				<xs:annotation>
+					<xs:documentation>Вес товара в кг. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PackagesQuantity" type="clt_ru:PackagesQuantityType">
+				<xs:annotation>
+					<xs:documentation>Количество грузовых мест.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PackagingKind" type="clt_ru:Text40Type">
+				<xs:annotation>
+					<xs:documentation>Вид упаковки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SupplementaryQuantity" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Количество товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsStatus" type="expas:GoodsStatusType">
+				<xs:annotation>
+					<xs:documentation>Статус товара гр 7</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DTInfoType">
+		<xs:annotation>
+			<xs:documentation>Сведения о ДТ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GTDID" type="cat_ru:GTDIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Регистрационный номер ДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DTGoods" type="expas:DTGoodsType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Товар ДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DTGoodsType">
+		<xs:annotation>
+			<xs:documentation>Сведения о товаре  ДТ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GoodsNumeric" type="clt_ru:Count3Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Порядковый номер товара гр 32</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NetWeightQuantity" type="clt_ru:QuantityBasisType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Масса товара, нетто (кг)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SupplementaryQuantity" type="cat_ru:SupplementaryQuantityType" minOccurs="0" maxOccurs="3">
+				<xs:annotation>
+					<xs:documentation>Количество товара в дополнительной единице измерения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DTGoodsGroup" type="expas:DTGoodsGroupType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Сведения об артикульной позиции товара ДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DTGoodsGroupType">
+		<xs:annotation>
+			<xs:documentation>Сведения об артикульной позиции товара ДТ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GoodsMarking" type="cltESAD_cu:GoodsArticulType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Уникальный идентификатор вида продукта (товара) или артикул товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SupplementaryQuantity" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Количество товара в дополнительной единице измерения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RecordId" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Уникальный идентификатор записи в ДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GoodsStatusType">
+		<xs:annotation>
+			<xs:documentation>Статус товара</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="StatusSymbolicValue" type="clt_ru:CodeVariable7Type">
+				<xs:annotation>
+					<xs:documentation>Символьное значение статуса товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CustomsModeCode" type="cltESAD_cu:CustomsModeCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код таможенной процедуры</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DTInfo" type="expas:DTInfoType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Порядковый номер товара гр 32</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RegistrationNumberType">
+		<xs:annotation>
+			<xs:documentation>Регистрационный номер разрешения</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+				<xs:annotation>
+					<xs:documentation>Код таможенного органа, зарегистрировавшего документ.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegistrationDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата регистрации документа.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Number" type="clt_ru:CodeVariable10Type">
+				<xs:annotation>
+					<xs:documentation>Порядковый номер документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransportMeansType">
+		<xs:annotation>
+			<xs:documentation>Описания транспортного средства </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TransportKind" type="clt_ru:Numeric1Type">
+				<xs:annotation>
+					<xs:documentation>Тип транспортного средства: 1 - а/м; 2 - ж/д; 3 - авиа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransportMark" type="clt_ru:Text50Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Марки транспортного средства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransportRegNumber" type="clt_ru:CodeVariable20Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Регистрационный номер прицепа/полуприцепа </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ActiveTransportIdentifier" type="clt_ru:TransportMeansIDType">
+				<xs:annotation>
+					<xs:documentation>Идентификатор активного транспортного средства для прицепов, полуприцепов и др.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

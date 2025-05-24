@@ -1,0 +1,262 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:asgcat_ru="urn:customs.ru:ASG_CommonAggregateTypes:5.24.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:asgclt_ru="urn:customs.ru:ASG_CommonLeafTypes:5.13.2" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:ASG_CommonAggregateTypes:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:ASG_CommonLeafTypes:5.13.2" schemaLocation="ASG_CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Общие сложные прикладные типы. </xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="BankOrganizationType">
+    <xs:annotation>
+      <xs:documentation>Сведения о банке или иной кредитной организации, выдавшей банковскую гарантию</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:SubjectDetailsBankType">
+        <xs:sequence>
+          <xs:element name="CBRLicense" type="cat_ru:DocumentBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Лицензия ЦБ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CollateralType">
+    <xs:annotation>
+      <xs:documentation>Информация об обеспечении</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GuaranteeType" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Код способа обеспечения по классификатору НСИ.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GuaranteeKind" type="clt_ru:CodeVariable2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Тип документа обеспечения: 1-Денежный залог, 2 - Банковская гарантия, 3 - Залог имущества, 4 - Договор поручительства, 5 - Дополнение к договору поручительства (245), 6 - Дополнение к договору поручительства (397), 7- Договор поручительства в рамках генерального, 8 - иное обеспечение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IsGeneral" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак генерального обеспечения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GuaranteeRegNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер обеспечения.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GuaranteeRegDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации  документа.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GuaranteeCustomCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, в котором зарегистрировано обеспечение.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GuaranteeOriginalNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Оригинальный номер обеспечения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GuaranteeOriginalDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата обеспечения (дата заключения договора, дата гарантии)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GuaranteeStartDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата начала действия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GuaranteeSubmitDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата предоставления обеспечения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GuaranteeExpireDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Срок действия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GuaranteeActualExpireDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата фактического завершения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GuaranteeCurrencyCode" type="clt_ru:CurrencyN3CodeType">
+        <xs:annotation>
+          <xs:documentation>Цифровой код валюты обеспечения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GuaranteeAmount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма обеспечения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="UsedAmount" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Атрибут содержит  общую сумму неисполненных обязательств в валюте обеспечения, при условии, что информация об обязательствах присутствует в системе.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AvailableAmount" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Атрибут содержит доступную для использования таможенным органом сумму</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ObligationTypeInfo" type="asgcat_ru:ObligationTypeInfoType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация о видах обязательств</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsOrderInfo" type="asgcat_ru:CustomsOrderInfoType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация о документах подтверждающих предоставление обеспечения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Guarantor" type="asgcat_ru:BankOrganizationType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация об организации-гаранте</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DebtDoc" type="asgcat_ru:DocInfoType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Информация о расходовании денежных средств, принятых в качестве обеспечения/ Информация о взыскании</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RequisitesLetterIn" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Реквизиты входящего письма ФТС России</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RequisitesLetterOut" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Реквизиты исходящего письма</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GuaranteeFormat" type="clt_ru:DigitalIndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак выдачи банковской гарантии в электронном виде (0 - в бумажном виде, 1 - в электронном виде)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SecurityStatus" type="clt_ru:Text10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Статус обеспечения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о документе начисления</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="DocKind" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Вид информации: 1-Информация о расходовании денежных средств, принятых в качестве обеспечения, 2-Информация о взыскании</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Amount" type="RUScat_ru:AmountType">
+            <xs:annotation>
+              <xs:documentation>Сумма списанных средств/ сумма средств, взысканных за счет обеспечения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ObligationTypeInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о видах обязательств</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ObligationCode" type="clt_ru:Code6Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Код вида обязательства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="StatusType">
+    <xs:annotation>
+      <xs:documentation>Статусное состояние</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Name" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Наименование статусного состояния</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Reason" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Причина перехода в статучное состояние</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ChangeInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация об изменениях в обеспечении.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ChangeDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата внесения изменений</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ChangeReason" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Причина внесения изменений</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ChangeStartDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата вступления изменений в силу</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ChangeDocument" type="cat_ru:DocumentBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Документ на основании которого были внесены изменения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Customs" type="cat_ru:CustomsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Таможенный орган, внесший изменения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CustomsOrderInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о документах подтверждающих предоставление обеспечения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsOrderKind" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Тип документа обеспечения: 5 - ТПО; 6 - ТР; 7 - Дополнение к договору поручительства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsOrderNumber" type="asgclt_ru:CustomsOrderNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер подтверждающего документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsOrderCustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, в котором зарегистрирован документ.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsOrderDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации подтверждающего документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

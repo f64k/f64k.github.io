@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:grn_cat="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeCommonAggregateTypesCust:5.24.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:cltExch_ru="urn:customs.ru:Information:ExchangeDocuments:ExchangeCommonLeafTypes:5.0.8" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:rtdni="urn:customs.ru:Information:ExchangeDocuments:RegTDNumberInfo:5.25.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:ExchangeDocuments:RegTDNumberInfo:5.25.0" elementFormDefault="qualified" version="5.25.0.0">
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:Information:ExchangeDocuments:ExchangeCommonLeafTypes:5.0.8" schemaLocation="ExchangeCommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeCommonAggregateTypesCust:5.24.0" schemaLocation="GuaranteeCommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd"/>	
+	<xs:annotation>
+		<xs:documentation>Сведения о номере зарегистрированной транзитной декларации.</xs:documentation>
+	</xs:annotation>
+	<xs:element name="RegTDNumberInfo" type="rtdni:RegTDNumberInfoType"/>
+	<xs:complexType name="RegTDNumberInfoType">
+		<xs:annotation>
+			<xs:documentation>Сведения о номере зарегистрированной транзитной декларации.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="Comments" type="clt_ru:FreeText250Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Комментарии</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="GRN" type="cltExch_ru:GuaranteeNumType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Cсылочный номер гарантии в транзите </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomsPerson" type="cat_ru:CustomsPersonType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="AdditionalNumber" type="cat_ru:GTDIDType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Присвоенный номер дополнения к договору поручительства</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="LiableTrader" type="RUScat_ru:SubjectDetailsType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Участник ВЭД, несущий обязательства по обеспечению</xs:documentation>
+						</xs:annotation>
+					</xs:element>					
+					<xs:element name="GuaranteeDocument" type="grn_cat:CustomsGuaranteeDocType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Информация о документе обеспечения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ReservationAmount" type="grn_cat:AmountType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Общая резервируемая сумма денежных средств</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TransitDateLimit" type="clt_ru:DateCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Срок таможенного транзита</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="BorderCustoms" type="cat_ru:CUCustomsType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Таможенный орган отправления</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DeliveryCustoms" type="cat_ru:CUCustomsType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Таможенный орган назначения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:choice>
+						<xs:element name="TDNumber" type="cat_ru:GTDIDType">
+							<xs:annotation>
+								<xs:documentation>Номер транзитной декларации</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="TIRID" type="rtdni:TIRIDType">
+							<xs:annotation>
+								<xs:documentation>Номер книжки МДП</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1004097E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="TIRIDType">
+		<xs:annotation>
+			<xs:documentation>Номер книжки МДП</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TIRID" type="clt_ru:Code8Type">
+				<xs:annotation>
+					<xs:documentation>Номер книжки МДП.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TIRSeries" type="clt_ru:Code2Type">
+				<xs:annotation>
+					<xs:documentation>Серия книжки МДП.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TIRPageNumber" type="clt_ru:Count5Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер листа книжки МДП.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

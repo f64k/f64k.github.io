@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:rllrq="urn:customs.ru:Information:SQDocuments:RosleshozLesegaisRequest:5.21.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" targetNamespace="urn:customs.ru:Information:SQDocuments:RosleshozLesegaisRequest:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Рослесхоз. Запрос сведений из Единой государственной автоматизированной информационной системы учета древесины и сделок с ней. Выписка по документу.</xs:documentation>
+  </xs:annotation>
+  <xs:element name="RosleshozLesegaisRequest" type="rllrq:RosleshozLesegaisRequestType">
+    <xs:annotation>
+      <xs:documentation>Рослесхоз. Запрос сведений из Единой государственной автоматизированной информационной системы учета древесины и сделок с ней. Выписка по документу.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RosleshozLesegaisRequestType">
+    <xs:annotation>
+      <xs:documentation>Рослесхоз. Запрос сведений из Единой государственной автоматизированной информационной системы учета древесины и сделок с ней. Выписка по документу.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="RequestGUID" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Уникальный идентификатор запроса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocVidimusRequest" type="rllrq:DocVidimusRequestType">
+            <xs:annotation>
+              <xs:documentation>Запрос выписки по документу</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009377E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="DeclarationNumType">
+    <xs:annotation>
+      <xs:documentation>Номер декларации. 28 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="28" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="DocVidimusRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос выписки по документу</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Id" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Внутренний id документа в системе, при наличии поиск только по нему</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BuyerINN" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН покупателя (арендатора, исполнителя)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SellerINN" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН продавца (ОИВ)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DeclarationNum" type="rllrq:DeclarationNumType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер ДСД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocNum" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер электронного сопроводительного документа для учета древесины и сделок с ней</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SignDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата заключения / поступления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InputDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата ввода в систему/ Дата подачи ДСД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DeclaredBy" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Автор декларации (продавец/ покупатель). Только для ДОС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

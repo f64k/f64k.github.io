@@ -1,0 +1,648 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:rtdt="urn:customs.ru:Information:CustomsDocuments:DTRevealedRisks:5.21.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:DTRevealedRisks:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Результат выявления рисков по ДТ</xs:documentation>
+  </xs:annotation>
+  <xs:element name="DTRevealedRisks" type="rtdt:DTRevealedRisksType" />
+  <xs:complexType name="ContainersType">
+    <xs:annotation>
+      <xs:documentation>Тип, описывающий список случайных контейнеров, для применения мер выявленных ПР</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ProfileRef" type="rtdt:ProfileRefType">
+        <xs:annotation>
+          <xs:documentation>Ссылки на ПР/ЦПР, которые сработали на конкретную товарную партию</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MinimizeMeasureCode" type="clt_ru:Code3Type">
+        <xs:annotation>
+          <xs:documentation>Код меры по минимизации рисков (значение указывается в соответствии с классификатором "Мер по минимизации рисков" rsk_mera.dbf)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsNumber" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ContainerIdentificator" type="clt_ru:ContainerIdentityType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Номер (идентификатор) контейнера</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DTRevealedRisksType">
+    <xs:annotation>
+      <xs:documentation>Результат выявления рисков по ДТ</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="SoftVersion" type="clt_ru:CodeVariable20Type">
+            <xs:annotation>
+              <xs:documentation>Полная версия ПЗ "Сервис выявление рисков СТО" уровня РТУ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocDateTime" type="clt_ru:DateTimeCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата и время документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PointCode" type="clt_ru:CodeVariable2Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Этап проведения проверки на соответствие профилям риска </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ProfileInfo" type="rtdt:ProfileInfoType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Информация о выявленных профилях рисков, сработавших ориентировках</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="HashInfo" type="rtdt:HashInfoType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Информация по неформ. индикатору</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер документа: ДТ, документа ВХ, МПО, реестра экспресс-грузов</xs:documentation>
+            </xs:annotation>
+            <xs:element name="DTNumber" type="rtdt:DocNumberType">
+              <xs:annotation>
+                <xs:documentation>Регистрационный номер ДТ/реестра экспресс-грузов / Заявления о выпуске до подачи</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="MPONumber" type="rtdt:MPORegNumberType">
+              <xs:annotation>
+                <xs:documentation>Регистрационный номер МПО</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="Reestr_ID" type="clt_ru:DocumentIDType" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>Уникальный номер реестра МПО</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="WHDocInventoryNumber" type="cat_ru:GTDIDType" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>Регистрационный номер документов, представленных для помещения товаров на ВХ</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+          <xs:element name="Consigments" type="rtdt:DocumentType">
+            <xs:annotation>
+              <xs:documentation>Сведения о выявленных рисках на партиях (-и) товара в документе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BodySemantica" type="rtdt:DocBodyType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Ответ от КПС "Семантика" по итогам семантического анализа содержимого ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GreenChannel" type="clt_ru:IndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Признак отнесения участника ВЭД
+к зеленому сектору </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CategoryObject" type="clt_ru:DigitalIndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код категории уровня риска объекта контроля: 
+«1» – по итогам автоматического категорирования объект контроля имеет низкий уровень риска;
+«2» – по итогам автоматического категорирования объект контроля имеет средний уровень риска;
+«3» – по итогам автоматического категорирования объект контроля имеет высокий уровень риска.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="KodKateg" type="clt_ru:Code2Type" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Код отраслевой категории уровня риска :             «04» –Производственник;
+«05» –Автопроизводитель; «06» –Импортер рыбной продукции; 
+«07» –Импортер мясной продукции; 
+«08» –Экспортер.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Containers" type="rtdt:ContainersType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Список контейнеров для применения мер по минимизации рисков</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006216E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа (код документа в Альбоме форматов для РФ)</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DocNumberType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер исходного документа</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:GTDIDType">
+        <xs:sequence>
+          <xs:element name="AddNumber" type="clt_ru:CodeVariable2Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дополнительная составляющая 3ей части номера (ЗВ)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="NFIInfoType">
+    <xs:annotation>
+      <xs:documentation>Тип, описывающий неформальные индикаторы</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="NFICode" type="clt_ru:Code4Type">
+        <xs:annotation>
+          <xs:documentation>Код информации для неформ. индикатора.
+Возможные значения:
+0100 – неформ. индикаторы из группы «Субъект ВЭД»
+0200 – неформ. индикаторы из группы «Партия товаров»
+0300 – неформ. индикаторы из группы «Товары»
+0400 – неформ. индикаторы из группы «Товары»-«Платежи»
+0500 – неформ. индикаторы из группы «Товары»-«Документы»
+0600 – неформ. индикаторы из группы «Транспортные средства»
+0700 – неформ. индикаторы в целом к профилю риска
+</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NFIHash" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Хэш-сумма для неформ. индикатора</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MPORegNumberType">
+    <xs:annotation>
+      <xs:documentation>Тип, описывающий формат рег. номера МПО</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, зарегистрировавшего документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MPO_Number" type="clt_ru:Code13Type">
+        <xs:annotation>
+          <xs:documentation>Уникальный номер МПО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ProfileRefType">
+    <xs:annotation>
+      <xs:documentation>Тип, описывающий ссылку на ПР/ЦПР, которые сработали на документе</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="NFIInfo" type="rtdt:NFIInfoType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Неформальные индикаторы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MinimizeMeasureCode" type="clt_ru:Code3Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Код меры по минимизации рисков</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="URI" type="xs:anyURI">
+      <xs:annotation>
+        <xs:documentation>Указывается на #ID</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="DocBodyType">
+    <xs:annotation>
+      <xs:documentation>Тип, описывающий формат документа-ответа  </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:any processContents="skip">
+        <xs:annotation>
+          <xs:documentation>Документ, подписанный  ЭЦП</xs:documentation>
+        </xs:annotation>
+      </xs:any>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ProfileInfoType">
+    <xs:annotation>
+      <xs:documentation>Тип, описывающий ПР/ЦПР</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocumentSignCode" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Код вида документа.
+Для профиля риска возможные значения: 
+11 – общероссийский профиль риска;
+12 – региональный профиль риска;
+13 – зональный профиль риска;
+20 – целевой профиль риска;
+21 – целевой правоохранительный профиль риска;
+32 – профиль риска на основе моделей;
+55 – профиль риска, обязательный к применению;
+77 – профиль риска для идентификации категории уровня риска;
+88 – зависимый профиль риска.
+
+Для ориентировки возможные значения: 
+70 - информационная
+71 - блокирующая</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DivisionCode" type="clt_ru:Code5Type">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, разработавшего документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistryDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SequenceNumber" type="RUSclt_ru:RiskProfileNumType">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="VersionNumber" type="clt_ru:Quantity3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер версии документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CriterionCode" type="clt_ru:Count4Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код типового критерия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ActivityCode" type="clt_ru:Code4Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код направления деятельности подразделения, по направлению которого выявлен риск</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FormalizedType" type="clt_ru:LetterIndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак формализации. Допустимые значения (битовая маска): 0 - неформализован; 1 - формализован; 2 - формализован частично</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BeginDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата начала действия версии ПР (Дата в формате YYYY-MM-DD. По стандарту  формат ISO 8601.)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EndVerDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата окончания действия  версии профиля риска (Дата в формате YYYY-MM-DD. По стандарту  формат ISO 8601.)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PRNote" type="clt_ru:Text3MB" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Примечание к области риска</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MinimizeMeasuresNote" type="clt_ru:Text3MB" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Не используется. Не заполняется в СВР. Описание профиля риска (ранее использовалось для ориентировок).</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DescriptionMeasure" type="clt_ru:Text3MB" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Примечание к мерам (произвольный текст)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MinimizeMeasuresInfo" type="rtdt:MinimizeInfoType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Набор информации о каждой мере по минимизации рисков</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="ID" type="clt_ru:Count8Type">
+      <xs:annotation>
+        <xs:documentation>Уникальный идентификатор, который присваивается профилю риска в ПЗ "СВР СТО" уровня РТУ, ФТС</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="MinimizeInfoType">
+    <xs:annotation>
+      <xs:documentation>Тип, описывающий меру по минимизации рисков (ММР)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="MinimizeMeasureCode" type="clt_ru:Code3Type">
+        <xs:annotation>
+          <xs:documentation>Код меры по минимизации рисков (значение указывается в соответствии с классификатором "Мер по минимизации рисков" rsk_mera.dbf)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MinimizeMeasureMainCode" type="clt_ru:Code3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код главной меры по минимизации рисков (значение указывается в соответствии с классификатором "Мер по минимизации рисков" rsk_mera.dbf)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MinimizeMeasureNecessity" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак обязательности применения меры по минимизации риска. Возможные значения: 0 - применять меру не обязательно. 1 - мера должна быть применена обязательно.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MinimizeMeasureUse" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак применения мер по минимизации рисков (уровень системы):
+« » - поле не заполняется;
+«0» - мера не применяется согласно результатам случайной выборки;
+«1» – мера должна быть применена согласно профилю риска;
+«2» - мера не применялась из-за несоответствия этапа, на котором была проведена проверка на наличие рисков, и этапа, на котором мера по минимизации рисков должна применяться согласно условиям профиля риска;
+«3» - резерв;
+«4» - мера не применяется в связи с включением субъекта ВЭД в Перечень лиц, в отношении которых принято решение об идентификации категории уровня риска применения мер по минимизации рисков, либо в связи с его отнесением в установленном порядке к категории низкого уровня риска;
+«5» - мера не применяется в связи с неприменением главной меры (проставляется АИС «АИСТ-М» в автоматическом режиме);
+«6» - мера не применялась по причине упрощенного контроля таможенной стоимости идентичных товаров; «7» - мера не применяется в связи с отнесением лица в установленном порядке к категории среднего уровня риска и низкого налогового риска; «8» -  мера не применяется в связи с включением субъекта ВЭД в участники проекта ЗК/УТК</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeasureDescription" type="clt_ru:Text3MB" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Примечание к мере по минимизации рисков</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeasurePrescription" type="clt_ru:Text3MB" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Особенности применения меры по минимизации рисков</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="QuestionText" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Вопросы, поставленные эксперту</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeasureAttribute" type="rtdt:MeasureInfoType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Характеристики досмотра/осмотра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MeasureInfoType">
+    <xs:annotation>
+      <xs:documentation>Тип, описывающий характеристики досмотра</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="MeasureAttributeCode" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Код характеристики досмотра/осмотра. Для досмотра указывается в соответствии со значениями классификатора "Характеристик таможенного досмотра товаров" - rskxdosm.dbf.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeasureAttributeValue" type="clt_ru:CodeVariable6Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Значение характеристики досмотра/осмотра. Для досмотра указывается в соответствии со значениями классификатора "Допустимых значений характеристик таможенного досмотра товаров" - rskzdosm.dbf.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeasureAttributeNecessary" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Признак, определяющий возможность выбора значения характеристики таможенного досмотра. 0 - возможно выбирать значения характеристик таможенного досмотра, 1 - возможность выбора отсутствует (досмотр применяется в соответствии со значениями характеристик, установленных профилем риска)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HashInfoType">
+    <xs:annotation>
+      <xs:documentation>Тип, описывающих хэш-сумму</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Hash" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Хэш-сумма для неформ. индикатора</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="HashMean" type="rtdt:TextUnlimited">
+        <xs:annotation>
+          <xs:documentation>Значение неформ. индикатора, соответствующее хэш-сумме</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GoodsType">
+    <xs:annotation>
+      <xs:documentation>Тип, описывающий товар, на котором выявлен ПР/ЦПР</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsNumber" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProfileRef" type="rtdt:ProfileRefType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Ссылки на ПР/ЦПР, которые сработали на конкретный товар</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ConsignmentType">
+    <xs:annotation>
+      <xs:documentation>Тип, описывающий партию, на которой выявлен ПР/ЦПР</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ConsigmentNumber" type="clt_ru:Count4Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер товарной партии. Примечание: Для реестров экспресс-грузов и реестров МПО заполняется порядковый номер партии из документа-запроса; для ДТ, МПО всегда равен 1.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProfileRef" type="rtdt:ProfileRefType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Ссылки на ПР/ЦПР, которые сработали на конкретную товарную партию</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Goods" type="rtdt:GoodsType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Товары, на которых выявлены риски</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RiskDocuments" type="rtdt:RiskDocumentsType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Идентификаторы документов, на основании которых выявлен риск по конкретному динамическому индикатору</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocumentType">
+    <xs:annotation>
+      <xs:documentation>Тип, описывающий документ, на котором выявлен ПР/ЦПР</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ProfileRef" type="rtdt:ProfileRefType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Ссылки на ПР/ЦПР, которые сработали на документ в целом (т.е. на все партии товаров). Примечание:  заполняется для реестров экспресс-грузов и реестров МПО.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Consigment" type="rtdt:ConsignmentType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Партия товара, на которой сработал ПР/ЦПР. Примечание: Для ДТ и МПО всегда только 1 элемент.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="TextUnlimited">
+    <xs:annotation>
+      <xs:documentation>Текст неограниченной длины</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="RiskDocumentsType">
+    <xs:annotation>
+      <xs:documentation>Тип, описывающий документы, которые участвовали в проверке динамического индикатора</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocId" type="rtdt:DocIdType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Идентификаторы документов, участвовавших в проверке по динамическому индикатору риска</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DynamicIndicator" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Динамический индикатор, по которому был выявлен риск:
+
+= реестры экспресс-грузов =
+01 - Признак повторного декларирования экспресс-груза после отказа в выпуске (за исключением случаев принятия решения об отказе в выпуске товаров в связи с выявлением необходимости уплаты таможенных платежей)
+02 - Признак повторного декларирования экспресс-груза после принятия решения о необходимости уплаты таможенных платежей
+03 - Количество товаров одного наименования в одном эскспресс-грузе
+04 - Сведения об экспресс-грузах, пересылаемых в адрес одного получателя
+
+= реестры МПО =
+11 - Признак повторного декларирования МПО после отказа в выпуске (за исключением случаев принятия решения об отказе в выпуске товаров в связи с выявлением необходимости уплаты таможенных платежей)
+12 - Признак повторного декларирования МПО после отказа в выпуске в связи с принятием решения о необходимости уплаты таможенных платежей
+13 - Количество товаров одного наименования в МПО
+14 - Сведения о МПО, пересылаемых в адрес одного получателя за конкретный период</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocIdType">
+    <xs:annotation>
+      <xs:documentation>Тип, описывающий реквизиты документов риска</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocNum" type="rtdt:DocNumType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор рисковой товарной партии (экспресс-груза, МПО) из реестра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocNumType">
+    <xs:annotation>
+      <xs:documentation>Тип, описывающий реквизиты документов риска</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice>
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер документа: ДТ, документа ВХ, МПО, реестра экспресс-грузов</xs:documentation>
+        </xs:annotation>
+        <xs:element name="ExpressCargoDeclaration" type="rtdt:ReestrType">
+          <xs:annotation>
+            <xs:documentation>Реестры экспресс-грузов </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="MPOReestr" type="rtdt:MPOReestrType">
+          <xs:annotation>
+            <xs:documentation>Уникальный номер реестра МПО</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReestrType">
+    <xs:annotation>
+      <xs:documentation>Сведения о реестре экспресс-грузов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ReestrId" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор реестра экспресс-грузов </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReestrNumber" type="cat_ru:GTDIDType">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер реестра экспресс-грузов </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WayBill" type="rtdt:WayBillType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Индивидуальные накладные</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MPOReestrType">
+    <xs:annotation>
+      <xs:documentation>Сведения о реестре МПО</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ReestrId" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор реестра МПО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReestrNumber" type="rtdt:MPORegNumberType">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер реестра МПО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MPO" type="rtdt:MPOType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>МПО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="WayBillType">
+    <xs:annotation>
+      <xs:documentation>Накладная реестра экспресс-грузов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ObjectOrdinal" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер индивидуальной накладной</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WayBillID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор накладной</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsNumeric" type="clt_ru:Count3Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер товаров по индивидуальной накладной</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MPOType">
+    <xs:annotation>
+      <xs:documentation>МПО</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RecNum" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер МПО в реестре</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MPO_ID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор МПО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsNumeric" type="clt_ru:Count3Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер товаров по МПО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

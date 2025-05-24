@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:reswh="urn:customs.ru:Information:WarehouseDocuments:ResWHGoodsProlong:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:catWH_ru="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonAggregateTypesCust:5.24.0" targetNamespace="urn:customs.ru:Information:WarehouseDocuments:ResWHGoodsProlong:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonAggregateTypesCust:5.24.0" schemaLocation="WarehouseCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Решение, принятое по заявлению о продлении сроков временного хранения товаров</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ResWHGoodsProlong" type="reswh:ResWHGoodsProlongType" />
+  <xs:complexType name="ResWHGoodsProlongType">
+    <xs:annotation>
+      <xs:documentation>Решение, принятое по заявлению о продлении сроков временного хранения товаров</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="SendDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата направления решения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SendTime" type="clt_ru:TimeCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Время  направления решения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegNumber" type="clt_ru:DocumentNumberType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер заявления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsDecision" type="reswh:GoodsDecisionType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Решение продления срока по каждому товару</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Inspector" type="catWH_ru:WHCustomInspectorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сотрудник таможенного органа, принявший решение по заявлению о продлении сроков временного хранения товаров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1008023E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="GoodsDecisionType">
+    <xs:annotation>
+      <xs:documentation>Решение продления срока по каждому товару</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsNumeric" type="clt_ru:Count10Type">
+        <xs:annotation>
+          <xs:documentation>Номер товара по ДО1</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReqPeriod" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Запрашиваемый срок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Reason" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Обоснование</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

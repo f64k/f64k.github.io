@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React без Babel на одной странице</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+      }
+      h1 {
+        color: #333;
+      }
+      .counter {
+        margin: 20px 0;
+      }
+      button {
+        padding: 10px 15px;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: #7b00ff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        margin-right: 10px;
+      }
+      button:hover {
+        background-color: #5600b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- Подключаем React и ReactDOM через CDN -->
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+
+    <script>
+      // Убедимся, что используем совместимую версию React
+      (function () {
+        const e = React.createElement;
+
+        // Классический компонент счетчика
+        class Counter extends React.Component {
+          constructor(props) {
+            super(props);
+            this.state = { count: 0 };
+
+            this.increment = this.increment.bind(this);
+            this.decrement = this.decrement.bind(this);
+            this.reset = this.reset.bind(this);
+          }
+
+          increment() {
+            this.setState({ count: this.state.count + 1 });
+          }
+
+          decrement() {
+            this.setState({ count: this.state.count - 1 });
+          }
+
+          reset() {
+            this.setState({ count: 0 });
+          }
+
+          render() {
+            return e(
+              "div",
+              { className: "counter" },
+              e("h1", null, `Счетчик: ${this.state.count}`),
+              e("button", { onClick: this.increment }, "Увеличить"),
+              e("button", { onClick: this.decrement }, "Уменьшить"),
+              e("button", { onClick: this.reset }, "Сбросить")
+            );
+          }
+        }
+
+        // Функциональный компонент счетчика с хуками (если предпочитаете хуки)
+        /*
+            function Counter() {
+                const [count, setCount] = React.useState(0);
+
+                return e('div', { className: 'counter' },
+                    e('h1', null, `Счетчик: ${count}`),
+                    e('button', { onClick: () => setCount(count + 1) }, 'Увеличить'),
+                    e('button', { onClick: () => setCount(count - 1) }, 'Уменьшить'),
+                    e('button', { onClick: () => setCount(0) }, 'Сбросить')
+                );
+            }
+            */
+
+        // Рендерим компонент в элемент с id "root"
+        ReactDOM.render(e(Counter), document.getElementById("root"));
+      })();
+    </script>
+  </body>
+</html>

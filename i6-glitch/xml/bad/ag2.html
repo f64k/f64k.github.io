@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XML Viewer SPA</title>
+    <!-- AG-Grid CDN -->
+    <!--<script src="https://cdn.jsdelivr.net/npm/ag-grid-community@31.3.2/dist/ag-grid-community.min.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/ag-grid-enterprise@33.2.4/dist/ag-grid-enterprise.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community@31.3.2/styles/ag-grid.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community@31.3.2/styles/ag-theme-alpine.css" />
+    <style>
+        body { font-family: sans-serif; padding: 15px; }
+        #myGrid { height: 600px; width: 100%; margin-top: 15px; }
+        .ag-theme-alpine { --ag-value-change-delta-up-color: #4caf50; --ag-value-change-delta-down-color: #f44336; } /* Optional: Theme customization */
+        label { margin-right: 10px; }
+    </style>
+</head>
+<body>
+
+    <h1>XML Viewer в AG-Grid</h1>
+    <label for="xmlFile">Выберите XML файл:</label>
+    <input type="file" id="xmlFile" accept=".xml">
+
+    <div id="myGrid" class="ag-theme-alpine"></div>
+
+    <script>
+        const gridOptions = {
+            // Определяем колонки
+            columnDefs: [
+                // Колонка для иерархии будет создана автоматически ag-Grid
+                // { field: 'nodeName', headerName: 'Узел' }, // Можно добавить, если нужно явное имя узла
+                { field: 'nodeValue', headerName: 'Значение', flex: 1 } // Значение узла
+            ],
+            // Включаем режим дерева
+            treeData: true,
+            // Говорим ag-Grid, как получить путь к данным для построения иерархии
+            getDataPath: (data) => data.dataPath,
+            // Конфигурация автоматически создаваемой колонки группы (для отображения иерархии)
+            autoGroupColumnDef: {
+                headerName: 'Структура XML', // Заголовок колонки с деревом
+                minWidth: 300,
+                field: 'nodeName', // Поле, значение которого будет отображаться в ячейке дерева
+                cellRendererParams: {
+                    suppressCount: true, // Не показывать количество дочерних элементов
+                    // innerRenderer: (params) => `<strong>${params.value}</strong>` // Можно кастомизировать отображение
+                }
+            },
+            // Развернуть все узлы по умолчанию (удобно для небольших файлов)
+            groupDefaultExpanded: -1, // -1 разворачивает все уровни
+            // Анимация строк
+            animateRows: true,
+            // Данные будут загружены позже
+            rowData: null
+        };
+
+        // Функция для обработки узла XML и его дочерних элементов
+        function processNode(node, path = [], gridData = []) {
+            // Пропускаем текстовые узлы и комментарии при построении иерархии,
+            // их значения будут у родительских элементов
+            if (node.nodeType !== Node.ELEMENT_NODE) {
+                return gridData;
+            }
+
+            const currentPath = [...path, node.tagName]; // Создаем путь для ag-Grid
+
+            // Получаем текстовое значение *только* этого узла (не включая дочерние)
+            let directTextValue = Array.from(node.childNodes)
+                                     .filter(n => n.nodeType === Node.TEXT_NODE)
+                                     .map(n => n.textContent.trim())
+                                     .join(' ')
+                                     .trim();
+
+            // Добавляем текущий узел в данные для грида
+            gridData.push({
+                dataPath: currentPath, // Путь для иерархии ag-Grid
+                nodeName: node.tagName, // Имя узла (для autoGroupColumnDef)
+                nodeValue: directTextValue || '' // Значение узла (если есть)
+            });
+
+            // Рекурсивно обрабатываем дочерние *элементы*
+            Array.from(node.children).forEach(child => {
+                processNode(child, currentPath, gridData);
+            });
+
+            return gridData;
+        }
+
+
+        // Инициализация AG-Grid
+        const gridDiv = document.querySelector('#myGrid');
+        const oAgGrid = agGrid.Grid ?? agGrid.createGrid; // в разных версиях
+        new oAgGrid(gridDiv, gridOptions);
+
+        // Обработчик выбора файла
+        const fileInput = document.getElementById('xmlFile');
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (!file) {
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                const xmlString = e.target.result;
+                try {
+                    const parser = new DOMParser();
+                    const xmlDoc = parser.parseFromString(xmlString, "application/xml");
+
+                    // Проверка на ошибки парсинга
+                    const parseError = xmlDoc.getElementsByTagName("parsererror");
+                    if (parseError.length > 0) {
+                        console.error("Ошибка парсинга XML:", parseError[0].textContent);
+                        alert("Не удалось разобрать XML файл. Проверьте консоль на наличие ошибок.");
+                        gridOptions.api.setRowData([]); // Очистить грид
+                        return;
+                    }
+
+                    // Начинаем обработку с корневого элемента
+                    const rootElement = xmlDoc.documentElement;
+                    if (!rootElement) {
+                         alert("Не найден корневой элемент в XML.");
+                         gridOptions.api.setRowData([]);
+                         return;
+                    }
+
+                    const gridData = processNode(rootElement);
+                    console.log("Data for grid:", gridData); // Для отладки
+
+                    // Обновляем данные в гриде
+                    gridOptions.api.setRowData(gridData);
+
+                } catch (error) {
+                    console.error("Ошибка при обработке XML:", error);
+                    alert(`Произошла ошибка: ${error.message}`);
+                    gridOptions.api.setRowData([]); // Очистить грид в случае ошибки
+                }
+            };
+
+            reader.onerror = (e) => {
+                console.error("Ошибка чтения файла:", e);
+                alert("Не удалось прочитать файл.");
+                 gridOptions.api.setRowData([]);
+            };
+
+            reader.readAsText(file); // Читаем файл как текст
+        });
+
+    </script>
+
+</body>
+</html>

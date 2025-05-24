@@ -1,0 +1,292 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:cltESAD_cu="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" xmlns:esres="urn:customs.ru:Information:SQDocuments:FtsExciseStampsRes:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:FtsExciseStampsRes:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" schemaLocation="CUESADCommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Предоставление сведений о выданных акцизных марках(ответ)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="FtsExciseStampsRes" type="esres:FtsExciseStampsResType" />
+  <xs:complexType name="FtsExciseStampsResType">
+    <xs:annotation>
+      <xs:documentation>Предоставление сведений о выданных акцизных марках(ответ)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Importer" type="esres:ImporterType">
+            <xs:annotation>
+              <xs:documentation>Организация-импортер</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RecipientINN" type="clt_ru:INNIDType">
+            <xs:annotation>
+              <xs:documentation>ИНН получателя</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IssueStampInfo" type="esres:IssueStampInfoType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о выданных акцизных марках</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009151E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор электронного документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AppliedStampsType">
+    <xs:annotation>
+      <xs:documentation>Сведения об использовании - Нанесенные на товар акцизные марки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DeclarationNumber" type="esres:DocumentNumber23Type">
+        <xs:annotation>
+          <xs:documentation>Номер декларации на товары/Номер заявления об уплате акциза по маркированным товарам Евразийского экономического союза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DeclarationDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата декларации на товары/Дата заявления об уплате акциза по маркированным товарам Евразийского экономического союза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentType" type="esres:AppliedDocumentType">
+        <xs:annotation>
+          <xs:documentation>Тип документа. Возможные значения: 1 - декларация на товары; 2 - заявление об уплате
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StampRangeInfo" type="esres:StampRangeInfoType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Информация о диапазонах использованных марок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DestroyedStampsType">
+    <xs:annotation>
+      <xs:documentation>Сведения об использовании - Уничтоженные акцизные марки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ActNumber" type="esres:DocumentNumber29Type">
+        <xs:annotation>
+          <xs:documentation>Номер акта об уничтожении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ActDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата акта об уничтожении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StampRangeInfo" type="esres:StampRangeInfoType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Информация о диапазонах уничтоженных марок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ImporterType">
+    <xs:annotation>
+      <xs:documentation>Сведения об организации-импортёре</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OrganizationName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование организации-импортера</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrganizationAddress" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Адрес местонахождения и осуществления деятельности организации-импортера</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="IssueStampInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о выданных акцизных марках</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocumentNumber" type="esres:DocumentNumber17Type">
+        <xs:annotation>
+          <xs:documentation>Номер документа о выдаче</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата документа о выдаче</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SeriesInfo" type="esres:SeriesInfoType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о выданных сериях акцизных марок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="IssueRangeType">
+    <xs:annotation>
+      <xs:documentation>Сведения о выданных диапазонах акцизных марок</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="StampRangeInfo" type="esres:StampRangeInfoType">
+        <xs:annotation>
+          <xs:documentation>Информация о выданном диапазоне</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AppliedStamps" type="esres:AppliedStampsType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения об использовании - Нанесенные на товар акцизные марки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DestroyedStamps" type="esres:DestroyedStampsType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения об использовании - Уничтоженные акцизные марки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LostStamps" type="esres:LostStampsType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения об использовании - Утраченные акцизные марки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LostStampsType">
+    <xs:annotation>
+      <xs:documentation>Сведения об использовании - Утраченные акцизные марки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="LossStatementNumber" type="esres:DocumentNumber26Type">
+        <xs:annotation>
+          <xs:documentation>Номер заявления об утрате/Номер ТПО на взысканное обеспечение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LossStatementDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата заявления об утрате/Дата ТПО на взысканное обеспечение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentType" type="esres:LossDocumentType">
+        <xs:annotation>
+          <xs:documentation>Тип документа. Допустимые значения: "1" - заявление об утрате; "2" - ТПО на взыскание		
+					</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StampRangeInfo" type="esres:StampRangeInfoType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Информация о диапазонах утраченных марок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SeriesInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о выданных сериях акцизных марок</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Series" type="cltESAD_cu:ExciseSeriesesType">
+        <xs:annotation>
+          <xs:documentation>Серия акцизной марки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IssueRange" type="esres:IssueRangeType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о выданных диапазонах акцизных марок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="StampRangeInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о выданном диапазоне</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="StartNumber" type="cltESAD_cu:ExciseNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер начала диапазона номеров акцизных марок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Count" type="clt_ru:Quantity8Type">
+        <xs:annotation>
+          <xs:documentation>Количество марок в диапазоне</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="DocumentNumber17Type">
+    <xs:annotation>
+      <xs:documentation>Номер представляемого документа. До 17 символов. Текстовый</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:minLength value="1" />
+      <xs:maxLength value="17" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DocumentNumber23Type">
+    <xs:annotation>
+      <xs:documentation>Номер представляемого документа. До 23 символов. Текстовый</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:minLength value="1" />
+      <xs:maxLength value="23" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DocumentNumber26Type">
+    <xs:annotation>
+      <xs:documentation>Номер представляемого документа. До 26 символов. Текстовый</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:minLength value="1" />
+      <xs:maxLength value="26" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DocumentNumber29Type">
+    <xs:annotation>
+      <xs:documentation>Номер представляемого документа. До 29 символов. Текстовый</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:minLength value="1" />
+      <xs:maxLength value="29" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AppliedDocumentType">
+    <xs:annotation>
+      <xs:documentation>Тип документа</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="1">
+        <xs:annotation>
+          <xs:documentation>декларация на товары</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="2">
+        <xs:annotation>
+          <xs:documentation>заявление об уплате</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="LossDocumentType">
+    <xs:annotation>
+      <xs:documentation>Тип документа</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="1">
+        <xs:annotation>
+          <xs:documentation>заявление об утрате</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="2">
+        <xs:annotation>
+          <xs:documentation>ТПО на взыскание</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

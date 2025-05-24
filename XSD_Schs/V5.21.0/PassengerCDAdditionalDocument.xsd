@@ -1,0 +1,392 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--  Решение КТС от 18.06.2010 №287  -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:cat_pcd="urn:customs.ru:Information:CustomsDocuments:PassengerCDCommonAggregateTypesCust:5.21.0" xmlns:pcd_ad="urn:customs.ru:Information:CustomsDocuments:PassengerCDAdditionalDocument:5.21.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:PassengerCDAdditionalDocument:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:CustomsDocuments:PassengerCDCommonAggregateTypesCust:5.21.0" schemaLocation="PassengerCDCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Пассажирская таможенная декларация. Дополнительный формуляр "Декларация наличных денег и(или) денежных инструментов".</xs:documentation>
+  </xs:annotation>
+  <xs:element name="PassengerCDAdditionalDocument" type="pcd_ad:PassengerCDAdditionalDocumentType" />
+  <xs:complexType name="PassengerCDAdditionalDocumentType">
+    <xs:annotation>
+      <xs:documentation>Пассажирская таможенная декларация. Дополнительный формуляр "Декларация наличных денег и(или) денежных инструментов.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="EnterOrExitCustomsTerritory" type="clt_ru:LetterIndicatorType">
+            <xs:annotation>
+              <xs:documentation>Тип декларации. 1 - Въезд на территорию таможенного союза, 2 - Выезд с территории таможенного союза</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DeclarantPerson" type="pcd_ad:PersonType">
+            <xs:annotation>
+              <xs:documentation>Сведения о физическом лице</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RecDetailsForeignCur" type="pcd_ad:RecForeignCurDetailsType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Наличные денежные средства и дорожные чеки, пункт 2.1 Дополнительного формуляра</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MonetaryInstrumentsDetails" type="pcd_ad:MonetaryInstrumentsDetailsType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Денежные инструменты, за исключением дорожных чеков (векселя, чеки (банковские), ценные бумаги на предъявителя и иное), пункт 2.2 Дополнительного формуляра</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IntendedUseMoney" type="pcd_ad:IntendedUseMoneyType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о предполагаемом использовании наличных денежных средств и (или) денежных инструментов, пункт 5 Дополнительного формуляра</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RouteMoney" type="pcd_ad:RouteMoneyType">
+            <xs:annotation>
+              <xs:documentation>Сведения о маршруте и способе перевозке (о виде транспорта)  наличных денежных средств и (или) денежных инструментов, пункт 6 Дополнительного формуляра</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата составления декларации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="LanguagePassDecl" type="clt_ru:LanguageCodeType">
+            <xs:annotation>
+              <xs:documentation>Код языка заполнения документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Signer" type="cat_pcd:SignerType">
+            <xs:annotation>
+              <xs:documentation>Сведения о лице, заявляющем сведения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsMark" type="pcd_ad:CustomsMarkType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о должностном лице таможенного органа, заполнившем дополнительный формуляп в случае подачи ПТД в бумажном виде, проставившем штамп и служебные отметки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006231E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CustomsMarkType">
+    <xs:annotation>
+      <xs:documentation>Служебные отметки</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:CustomsPersonType">
+        <xs:sequence>
+          <xs:element name="Mark" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Служебные отметки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="IntendedUseMoneyKindType">
+    <xs:annotation>
+      <xs:documentation>Перечислимый тип cведений о предполагаемом использовании наличных денежных средств и (или) денежных инструментов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="clt_ru:LetterIndicatorType">
+      <xs:enumeration value="1">
+        <xs:annotation>
+          <xs:documentation>текущие расходы (приобретение товаров и услуг)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="2">
+        <xs:annotation>
+          <xs:documentation>инвестиции, включая приобретение недвижимости</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="3">
+        <xs:annotation>
+          <xs:documentation>безвозмездные трансферты в пользу физических лиц (материальная помощь и т.п.)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="4">
+        <xs:annotation>
+          <xs:documentation>безвозмездные трансферты в пользу юридических лиц (благотворительность, пожертвования и т.п.)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="5">
+        <xs:annotation>
+          <xs:documentation>прочее</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="IntendedUseMoneyType">
+    <xs:annotation>
+      <xs:documentation>Сведения о предполагаемом использовании наличных денежных средств и (или) денежных инструментов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="IntendedUseMoneyKind" type="pcd_ad:IntendedUseMoneyKindType">
+        <xs:annotation>
+          <xs:documentation>Вариант предполагаемого использование наличных денежных средств и (или) денежных инструментов (1 - текущие расходы (приобретение товаров и услуг); 2 - инвестиции, включая приобретение недвижимости; 3 - безвозмездные трансферты в пользу физических лиц (материальная помощь и т.п.); 4 - безвозмездные трансферты в пользу юридических лиц (благотворительность, пожертвования и т.п.); 5 - прочее)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IntendedUseMoneyOther" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Указание предполагаемого использования в случае выбора варианта 5 (прочее) </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MonetaryInstrumentsDetailsType">
+    <xs:annotation>
+      <xs:documentation>Денежные инструменты, за исключением дорожных чеков (векселя, чеки (банковские), ценные бумаги на предъявителя и иное)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="pcd_ad:RecForeignCurDetailsBaseType">
+        <xs:sequence>
+          <xs:element name="MonetaryInstrumentKind" type="clt_ru:DigitalIndicatorType">
+            <xs:annotation>
+              <xs:documentation>Тип инструмента: 0 - вексель; 1 - банковский чек; 2 - ценные бумаги на предъявителя; 3 - иное</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MonetaryInstrumentName" type="clt_ru:DocumentNameType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Наименование типа инструмента в случае типа инструмента 3 - иное</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="WhoReleased" type="clt_ru:DocumentNameType">
+            <xs:annotation>
+              <xs:documentation>Кем выпущен</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DateReleased" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата выпуска</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MonetaryInstrumentNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Идентификационный номер (при наличии)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Quantity" type="clt_ru:Quantity3Type">
+            <xs:annotation>
+              <xs:documentation>Количество</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="OriginMoneyKindType">
+    <xs:annotation>
+      <xs:documentation>Перечислимый тип сведений о происхождении наличных денежных средств и (или) денежных инструментов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="clt_ru:Count2Type">
+      <xs:enumeration value="1">
+        <xs:annotation>
+          <xs:documentation>Заработная плата, доходы от предпринимательской деятельности физического лица</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="2">
+        <xs:annotation>
+          <xs:documentation>дивиденды и другие доходы от участия в капитале предприятий</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="3">
+        <xs:annotation>
+          <xs:documentation>доходы от реализации движимого и недвижимого имущества</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="4">
+        <xs:annotation>
+          <xs:documentation>безвозмездные трансферты, полученные от физических и юридических лиц (материальная помощь, гранты и т.п.)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="5">
+        <xs:annotation>
+          <xs:documentation>пенсия, стипендия, социальные пособия, алименты</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="6">
+        <xs:annotation>
+          <xs:documentation>доходы от аренды недвижимости и земельных участков</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="7">
+        <xs:annotation>
+          <xs:documentation>заемные средства</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="8">
+        <xs:annotation>
+          <xs:documentation>наследство</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="9">
+        <xs:annotation>
+          <xs:documentation>прочее</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="OriginMoneyType">
+    <xs:annotation>
+      <xs:documentation>Сведения о происхождении наличных денежных средств и (или) денежных инструментов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OriginMoneyKind" type="pcd_ad:OriginMoneyKindType">
+        <xs:annotation>
+          <xs:documentation>Вариант происхождения наличных денежных средств и (или) денежных инструментов (1 - заработная плата, доходы от предпринимательской деятельности физического лица; 2 - дивиденды и другие доходы от участия в капитале предприятий; 3 - доходы от реализации движимого и недвижимого имущества; 4 - безвозмездные трансферты, полученные от физических и юридических лиц (материальная помощь, гранты и т.п.); 5 - пенсия, стипендия, социальные пособия, алименты; 6 - доходы от аренды недвижимости и земельных участков; 7 - заемные средства; 8 - наследство; 9 - прочее)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OriginMoneyOther" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Указание происхождения в случае выбора варианта 9 (прочее) </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OwnerMoneyType">
+    <xs:annotation>
+      <xs:documentation>Сведения о владельце наличных денежных средств и (или) денежных инструментов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OwnerMoneyKind" type="clt_ru:DigitalIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Кто является владельцем: 0 - декларант; 1 - другое физическое лицо; 2 - иное лицо</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OwnerMoneyName" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Фамилия, имя для физических лиц/Наименование иного лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OwnerMoneyAddress" type="cat_ru:AddressType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Адрес местожительства для физического лица/Адрес местонахождения (юридический адрес) для иных лиц</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PersonType">
+    <xs:annotation>
+      <xs:documentation>Сведения о физическом лице</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_pcd:DeclarantPersonType">
+        <xs:sequence>
+          <xs:element name="BirthDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата рождения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <!-- Заполняется в случае наличия Дополнительного формуляра (Декларация наличных денег и (или) денежных инструментов) -->
+          <xs:element name="BirthPlace" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Место рождения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Address" type="cat_ru:AddressType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Адрес постоянного места жительства</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegDocumentReference" type="cat_ru:DocumentBaseType" minOccurs="0">
+            <xs:annotation>
+              <!-- Указывается при наличии в случае положительного ответа в пункте 3.2 основного формуляра лицами, не являющимися лицами государств-членов Таможенного союза -->
+              <xs:documentation>номер и дата выдачи визы (реквизиты документа, подтверждающего право пребывания на таможенной территории Таможенного союза)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RecForeignCurDetailsBaseType">
+    <xs:annotation>
+      <xs:documentation>Базовый тип сведений о перемещаемых валютных ценностях</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="MoveAmount" type="cat_pcd:MoveMoneyType">
+        <xs:annotation>
+          <xs:documentation>Валюта и Сумма/Стоимость</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OwnerMoney" type="pcd_ad:OwnerMoneyType">
+        <xs:annotation>
+          <xs:documentation>Сведения о владельце наличных денежных средств и (или) денежных инструментов – указывается, если декларант не является собственником</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OriginMoney" type="pcd_ad:OriginMoneyType">
+        <xs:annotation>
+          <xs:documentation>Сведения о происхождении наличных денежных средств и (или) денежных инструментов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RecForeignCurDetailsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о перемещаемой наличной валюте и дорожных чеках</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="pcd_ad:RecForeignCurDetailsBaseType">
+        <xs:sequence>
+          <xs:element name="ForeignCurKind" type="clt_ru:DigitalIndicatorType">
+            <xs:annotation>
+              <xs:documentation>Вид перемещаемой валюты: 1 - банкноты; 2 - монеты; 3 - дорожные чеки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RouteMoneyType">
+    <xs:annotation>
+      <xs:documentation>Сведения о маршруте и способе перевозки (о виде транспорта) наличных денежных средств и (или) денежных инструментов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CountryDeparture" type="cat_pcd:CountryType">
+        <xs:annotation>
+          <!-- указывается начальный пункт маршрута (страна, из которой вывозятся либо были вывезены декларируемые наличные денежные средства и (или) денежные инструменты) -->
+          <xs:documentation>Страна убытия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateDeparture" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата убытия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryArrival" type="cat_pcd:CountryType">
+        <xs:annotation>
+          <!-- указывается страна, являющаяся конечным пунктом следования декларанта -->
+          <xs:documentation>Страна прибытия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateArrival" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата прибытия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransitCountries" type="cat_pcd:CountryType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Транзитные страны</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransportModeCode" type="clt_ru:TransportModeCodeType">
+        <xs:annotation>
+          <xs:documentation>Код вида транспортного средства, на котором декларант прибыл/убывает на территорию таможенного союза/с территории таможенного союза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

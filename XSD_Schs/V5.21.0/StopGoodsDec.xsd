@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:std="urn:customs.ru:Information:ExchangeDocuments:StopGoodsDec:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:ExchangeDocuments:StopGoodsDec:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Решение о приостановлении сорка выпуска товаров.</xs:documentation>
+  </xs:annotation>
+  <xs:element name="StopGoodsDec" type="std:StopGoodsDecType" />
+  <xs:complexType name="StopGoodsDecType">
+    <xs:annotation>
+      <xs:documentation>Решение о приостановлении срока выпуска товаров</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="SendDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата направления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DecIssueDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата принятия решения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DecEndDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата окончания приостановления выпуска товаров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsLocation" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Местонахождение товаров, выпуск которых приостановлен</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RightPerson" type="std:RightPersonType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Правообладатель (декларант, представитель)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Customs" type="std:CustomsInfoType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Таможенный орган</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DeclarationNumber" type="cat_ru:GTDIDType">
+            <xs:annotation>
+              <xs:documentation>Номер ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RestrictionGoodsInfo" type="std:RestrictionGoodsInfoType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о товаре, на который наложено ограничение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006028E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CustomsInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о таможенном органе</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:CustomsType">
+        <xs:sequence>
+          <xs:element name="Phone" type="clt_ru:PhoneNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер телефона.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Fax" type="clt_ru:PhoneNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер факса.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Telex" type="clt_ru:PhoneNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер телекса.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Email" type="clt_ru:Text40Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Электронная почта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsAddress" type="cat_ru:AddressType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Адрес таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RestrictionGoodsInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товаре, на который наложено ограничение</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CounterfeitSigns" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Признаки контрафактности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsNumeric" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Номер товара по ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsDescriptions" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IntellectualPropertyObject" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Объект интеллектуальной собственности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsDoc" type="cat_ru:DocumentBaseType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Документ на товар, содержащий сведения о его идентификации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RightPersonType">
+    <xs:annotation>
+      <xs:documentation>Правообладатель (декларант, представитель)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Name" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>ФИО правообладателя (представителя)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PostalAddress" type="cat_ru:AddressType">
+        <xs:annotation>
+          <xs:documentation>Почтовый адрес правообладателя (декларанта, представителя)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

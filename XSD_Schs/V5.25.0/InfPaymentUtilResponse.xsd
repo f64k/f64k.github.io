@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:els_leaf="urn:customs.ru:Information:ELSDocuments:ELSLeafTypes:5.21.0" xmlns:ipur="urn:customs.ru:Information:SQDocuments:InfPaymentUtilResponse:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:InfPaymentUtilResponse:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:ELSDocuments:ELSLeafTypes:5.21.0" schemaLocation="ELSLeafTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Ответ на запрос сведений об уплате/возвратах утилизационного сбора</xs:documentation>
+  </xs:annotation>
+  <xs:element name="InfPaymentUtilResponse" type="ipur:InfPaymentUtilResponseType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос сведений об уплате/возвратах утилизационного сбора</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="InfPaymentUtilResponseType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос сведений об уплате/возвратах утилизационного сбора</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Response" type="ipur:ResponseType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Ответ на запрос</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009383E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ResponseType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="BCC" type="els_leaf:BCCType">
+        <xs:annotation>
+          <xs:documentation>КБК платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BCCName" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentAmount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма уплаченного утилизационного сбора</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReturnAmount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма возвращенного утилизационного сбора</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

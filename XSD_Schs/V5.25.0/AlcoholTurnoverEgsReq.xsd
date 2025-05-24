@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:at_req="urn:customs.ru:Information:SQDocuments:AlcoholTurnoverEgsReq:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:AlcoholTurnoverEgsReq:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос сведений о декларировании этилового спирта, алкогольной и спиртосодержащей продукции</xs:documentation>
+  </xs:annotation>
+  <xs:element name="AlcoholTurnoverEgsReq" type="at_req:AlcoholTurnoverEgsReqType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений о декларировании этилового спирта, алкогольной и спиртосодержащей продукции</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="AlcoholTurnoverEgsReqType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений о декларировании этилового спирта, алкогольной и спиртосодержащей продукции</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="RequestCode" type="clt_ru:LetterIndicatorType">
+            <xs:annotation>
+              <xs:documentation>Вид запроса сведений: 1 - Представление сведений о ввозе этилового спирта, алкогольной и спиртосодержащей продукции из третьих стран, 2 - Представление сведений о декларировании этилового спирта, алкогольной и спиртосодержащей продукции, 3 - Представление сведений о ввозе этилового спирта, алкогольной и спиртосодержащей продукции из государств-членов ЕАЭС, 4 - Представление сведений об уплате акциза в отношении маркированных товаров ЕАЭС, 5 - Представление сведений о результатах таможенной экспертизы в отношении этилового спирта, алкогольной и спиртосодержащей продукции</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:element name="Organization" type="at_req:OrganizationType">
+              <xs:annotation>
+                <xs:documentation>Сведения об участнике ВЭД (для запросов 1, 3, 4, 5)</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="GTDNumber" type="cat_ru:GTDIDType">
+              <xs:annotation>
+                <xs:documentation>Номер ДТ (для запроса 2)</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009357E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор электронного документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="OrganizationType">
+    <xs:annotation>
+      <xs:documentation>Сведения об участнике ВЭД</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OrganizationINN" type="clt_ru:INNIDType">
+        <xs:annotation>
+          <xs:documentation>ИНН организации-импортера</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Term" type="at_req:TermType">
+        <xs:annotation>
+          <xs:documentation>Период выборки сведений</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TermType">
+    <xs:annotation>
+      <xs:documentation>Период выборки сведений</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="BeginDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата начала периода</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EndDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата окончания периода</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

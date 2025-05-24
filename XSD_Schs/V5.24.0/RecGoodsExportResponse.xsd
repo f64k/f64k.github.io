@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:rgers="urn:customs.ru:Information:SQDocuments:RecGoodsExportResponse:5.24.0" xmlns:cltESAD_cu="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:SQDocuments:RecGoodsExportResponse:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+	<xs:import namespace="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" schemaLocation="CUESADCommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:element name="RecGoodsExportResponse" type="rgers:RecGoodsExportResponseType">
+		<xs:annotation>
+			<xs:documentation>Ответ на запрос РЭЦ сведений о дате вывоза, количестве и стоимости фактически вывезенных в соответствии с таможенной процедурой экспорта товаров</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="RecGoodsExportResponseType">
+		<xs:annotation>
+			<xs:documentation>Ответ на запрос РЭЦ сведений о дате вывоза, количестве и стоимости фактически вывезенных в соответствии с таможенной процедурой экспорта товаров</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="INN" type="clt_ru:INNIDType">
+						<xs:annotation>
+							<xs:documentation>ИНН</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DTNumberList" type="rgers:DTNumberListType" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Декларации на товары</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009355E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="DTNumberListType">
+		<xs:annotation>
+			<xs:documentation>Декларации на товары</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DTNumber" type="cat_ru:GTDIDType">
+				<xs:annotation>
+					<xs:documentation>Номер декларации на товары</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CustomsModeCode" type="cltESAD_cu:CustomsModeCodeType">
+				<xs:annotation>
+					<xs:documentation>Код таможенной процедуры</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DTDecision" type="rgers:DTDecisionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Решение по ДТ, принятое таможенным органом</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Consignee" type="rgers:ConsigneeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Сведения о грузополучателе</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DeliveryCountry" type="rgers:DeliveryCountryType">
+				<xs:annotation>
+					<xs:documentation>Сведения о стране назначения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Transport" type="rgers:TransportType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Сведения о транспорте из базы данных фактического вывоза</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsDocumentsList" type="rgers:GoodsDocumentsListType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Документы на груз</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsList" type="rgers:GoodsListType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Список товаров</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GoodsDocumentsListType">
+		<xs:annotation>
+			<xs:documentation>Документs на груз</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GoodsDocumentCode" type="clt_ru:Text50Type">
+				<xs:annotation>
+					<xs:documentation>Код документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsDocumentNumber" type="clt_ru:Text50Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsDocumentDate" type="clt_ru:DateCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransportType">
+		<xs:annotation>
+			<xs:documentation>Сведения о транспорте из базы данных фактического вывоза</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TransportKind" type="clt_ru:Text10Type">
+				<xs:annotation>
+					<xs:documentation>Дата решения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransportType" type="clt_ru:Text50Type">
+				<xs:annotation>
+					<xs:documentation>Тип транспорта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransportNumber" type="clt_ru:Text50Type">
+				<xs:annotation>
+					<xs:documentation>Номер транспортного средства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DeliveryCountryType">
+		<xs:annotation>
+			<xs:documentation>Сведения о стране назначения</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DeliveryCountryCode" type="clt_ru:CountryA2CodeType">
+				<xs:annotation>
+					<xs:documentation>Код страны назначения (Альфа-2)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DeliveryCountryName" type="clt_ru:Text50Type">
+				<xs:annotation>
+					<xs:documentation>Название страны назначения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConsigneeType">
+		<xs:annotation>
+			<xs:documentation>Сведения о грузополучателе</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ConsigneeName" type="clt_ru:Text150Type">
+				<xs:annotation>
+					<xs:documentation>Наименование грузополучателя (на русском или английском)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ConsigneeAddress" type="clt_ru:Text150Type" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Адрес грузополучателя в стране регистрации (на русском или английском)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DTDecisionType">
+		<xs:annotation>
+			<xs:documentation>Решение по ДТ, принятое таможенным органом. Направляется исключительно и только в ответ на запросы, отправленные сервисом "Запрос фитосанитарного сертификата"</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DecisionDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата решения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DecisionCode" type="clt_ru:Text50Type">
+				<xs:annotation>
+					<xs:documentation>Код решения в соответствии с классификатором (реш.378)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GoodsListType">
+		<xs:annotation>
+			<xs:documentation>Список товаров</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TNVED" type="clt_ru:CUGoodsNomenclatuerCodeType">
+				<xs:annotation>
+					<xs:documentation>10-значный код товара в соответствии с ТН ВЭД ЕАЭС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsNumeric" type="clt_ru:Count3Type">
+				<xs:annotation>
+					<xs:documentation>Порядковый номер товара в ДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsDescription" type="clt_ru:FreeText500Type" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation>Наименование товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsQuantityBrutto" type="cat_ru:SupplementaryQuantityType">
+				<xs:annotation>
+					<xs:documentation>Количество товара (брутто, задекларированный)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SupplementaryGoodsBruttoFact" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Количество товара (брутто, факт)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SupplementaryGoodsNetto" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Количество товара (нетто, задекларированный)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SupplementaryGoodsNettoFact" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Количество товара (нетто, факт)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UnitPrice" type="clt_ru:AmountType">
+				<xs:annotation>
+					<xs:documentation>Цена за единицу товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CurrencyCode" type="clt_ru:CurrencyA3CodeType">
+				<xs:annotation>
+					<xs:documentation>Валюта цены товара (код)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ExportedGoods" type="rgers:ExportedGoodsType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Дата фактического убытия товара, количество</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ExportedGoodsType">
+		<xs:annotation>
+			<xs:documentation>Дата фактического убытия товара, количество</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Date" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата фактического убытия товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CustomsPointName" type="clt_ru:FreeText250Type">
+				<xs:annotation>
+					<xs:documentation>Наименование пункта пропуска на территории РФ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

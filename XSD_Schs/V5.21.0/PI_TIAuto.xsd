@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:catESAD_cu="urn:customs.ru:CUESADCommonAggregateTypesCust:5.21.0" xmlns:pita="urn:customs.ru:Information:PriorInformation:PI_TIAuto:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:PriorInformation:PI_TIAuto:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonAggregateTypesCust:5.21.0" schemaLocation="CUESADCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Предварительная информация в отношении временно ввозимых физическими лицами авто-, мототранспортных средств для личного пользования</xs:documentation>
+  </xs:annotation>
+  <xs:element name="PI_TIAuto" type="pita:PI_TIAutoType">
+    <xs:annotation>
+      <xs:documentation>Предварительная информация в отношении временно ввозимых физическими лицами авто-, мототранспортных средств для личного пользования</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="PI_TIAutoType">
+    <xs:annotation>
+      <xs:documentation>Предварительная информация в отношении временно ввозимых физическими лицами авто-, мототранспортных средств для личного пользования</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="TransportMeanCard" type="pita:TransportMeanCardType">
+            <xs:annotation>
+              <xs:documentation>Карточка транспортного средства. Сведения о транспортном средстве</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TransportDriver" type="pita:TransportPersonType">
+            <xs:annotation>
+              <xs:documentation>Информация о владельце (водителе) транспортного средства</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TransportOwner" type="pita:TransportPersonType">
+            <xs:annotation>
+              <xs:documentation>Информация о собственнике транспортного средства</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006821E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="IdentityCardInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения документа, удостоверяющего личность</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:RUIdentityCardType">
+        <xs:sequence>
+          <xs:element name="CountryName" type="clt_ru:CountryNameType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Краткое название страны в соответствии с классификатором стран мира</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TransportMeanCardType">
+    <xs:annotation>
+      <xs:documentation>Карточка транспортного средства. Сведения о транспортном средстве</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="catESAD_cu:AutomobileBaseType">
+        <xs:sequence>
+          <xs:element name="CountryCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Буквенный код страны в соответствии с классификатором стран мира</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CountryName" type="clt_ru:CountryNameType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Краткое название страны в соответствии с классификатором стран мира</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TransportMeansTypeCode" type="clt_ru:Code2Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код типа транспортного средства</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TransportCategoryCode" type="clt_ru:CodeVariable3Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код категории ТС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="StateRegNumber" type="clt_ru:TransportMeansIDType">
+            <xs:annotation>
+              <xs:documentation>Государственный регистрационный номер</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TransportPersonType">
+    <xs:annotation>
+      <xs:documentation>Сведения о владельце/водителе транспортного средства</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:PersonBaseType">
+        <xs:sequence>
+          <xs:element name="BirthDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата рождения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IdentityCardInfo" type="pita:IdentityCardInfoType">
+            <xs:annotation>
+              <xs:documentation>Сведения документа, удостоверяющего личность</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Address" type="cat_ru:AddressType">
+            <xs:annotation>
+              <xs:documentation>Адрес</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

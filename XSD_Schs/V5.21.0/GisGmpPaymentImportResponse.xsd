@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Схемы ГИС ГМП -  аналог документа SQ.05011 -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:ggpi_res="urn:customs.ru:Information:SQDocuments:GisGmpPaymentImportResponse:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:GisGmpPaymentImportResponse:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Прием запроса на формирование необходимой для уплаты информации (ответ)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="GisGmpPaymentImportResponse" type="ggpi_res:GisGmpPaymentImportResponseType">
+    <xs:annotation>
+      <xs:documentation>Прием запроса на формирование необходимой для уплаты информации (ответ)</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GisGmpPaymentImportResponseType">
+    <xs:annotation>
+      <xs:documentation>Прием запроса на формирование необходимой для уплаты информации (ответ)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Id" type="clt_ru:Text50Type">
+            <xs:annotation>
+              <xs:documentation>Идентификатор ответа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Rgid" type="clt_ru:Text50Type">
+            <xs:annotation>
+              <xs:documentation>Идентификатор запроса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RecipientIdentifier" type="clt_ru:Code6Type">
+            <xs:annotation>
+              <xs:documentation>УРН участника – получателя ответа на запрос</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Timestamp" type="clt_ru:DateTimeCustType">
+            <xs:annotation>
+              <xs:documentation>Дата и время формирования сообщения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Result" type="ggpi_res:ResultType">
+            <xs:annotation>
+              <xs:documentation>Результат обработки сущности в пакете</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009174E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ResultType">
+    <xs:annotation>
+      <xs:documentation>Результат обработки сущности в пакете</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Entity" type="ggpi_res:EntityType" maxOccurs="100">
+        <xs:annotation>
+          <xs:documentation>Сущность в пакете</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EntityType">
+    <xs:annotation>
+      <xs:documentation>Сущность в пакете</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="EntityID" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Идентификатор сущности в пакете</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ResultCode" type="clt_ru:Text40Type">
+        <xs:annotation>
+          <xs:documentation>Код результата обработки информации. Код результата обработки:
+                        0 — если запрос успешно принят;
+                        код ошибки — в случае отказа в приеме к обработке документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ResultDescription" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Описание результата</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

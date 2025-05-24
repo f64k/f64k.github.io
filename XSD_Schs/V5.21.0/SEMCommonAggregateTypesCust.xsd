@@ -1,0 +1,400 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:catESAD_cu="urn:customs.ru:CUESADCommonAggregateTypesCust:5.21.0" xmlns:cltESAD_ru="urn:customs.ru:RUCommonLeafTypes:5.4.0" xmlns:catESAD_ru="urn:customs.ru:RUCommonAggregateTypes:5.21.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" xmlns:sem_clt="urn:customs.ru:Information:SEMDocuments:SEMCommonLeafTypes:5.0.10" xmlns:sem_cat="urn:customs.ru:Information:SEMDocuments:SEMCommonAggregateTypes:5.21.0" targetNamespace="urn:customs.ru:Information:SEMDocuments:SEMCommonAggregateTypes:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonAggregateTypesCust:5.21.0" schemaLocation="CUESADCommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUCommonLeafTypes:5.4.0" schemaLocation="RUESADCommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUCommonAggregateTypes:5.21.0" schemaLocation="RUESADCommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:SEMDocuments:SEMCommonLeafTypes:5.0.10" schemaLocation="SEMCommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Общие сложные типы документов для обмена с КПС "Семантика"</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="BaseServiceRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос к сервису</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="AccelerationIndicator" type="clt_ru:IndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Индикатор ускоренной обработки запроса. Ускоренная обработка применяется в процессе оформления, обычная обработка при постконтроле</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Direction" type="clt_ru:TransitDirectionCodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Направление движения товаров (ИМ - импорт, ЭК - экспорт, ТР - транзит)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CalculationSettings" type="sem_cat:SettingsType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Ограничительные коэффициенты. Не используются при запросе из системы таможенного оформления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Consignee" type="sem_cat:InConsParticipantType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о получателе товаров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Consignor" type="sem_cat:InConsParticipantType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения об отправителе товаров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Declarant" type="sem_cat:InParticipantType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения декларанте/представителе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="FinancialAdjustingResponsiblePerson" type="sem_cat:InParticipantType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Лицо, ответственное за финансовое урегулирование</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GtdRegNumber" type="cat_ru:GTDIDType">
+            <xs:annotation>
+              <xs:documentation>Номер декларации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GoodsType">
+    <xs:annotation>
+      <xs:documentation>Информация о товарах (для запросов)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="catESAD_cu:GoodsItemBaseType">
+        <xs:sequence>
+          <xs:element name="GoodsTNVEDCode" type="clt_ru:GoodsNomenclatureCodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код товара по ТН ВЭД ЕАЭС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AdditionalSign" type="clt_ru:LetterIndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дополнительный признак нетарифного регулирования ("С"). Гр.33 второй раздел</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IntellectPropertySign" type="clt_ru:LetterIndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Признак объекта интеллектуальной собственности ("И"). Гр.33 второй раздел в ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsAddTNVEDCode" type="clt_ru:GoodsNomenclatuerAddCodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код  товара по классификатору  дополнительной таможенной информации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PresentedDocumentModeCode" type="clt_ru:CustomsDocumentCodeType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Код вида представляемого документа. Заполняется в соответствии с классификатором видов документов, используемых при заявлении сведений в графе 44.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Procedure" type="cltESAD_ru:CustomsProcedureType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код процедуры - графа 37</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsGroupDescription" type="catESAD_cu:GoodsGroupDescriptionType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Описание и характеристика товаров / Описание группы товаров одного наименования с отличающимися от других групп характеристиками </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="InConsParticipantType">
+    <xs:annotation>
+      <xs:documentation>Сведения об отправителе/получателе товаров</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="sem_cat:InParticipantType">
+        <xs:sequence>
+          <xs:element name="BowelsINN" type="clt_ru:INNIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>ИНН недропользователя.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BowelsOKPO" type="clt_ru:OKPOIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>ОКПО недропользователя.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ContractorIndicator" type="clt_ru:LetterIndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Особенность указанных сведений:1-КОНТРАГЕНТ; 2 - РАЗНЫЕ ПО СПИСКУ.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="InParticipantType">
+    <xs:annotation>
+      <xs:documentation>Участник таможенного процесса</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="catESAD_ru:ESADOrganizationInType">
+        <xs:sequence>
+          <xs:element name="BranchDescription" type="catESAD_ru:BranchDescriptionType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения об обособленном подразделении.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="KTsType">
+    <xs:annotation>
+      <xs:documentation>Категория товаров, включенных во внутрисистемный список товаров, запрещенных или ограниченных к перемещению через таможенную границу РФ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Description" type="clt_ru:Text3MB" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Текстовое описание КТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KTID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Системный идентификатор KT</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Requisites" type="clt_ru:Text3MB" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Реквизиты пункта КТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Relevance" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Степень соответствия текстового описания объекта КТ (KTID) текстовому описанию товара(GOODS_INDEX)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DescriptionMarkup" type="sem_cat:MarkUpType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Размеченное текстовое описание КТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentReference" type="cat_ru:DocumentBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Реквизиты нормативного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MarkUpType">
+    <xs:annotation>
+      <xs:documentation>Разметка слова в тексте</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Delimiter" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Разделитель, вставляется после Word. Может отсутствовать</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Word" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Подсвечиваемое слово</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Weight" type="sem_clt:WordWeightType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Значимость слова. Значение от 0 до 16. Влияет на силу выделения слова в общем размеченном тексте</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OISsType">
+    <xs:annotation>
+      <xs:documentation>Объект интеллектуальной собственности</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OISID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Системный идентификатор ОИС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TNVEDCodeMarked" type="sem_cat:MarkUpType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Размеченное текстовое описание кодов товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Relevance" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Степень соответствия ОИС описанию товара (оценка достоверности)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MessageR" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сообщение о совпадении/несовпадении сведений, заявленных в 8, 9,14 гр. с данными из Реестра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BrandOwner" type="sem_cat:MarkUpType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Правообладатель (собственник). Размеченный текст</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OISDescriptionMarked" type="sem_cat:MarkUpType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Размеченное текстовое описание ОИС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TradeMarkMarked" type="sem_cat:MarkUpType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Выделение по ТМ для ОИС (размеченный текст)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ResultGoodsType">
+    <xs:annotation>
+      <xs:documentation>Информация о товарах</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsDescription" type="clt_ru:Text3MB" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Текстовое описание товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsNumeric" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер декларируемого товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsTNVEDCode" type="clt_ru:CodeVariable10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код товара по ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsDescriptionMarkup" type="sem_cat:MarkUpType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Размеченное текстовое описание товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RiskProfileDescriptionType">
+    <xs:annotation>
+      <xs:documentation>Неформализованные индикаторы профиля риска</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Code" type="clt_ru:Code4Type">
+        <xs:annotation>
+          <xs:documentation>Код неформализованного признака</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Description" type="clt_ru:Text3MB">
+        <xs:annotation>
+          <xs:documentation>Описание (значение) неформализованного признака</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RiskProfileRegNumberType">
+    <xs:annotation>
+      <xs:documentation>ИД профиля риска</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DivisionCode" type="clt_ru:Code5Type">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, разработавшего ПР/ЦПР</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentSignCode" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Код вида профиля риска. Возможные значения: :
+11 – общероссийский профиль риска;
+12 – региональный профиль риска;
+13 – зональный профиль риска;
+20 – целевой профиль риска;
+21 – целевой правоохранительный профиль риска;
+32 – профиль риска на основе моделей;
+55 – профиль риска, обязательный к применению;
+77 – профиль риска для идентификации категории уровня риска;
+88 – зависимый профиль риска. 
+					</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistryDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации ПР/ЦПР</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SequenceNumber" type="RUSclt_ru:RiskProfileNumType">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер ПР/ЦПР</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="VersionNumber" type="clt_ru:Quantity3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер версии ПР/ЦПР</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RiskProfilesType">
+    <xs:annotation>
+      <xs:documentation>Список выявленных на товаре профилей риска</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RiskProfileRegNumber" type="sem_cat:RiskProfileRegNumberType">
+        <xs:annotation>
+          <xs:documentation>ИД профиля риска</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RiskProfileDescription" type="sem_cat:RiskProfileDescriptionType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание неформализованных индикаторов профиля риска</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TradeMarkTROIS" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак проверки отнесения тов. знака в ТРОИС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SettingsType">
+    <xs:annotation>
+      <xs:documentation>Ограничительные коэффициенты</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Name" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование коэффициента</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Value" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Значение коэффициента</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Type" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Тип коэффициента</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DTInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация по ДТ и номерам товаров</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DTRegNumber" type="cat_ru:GTDIDType">
+        <xs:annotation>
+          <xs:documentation>Номер ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsNumeric" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Номер товара в ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

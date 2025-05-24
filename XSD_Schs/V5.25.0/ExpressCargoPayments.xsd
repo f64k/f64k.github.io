@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" xmlns:ecp="urn:customs.ru:Information:ExchangeDocuments:ExpressCargoPayments:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:ExchangeDocuments:ExpressCargoPayments:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+	<xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Запрос на начисление пени по реестру экспресс-грузов/ Запрос на погашение задолжености по реестру экспресс-грузов </xs:documentation>
+	</xs:annotation>
+	<xs:element name="ExpressCargoPayments" type="ecp:ExpressCargoPaymentsType">
+		<xs:annotation>
+			<xs:documentation>Запрос на начисление пени по реестру экспресс-грузов/ Запрос на погашение задолжености по реестру экспресс-грузов </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ExpressCargoPaymentsType">
+		<xs:annotation>
+			<xs:documentation>Запрос на начисление пени по реестру экспресс-грузов/ Запрос на погашение задолжености по реестру экспресс-грузов </xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="DocType" type="clt_ru:Numeric1Type">
+						<xs:annotation>
+							<xs:documentation>Тип запроса: 1 - Запрос на начисление пени по реестру экспресс-грузов; 2 - Запрос на погашение задолжености по реестру экспресс-грузов ; 3 - Запрос о прекращении обязанности уплаты</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RegNumber" type="RUScat_ru:DocNumberType">
+						<xs:annotation>
+							<xs:documentation>Регистрационный номер реестра</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="HouseWaybill" type="ecp:HouseWaybillType" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Накладные реестра</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Comments" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Комментарии</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1040057E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="PeriodsType">
+		<xs:annotation>
+			<xs:documentation>Период(ы) начисления пени</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PeriodNumber" type="clt_ru:Count3Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер периода по порядку</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CBRate" type="clt_ru:AmountType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Ключевая ставка ЦБ (ставка рефинансирования) </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ShareRefinanceRate" type="clt_ru:Quantity3Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Доля ключевой ставки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Term" type="ecp:TermType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Период, за который начисляется платеж</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TermType">
+		<xs:annotation>
+			<xs:documentation>Период </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="BeginDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата начала периода</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EndDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата окончания периода</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentDetailsType">
+		<xs:annotation>
+			<xs:documentation>Исчисление платежей по видам платежа в индивидуальной накладной</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PaymentName" type="clt_ru:CustomsPaymentCodeType">
+				<xs:annotation>
+					<xs:documentation>Код вида платежа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TaxBase" type="clt_ru:QuantityBasisType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>База для исчисления </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Periods" type="ecp:PeriodsType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Сведения о начислении пени</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FactPaidAmount" type="clt_ru:AmountType">
+				<xs:annotation>
+					<xs:documentation>Сумма платежа, подлежащая уплате (рублей)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FactPaymentDetailsType">
+		<xs:annotation>
+			<xs:documentation>графа B1 Подробности уплаты (взыскания)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PaymentName" type="clt_ru:CustomsPaymentCodeType">
+				<xs:annotation>
+					<xs:documentation>Код вида платежа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PaymentDate" type="clt_ru:DateCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата платежа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="WriteOffAmount" type="clt_ru:AmountType">
+				<xs:annotation>
+					<xs:documentation>Сумма списания платежа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PayerID" type="RUSclt_ru:UITNCode40Type">
+				<xs:annotation>
+					<xs:documentation>Идентификатор плательщика</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HouseWaybillType">
+		<xs:annotation>
+			<xs:documentation>Индивидуальная накладная реестра</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="WayBillID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Уникальный идентификатор партии товаров в текущем реестре</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ObjectOrdinal" type="clt_ru:Count3Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Порядковый номер индивидуальной накладной</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HouseWaybillDetails" type="cat_ru:DocumentBaseType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Сведения об индивидуальной накладной</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PaymentDetails" type="ecp:PaymentDetailsType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Исчисление платежей по видам платежа в индивидуальной накладной</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FactPaymentDetails" type="ecp:FactPaymentDetailsType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>графа B1 Подробности уплаты (взыскания)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TerminationOfDuty" type="ecp:TerminationOfDutyType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Графа В1. Прекращение обязанности </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TerminationOfDutyType">
+		<xs:annotation>
+			<xs:documentation>Прекращение обязанности</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CustomsTaxModeCode" type="clt_ru:Code4Type">
+				<xs:annotation>
+					<xs:documentation>Кодовое обозначение вида налогов, сборов или иного платежа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CustomsTaxModeName" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование вида налогов, сборов или иного платежа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Amount" type="clt_ru:AmountType">
+				<xs:annotation>
+					<xs:documentation>Cумма платежа, пеней, в отношении которой обязанность по уплате прекратилась </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CurrencyN3Code" type="clt_ru:CurrencyN3CodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Цифровой код валюты платежа </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocumentBase" type="cat_ru:DocumentBaseType">
+				<xs:annotation>
+					<xs:documentation>Документ, на основании которого обязанность по уплате прекратилась</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TerminationOfDutyDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата прекращения обязанности по уплате таможенных пошлин, налогов</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CaseCode" type="clt_ru:Code2Type">
+				<xs:annotation>
+					<xs:documentation>Код случая, при котором обязанность по уплате таможенных пошлин, налогов прекращается</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CaseCodeDescription" type="RUSclt_ru:FreeText1000Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Описание случая, при котором обязанность по уплате таможенных пошлин, налогов прекращается</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

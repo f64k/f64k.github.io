@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:fbt="urn:customs.ru:Information:SQDocuments:FileTransfer:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:FileTransfer:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Передача вложений без ограничений по объему</xs:documentation>
+  </xs:annotation>
+  <xs:element name="FileTransfer" type="fbt:FileTransferType" />
+  <xs:complexType name="FileTransferType">
+    <xs:annotation>
+      <xs:documentation>Передача вложений без ограничений по объему</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:annotation>
+            <xs:documentation>Список вложений</xs:documentation>
+          </xs:annotation>
+          <xs:element name="Attachments" type="fbt:AttachmentsType">
+            <xs:annotation>
+              <xs:documentation>Вложение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009277E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AttachmentsType">
+    <xs:annotation>
+      <xs:documentation>Блок сведений о вложениях</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Attachment" type="fbt:AttachmentType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание вложения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AttachmentType">
+    <xs:annotation>
+      <xs:documentation>Описание вложения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FileName" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Имя (идентификатор) файла вложения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FileType" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Тип (формат) файла вложения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IsZipped" type="CategoryCust:IndicatorCategoriesCust" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак, упакован ли файл в zip-архив</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FileSchema" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Имя схемы, по которой сформирован файл вложения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FileData" type="CategoryCust:BinaryDataCategoriesCust">
+        <xs:annotation>
+          <xs:documentation>Данные файла в кодировке BASE64</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

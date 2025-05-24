@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--Приказ ФТС России  от 14.02.2019 г. № 258 "Об утверждении форм документов, составляемых таможенными органами при проведении таможенных проверок, 
+порядков их заполнения и порядка внесения изменений в решение о проведении выездной таможенной проверки" 
+Приложение № 12 - Постановление о снятии ареста, наложенного на товары (DocType=0)
+Приложение № 13 - Постановление о возврате изъятых товаров (DocType=1)-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:adt_cat="urn:customs.ru:Information:CustomsAuditDocuments:AuditCommonAggregateTypesCust:5.24.0" xmlns:raog="urn:customs.ru:Information:CustomsAuditDocuments:ResolutionArrestOutGoods:5.24.0" targetNamespace="urn:customs.ru:Information:CustomsAuditDocuments:ResolutionArrestOutGoods:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:CustomsAuditDocuments:AuditCommonAggregateTypesCust:5.24.0" schemaLocation="AuditCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Постановление о снятии ареста, наложенного на товары / о возврате изъятых товаров</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ResolutionArrestOutGoods" type="raog:ResolutionArrestOutGoodsType">
+    <xs:annotation>
+      <xs:documentation>Постановление о снятии ареста, наложенного на товары / о возврате изъятых товаров</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ResolutionArrestOutGoodsType">
+    <xs:annotation>
+      <xs:documentation>Постановление о снятии ареста, наложенного на товары / о возврате изъятых товаров</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocType" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Тип постановления: 0 - о снятии ареста, наложенного на товары; 1 - о возврате изъятых товаров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomResolution" type="adt_cat:CustomsIssuedType">
+            <xs:annotation>
+              <xs:documentation>Таможенный орган, вынесший постановление о снятии ареста, наложенного на товары / о возврате изъятых товаров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ResolutionPlace" type="clt_ru:NameType">
+            <xs:annotation>
+              <xs:documentation>Место составления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ResolutionDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата составления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ResolutionInfo" type="adt_cat:ResolutionInfoType">
+            <xs:annotation>
+              <xs:documentation>Реквизиты Постановления о наложении ареста / об изъятии товаров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DecisionPerformAudit" type="adt_cat:NumberType">
+            <xs:annotation>
+              <xs:documentation>Решение о проведении выездной таможенной проверки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AuditOrganization" type="adt_cat:AuditOrganizationType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения об юридическом/физическом лице, в отношении которого производилась проверка</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="StatementNumber" type="adt_cat:NumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Реквизиты Заявления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Goods" type="raog:GoodsType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о товарах</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SecondExempReceived" type="adt_cat:SecondExempReceivedType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Второй экземпляр постановления получил</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RefusalMark" type="adt_cat:RefusalMarkType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Отметка об отказе в получении второго экземпляра Постановления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006916E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="GoodsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товарах</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Наименование товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsQuantity" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsCharacteristics" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Индивидуальные признаки товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

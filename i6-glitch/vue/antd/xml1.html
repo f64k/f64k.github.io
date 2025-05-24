@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>XML Viewer</title>
+    <link href="https://cdn.jsdelivr.net/npm/ant-design-vue@4.2.6/dist/reset.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/ant-design-vue@4.2.6/dist/antd.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <a-space direction="vertical" style="width: 100%; padding: 20px">
+            <a-upload 
+                accept=".xml"
+                :before-upload="handleFileUpload"
+                :show-upload-list="false"
+            >
+                <template #icon><upload-outlined /></template>
+                <a-button type="primary">Загрузить XML</a-button>
+            </a-upload>
+            
+            <a-tree
+                v-if="treeData.length"
+                :tree-data="treeData"
+                :field-names="{ title: 'name', key: 'key', children: 'children' }"
+                block-node
+                default-expand-all
+            />
+            
+            <a-empty v-else description="Загрузите XML-файл" />
+        </a-space>
+    </div>
+
+    <!-- Зависимости -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.4.21/dist/vue.global.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ant-design-vue@4.2.6/dist/antd.js"></script>
+    <script src="/xml-manager.js"></script>
+
+    <script>
+    const { createApp } = Vue;
+    const Antd = window['ant-design-vue'];
+    const { message, UploadOutlined } = Antd;
+
+    const app = createApp({
+        data() {
+            return {
+                treeData: []
+            }
+        },
+        methods: {
+            async handleFileUpload(file) {
+                try {
+                    const xmlContent = await XMLManager.loadFile(file);
+                    this.treeData = XMLManager.convertToTree(xmlContent);
+                    XMLManager.saveToStorage(xmlContent);
+                    return false;
+                } catch (error) {
+                    console.error('Ошибка:', error);
+                    message.error('Ошибка загрузки файла');
+                    return false;
+                }
+            }
+        },
+        async mounted() {
+            const savedXML = XMLManager.loadFromStorage();
+            if(savedXML) this.treeData = XMLManager.convertToTree(savedXML);
+        }
+    });
+
+    app.use(Antd)
+       .component('UploadOutlined', UploadOutlined)
+       .mount('#app');
+    </script>
+</body>
+</html>

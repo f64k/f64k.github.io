@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:sem_cat="urn:customs.ru:Information:SEMDocuments:SEMCommonAggregateTypes:5.21.0" xmlns:kt_resp="urn:customs.ru:Information:CustomsDocuments:SEM_KTResponse:5.21.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:SEM_KTResponse:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:SEMDocuments:SEMCommonAggregateTypes:5.21.0" schemaLocation="SEMCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сервис КТ - выходные данные</xs:documentation>
+  </xs:annotation>
+  <xs:element name="SEM_KTResponse" type="kt_resp:SEM_KTResponseType" />
+  <xs:complexType name="SEM_KTResponseType">
+    <xs:annotation>
+      <xs:documentation>Категории товаров включенных во внутрисистемный список товаров, запрещенных или ограниченных к перемещению через таможенную границу РФ</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Status" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Cостояние отработки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Goods" type="kt_resp:ResultKTGoodsType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Информация о товарах. В случае отсутствия информация по товарам не найдена</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1030003E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ResultKTGoodsType">
+    <xs:annotation>
+      <xs:documentation>Информация о товарах. В случае отсутствия информация по товарам не найдена</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="sem_cat:ResultGoodsType">
+        <xs:sequence>
+          <xs:element name="MessageDoc" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сообщение о наличии/ отсутствии кодов разрешительных документов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="KTs" type="sem_cat:KTsType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Категории товаров, включенных во внутрисистемный список товаров, запрещенных или ограниченных к перемещению через таможенную границу РФ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

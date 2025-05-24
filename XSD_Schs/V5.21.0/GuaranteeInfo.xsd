@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:grif="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeInfo:5.21.0" targetNamespace="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeInfo:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сведения о принятом  обеспечении</xs:documentation>
+  </xs:annotation>
+  <xs:element name="GuaranteeInfo" type="grif:GuaranteeInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о принятом  обеспечении</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GuaranteeInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о принятом  обеспечении</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="GuaranteeDocInfo" type="grif:GuaranteeDocInfoType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Информация о документе обеспечения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1050022E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="StatusNameType">
+    <xs:annotation>
+      <xs:documentation>Статус обеспечения. Текст. Длина до 30 символов.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="30" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="GuaranteeDocInfoType">
+    <xs:annotation>
+      <xs:documentation>Документ обеспечения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GuaranteeDocCode" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Код по классификатру способов обеспечения уплаты там.пошлин, налогов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GuaranteeDocNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GuaranteeDocDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StatusName" type="grif:StatusNameType">
+        <xs:annotation>
+          <xs:documentation>Статус документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentAmount" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сумма обеспечения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentCurrencyCode" type="clt_ru:CurrencyN3CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Цифровой код валюты суммы обеспечения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GuaranteeEndDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата окончания действия обеспеченияя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Спецификация информационного взаимодействия между АПС «Задолженность» и ИПС таможенного контроля Приложение А.3  -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:CDSums="urn:customs.ru:Information:GuaranteeDocuments:CustDebtSums:5.24.0" targetNamespace="urn:customs.ru:Information:GuaranteeDocuments:CustDebtSums:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сведения о суммах платежей и пеней по фактам задолженности</xs:documentation>
+  </xs:annotation>
+  <xs:element name="CustDebtSums" type="CDSums:CustDebtSumsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о суммах платежей и пеней по фактам задолженности</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="CustDebtSumsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о суммах платежей и пеней по фактам задолженности</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="CustCode" type="clt_ru:CustomsCodeType">
+            <xs:annotation>
+              <xs:documentation>Код таможенного органа, в котором зарегистрирован факт задолженности</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReportDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Отчетная дата</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ValidDocReqs" type="cat_ru:DocumentBaseType">
+            <xs:annotation>
+              <xs:documentation>Реквизиты документа, на основании которого выявлен факт задолженности (КДТ/ Решение по результатам таможенного контроля)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DebtGeneralInfo" type="CDSums:DebtGeneralInfoType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о паспорте задолженности</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1050016E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DebtFinOpersType">
+    <xs:annotation>
+      <xs:documentation>Сведения о суммах таможенных платежей и пени</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FinOperType" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Тип операции: 1 - начислено; 2 - уплачено; 3 - исключено; 9 - возвращено</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentModeCode" type="clt_ru:CustomsPaymentCodeType">
+        <xs:annotation>
+          <xs:documentation>Код вида платежа, по которому выявлен факт неуплаты (неполной уплаты)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FinOperSum" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма по виду платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FinOperDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата операции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentDocReqs" type="cat_ru:DocumentBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Реквизиты документа, на основании которого произведена операция</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DebtGeneralInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о паспорте задолженности</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="NotifInfo" type="CDSums:NotifInfoType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения об уведомлении (требовании) об уплате таможенных платежей</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RePayDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата погашения задолженности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocchargeInfo" type="CDSums:DocchargeInfoType">
+        <xs:annotation>
+          <xs:documentation>Сведения об документе начислений</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DebtState" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Текущее состояние задолженности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DebtReason" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Причина образования задолженности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CheckDep" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Проверяющее подразделение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DebtFinOpers" type="CDSums:DebtFinOpersType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Суммы таможенных платежей и пени</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocchargeInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о документе начислений</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="CHNumber" type="clt_ru:Count3Type">
+            <xs:annotation>
+              <xs:documentation>Порядковый номер корректировки документа начислений (КДТ/РТП/РТП-Ф)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="NotifInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения об уведомлении/требовании</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="ExecDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата исполнения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

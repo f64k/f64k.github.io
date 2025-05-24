@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- VS01542v001-FNS005 (Сведения об операциях с товарами и анализе цепочек движения товарных партий), fns-opergoods-ru-root.xsd -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:og_req="urn:customs.ru:Information:SQDocuments:FnsOperGoodsReq:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:FnsOperGoodsReq:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос сведений об операциях с товарами и анализе цепочек движения товарных партий</xs:documentation>
+  </xs:annotation>
+  <xs:element name="FnsOperGoodsReq" type="og_req:FnsOperGoodsReqType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений об операциях с товарами и анализе цепочек движения товарных партий</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="FnsOperGoodsReqType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений об операциях с товарами и анализе цепочек движения товарных партий</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="RequestId" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Идентификатор запроса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RequestDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата формирования запроса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CodeInfoBlock" type="clt_ru:Code2Type">
+            <xs:annotation>
+              <xs:documentation>Код информационного блока</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PersonInfo" type="og_req:PersonInfoType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Реквизиты налогоплательщика</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReportingPeriod" type="og_req:ReportingPeriodType">
+            <xs:annotation>
+              <xs:documentation>Отчетный период</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ListProdRegNum" type="clt_ru:Text50Type" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Список регистрационных номеров партий товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AdditionalParrametrs" type="og_req:AdditionalParrametrsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Список регистрационных номеров партий товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1060018E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AdditionalParrametrsType">
+    <xs:annotation>
+      <xs:documentation>Дополнительные параметры для запроса сведений по информационным блокам</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CodeInfoBlockType12" type="og_req:CodeInfoBlockType12Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дополнительные параметры для запроса сведений по информационному блоку 12</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CodeInfoBlockType12Type">
+    <xs:annotation>
+      <xs:documentation>Дополнительные параметры для запроса сведений по информационному блоку 12</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocNumber" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Номер сопроводительного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата сопроводительного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProductNumberDoc" type="clt_ru:Count3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер товара в сопроводительном документе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="IndividualPersonType">
+    <xs:annotation>
+      <xs:documentation>Налогоплательщик - индивидуальный предприниматель</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="INNIP" type="clt_ru:INNIDType">
+        <xs:annotation>
+          <xs:documentation>ИНН индивидуального предпринимателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="JuridicalPersonType">
+    <xs:annotation>
+      <xs:documentation>Налогоплательщик - юридическое лицо</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="INN" type="clt_ru:INNIDType">
+        <xs:annotation>
+          <xs:documentation>ИНН юридического лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KPP" type="clt_ru:KPPCodeType">
+        <xs:annotation>
+          <xs:documentation>КПП юридического лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PersonInfoType">
+    <xs:annotation>
+      <xs:documentation>Реквизиты налогоплательщика</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="JuridicalPerson" type="og_req:JuridicalPersonType">
+          <xs:annotation>
+            <xs:documentation>Налогоплательщик - юридическое лицо</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="IndividualPerson" type="og_req:IndividualPersonType">
+          <xs:annotation>
+            <xs:documentation>Налогоплательщик - индивидуальный предприниматель</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReportingPeriodType">
+    <xs:annotation>
+      <xs:documentation>Отчетный период</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Year" type="clt_ru:DateYearCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчетный год</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Quarter" type="clt_ru:Code2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчетный квартал</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StartDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Начало периода</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EndDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Окончание периода</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

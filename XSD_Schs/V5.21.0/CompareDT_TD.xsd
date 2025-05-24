@@ -1,0 +1,600 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cmtd="urn:customs.ru:Information:CustomsDocuments:CompareDT_TD:5.21.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:CompareDT_TD:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Результат сравнения ДТ и ТД</xs:documentation>
+  </xs:annotation>
+  <xs:element name="CompareDT_TD" type="cmtd:CompareDT_TDType">
+    <xs:annotation>
+      <xs:documentation>Результат сравнения ДТ и ТД</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="CompareDT_TDType">
+    <xs:annotation>
+      <xs:documentation>Результат сравнения ДТ с ТД/уведомлением о прибытии</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocSign" type="clt_ru:Numeric1Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Тип сверки: 1 - с ТД, 2 - с уведомлением о прибытии</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Consignee" type="cmtd:ConsigneeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Получатель в ДТ и ТД</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ConsigneeInv" type="cmtd:ConsigneeType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Получатель в ДТ и инвойсах/коносаментах</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ConsignorInv" type="cmtd:ConsigneeType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Отправитель в ДТ и инвойсах</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Transport" type="cmtd:TransportType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Транспортные средства</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Cost" type="cmtd:CostType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Общая сумма (гр 22 ДТ)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Doc44V" type="cmtd:Doc44VType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Документы гр 44 по видам</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="UCountryDT" type="cmtd:UCountryType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Страны по ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Country" type="cmtd:CountryType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Страны и условия поставки  по инвойсам/коносаментам</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CountryPP" type="cmtd:CountryType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Страны по уведомлению о прибытии</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsTD" type="cmtd:GoodsTDType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Товары в ТД/Уведомлении о прибытии</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsInv" type="cmtd:GoodsInvType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Товары в инвойсе / коносаменте</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" default="1061002E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Doc44VType">
+    <xs:annotation>
+      <xs:documentation>Документы гр 44 по видам</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PresentedDocumentModeCode" type="clt_ru:CustomsDocumentCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код вида документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Doc44" type="cmtd:Doc44Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Документы гр 44</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CodeRes" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат сравнения </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InvoiceType">
+    <xs:annotation>
+      <xs:documentation>Инвойсы</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="InvoiceNum" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер инвойса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="XPathINum" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>XPath к номеру инвойса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InvoiceG" type="cmtd:GoodsType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Товары инвойса в группе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GoodsTDType">
+    <xs:annotation>
+      <xs:documentation>Товары в ТД</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TNVDCode" type="clt_ru:GoodsNomenclatureCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код ТНВЭД 4-6 знаков</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Goods_TD" type="cmtd:GoodsType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сгруппированные товары в ТД/Уведомлении о прибытии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AllWeightTD" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вес всего по товарам ТД/Уведомлении о прибытии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AllAmountTD" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Cтоимость всего по товарам ТД/Уведомлении о прибытии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Goods_DT" type="cmtd:GoodsType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Товары в ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AllWeightDT" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вес всего по товарам ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AllAmountDT" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Cтоимость всего по товарам в ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WeightRes" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат сравнения веса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InvoiceRes" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат сравнения стоимости</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TNVDRes" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат сравнения кода ТНВЭД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ContRes" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат сравнения контейнера</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GoodsInvType">
+    <xs:annotation>
+      <xs:documentation>Товары в инвойсах</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TNVDCode" type="clt_ru:GoodsNomenclatureCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код ТНВЭД 4 знака</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Invoice" type="cmtd:InvoiceType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сгруппированные инвойсы  / коносаменты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AllGrossInv" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вес брутто всего по товарам инвойсов / коносаментов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AllNetInv" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вес нетто всего по товарам инвойсов / коносаментов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AllAmountInv" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Cтоимость всего по товарам инвойсов / коносаментов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Goods_DT" type="cmtd:GoodsType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Товары в ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AllGrossDT" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вес брутто всего по товарам ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AllNetDT" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вес нетто всего по товарам ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AllAmountDT" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Cтоимость всего по товарам в ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GrossRes" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат сравнения веса брутто</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NetRes" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат сравнения веса нетто</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InvoiceRes" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат сравнения стоимости</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TNVDRes" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат сравнения кода ТНВЭД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GoodsType">
+    <xs:annotation>
+      <xs:documentation>Товары в документе</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsNumeric" type="clt_ru:Count3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер товара </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TNVDCode" type="clt_ru:GoodsNomenclatureCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код ТНВЭД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="XPath" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>XPath к Код ТНВЭД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GrossWeight" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вес товара брутто</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="XPathGross" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>XPath к Вес товара брутто</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NetWeight" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вес товара нетто</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="XPathNet" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>XPath к Вес товара нетто</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InvoicedCost" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Cтоимость товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="XPathCost" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>XPath к Cтоимость товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="4">
+        <xs:annotation>
+          <xs:documentation>Наименование товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="XPathDes" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>XPath к Наименование товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ContainerIdentificator" type="clt_ru:ContainerIdentityType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Номера контейнеров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="XPathContainer" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>XPath к Номера контейнеров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ConsigneeType">
+    <xs:annotation>
+      <xs:documentation>Сверка Получатель/Отправитель </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ConsigneeDT" type="cmtd:UConsigneeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Получатель/отправитель в ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ConsigneeTD" type="cmtd:UConsigneeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Получатель/Отправитель в ТД/Инвойсе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InvoiceNum" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер инвойса/коносамента</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NameRes" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат сравнения наименования</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INNRes" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат сравнения ИНН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="UConsigneeType">
+    <xs:annotation>
+      <xs:documentation>Получатель / Отправитель</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ConsigneeName" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование получателя / отправителя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="XPathCN" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>XPath к наименование получателя / отправителя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INN" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН получателя / отправителя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="XPathINN" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>XPath к ИНН получателя / отправителя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TransportType">
+    <xs:annotation>
+      <xs:documentation>Транспортные средства</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="IdentifierDT" type="clt_ru:TransportMeansIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер транспортного средства в ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="XPathIdDT" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>XPath к номер транспортного средства в ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdentifierTD" type="clt_ru:TransportMeansIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер транспортного средства в ТД/Уведомлении о прибытии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="XPathIdTD" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>XPath к номер транспортного средства в ТД//Уведомлении о прибытии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IDRes" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат сравнения </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CostType">
+    <xs:annotation>
+      <xs:documentation>Сумма по инвойсу в ДТ/ТД</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CostDT" type="cmtd:UCostType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сумма по инвойсу в ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CostTD" type="cmtd:UCostType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сумма по инвойсу в ТД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CurRes" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат сравнения валюты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AmountRes" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат сравнения суммы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CountryType">
+    <xs:annotation>
+      <xs:documentation>Сравнение стран</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="UCountryInv" type="cmtd:UCountryType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Страны </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DispatchRes" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат сравнения страны отправления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DestinationRes" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат сравнения страны назначения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OriginRes" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат сравнения страны происхождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TermsRes" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат сравнения условий поставки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="UCostType">
+    <xs:annotation>
+      <xs:documentation>Сумма по инвойсу </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ContractCurrencyCode" type="clt_ru:CurrencyA3CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код валюты в графе 22</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="XPathCur" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>XPath к код валюты в графе 22</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TotalAmount" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Общая сумма по счету </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="XPathAmount" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>XPath к Общая сумма по счету</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="UCountryType">
+    <xs:annotation>
+      <xs:documentation>Страны и условия</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="InvoiceNum" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер инвойса/Коносамента</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DispatchCountryCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Страна отправления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="XPathDisC" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>XPath к Страна отправления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DestinationCountryCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Страна назначения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="XPathDestinationCode" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>XPath к Страна назначения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OriginCountryCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Cтрана происхождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="XPathOrigin" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>XPath к Cтрана происхождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DeliveryTermsStringCode" type="clt_ru:IncotermsDeliveryStringCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код условий поставки </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="XPathTerms" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>XPath к Код условий поставки </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Doc44Type">
+    <xs:annotation>
+      <xs:documentation>Документы гр 44 </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PrDocumentNumberDT" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер документа в ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="XPathNDT" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>XPath к Номер документа в ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PrDocumentNumberTD" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер документа в ТД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="XPathNTD" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>XPath к Номер документа в ТД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NumRes" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат сравнения </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

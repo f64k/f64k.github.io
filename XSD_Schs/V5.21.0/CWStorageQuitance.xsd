@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:catWH_ru="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonAggregateTypesCust:5.21.0" xmlns:ckv="urn:customs.ru:Information:WarehouseDocuments:CWStorageQuitance:5.21.0" targetNamespace="urn:customs.ru:Information:WarehouseDocuments:CWStorageQuitance:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonAggregateTypesCust:5.21.0" schemaLocation="WarehouseCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Складская квитанция</xs:documentation>
+  </xs:annotation>
+  <xs:element name="CWStorageQuitance" type="ckv:CWStorageQuitanceType" />
+  <xs:complexType name="CWStorageQuitanceType">
+    <xs:annotation>
+      <xs:documentation>Складская квитанция</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="catWH_ru:CWDocType">
+        <xs:sequence>
+          <xs:element name="Header" type="ckv:StorageQuitanceHeadType">
+            <xs:annotation>
+              <xs:documentation>Заголовок документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Commodity" type="ckv:CommodityType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Информация о товаре</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1008003E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CommodityType">
+    <xs:annotation>
+      <xs:documentation>Информация о товаре</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:GoodsBaseType">
+        <xs:sequence>
+          <xs:element name="GoodsNumericPred" type="clt_ru:Count5Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Порядковый номер товара в предыдущей квитанции</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsNumberInGTD" type="clt_ru:Count5Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Порядковый номер товара в ДТ, по которой принят груз</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsPlacesIn" type="clt_ru:Quantity5Type">
+            <xs:annotation>
+              <xs:documentation>Количество принятых грузовых мест</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RatableValueIn" type="clt_ru:AmountType">
+            <xs:annotation>
+              <xs:documentation>Оценочная стоимость принятого груза</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsPlacesRest" type="clt_ru:Quantity5Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Количество остатка мест товаров на складе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RatableValueRest" type="clt_ru:AmountType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Оценочная стоимость остатка товаров на складе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GrossWeightQuantityRest" type="clt_ru:QuantityBasisType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Вес брутто остатков товара на складе (в кг или ДЕИ)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GrossWeightSuppQuantityIn" type="catWH_ru:WHSuppQuantityType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Вес брутто принятого груза в ДЕИ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GTDOutNumber" type="cat_ru:GTDIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер ДТ, по которому товары выпущены со склада</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="StorageQuitanceHeadType">
+    <xs:annotation>
+      <xs:documentation>Информация о реквизитах документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsModeCode" type="clt_ru:Code2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код таможенного режима</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrderNumberOfEdition" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер редакции электронного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StorageQuitanceNumber" type="catWH_ru:AISTSDocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Номер складской квитанции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PriorStorageQuitanceNumber" type="catWH_ru:AISTSDocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер предыдущей складской квитанции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NextStorageQuitanceNumber" type="catWH_ru:AISTSDocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер следующей складской квитанции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GTDNumber" type="cat_ru:GTDIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

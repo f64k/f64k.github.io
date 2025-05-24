@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:rmca="urn:customs.ru:Information:CustomsDocuments:ResponseMCA:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:ResponseMCA:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Информация о значениях ИТС, стоимости, количества и веса при выдаче информации по запросу</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ResponseMCA" type="rmca:ResponseMCAType" />
+  <xs:complexType name="ResponseMCAType">
+    <xs:annotation>
+      <xs:documentation>Информация ИСС "Малахит"</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocumentHead" type="rmca:DocumentHeadType">
+            <xs:annotation>
+              <xs:documentation>Заголовок документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocumentBody" type="rmca:DocumentBodyType">
+            <xs:annotation>
+              <xs:documentation>Тело документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocumentSign" type="cat_ru:PersonSignatureType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Подписи</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006211E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CellType">
+    <xs:annotation>
+      <xs:documentation>Свойства ячейки</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="rmca:TextParaType">
+        <xs:sequence>
+          <xs:element name="Align" type="clt_ru:CodeVariable6Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Стили выравнивания по горизонтали</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Valign" type="clt_ru:CodeVariable6Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Стили выравнивания по вертикали</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Namest" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Наименование первой ячейки, включаемой в объединение по горизонтали</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Nameend" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Наименование последней ячейки, включаемой в объединение по горизонтали</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Morerows" type="clt_ru:Count10Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Количество строк, включаемых в объединение по вертикали</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Morecols" type="clt_ru:Count10Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Количество столбцов, включаемых в объединение по горизонтали</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DocumentBodyType">
+    <xs:annotation>
+      <xs:documentation>Тело документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element name="TextSection" type="rmca:TextSectionType" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation>Текстовый раздел</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Table" type="rmca:TableType" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation>Таблица</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocumentHeadType">
+    <xs:annotation>
+      <xs:documentation>Заголовок документа</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="VisibleFlag" type="clt_ru:IndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Признак видимости</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OrganizationName" type="clt_ru:NameType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Наименование организации, выдавшей документ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="EntryRowType">
+    <xs:annotation>
+      <xs:documentation>Строка таблицы</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TableCell" type="rmca:TableCellType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Ячейка таблицы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EntryTableType">
+    <xs:annotation>
+      <xs:documentation>Вложенная таблица</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="rmca:CellType">
+        <xs:sequence>
+          <xs:element name="Cols" type="clt_ru:Count10Type">
+            <xs:annotation>
+              <xs:documentation>Число колонок в таблице</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="EntryRow" type="rmca:EntryRowType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Строка таблицы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TableCellType">
+    <xs:annotation>
+      <xs:documentation>Ячейка таблицы</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="rmca:CellType" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TableRowType">
+    <xs:annotation>
+      <xs:documentation>Строка таблицы</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element name="TableCell" type="rmca:TableCellType" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation>Ячейка таблицы</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="EntryCell" type="rmca:EntryTableType" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation>Ячейка с вложенной таблицей</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="GoodNum" type="clt_ru:Count3Type" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>Номер товара в ДТ</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TableType">
+    <xs:annotation>
+      <xs:documentation>Таблица</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Cols" type="clt_ru:Count10Type">
+        <xs:annotation>
+          <xs:documentation>Число колонок в таблице</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TableName" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Наименование таблицы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ShortTableName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Краткое наименование таблицы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ColumnSpec" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание колонок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TableBodyRow" type="rmca:TableRowType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Тело таблицы. Строка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TableHeadRow" type="rmca:TableRowType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Заголовок таблицы. Строка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TableFootRow" type="rmca:TableRowType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Подвал таблицы. Строка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TextParaType">
+    <xs:annotation>
+      <xs:documentation>Параграф текста</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Style" type="clt_ru:CodeVariable6Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Стиль текста</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TextPara" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Параграф текста</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TextSectionType">
+    <xs:annotation>
+      <xs:documentation>Текстовый раздел</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="rmca:TextParaType">
+        <xs:sequence>
+          <xs:element name="SectionName" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Наименование раздела</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

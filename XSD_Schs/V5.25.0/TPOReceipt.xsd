@@ -1,0 +1,282 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Приказ Минфина России № 148н от 11 октября 2021 года. Приложение к приказу - Квитанция на оплату ТПО -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tpo_rcp="urn:customs.ru:Information:ExchangeDocuments:TPOReceipt:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:els_leaf="urn:customs.ru:Information:ELSDocuments:ELSLeafTypes:5.21.0" targetNamespace="urn:customs.ru:Information:ExchangeDocuments:TPOReceipt:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:ELSDocuments:ELSLeafTypes:5.21.0" schemaLocation="ELSLeafTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Квитанция плательщика</xs:documentation>
+  </xs:annotation>
+  <xs:element name="TPOReceipt" type="tpo_rcp:TPOReceiptType">
+    <xs:annotation>
+      <xs:documentation>Квитанция плательщика</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="TPOReceiptType">
+    <xs:annotation>
+      <xs:documentation>Квитанция плательщика</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Status" type="clt_ru:Numeric1Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Статус квитанции : 0 - сформировано, 1- оплачено, 2 - аннулировано </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Document" type="tpo_rcp:TPORegNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Документ основания платежа (ТПО)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ExpressDocNumber" type="tpo_rcp:ExpressDocNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер ПТДЭГ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="InvoiceNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер индивидуальной накладной</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReceiptNumber" type="clt_ru:Text50Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер квитанции</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReceiptDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата квитанции</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsHouse" type="cat_ru:CustomsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код и наименование таможни</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsPost" type="cat_ru:CustomsType">
+            <xs:annotation>
+              <xs:documentation>Код и наименование таможенного поста</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Recipient" type="tpo_rcp:RecipientType">
+            <xs:annotation>
+              <xs:documentation>Получатель</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Payer" type="tpo_rcp:PayerType">
+            <xs:annotation>
+              <xs:documentation>Плательщик</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Payments" type="tpo_rcp:PaymentsType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о платежах</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TotalAmount" type="clt_ru:AmountType">
+            <xs:annotation>
+              <xs:documentation>Итого: сумма квитанции</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BarCode" type="tpo_rcp:Text100kB" minOccurs="0" maxOccurs="2">
+            <xs:annotation>
+              <xs:documentation>Двумерный штриховой код</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1004146E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="Text100kB">
+    <xs:annotation>
+      <xs:documentation>Текстовая информация. До 100кбайт</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="102400" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ExpressDocNumberType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер ПТДЭГ</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:GTDIDType">
+        <xs:sequence>
+          <xs:element name="AddNumber" type="clt_ru:CodeVariable3Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дополнительная составляющая номера </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PayerType">
+    <xs:annotation>
+      <xs:documentation>Личные данные плательщика</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="PayerName" type="clt_ru:NameType">
+          <xs:annotation>
+            <xs:documentation>Наименование плательщика</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Person" type="tpo_rcp:PersonType">
+          <xs:annotation>
+            <xs:documentation>ФИО плательщика</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+      <xs:element name="INN" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН плательщика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="UITN" type="RUScat_ru:UITN40Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Налоговый или регистрационный номер, присвоенный иностранной организации в стране регистрации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Passport" type="RUScat_ru:RUIdentityCardType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Паспортные данные плательщика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaymentsType">
+    <xs:annotation>
+      <xs:documentation>Перечень платежей</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PaymentsKind" type="clt_ru:CUCustomsPaymentCodeType">
+        <xs:annotation>
+          <xs:documentation>Код вида платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BCC" type="els_leaf:BCCType">
+        <xs:annotation>
+          <xs:documentation>КБК</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentsName" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Наименование платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Amount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма к оплате</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CurrencyName" type="clt_ru:CurrencyNameType">
+        <xs:annotation>
+          <xs:documentation>Валюта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PersonType">
+    <xs:annotation>
+      <xs:documentation>Личные данные лица</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonSurname" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Фамилия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Имя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonMiddleName" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RecipientType">
+    <xs:annotation>
+      <xs:documentation>Личные данные получателя</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OrganizationName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Наименование клиента</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INN" type="clt_ru:INNIDType">
+        <xs:annotation>
+          <xs:documentation>ИНН клиента</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KPP" type="clt_ru:KPPCodeType">
+        <xs:annotation>
+          <xs:documentation>Код постановки на учет (КПП) клиента</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BankName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Наименование банка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BIC" type="clt_ru:BICIDType">
+        <xs:annotation>
+          <xs:documentation>БИК</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CorrespAccount" type="clt_ru:AccountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер корреспондентского счета (субсчета)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonalAccount" type="clt_ru:AccountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Лицевой счет клиента</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TPORegNumberType">
+    <xs:annotation>
+      <xs:documentation>Справочный номер ТПО</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, зарегистрировавшего документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocNumber" type="clt_ru:Code10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер документа по журналу регистрации/типографский номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NumPP" type="clt_ru:Code2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер вносимых изменений</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

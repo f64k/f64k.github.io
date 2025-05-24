@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:exp_s="urn:customs.ru:Information:CustomsDocuments:ExpertSignature:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:ExpertSignature:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Уведомление об ознакомлении эксперта со своими правами и обязанностями (Подписка Эксперта)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ExpertSignature" type="exp_s:ExpertSignatureType">
+    <xs:annotation>
+      <xs:documentation>Уведомление об ознакомлении эксперта со своими правами и обязанностями (Подписка Эксперта)</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ExpertSignatureType">
+    <xs:annotation>
+      <xs:documentation>Уведомление об ознакомлении эксперта со своими правами и обязанностями (Подписка Эксперта)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DateExpertSignature" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата формирования Уведомления об ознакомлении эксперта со своими правами и обязанностями (Подписки Эксперта)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CEKTUDivision" type="exp_s:CEKTUDivisionInformationType">
+            <xs:annotation>
+              <xs:documentation>Код и наименование подразделения ЦЭКТУ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TypeProcess" type="exp_s:TypeProcessType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Тип процесса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DescriptionRightsAndDuties" type="clt_ru:FreeText500Type" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Описание прав и обязанностей эксперта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ExpertInfo" type="exp_s:PersonType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Эксперт</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1051019E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CEKTUDivisionInformationType">
+    <xs:annotation>
+      <xs:documentation>Сведения о подразделении ЦЭКТУ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код подразделения ЦЭКТУ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Name" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование подразделения ЦЭКТУ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Address" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Адрес подразделения ЦЭКТУ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PersonType">
+    <xs:annotation>
+      <xs:documentation>Информация о должностном лице</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:PersonBaseType">
+        <xs:sequence>
+          <xs:element name="Phone" type="clt_ru:PhoneNumberType">
+            <xs:annotation>
+              <xs:documentation>Телефон должностного лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TypeProcessType">
+    <xs:annotation>
+      <xs:documentation>Тип процесса</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TypeProcessCode" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Код типа процесса: 1 - Дело об АП, 2 - Сообщение о преступлении, 3 - Уголовное дело, 9 - Иное.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TypeProcessText" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Иной тип процесса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

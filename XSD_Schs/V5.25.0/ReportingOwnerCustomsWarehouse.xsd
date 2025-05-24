@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Приказ ФТС России № 33 от 22 января 2021 года Об утверждении способа представления отчетности, форм отчетов, порядков заполнения форм отчетов, а также порядка и сроков представления отчетности владельцами таможенных складов и лицами, поместившими товары под таможенную процедуру таможенного склада и осуществляющими их хранение в местах, не являющихся таможенными складами, и о внесении изменений в приказ ФТС России от 28 декабря 2010 г. № 2636 -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:rocw="urn:customs.ru:ReportingCollection:ReportingOwnerCustomsWarehouse:5.25.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" targetNamespace="urn:customs.ru:ReportingCollection:ReportingOwnerCustomsWarehouse:5.25.0" elementFormDefault="qualified" version="5.25.0.0">
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Отчет владельца таможенного склада</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ReportingOwnerCustomsWarehouse" type="rocw:ReportingOwnerCustomsWarehouseType">
+		<xs:annotation>
+			<xs:documentation>Отчет владельца таможенного склада</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ReportingOwnerCustomsWarehouseType">
+		<xs:annotation>
+			<xs:documentation>Отчет владельца таможенного склада</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="ReportType" type="clt_ru:LetterIndicatorType">
+						<xs:annotation>
+							<xs:documentation>Вид отчетности: 1 - Подача ежеквартальной отчетности; 2 - Подача отчетности при исключении из реестра</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ReportDate" type="clt_ru:DateCustType">
+						<xs:annotation>
+							<xs:documentation>Дата подачи отчета</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ReportNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Номер отчета</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ReportYear" type="clt_ru:DateYearCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Отчетный год</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ReportQuarter" type="clt_ru:Numeric1Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Отчетный квартал</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ReportPeriod" type="rocw:ReportingPeriodType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Отчетный период</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Organization" type="rocw:OrganizationInfoType">
+						<xs:annotation>
+							<xs:documentation>Организация</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CertOfInclusion" type="rocw:CertOfInclusionType">
+						<xs:annotation>
+							<xs:documentation>Свидетельство о включении в реестр</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PersonPost" type="cat_ru:PersonSignatureType">
+						<xs:annotation>
+							<xs:documentation>Руководитель организации или уполномоченное им лицо</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="GoodsInfo" type="rocw:GoodsInfoType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Сведения о товарах</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1004164E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="OrganizationInfoType">
+		<xs:annotation>
+			<xs:documentation>Сведения об организации</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OrganizationName" type="clt_ru:NameType">
+				<xs:annotation>
+					<xs:documentation>Наименование организации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="INN" type="clt_ru:INNIDType">
+				<xs:annotation>
+					<xs:documentation>ИНН - Индивидуальный номер налогоплательщика</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="KPP" type="clt_ru:KPPCodeType">
+				<xs:annotation>
+					<xs:documentation>КПП - Код причины постановки на учет</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CertOfInclusionType">
+		<xs:annotation>
+			<xs:documentation>Свидетельство о включении в реестр</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CertOfInclusionNumber" type="clt_ru:DocumentNumberType">
+				<xs:annotation>
+					<xs:documentation>Номер свидетельства о включении в реестр</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CertOfInclusionDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата свидетельства о включении в реестр</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GoodsInfoType">
+		<xs:annotation>
+			<xs:documentation>Сведения о товарах</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GoodsPosition" type="clt_ru:Count5Type">
+				<xs:annotation>
+					<xs:documentation>Номер товара по порядку</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Section1" type="rocw:Section1Type">
+				<xs:annotation>
+					<xs:documentation>Раздел I. Товары, помещенные под таможенную процедуру таможенного склада</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Section2" type="rocw:Section2Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Раздел II. Товары, в отношении которых таможенная процедура таможенного склада завершена</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Section3" type="rocw:Section3Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Раздел III. Товары, в отношении которых таможенная процедура таможенного склада прекращена</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Section4" type="rocw:GoodsBaseType">
+				<xs:annotation>
+					<xs:documentation>Раздел IV. Остаток товаров на таможенном складе</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Notes" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Примечания</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Section1Type">
+		<xs:annotation>
+			<xs:documentation>Товары, помещенные под таможенную процедуру таможенного склада</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="rocw:GoodsProcType">
+				<xs:sequence>
+					<xs:element name="PlacementDate" type="clt_ru:DateCustType">
+						<xs:annotation>
+							<xs:documentation>Дата размещения товара на таможенном складе</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="StoragePlaceNum" type="clt_ru:FreeText250Type">
+						<xs:annotation>
+							<xs:documentation>Номер складского места</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ExpirationDate" type="clt_ru:DateCustType">
+						<xs:annotation>
+							<xs:documentation>Дата истечения срока действия таможенной процедуры таможенного склада</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ShelfLife" type="rocw:ShelfLifeType">
+						<xs:annotation>
+							<xs:documentation>Срок годности и (или) реализации товара</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Section2Type">
+		<xs:annotation>
+			<xs:documentation>Товары, в отношении которых таможенная процедура таможенного склада завершена</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="rocw:GoodsProcType">
+				<xs:sequence>
+					<xs:element name="ProcedureCode" type="clt_ru:Code2Type">
+						<xs:annotation>
+							<xs:documentation>Код таможенной процедуры</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="IssuanceDate" type="clt_ru:DateCustType">
+						<xs:annotation>
+							<xs:documentation>Дата вывоза товара с таможенного склада</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Section3Type">
+		<xs:annotation>
+			<xs:documentation>Товары, в отношении которых таможенная процедура таможенного склада прекращена</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ProtocolDetails" type="cat_ru:DocumentBaseType">
+				<xs:annotation>
+					<xs:documentation>Реквизиты протокола о задержании товаров и документов на них</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IssuanceDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата вывоза товара с таможенного склада</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GoodsProcType">
+		<xs:annotation>
+			<xs:documentation>Товары, помещенные или находившиеся под таможенной процедурой таможенного склада</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="rocw:GoodsBaseType">
+				<xs:sequence>
+					<xs:element name="GTDNumber" type="cat_ru:GTDIDType">
+						<xs:annotation>
+							<xs:documentation>Регистрационный номер ДТ</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="GoodsNumeric" type="clt_ru:Count5Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Номер товара в ДТ</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="GoodsTNVEDCode" type="clt_ru:GoodsNomenclatureCodeType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Код товара по ТН ВЭД ЕАЭС</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" minOccurs="1" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Наименование товара</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GoodsBaseType">
+		<xs:annotation>
+			<xs:documentation>Базовый тип описания товара</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GrossWeightQuantity" type="clt_ru:QuantityBasisType">
+				<xs:annotation>
+					<xs:documentation>Вес товара брутто (кг)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SupplementaryQuantity" type="rocw:SuppQuantityType">
+				<xs:annotation>
+					<xs:documentation>Количество товара в дополнительной единице измерения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ShelfLifeType">
+		<xs:annotation>
+			<xs:documentation>Срок годности и (или) реализации товара</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ShelfLifeDate" type="clt_ru:DateCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Срок годности и (или) реализации товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DateIndicator" type="clt_ru:IndicatorType">
+				<xs:annotation>
+					<xs:documentation>Признак наличия даты</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SuppQuantityType">
+		<xs:annotation>
+			<xs:documentation>Количество в дополнительной единице измерения</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GoodsQuantity" type="clt_ru:QuantityBasisType">
+				<xs:annotation>
+					<xs:documentation>Количество товара в единице измерения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MeasureUnitQualifierName" type="clt_ru:MeasureUnitQualifierNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Условное обозначение единицы измерения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MeasureUnitQualifierCode" type="clt_ru:MeasureUnitQualifierCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код единицы измерения в соответствии с единицами измерения, применяемыми в ТН ВЭД ЕАЭС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReportingPeriodType">
+		<xs:annotation>
+			<xs:documentation>Отчётный период</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="StartDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата начала отчётного периода</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EndDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата окончания отчётного периода</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

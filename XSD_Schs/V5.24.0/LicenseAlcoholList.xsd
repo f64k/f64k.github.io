@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:lst_alclic="urn:customs.ru:Information:CustomsDocuments:LicenseAlcoholList:5.24.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:LicenseAlcoholList:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Список лицензий на производство и оборот этилового спирта, алкогольной и спиртосодержащей продукции, выданной Росалкогольрегулированием</xs:documentation>
+  </xs:annotation>
+  <xs:element name="LicenseAlcoholList" type="lst_alclic:LicenseAlcoholListType">
+    <xs:annotation>
+      <xs:documentation>Список лицензий на производство и оборот этилового спирта, алкогольной и спиртосодержащей продукции, выданной Росалкогольрегулированием</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="LicenseAlcoholListType">
+    <xs:annotation>
+      <xs:documentation>Список лицензий работу с алкогольной продукцией</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Licence" type="lst_alclic:LicenceAlcoholType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Информация о лицензии на работу с алкогольной продукицей</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1004121E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="OrganizationType">
+    <xs:annotation>
+      <xs:documentation>Информация об организации, получившей лицензию</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:OrganizationType">
+        <xs:sequence>
+          <xs:element name="BranchDescription" type="cat_ru:CUBranchDescriptionType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения об обособленном подразделении (складе)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="LicenseNumberType">
+    <xs:annotation>
+      <xs:documentation>Тип информации о регистрационном номере лицензии</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocumentNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер лицении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата выдачи лицензии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FormNumberType">
+    <xs:annotation>
+      <xs:documentation>Тип информации о номере бланка лицензии</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Series" type="clt_ru:CodeVariable2Type">
+        <xs:annotation>
+          <xs:documentation>Серия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Number" type="clt_ru:Code6Type">
+        <xs:annotation>
+          <xs:documentation>Номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LicenceAlcoholType">
+    <xs:annotation>
+      <xs:documentation>Информация о лицензии на работу с алкогольной продукцией</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="BDRDID" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор документа по БД РД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FormNumber" type="lst_alclic:FormNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер бланка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegNumber" type="lst_alclic:LicenseNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер лицензии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrganizationName" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование организации, выдавшей лицензию</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PrevLicense" type="lst_alclic:LicenseNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер предыдущей лицензии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Permissions" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Вид лицензируемой деятельности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Organization" type="lst_alclic:OrganizationType">
+        <xs:annotation>
+          <xs:documentation>Информация об организации, получившей лицензию</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BeginDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата начала действия лицензии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EndDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата окончания действия лицензии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Signer" type="cat_ru:PersonSignatureType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация о лице, подписавшем лицензию</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ChangesDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата изменения сведений о лицензии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ChangesReason" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Основания для внесения изменений</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Activity" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Сведения о действии лицензии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

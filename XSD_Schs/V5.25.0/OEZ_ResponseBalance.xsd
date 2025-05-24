@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:catESAD_cu="urn:customs.ru:CUESADCommonAggregateTypesCust:5.24.0" xmlns:oezb="urn:customs.ru:Information:CustomsDocuments:OEZ_ResponseBalance:5.25.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:OEZ_ResponseBalance:5.25.0" elementFormDefault="qualified" version="5.25.0.0">
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CUESADCommonAggregateTypesCust:5.24.0" schemaLocation="CUESADCommonAggregateTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Сведения об остатках товаров ОЭЗ</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OEZ_ResponseBalance" type="oezb:OEZ_ResponseBalanceType">
+		<xs:annotation>
+			<xs:documentation>Сведения об остатках товаров ОЭЗ</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="OEZ_ResponseBalanceType">
+		<xs:annotation>
+			<xs:documentation>Сведения об остатках товаров ОЭЗ</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="DocType" type="clt_ru:Numeric1Type">
+						<xs:annotation>
+							<xs:documentation>Тип документа: 1 - ответ на запрос об остатках; 2 - результат списания остатков</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DocKind" type="oezb:DocKindType">
+						<xs:annotation>
+							<xs:documentation>Код вида документа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RegNum" type="oezb:RegNumType">
+						<xs:annotation>
+							<xs:documentation>Регистрационный номер Описи документов о товарах ЕАЭС, вывозимых с территории ОЭЗ</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Goods" type="oezb:ManufacturedGoodsType" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Товары описи</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ReleaseIndicator" type="clt_ru:IndicatorType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Признак успешного списания остатков /  Признак достаточности остатков</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1051048E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RegNumType">
+		<xs:annotation>
+			<xs:documentation>Регистрационный номер документа</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+				<xs:annotation>
+					<xs:documentation>Код таможенного органа, зарегистрировавшего документ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegistrationDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата регистрации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Number" type="clt_ru:CodeVariable10Type">
+				<xs:annotation>
+					<xs:documentation>Порядковый номер </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AddNumber" type="clt_ru:CodeVariable5Type">
+				<xs:annotation>
+					<xs:documentation>4-ая часть номера</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BalanceQuantityType">
+		<xs:annotation>
+			<xs:documentation>Количество остатков товара ИМ78</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NetWeightQuantity" type="clt_ru:QuantityBasisType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Списываемый вес нетто товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NetWeightQuota" type="clt_ru:QuantityBasisType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Текущий остаток товара в кг</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SupplementaryGoodsQuantity" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Списываемое количество товара в дополнительной единице измерения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SupplementaryGoodsQuota" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Текущий остаток товара в дополнительной единице измерения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MeasureIndicator" type="clt_ru:IndicatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Признак совпадения списываемых единиц измерения с единицами измерения остатка</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="QuotaIndicator" type="clt_ru:IndicatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Признак достаточности остатков товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GoodsDeclnfoType">
+		<xs:annotation>
+			<xs:documentation>Товар ДТ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GoodsNumber" type="clt_ru:Count3Type">
+				<xs:annotation>
+					<xs:documentation>Номер товара в ДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsWeightQuantity" type="clt_ru:QuantityBasisType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Вес товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsQuantity" type="catESAD_cu:SupplementaryQuantityType" minOccurs="0" maxOccurs="3">
+				<xs:annotation>
+					<xs:documentation>Количество товара из ДТ, вошедшее в позицию</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BalanceQuantity" type="oezb:BalanceQuantityType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Количество остатков товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReleaseIndicator" type="clt_ru:IndicatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Признак успешного списания остатков /  Признак достаточности остатков</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GoodsDeclType">
+		<xs:annotation>
+			<xs:documentation>Сведения о ДТ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DeclRegNum" type="cat_ru:GTDIDType">
+				<xs:annotation>
+					<xs:documentation>Регистрационный номер ДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsDeclnfo" type="oezb:GoodsDeclnfoType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Товары ДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ManufacturedGoodsType">
+		<xs:annotation>
+			<xs:documentation>Сведения об использованных/потребленных товарах</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Position" type="clt_ru:Count3Type">
+				<xs:annotation>
+					<xs:documentation>Порядковый номер товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Наименование товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsTNVEDCode" type="clt_ru:GoodsNomenclatureCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код товара по ТН ВЭД ЕАЭС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsWeightQuantity" type="clt_ru:QuantityBasisType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Вес товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsQuantity" type="catESAD_cu:SupplementaryQuantityType" minOccurs="0" maxOccurs="3">
+				<xs:annotation>
+					<xs:documentation>Количество товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsDecl" type="oezb:GoodsDeclType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Сведения о товарах по ДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="DocKindType">
+		<xs:annotation>
+			<xs:documentation>Перечислимый тип вида документа</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="clt_ru:CodeVariable2Type">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Опись документов о товарах ЕАЭС, вывозимых с территории ОЭЗ (по ПК 55н)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Опись документов о товарах ЕАЭС, вывозимых с территории ОЭЗ (по ПК 59н)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

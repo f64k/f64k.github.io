@@ -1,0 +1,288 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:inres="urn:customs.ru:Information:SQDocuments:PfrGetInsuranceNumberResponse:5.21.0" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" targetNamespace="urn:customs.ru:Information:SQDocuments:PfrGetInsuranceNumberResponse:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Получение ПФР страхового номера застрахованного лица (ответ)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="PfrGetInsuranceNumberResponse" type="inres:PfrGetInsuranceNumberResponseType">
+    <xs:annotation>
+      <xs:documentation>Получение ПФР страхового номера застрахованного лица (ответ)</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="PfrGetInsuranceNumberResponseType">
+    <xs:annotation>
+      <xs:documentation>Получение ПФР страхового номера застрахованного лица (ответ)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="FIO" type="cat_ru:PersonBaseType">
+            <xs:annotation>
+              <xs:documentation>ФИО застрахованного лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BirthDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата рождения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Gender" type="inres:GenderType">
+            <xs:annotation>
+              <xs:documentation>Пол: M - мужской; F - женский</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:sequence>
+              <xs:element name="FormationDate" type="clt_ru:DateCustType">
+                <xs:annotation>
+                  <xs:documentation>Дата формирования</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:choice>
+                <xs:element name="InsuranceNumber" type="clt_ru:Code14Type">
+                  <xs:annotation>
+                    <xs:documentation>Страховой номер</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:sequence>
+                  <xs:element name="TwinQuantity" type="clt_ru:Quantity2Type">
+                    <xs:annotation>
+                      <xs:documentation>Количество двойников</xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Twin" type="inres:TwinType" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                      <xs:documentation>Информация о двойнике</xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                </xs:sequence>
+              </xs:choice>
+            </xs:sequence>
+            <xs:sequence>
+              <xs:element name="Snils" type="inres:SNILSType" nillable="false">
+                <xs:annotation>
+                  <xs:documentation>СНИЛС</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="BirthPlace" type="inres:BirthPlaceType" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Место рождения</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:choice minOccurs="0">
+                <xs:element name="PassportRF" type="RUScat_ru:RUIdentityCardType">
+                  <xs:annotation>
+                    <xs:documentation>Паспорт РФ</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="ForeignPassport" type="RUScat_ru:RUIdentityCardType">
+                  <xs:annotation>
+                    <xs:documentation>Паспорт иностранного гражданина</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="ResidencePermitRF" type="RUScat_ru:RUIdentityCardType">
+                  <xs:annotation>
+                    <xs:documentation>Вид на жительство в РФ. Формат серии и номера совпадает с загранпаспортом.
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="InternationalPassportRF" type="RUScat_ru:RUIdentityCardType">
+                  <xs:annotation>
+                    <xs:documentation>Загранпаспорт</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="MilitaryPassport" type="inres:IdentityDocumentType">
+                  <xs:annotation>
+                    <xs:documentation>Военный билет</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="SailorPassport" type="RUScat_ru:RUIdentityCardType">
+                  <xs:annotation>
+                    <xs:documentation>Паспорт моряка</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="SovietPassport" type="inres:IdentityDocumentType">
+                  <xs:annotation>
+                    <xs:documentation>Паспорт СССР</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="BirthCertificate" type="inres:IdentityDocumentType">
+                  <xs:annotation>
+                    <xs:documentation>Свидетельство о рождении</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="DrivingLicenseRF" type="RUScat_ru:RUIdentityCardType">
+                  <xs:annotation>
+                    <xs:documentation>Водительское удостоверение РФ</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="ReleaseCertificate" type="RUScat_ru:RUIdentityCardType">
+                  <xs:annotation>
+                    <xs:documentation>Справка об освобождении</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="PassportLossCertificate" type="RUScat_ru:RUIdentityCardType">
+                  <xs:annotation>
+                    <xs:documentation>Справка об утере паспорта</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="Form9Certificate" type="RUScat_ru:RUIdentityCardType">
+                  <xs:annotation>
+                    <xs:documentation>Справка о регистрации по форме 9</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="TemporaryIdentityCardRF" type="inres:IdentityDocumentType">
+                  <xs:annotation>
+                    <xs:documentation>Временное удостоверение личности гражданина РФ по форме 2П</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="PfrIdentificationDocument" type="inres:IdentityType">
+                  <xs:annotation>
+                    <xs:documentation>Удостоверение личности ПФР</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:choice>
+            </xs:sequence>
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009201E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="BirthPlaceType">
+    <xs:annotation>
+      <xs:documentation>Сведения о месте рождения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PlaceType" type="clt_ru:Text50Type" nillable="false">
+        <xs:annotation>
+          <xs:documentation>Тип места</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Settlement" type="clt_ru:Text50Type" nillable="false">
+        <xs:annotation>
+          <xs:documentation>Населенный пункт</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="District" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Район</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Region" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Регион</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Country" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Страна</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="IdentityDocumentType">
+    <xs:annotation>
+      <xs:documentation>Удостоверяющий документ</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:RUIdentityCardType">
+        <xs:sequence>
+          <xs:element name="SerialLatin" type="clt_ru:IdentityCardSeriesType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Серия римские цифры</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SerialRussian" type="clt_ru:IdentityCardSeriesType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Серия русские буквы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SerialLong" type="clt_ru:CodeVariable20Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Нерегламентированная серия</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="IdentityType">
+    <xs:annotation>
+      <xs:documentation>Сведения о документе, удостоверяющем личность с указанием типа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Type" type="inres:String200Type" nillable="false">
+        <xs:annotation>
+          <xs:documentation>Тип документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Document" type="inres:IdentityDocumentType">
+        <xs:annotation>
+          <xs:documentation>Сведения о документе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TwinType">
+    <xs:annotation>
+      <xs:documentation>Информация о двойнике</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="InsuranceNumber" type="clt_ru:Code14Type">
+        <xs:annotation>
+          <xs:documentation>Страховой номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BirthPlace" type="RUScat_ru:RUAddressType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Место рождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdentityDocument" type="inres:IdentityDocumentType">
+        <xs:annotation>
+          <xs:documentation>Удостоверяющий документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Простые локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="GenderType">
+    <xs:annotation>
+      <xs:documentation>Пол: M-мужской; F-женский</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:enumeration value="M" />
+      <xs:enumeration value="F" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SNILSType">
+    <xs:annotation>
+      <xs:documentation>СНИЛС</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:IdentifierCategoriesCust">
+      <xs:pattern value="\d{11}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="String200Type">
+    <xs:annotation>
+      <xs:documentation>Строка от 1 до 200 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="200" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

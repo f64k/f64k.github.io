@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:catpi_ru="urn:customs.ru:Information:PriorInformation:PriorCommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:pic="urn:customs.ru:Information:PriorInformation:PI_Consignment:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:PriorInformation:PI_Consignment:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:PriorInformation:PriorCommonAggregateTypes:5.24.0" schemaLocation="PriorCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Предварительная информация о партии товаров</xs:documentation>
+  </xs:annotation>
+  <xs:element name="PI_Consignment" type="pic:PI_ConsignmentType" />
+  <xs:complexType name="PI_ConsignmentType">
+    <xs:annotation>
+      <xs:documentation>Предварительная информация о партии товаров</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DepartureCountry" type="pic:CountryType">
+            <xs:annotation>
+              <xs:documentation>Страна отправления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DestinationCountry" type="pic:CountryType">
+            <xs:annotation>
+              <xs:documentation>Страна назначения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Consignor" type="RUScat_ru:SubjectDetailsType">
+            <xs:annotation>
+              <xs:documentation>Информация об отправителе товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Consignee" type="RUScat_ru:SubjectDetailsType">
+            <xs:annotation>
+              <xs:documentation>Информация о получателе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BorderCustoms" type="cat_ru:CUCustomsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Таможенный орган (пограничный пункт пропуска), в который ожидается прибытие товаров и транспортных средств</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Goods" type="pic:GoodsType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о товарах</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006820E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CountryType">
+    <xs:annotation>
+      <xs:documentation>Страна</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CountryCode" type="clt_ru:CountryA2CodeType">
+        <xs:annotation>
+          <xs:documentation>Буквенный код страны по классификатору стран мира / 00 (неизвестна)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryName" type="clt_ru:CountryNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Краткое название страны</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocumentsType">
+    <xs:annotation>
+      <xs:documentation>Документ</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="DocumentModeCode" type="clt_ru:CustomsDocumentCodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код вида документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GoodsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товарах</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" maxOccurs="4">
+        <xs:annotation>
+          <xs:documentation>Наименование товара </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodMarking" type="clt_ru:GoodMarkingType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Артикул (код товара, номер по каталогу производителя) </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsTNVEDCode" type="clt_ru:CUGoodsNomenclatuerCodeType">
+        <xs:annotation>
+          <xs:documentation>Код товара по ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GrossWeightQuantity" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Вес товара, брутто (кг)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NetWeightQuantity" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вес товара, нетто (кг)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TotalCost" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Стоимость товаров в соответствии с коммерческими документами</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Documents" type="pic:DocumentsType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Документы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsPackingInfo" type="catpi_ru:GoodsPackagingType">
+        <xs:annotation>
+          <xs:documentation>Сведения о грузовых местах/упаковке товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

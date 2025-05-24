@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:aclt_ru="urn:customs.ru:ArriveCommonLeafTypes:5.19.0" xmlns:acat_ru="urn:customs.ru:ArriveCommonAggregateTypes:5.24.0" targetNamespace="urn:customs.ru:ArriveCommonAggregateTypes:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:ArriveCommonLeafTypes:5.19.0" schemaLocation="ArriveCommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Общие сложные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ArrivalDepartureAddressDetailsType">
+    <xs:annotation>
+      <xs:documentation>Сведения об адресе или географических координатах места</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AddressDetails" type="RUScat_ru:RUAddressType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Адрес регистрации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GeoCoordinateDetails" type="acat_ru:GeoCoordinateDetailsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о географических координатах объекта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrivePointLocationWorkDetailsType">
+    <xs:annotation>
+      <xs:documentation>Режим работы подразделения таможенного органа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="WorkTimeCode" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Кодовое обозначение времени работы организации (подразделения)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WorkTimeDescriptionText" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дополнительная информация о времени работы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WorkScheduleDetails" type="acat_ru:WorkScheduleDetailsType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о графике работы таможенного органа (подразделения) государства-члена</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GeoCoordinateDetailsType">
+    <xs:annotation>
+      <xs:documentation>Компоненты, представляющие информацию о географическом положении объекта</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="LatitudeMeasure" type="aclt_ru:GeoCoordinateMeasureType">
+        <xs:annotation>
+          <xs:documentation>Географическая широта местоположения объекта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LongitudeMeasure" type="aclt_ru:GeoCoordinateMeasureType">
+        <xs:annotation>
+          <xs:documentation>Географическая долгота местоположения объекта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="WorkScheduleDetailsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о графике работы организации (подразделения)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="WorkSheduleCode" type="clt_ru:Count2Type">
+        <xs:annotation>
+          <xs:documentation>Кодовое обозначение вида гафика работы организации (подразделения)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WorkSheduleDescriptionText" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание графика работы и особенностей его применения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PeriodDetails" type="RUScat_ru:PeriodDetailsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Период действия какого-либо события или документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WorkTimeDetails" type="acat_ru:WorkTimeDetailsType" minOccurs="0" maxOccurs="7">
+        <xs:annotation>
+          <xs:documentation>Подробная информация о времени работы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="WorkTimeDetailsType">
+    <xs:annotation>
+      <xs:documentation>Подробная информация о времени работы</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="WeekDayCode" type="aclt_ru:WeekDayCodeType" minOccurs="0" maxOccurs="7">
+        <xs:annotation>
+          <xs:documentation>Кодовое обозначение дня недели</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WorkTimeHourDetails" type="acat_ru:WorkTimeHourDetailsType">
+        <xs:annotation>
+          <xs:documentation>Подробная информация о часах работы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WorkTimeHourDescriptionText" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Дополнительная информация о часах работы (включая перерывы и выходные дни)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="WorkTimeHourDetailsType">
+    <xs:annotation>
+      <xs:documentation>Указание диапазона рабочих часов в течение суток</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="StartingTime" type="clt_ru:TimeCustType">
+        <xs:annotation>
+          <xs:documentation>Начальное время диапазона</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EndingTime" type="clt_ru:TimeCustType">
+        <xs:annotation>
+          <xs:documentation>Конечное время диапазона</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

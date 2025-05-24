@@ -1,0 +1,281 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" xmlns:tfr_cm="urn:customs.ru:Information:CustomsDocuments:TaxFreeCustomsMark:5.24.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:TaxFreeCustomsMark:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Чек TaxFree c отметками ТО</xs:documentation>
+  </xs:annotation>
+  <xs:element name="TaxFreeCustomsMark" type="tfr_cm:TaxFreeCustomsMarkType">
+    <xs:annotation>
+      <xs:documentation>Чек TaxFree c отметками ТО</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="TaxFreeCustomsMarkType">
+    <xs:annotation>
+      <xs:documentation>Чек TaxFree c отметками ТО</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Digest" type="clt_ru:Text50Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Контрольная сумма предшествующего документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TypographNumber" type="clt_ru:Text50Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Типографский номер чека TaxFree</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TaxFreeID" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Уникальный номер чека TaxFree</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TaxFreeNumber" type="clt_ru:Text50Type">
+            <xs:annotation>
+              <xs:documentation>Порядковый номер чека TaxFree</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TaxFreeDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата чека TaxFree</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TaxFreeBuyer" type="tfr_cm:TaxFreeSlBuyerType">
+            <xs:annotation>
+              <xs:documentation>Сведения о покупателе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SellerINN" type="clt_ru:INNIDType">
+            <xs:annotation>
+              <xs:documentation>ИНН продавца</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:element name="ThreeMonthPassedSign" type="clt_ru:IndicatorType">
+              <xs:annotation>
+                <xs:documentation>Признак истечения 3 месяцев с момента выдачи чека</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="CustomsMark" type="tfr_cm:CustomsMarkType">
+              <xs:annotation>
+                <xs:documentation>Отметки ТО</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006264E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CustomsMarkType">
+    <xs:annotation>
+      <xs:documentation>Отметки ТО</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Comments" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="4">
+        <xs:annotation>
+          <xs:documentation>Коментарий ТО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsPerson" type="tfr_cm:CustomsPersonDetails">
+        <xs:annotation>
+          <xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Customs" type="cat_ru:CustomsType">
+        <xs:annotation>
+          <xs:documentation>Сведения о таможенном органе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TaxFreeCMDate" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата и время формирования отметок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CashVoucher" type="tfr_cm:CashVoucherType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о кассовых чеках</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Decision" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Решение ТО: 0 - товары в полном объеме вывезены с территории ЕАЭС, 1 - товары частично вывезены с территории ЕАЭС, 2 - сведения в чеке не соответствуют нормативной базе РФ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CashVoucherType">
+    <xs:annotation>
+      <xs:documentation>Сведения о кассовых чеках</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CashVoucherNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер кассового чека</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CashVoucherDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата кассового чека</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TaxFreeCMGoods" type="tfr_cm:TaxFreeCMGoodsType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о товарах и отметках</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CustomsPersonDetails">
+    <xs:annotation>
+      <xs:documentation>Сведения о должностном лице таможенного органа</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:PersonBaseType">
+        <xs:sequence>
+          <xs:element name="LNP" type="clt_ru:LNPIDType">
+            <xs:annotation>
+              <xs:documentation>ЛНП должностного лица таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код таможенного органа, указанный на оттиске ЛНП</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TfSlCountryType">
+    <xs:annotation>
+      <xs:documentation>Информация о стране</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CountryName" type="clt_ru:CountryNameType">
+        <xs:annotation>
+          <xs:documentation>Наименование Страны</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryCode" type="clt_ru:CountryA2CodeType">
+        <xs:annotation>
+          <xs:documentation>Код страны alpha-2 (две буквы латинского алфавита)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TaxFreeSlBuyerType">
+    <xs:annotation>
+      <xs:documentation>Сведения о покупателе</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonSurname" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Фамилия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonName" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Имя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonMiddleName" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryPermanentResidence" type="tfr_cm:TfSlCountryType">
+        <xs:annotation>
+          <xs:documentation>Страна выдачи паспорта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdentityCardSeries" type="clt_ru:IdentityCardSeriesType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Серия паспорта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdentityCardNumber" type="clt_ru:IdentityCardNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер паспорта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdentityCardDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата выдачи паспорта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExpiryDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Срок действия паспорта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BirthDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата рождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonContact" type="cat_ru:ContactType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Контактные данные покупателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TaxFreeCMGoodsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товаре</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsNumber" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер товара </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsArticul" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Артикул товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsDescription" type="RUSclt_ru:FreeText1000Type">
+        <xs:annotation>
+          <xs:documentation>Наименование товара по чеку TaxFree от продавца</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsQuantity" type="cat_ru:SupplementaryQuantityType">
+        <xs:annotation>
+          <xs:documentation>Количество товара по чеку</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsQuantityFact" type="cat_ru:SupplementaryQuantityType">
+        <xs:annotation>
+          <xs:documentation>Количество фактически вывозимого товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="VAT" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма налога, исчисленная  из суммы вывозимого товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TotalCostGoods" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Стоимость вывозимого товара c учетом налога</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Comments" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Комментарий ТО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

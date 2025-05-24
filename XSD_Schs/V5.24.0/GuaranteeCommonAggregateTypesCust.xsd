@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:grn_cat="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeCommonAggregateTypesCust:5.24.0" targetNamespace="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeCommonAggregateTypesCust:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Общие сложные типы документов в рамках обмена с АС "Обеспечение"</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AmountPaidType">
+    <xs:annotation>
+      <xs:documentation>Суммы по кодам видам платежей</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="grn_cat:AmountType">
+        <xs:sequence>
+          <xs:element name="CUCustomsPaymentCode" type="clt_ru:CUCustomsPaymentCodeType">
+            <xs:annotation>
+              <xs:documentation>Код вида платежа по классификатору видов налогов, сборов и иных платежей, взимание которых возложено на таможенные органы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AmountType">
+    <xs:annotation>
+      <xs:documentation>Денежная сумма и код валюты</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Amount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CurrencyCode" type="clt_ru:CurrencyA3CodeType">
+        <xs:annotation>
+          <xs:documentation>Буквенный код валюты в соответствии с Классификатором валют.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="BankOrganizationType">
+    <xs:annotation>
+      <xs:documentation>Сведения о банке или иной кредитной организации, выдавшей банковскую гарантию</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:SubjectDetailsType">
+        <xs:sequence>
+          <xs:element name="BICID" type="clt_ru:BICIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>БИК</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CorrAccount" type="clt_ru:ForeignAccountType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Корреспондентский счет</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BankAccount" type="clt_ru:ForeignAccountType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Расчетный счет</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TransitCurrencyAccount" type="clt_ru:ForeignAccountType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Валютный счет</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OKPOID" type="clt_ru:OKPOIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>ОКПО организации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CBRLicense" type="cat_ru:DocumentBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Лицензия ЦБ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CustomsGuaranteeDocType">
+    <xs:annotation>
+      <xs:documentation>Информация о документе, по которому осуществляется перевозка товаров/о документе обеспечения</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="DocumentKind" type="clt_ru:CodeVariable2Type">
+            <xs:annotation>
+              <xs:documentation>Тип документа, по которому осуществляется перевозка товаров/Тип документа обеспечения: 0 - заявление о выдаче/приобретении акцизных марок; 1 - ДТ/ЗВ; 2 - ТД; 3 - книжка МДП; 4 - Сертификат; 5 - ТПО; 6 - ТР; 7 - дополнение к договору поручительства; 8 - банковская гарантия; 9 - документ включения в реестр; 10 - пассажирская декларация; 11  - Ходатайство о приостановлении исполнения обжалуемого решения; 12 - УИН Разрешения; 13 - Рег.номер Разрешения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ContractNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер договора поручительства</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ContractDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата договора поручительства</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GuaranteeInformationType">
+    <xs:annotation>
+      <xs:documentation>Сведения по банковской гарантии</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GuaranteeOriginalNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер банковской гарантии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GuaranteeOriginalDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата выдачи банковской гарантии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StartDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата вступления в силу документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExpireDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Срок действия документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GuaranteeType" type="clt_ru:DigitalIndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Тип банковской гарантии (0 - Простое обеспечение, 1-Генеральное обеспечение)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GuaranteeFormat" type="clt_ru:DigitalIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак выдачи банковской гарантии в электронном виде (0 - в бумажном виде, 1 - в электронном виде)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RenewalGuarantee" type="clt_ru:DigitalIndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак о переформлении  (замене) банковской гарантии, ранее принятой в качеcтве генерального обеспечения (0 - не переоформляется (не заменяется), 1- переоформляется (заменяется).</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OldGuaranteeNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер предшествующей банковской гарантии (указывается в случае наличия признака  о переоформлении (замене) банковской гарантии)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IrrevocableSign" type="clt_ru:DigitalIndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак безотзывности банковкой гарантии (0 - безотзывная, 1- отзывная)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ConsentDebiting" type="clt_ru:DigitalIndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Согласие гаранта на беспорное списание таможенным органом причитающейся суммы в случае неисполнения гарантом обязательств по банковской гарантии (0-да, 1-нет)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ConsentPayment" type="clt_ru:DigitalIndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Согласие гаранта уплатить таможенному органу неустойку в размере 0,1 процента суммы, подлежащей уплате за каждый календарный день просрочки (0-согласен, 1- не согласен)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ConsentGuarantor" type="clt_ru:DigitalIndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Согласие гаранта по банковским гарантии, что исполнением обязательств является фактическое поступление денежных средств на счет Федерального казначейства и (или) на счет, определенный международным договором государств - членов Евразийского экономического союза ( 0- согласен, 1- не согласен)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GuaranteeAmount" type="grn_cat:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма банковской гарантии и код валюты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ObligationTypeInfo" type="grn_cat:ObligationTypeInfoType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация о видах обязательств</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ObligationType">
+    <xs:annotation>
+      <xs:documentation>Вид обязательства  (код и расшифровка)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ObligationCode" type="clt_ru:CodeVariable6Type">
+        <xs:annotation>
+          <xs:documentation>Код вида обязательства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ObligationName" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Краткое наименование кода обязательства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ObligationTypeInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о видах обязательств</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ObligationCode" type="clt_ru:CodeVariable6Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Код вида обязательства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RouteInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о маршруте перевозки при транзите</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="NumPP" type="clt_ru:Numeric1Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер записи</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryCode" type="clt_ru:CountryA2CodeType">
+        <xs:annotation>
+          <xs:documentation>Буквенный код государства-члена ЕАЭС в соответствии с классификатором стран мира</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

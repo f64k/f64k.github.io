@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:pfrmsp_res="urn:customs.ru:Information:SQDocuments:PfrMilitaryServicePeriodResponse:5.24.0" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" targetNamespace="urn:customs.ru:Information:SQDocuments:PfrMilitaryServicePeriodResponse:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Ответ на запрос ПФР сведений  о периодах прохождения военной службы, а также другой приравненной к ней службы, предусмотренной Законом РФ от 12.02.1993 № 4468-1</xs:documentation>
+  </xs:annotation>
+  <xs:element name="PfrMilitaryServicePeriodResponse" type="pfrmsp_res:PfrMilitaryServicePeriodResponseType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос ПФР сведений о периодах прохождения военной службы, а также другой приравненной к ней службы, предусмотренной Законом РФ от 12.02.1993 № 4468-1</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="PfrMilitaryServicePeriodResponseType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос ПФР сведений о периодах прохождения военной службы, а также другой приравненной к ней службы, предусмотренной Законом РФ от 12.02.1993 № 4468-1</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Citizen" type="pfrmsp_res:CitizenType">
+            <xs:annotation>
+              <xs:documentation>ФИО лица, дата рождения, адрес</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Snils" type="pfrmsp_res:SNILS" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Страховой номер индивидуального лицевого счета</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MilitaryPeriods" type="pfrmsp_res:MilitaryPeriodsType">
+            <xs:annotation>
+              <xs:documentation>Сведения о периодах прохождения военной службы (в том числе военной службы по призыву), а также другой приравненной к ней</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IncludingReason" type="clt_ru:FreeText500Type">
+            <xs:annotation>
+              <xs:documentation>Основание включения сведений</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AuthorityInfoName" type="clt_ru:FreeText250Type">
+            <xs:annotation>
+              <xs:documentation>Наименование органа, представившего сведения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="InfoDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата представления сведений</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009319E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CitizenType">
+    <xs:annotation>
+      <xs:documentation>ФИО лица, дата рождения, адрес</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Surname" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Фамилия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Name" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Имя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Patronymic" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Birthday" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата рождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MilitaryPeriodsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о периодах прохождения военной службы (в том числе военной службы по призыву), а также другой приравненной к ней</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="MilitaryPeriod" type="pfrmsp_res:MilitaryPeriodType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о периоде прохождения военной службы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MilitaryPeriodType">
+    <xs:annotation>
+      <xs:documentation>Сведения о периоде прохождения военной службы</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="MilitaryType" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Вид военной службы, другой приравненной к ней службы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Position" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Должность/Звание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateStart" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата начала периода</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateEnd" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата окончания периода</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="SNILS">
+    <xs:annotation>
+      <xs:documentation>СНИЛС</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:IdentifierCategoriesCust">
+      <xs:pattern value="\d{3}-\d{3}-\d{3} \d{2}" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

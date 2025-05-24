@@ -1,0 +1,724 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Проект приказа ФНС России «Об утверждении формата расходного ордера на заправку воздушных судов» -->
+<xs:schema xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:fftt="urn:customs.ru:Information:CommercialFinanceDocuments:FTSFuelTransactionTransmission:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CommercialFinanceDocuments:FTSFuelTransactionTransmission:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Расходный ордер на заправку воздушных судов</xs:documentation>
+  </xs:annotation>
+  <xs:element name="FTSFuelTransactionTransmission" type="fftt:FTSFuelTransactionTransmissionType">
+    <xs:annotation>
+      <xs:documentation>Расходный ордер на заправку воздушных судов</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="FTSFuelTransactionTransmissionType">
+    <xs:annotation>
+      <xs:documentation>Расходный ордер на заправку воздушных судов</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="FuelTransactionTransmissionHeader" type="fftt:FuelTransactionTransmissionHeaderType">
+            <xs:annotation>
+              <xs:documentation>Шапка пакета документов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="FuelTransaction" type="fftt:IPTransactionType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Список документов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="FuelTransactionTransmissionSummary" type="fftt:FuelTransactionTransmissionSummaryType">
+            <xs:annotation>
+              <xs:documentation>Итоги по документам пакета</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1002056E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DensityInformationType">
+    <xs:annotation>
+      <xs:documentation>Информация о плотности</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DensityType" type="clt_ru:Code3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вид плотности. Принимает значение: MEA – измеренная плотность, STD – стандартная плотность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Density" type="clt_ru:QuantityBasis0Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Плотность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DensityUOM" type="clt_ru:Code3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Единица измерения плотности: KGM – кг/м3, KGL – кг/л, LGH – фут/галлон</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Temperature" type="fftt:Quantity4point1Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Температура</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TUOM" type="clt_ru:LetterIndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Единица измерения температуры: C – Цельсий, F – Фаренгейт</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EquipmentType">
+    <xs:annotation>
+      <xs:documentation>Информация о заправщике, количестве, температуре и плотности</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FuelingEquipmentID" type="fftt:Text15Type">
+        <xs:annotation>
+          <xs:documentation>Информация по топливозаправщику: наименование или код</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FuelingType" type="clt_ru:Code3Type">
+        <xs:annotation>
+          <xs:documentation>Тип транспорта:HYD – труба, REF – ТЗА</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PITNumber" type="fftt:Text15Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер гидранта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Operator" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>ФИО или идентификатор исполнителя заправки (Водителя ТЗА)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AverageFuelTemperature" type="fftt:Quantity4point1Type">
+        <xs:annotation>
+          <xs:documentation>Температура заправки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TUOM" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Единица измерения температуры: C – Цельсий, F – Фаренгейт</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DensityInformation" type="fftt:DensityInformationType">
+        <xs:annotation>
+          <xs:documentation>Информация о плотности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeterReading" type="fftt:MeterReadingType" minOccurs="0" maxOccurs="10">
+        <xs:annotation>
+          <xs:documentation>Показания счетчика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FlightInformationType">
+    <xs:annotation>
+      <xs:documentation>Информация о рейсе</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AirlineFlightID" type="clt_ru:Text10Type">
+        <xs:annotation>
+          <xs:documentation>Номер рейса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AirlineLegID" type="fftt:Text30Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор плеча маршрута</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AircraftIdentification" type="clt_ru:Text10Type">
+        <xs:annotation>
+          <xs:documentation>Бортовой номер воздушного судна</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InternationalFlight" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак вылета за границу</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TicketReferenceValue" type="fftt:TicketReferenceValueType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Дополнительная информация по рейсу</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FlightType" type="clt_ru:CodeVariable2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Тип рейса. Принимает значение: P – пассажирский, C – грузовой, M – военный, CH – чартерный, FF – технический, TF – тестовый, TR – тренировочный</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ScheduledFlightDate" type="clt_ru:DateTimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата рейса по расписанию</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FuelTransactionTransmissionHeaderType">
+    <xs:annotation>
+      <xs:documentation>Шапка пакета документов </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FuelTransactionTransmissionId" type="clt_ru:Text150Type">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор файла передачи данных</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FuelTransactionCreationDate" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата и время создания файла одного пакета документов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FuelTransactionVersion" type="clt_ru:Text5Type">
+        <xs:annotation>
+          <xs:documentation>Версия стандарта, по которой создан пакет документов (Принимает значение 3.3.0)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FuelTransactionTransmissionSummaryType">
+    <xs:annotation>
+      <xs:documentation>Итоги по пакету документов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FuelTransactionMessageCount" type="clt_ru:CodeVariable6Type">
+        <xs:annotation>
+          <xs:documentation>Количество заправок в документе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FuelTransactionTotalFuelQuantity" type="clt_ru:QuantityBasis0Type">
+        <xs:annotation>
+          <xs:documentation>Количество топливной смеси в документе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HeaderType">
+    <xs:annotation>
+      <xs:documentation>Сведения о документе </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="IntoPlaneCode" type="clt_ru:CodeVariable5Type">
+        <xs:annotation>
+          <xs:documentation>Код IATA топливозаправочной компании</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IntoPlaneName" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Наименование топливозаправочной компании</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IntoPlaneLocalTaxID" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН топливозаправочной компании </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IntoPlaneLocalTaxRegistrationReasonCode" type="clt_ru:KPPCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>КПП топливозаправочной компании </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AirportCode" type="clt_ru:CodeVariable4Type">
+        <xs:annotation>
+          <xs:documentation>Код IATA аэропорта вылета</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TicketNumber" type="clt_ru:CodeVariable20Type">
+        <xs:annotation>
+          <xs:documentation>Номер документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TicketNumberAtr" type="fftt:TicketNumberAtrType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Атрибуты документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="UniqueTicketID" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PreviousTicketNumber" type="clt_ru:CodeVariable20Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер предыдущего документа. Для заправок в крыло номер предыдущего расходного ордера.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransactionDate" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата документа (дата и время заправки)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Comments" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Дополнительная информация</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="IPTLineType">
+    <xs:annotation>
+      <xs:documentation>Информация о заправке </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="IPTransactionType" type="fftt:IPTransactionCodeType">
+        <xs:annotation>
+          <xs:documentation>Тип транзакции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransactionParties" type="fftt:SaleType">
+        <xs:annotation>
+          <xs:documentation>Тип операции (продажа или передача без продажи)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MovementInformation" type="fftt:MovementInfirmationType">
+        <xs:annotation>
+          <xs:documentation>Информация о продукте и его количестве</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="IPTransactionType">
+    <xs:annotation>
+      <xs:documentation>Документ, отражающий операцию, – заправка ВС в крыло </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Header" type="fftt:HeaderType">
+        <xs:annotation>
+          <xs:documentation>Сведения о документе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FlightInformation" type="fftt:FlightInformationType">
+        <xs:annotation>
+          <xs:documentation>Информация о рейсе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentInformation" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Условия оплаты (метод оплаты). Принимает значение: CA – наличные, CC – кредитная карта, CO – заправка по договору, CN – чековая книжка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IPTLine" type="fftt:IPTLineType">
+        <xs:annotation>
+          <xs:documentation>Информация о заправке</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Summary" type="fftt:SummaryType">
+        <xs:annotation>
+          <xs:documentation>Итоги по документу</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="IPTransactionCodeType">
+    <xs:annotation>
+      <xs:documentation>Тип транзакции </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="IPTransactionCode" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Код транзакции. Принимает значение: DE - слив, FU - заправка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <!--			<xs:element name="Sale" type="fftt:SaleType">
+				<xs:annotation>
+					<xs:documentation>Продажа топлива</xs:documentation>
+				</xs:annotation>
+			</xs:element>-->
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MeterCertificationInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о сертификации счетчиков</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="MeterCertificationID" type="fftt:Text35Type">
+        <xs:annotation>
+          <xs:documentation>Номер сертификата счетчика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeterCertificationExpDate" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата окончания сертификата</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MeterReadingType">
+    <xs:annotation>
+      <xs:documentation>Показания счетчика</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="MeterID" type="clt_ru:Text10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор счетчика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeterReadingStart" type="clt_ru:QuantityBasis0Type">
+        <xs:annotation>
+          <xs:documentation>Показания счетчика до заправки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeterReadingEnd" type="clt_ru:QuantityBasis0Type">
+        <xs:annotation>
+          <xs:documentation>Показания счетчика после заправки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeterQuantityDelivered" type="clt_ru:QuantityBasis0Type">
+        <xs:annotation>
+          <xs:documentation>Разница показаний счетчика до и после заправки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MQDUOM" type="clt_ru:CodeVariable3Type">
+        <xs:annotation>
+          <xs:documentation>Единица измерения разницы показаний счетчика до и после заправки: M3 – метр кубический, KG – килограмм, LT - литр, MT – метрическая тонна, USG - галлон</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeterCertificationInfo" type="fftt:MeterCertificationInfoType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация о сертификации счетчика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MovementInfirmationType">
+    <xs:annotation>
+      <xs:documentation>Информация о движении топлива</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Direction" type="clt_ru:Code2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Направление движения топлива. Принимает значение: TO – заправка, FR – слив</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProductInformation" type="fftt:ProductInformationType" maxOccurs="200">
+        <xs:annotation>
+          <xs:documentation>Информация о продукте</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StandNumber" type="fftt:Text15Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Местоположение доставки топлива</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Equipment" type="fftt:EquipmentType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Информация о заправщике, количестве, температуре и плотности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TotalQuantityKG" type="clt_ru:QuantityBasis0Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество топлива (в КГ)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TotalQuantityL" type="clt_ru:QuantityBasis0Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество топлива (в литрах)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TQDFlag" type="clt_ru:Code2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак веса: GR – нетто, NT – брутто</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TQDUOM" type="clt_ru:CodeVariable3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак количества: M3 – метр кубический, KG – килограмм, LT - литр, MT – метрическая тонна, USG - галлон</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransactionTime" type="fftt:TransactionTimeType">
+        <xs:annotation>
+          <xs:documentation>Время заправки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ProductInformationType">
+    <xs:annotation>
+      <xs:documentation>Информация о продукте</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ProductID" type="clt_ru:CodeVariable5Type">
+        <xs:annotation>
+          <xs:documentation>Код продукта. Принимает значение: ADTV – дополнительные присадки, DEF – слив с крыла, HYD – заправка через гидрант, IM – ПВКЖ ИМ, ITP – заправка в крыло, JETA – Авиатопливо JETA, JETA1 – Авиатопливо JETA1-, OTH - прочее, TS1 – Авиатопливо ТС-1</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProductIDCustoms" type="clt_ru:CodeVariable3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Особенности продукта для таможни. Принимает значение: BD – Облагается налогом, DOM - Применяется в случае выполнения внутреннего рейса иностранной компанией, FTZ - Зона свободной торговли, DF - НДС - 0%, OT - Прочее, NA - Не применимо</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProductIDQualifier" type="clt_ru:CodeVariable4Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код продукта - уточнение. Принимает значение: PRDT - продукт, FEE - сбор, OTHR - прочие</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProductDescription" type="fftt:Text25Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание продукта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProductPercentage" type="fftt:Quantity4point1Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Процент дополнительных жидкостей в топливе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SaleType">
+    <xs:annotation>
+      <xs:documentation>Продажа топлива</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ReceiverCode" type="clt_ru:CodeVariable3Type">
+        <xs:annotation>
+          <xs:documentation>Код IATA грузополучателя (авиакомпании)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReceiverName" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Наименование грузополучателя (авиакомпании)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReceiverLocalTaxID" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН грузополучателя (авиакомпании)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReceiverLocalTaxRegistrationReasonCode" type="clt_ru:KPPCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>КПП грузополучателя (авиакомпании)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReceiverRepresentative" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Представитель грузополучателя (авиакомпании). Указывается ФИО или идентификатор физического лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BuyerCode" type="clt_ru:CodeVariable3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код IATA покупателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BuyerName" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование покупателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BuyerLocalTaxID" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН покупателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BuyerLocalTaxRegistrationReasonCode" type="clt_ru:KPPCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>КПП покупателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BuyerResidenceCountryCode" type="clt_ru:CountryA2CodeType">
+        <xs:annotation>
+          <xs:documentation>Код  страны регистрации покупателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReceiverAccountNumber" type="clt_ru:AccountType">
+        <xs:annotation>
+          <xs:documentation>Номер счета получателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SupplierOROwnerCode" type="clt_ru:CodeVariable3Type">
+        <xs:annotation>
+          <xs:documentation>Код IATA владельца топлива</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SupplierOROwnerName" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Наименование владельца топлива</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SupplierOROwnerLocalTaxID" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН владельца топлива</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SupplierOROwnerLocalTaxRegistrationReasonCode" type="clt_ru:KPPCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>КПП владельца топлива</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SummaryType">
+    <xs:annotation>
+      <xs:documentation>Итоги по документу</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FuelTransactionLineCount" type="clt_ru:CodeVariable18Type">
+        <xs:annotation>
+          <xs:documentation>Количество строк с заправками</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TotalFuelQuantity" type="clt_ru:QuantityBasis0Type">
+        <xs:annotation>
+          <xs:documentation>Общее количество топлива</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TicketNumberAtrType">
+    <xs:annotation>
+      <xs:documentation>Номер документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TicketType" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Тип документа. Принимает значение: O – действующий, R – измененный, C – отклоненный, D – удаленный</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TicketSource" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Источник документа. Принимает значение: M – бумажный, Е – электронный</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TicketStatus" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Статус документа. Принимает значение: P – предварительный, F – финальный</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TicketCancelOperator" type="clt_ru:LetterIndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Статус отмены оператором. Принимает значение: P – отменен, N – перевыпущен</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TicketReferenceValueType">
+    <xs:annotation>
+      <xs:documentation>Дополнительная информация по рейсу</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TicketReferenceValue" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дополнительная информация по рейсу</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ValueType" type="fftt:TicketReferenceValueCodeType">
+        <xs:annotation>
+          <xs:documentation>Атрибут дополнительной иинформации по рейсу</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TransactionTimeType">
+    <xs:annotation>
+      <xs:documentation>Время заправки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="LocalDateTimeStart" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата начала заправки (локальное время)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LocalDateTimeFinished" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата окончания заправки (локальное время)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GMTDateTimeStart" type="clt_ru:DateTimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата начала заправки (глобальное время UTC)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GMTDateTimeFinished" type="clt_ru:DateTimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата окончания заправки (глобальное время UTC)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="Quantity4point1Type">
+    <xs:annotation>
+      <xs:documentation>Температура. От 0. 1 знак после запятой. 4 цифры</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:NumericCategoriesCust">
+      <xs:totalDigits value="4" />
+      <xs:minInclusive value="0" />
+      <xs:fractionDigits value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text15Type">
+    <xs:annotation>
+      <xs:documentation>Текстовое описание. До 15 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="15" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text25Type">
+    <xs:annotation>
+      <xs:documentation>Текстовое описание. До 25 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="25" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text30Type">
+    <xs:annotation>
+      <xs:documentation>Текстовое описание. До 30 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="30" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text35Type">
+    <xs:annotation>
+      <xs:documentation>Текстовое описание. До 35 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="35" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TicketReferenceValueCodeType">
+    <xs:annotation>
+      <xs:documentation>Код дополнительной информации по рейсу. До 3 символов. Текстовый..Может принимать значения: AC – Тип воздушного судна; AID – Организация, выполняющая поверку ТЗА; BAT – Серия\Партия; BOL – Накладная; BUY – покупатель; CCO – Номер контрольного талона; CDN – Номер таможенной декларации; CID – Идентификационный номер оборудования; COD – Страна назначения; CTN – Номер контракта (договора); D – Причины задержки; FDT – Конечный пункт назначения; FO – Исходный рейс ; NDT – Следующий пункт назначения; OFD – Дата исходного рейса в случае задержки или переноса рейса; PO – Заказ (заявка) поставщика; SEN – серийный номер; SO – Заказ (заявка) покупателя; TAX – Дополнительная информация по налогам</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="3" />
+      <xs:enumeration value="AC" />
+      <xs:enumeration value="AID" />
+      <xs:enumeration value="BAT" />
+      <xs:enumeration value="BOL" />
+      <xs:enumeration value="BUY" />
+      <xs:enumeration value="CCO" />
+      <xs:enumeration value="CDN" />
+      <xs:enumeration value="CID" />
+      <xs:enumeration value="COD" />
+      <xs:enumeration value="CTN" />
+      <xs:enumeration value="D" />
+      <xs:enumeration value="FDT" />
+      <xs:enumeration value="FO" />
+      <xs:enumeration value="NDT" />
+      <xs:enumeration value="OFD" />
+      <xs:enumeration value="PO" />
+      <xs:enumeration value="SEN" />
+      <xs:enumeration value="SO" />
+      <xs:enumeration value="TAX" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

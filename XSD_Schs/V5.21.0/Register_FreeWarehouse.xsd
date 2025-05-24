@@ -1,0 +1,440 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Аналог EEC_R_CA_CC_07_RegisterFreeWarehouse_v1.0.0.xsd альбома ЕЭК (R.CA.CC.07.001: Общий реестр владельцев свободных складов (Общий реестр владельцев свободных складов))
+Решении Коллегии ЕЭК от 01.11.2016 г. № 136 "О технологических документах, регламентирующих информационное взаимодействие при реализации средствами интегрированной информационной 
+системы внешней и взаимной торговли общего процесса "Формирование, ведение и использование общего реестра владельцев свободных складов"
+Приказ ФТС России от 17.07.2019 г. № 1169 "Об утверждении формы реестра владельцев свободных складов"-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:rfwar="urn:customs.ru:Information:SQDocuments:Register_FreeWarehouse:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:Register_FreeWarehouse:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сведения из общего реестра владельцев свободных складов</xs:documentation>
+  </xs:annotation>
+  <xs:element name="Register_FreeWarehouse" type="rfwar:Register_FreeWarehouseType">
+    <xs:annotation>
+      <xs:documentation>Сведения из общего реестра владельцев свободных складов</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="Register_FreeWarehouseType">
+    <xs:annotation>
+      <xs:documentation>Сведения из общего реестра владельцев свободных складов</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="EDocHeader" type="rfwar:EDocHeaderType">
+            <xs:annotation>
+              <xs:documentation>Совокупность технологических реквизитов электронного документа (сведений)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegisterFreeWarehouseDetails" type="rfwar:RegisterFreeWarehouseDetailsType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения об объекте реестра владельцев свободных складов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009262E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="CommunicationChannelCodeType">
+    <xs:annotation>
+      <xs:documentation>Кодовое обозначение вида средства (канала) связи (телефон, факс, электронная почта и др.)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:enumeration value="AO" />
+      <xs:enumeration value="EM" />
+      <xs:enumeration value="FX" />
+      <xs:enumeration value="TE" />
+      <xs:enumeration value="TG" />
+      <xs:enumeration value="TL" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CubageMeasureType">
+    <xs:annotation>
+      <xs:documentation>Объем помещения (куб. м)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:QuantityCategoriesCust">
+      <xs:fractionDigits value="1" />
+      <xs:totalDigits value="10" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MeasurementUnitCodeType">
+    <xs:annotation>
+      <xs:documentation>Кодовое обозначение единицы измерения</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:pattern value="[0-9A-Z]{2,3}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="OrganizationCodeType">
+    <xs:annotation>
+      <xs:documentation>Классификационный код юридического лица, предназначенный для целей статистического учета</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:pattern value="\d{8}|\d{10}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ReregistrationCodeType">
+    <xs:annotation>
+      <xs:documentation>Кодированное обозначение признака перерегистрации</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:pattern value="\d{1}|\d{2}|\d{3}|[А-Я]{1}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TaxpayerIdType">
+    <xs:annotation>
+      <xs:documentation>Идентификатор юридического или физического лица в реестре налогоплательщиков страны регистрации налогоплательщика</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:pattern value="\d{8,13}|\d{14}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TotalAreaMeasureType">
+    <xs:annotation>
+      <xs:documentation>Общая площадь (кв. м)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:QuantityCategoriesCust">
+      <xs:fractionDigits value="2" />
+      <xs:totalDigits value="10" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UniversallyUniqueIdType">
+    <xs:annotation>
+      <xs:documentation>Универсально уникальный идентификатор (UUID) в соответствии со стандартом ISO/IEC 9834-8</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="CommunicationDetailsType">
+    <xs:annotation>
+      <xs:documentation>Контактный реквизит с указанием способа и идентификатора средства (канала) связи</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CommunicationChannelCode" type="rfwar:CommunicationChannelCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Кодовое обозначение вида средства (канала) связи (телефон, факс, электронная почта и др.)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CommunicationChannelName" type="rfwar:TaxpayerIdType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование вида средства (канала) связи (телефон, факс, электронная почта и др.)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CommunicationChannelId" type="clt_ru:KPPCodeType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Последовательность символов, идентифицирующая канал связи (указание номера телефона, факса, адреса электронной почти и др.)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EDocHeaderType">
+    <xs:annotation>
+      <xs:documentation>Совокупность технологических реквизитов электронного документа (сведений)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="InfEnvelopeCode" type="RUSclt_ru:InfEnvelopeCodeType">
+        <xs:annotation>
+          <xs:documentation>Кодовое обозначение сообщения общего процесса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EDocCode" type="RUSclt_ru:EDocCodeType">
+        <xs:annotation>
+          <xs:documentation>Кодовое обозначение электронного документа (сведений) в соответствии с реестром структур электронных документов и сведений</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EDocId" type="rfwar:UniversallyUniqueIdType">
+        <xs:annotation>
+          <xs:documentation>Строка символов, однозначно идентифицирующая электронный документ (сведения)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EDocRefId" type="rfwar:UniversallyUniqueIdType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор электронного документа (сведений), в ответ на который был сформирован данный электронный документ (сведения)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EDocDateTime" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата и время создания электронного документа (сведений)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LanguageCode" type="clt_ru:LanguageCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Кодовое обозначение естественного языка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FreeWarehouseDetailsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о свободном складе</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AddressDetails" type="RUScat_ru:RUAddressType">
+        <xs:annotation>
+          <xs:documentation>Адрес регистрации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WarehouseKindCode" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Назначение склада: 1 – склад временного хранения; 2 – таможенный склад; 3 – свободный склад</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TypeWarehouseIndicator" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Тип склада: 0 – открытый; 1 – закрытый</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TotalAreaMeasure" type="rfwar:TotalAreaMeasureType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Общая площадь (кв. м)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TotalAreaMeasurementUnitCode" type="rfwar:MeasurementUnitCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Кодовое обозначение единицы измерения общей площади</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CubageMeasure" type="rfwar:CubageMeasureType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Объем помещения (куб. м)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CubageMeasurementUnitCode" type="rfwar:MeasurementUnitCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Кодовое обозначение единицы измерения объема помещения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransportModeCode" type="clt_ru:TransportModeCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код вида транспортного средства в соответствии с классификатором видов транспорта и транспортировки товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WarehouseActivityDescriptionText" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о виде деятельности, осуществляемой на территории склада</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AdditionalInfoText" type="RUSclt_ru:FreeText4000Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Дополнительная информация</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OrganizationDetailsType">
+    <xs:annotation>
+      <xs:documentation>Совокупность основных реквизитов юридического лица</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CountryCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Кодовое обозначение страны регистрации юридического лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrganizationName" type="RUSclt_ru:Name300Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Полное наименование юридического лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrganizationBriefName" type="RUSclt_ru:Name120Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сокращенное наименование юридического лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BusinessEntityTypeName" type="RUSclt_ru:Name300Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование организационно-правой формы, в которой зарегистрировано юридическое лицо</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrganizationId" type="clt_ru:CodeVariable20Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор организации в реестре юридических лиц страны регистрации юридического лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrganizationCode" type="rfwar:OrganizationCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Классификационный код юридического лица, предназначенный для целей статистического учета</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LanguageCode" type="clt_ru:LanguageCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Язык заполнения реквизитов юридического лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegisterDocumentDetailsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о документе, подтверждающем включение юридического лица в реестр</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RegistrationNumberIdentifier" type="RUSclt_ru:Id25Type">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер юридического лица согласно реестру</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocCreationDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата подписания утверждения или регистрации документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegisterDocumentCode" type="clt_ru:LetterIndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Тип документа, подтверждающего включение юридического лица в реестр</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReregistrationCode" type="rfwar:ReregistrationCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Кодированное обозначение признака перерегистрации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegisterFreeWarehouseDetailsType">
+    <xs:annotation>
+      <xs:documentation>Сведения об объекте реестра владельцев свободных складов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RegisterCountryCode" type="clt_ru:CountryA2CodeType">
+        <xs:annotation>
+          <xs:documentation>Кодовое обозначение страны, представившей информацию</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegisterDocumentDetails" type="rfwar:RegisterDocumentDetailsType">
+        <xs:annotation>
+          <xs:documentation>Сведения о документе, подтверждающем включение юридического лица в реестр</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsOfficeCode" type="clt_ru:CustomsCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа в соответствии с классификаторами таможенных органов, применяемыми в государствах-членах ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegisterOrganizationDetails" type="rfwar:RegisterOrganizationDetailsType">
+        <xs:annotation>
+          <xs:documentation>Сведения о реквизитах юридического лица, включенного в реестр</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FreeWarehouseDetails" type="rfwar:FreeWarehouseDetailsType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о свободном складе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StartActivityDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата начала осуществления деятельности (1-й день действия, в том числе после временного прекращения (приостановления))</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EndActivityDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата окончания осуществления деятельности (последний день действия, в том числе по причине временного прекращения)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ResourceItemStatusDetails" type="rfwar:ResourceItemStatusDetailsType">
+        <xs:annotation>
+          <xs:documentation>Совокупность технологических сведений о записи общего ресурса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegisterOrganizationDetailsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о реквизитах юридического лица, включенного в реестр</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OrganizationDetails" type="rfwar:OrganizationDetailsType">
+        <xs:annotation>
+          <xs:documentation>Совокупность основных реквизитов юридического лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TaxpayerDetails" type="rfwar:TaxpayerDetailsType">
+        <xs:annotation>
+          <xs:documentation>Совокупность реквизитов, присвоенных налоговой службой юридическому или физическому лицу</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AddressDetails" type="RUScat_ru:RUAddressType">
+        <xs:annotation>
+          <xs:documentation>Адрес регистрации юридического лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CommunicationDetails" type="rfwar:CommunicationDetailsType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Контактный реквизит с указанием способа и идентификатора средства (канала) связи</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PostalAddressDetails" type="RUScat_ru:RUAddressType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация о почтовом адресе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BranchFlagCode" type="clt_ru:LetterIndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак филиала организации: 0 – головная организация (основное подразделение); 1 – филиал организации (структурное подразделение)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ResourceItemStatusDetailsType">
+    <xs:annotation>
+      <xs:documentation>Совокупность технологических сведений о записи общего ресурса</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ValidityPeriodDetails" type="rfwar:ValidityPeriodDetailsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Период действия записи общего ресурса (реестра, перечня, базы данных)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="UpdateDateTime" type="clt_ru:DateTimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата и время обновления записи общего ресурса (реестра, перечня, базы данных)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TaxpayerDetailsType">
+    <xs:annotation>
+      <xs:documentation>Совокупность реквизитов, присвоенных налоговой службой юридическому или физическому лицу</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TaxpayerId" type="rfwar:TaxpayerIdType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор юридического или физического лица в реестре налогоплательщиков страны регистрации налогоплательщика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TaxRegistrationReasonCode" type="clt_ru:KPPCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код, идентифицирующий причину постановки организации на налоговый учет</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ValidityPeriodDetailsType">
+    <xs:annotation>
+      <xs:documentation>Период действия записи общего ресурса (реестра, перечня, базы данных)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ValidityPeriodDetails" type="clt_ru:DateTimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата и время начала действия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="UpdateDateTime" type="clt_ru:DateTimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата и время окончания действия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

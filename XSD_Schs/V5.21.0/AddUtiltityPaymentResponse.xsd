@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:sq_clt="urn:customs.ru:Information:SQDocuments:SQCommonLeafTypesCust:5.0.10" xmlns:aupr="urn:customs.ru:Information:SQDocuments:AddUtiltityPaymentResponse:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:AddUtiltityPaymentResponse:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:SQDocuments:SQCommonLeafTypesCust:5.0.10" schemaLocation="SQCommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Ответ на запрос о внесении сведений об утилизационном сборе</xs:documentation>
+  </xs:annotation>
+  <xs:element name="AddUtiltityPaymentResponse" type="aupr:AddUtiltityPaymentResponseType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос о внесении сведений об утилизационном сборе</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="AddUtiltityPaymentResponseType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос о внесении сведений об утилизационном сборе</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="UtilityPaymentInfoByItem" type="aupr:UtilityPaymentInfoByItemType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Результат обработки заявления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009213E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="UtilityPaymentInfoByItemType">
+    <xs:annotation>
+      <xs:documentation>Раздел описания передаваемых сведений по одному ТС (шасси)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="VehicleEPassportId" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Уникальный номер, присваиваемый электронному паспорту транспортного средства (шасси транспортного средства, самоходной
+                        машины и других видов техники) в системах электронных паспортов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="VehicleIdInfoDetails" type="aupr:VehicleIdInfoDetailsType">
+        <xs:annotation>
+          <xs:documentation>Информация об идентификационных номерах транспортного средства (шасси транспортного средства, самоходной машины и других видов техники) или его компонента, присвоенных организацией-изготовителем
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="VehicleEPassportStatusCode" type="aupr:VehicleEPassportStatusCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Кодовое обозначение статуса электронного паспорта транспортного средства (шасси транспортного средства, самоходной
+                        машины и других видов техники)
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EventDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата присвоения статуса электронного паспорта транспортного средства (шасси транспортного средства, самоходной
+                        машины и других видов техники)
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocCreationDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата оформления электронного паспорта (присвоения в системах электронных паспортов статуса «Действующий»)
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StatementNumber" type="aupr:StatementNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер заявления в СЭП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StatementStatus" type="clt_ru:LetterIndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Статус рассмотрения заявления (4 - Исполнено; 9 - Отказано)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ErrorData" type="aupr:ErrorDataType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Ошибки возникшие при обработке заявления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="VehicleIdInfoDetailsType">
+    <xs:annotation>
+      <xs:documentation>Информация об идентификационных номерах транспортного средства (шасси транспортного средства, самоходной машины
+                и других видов техники) или его компонента, присвоенных организацией-изготовителем</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="VehicleIdDetails" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация об идентификационном номере транспортного средства (шасси транспортного средства, самоходной машины и других
+                        видов техники), присвоенном организацией-изготовителем
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="VehicleEngineIdDetails" type="clt_ru:Text50Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Информация о номере двигателя, присвоенном организацией-изготовителем
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="VehicleFrameIdDetails" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация о номере шасси (рамы) транспортного средства, присвоенном и нанесенном организацией-изготовителем
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="VehicleBodyIdDetails" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация о номере кузова (кабины, прицепа), присвоенном и нанесенном организацией-изготовителем
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MachineBodyIdDetails" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация о номере кузова (кабины, в том числе кабины оператора, прицепа, рамы) самоходной машины и других видов
+                        техники, присвоенном и нанесенном организацией-изготовителем</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GearboxIdDetails" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация об идентификационном номере коробки передач самоходной машины и других видов техники, присвоенном и
+                        нанесенном организацией-изготовителем</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MainPoweredAxleIdDetails" type="clt_ru:Text50Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Информация об идентификационном номере основного ведущего моста, присвоенном и нанесенном организацией-изготовителем</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ErrorDataType">
+    <xs:annotation>
+      <xs:documentation>Ошибки возникшие при обработке заявления</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ErrorCode" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Код результата обработки заявления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ErrorText" type="sq_clt:FreeText4000Type">
+        <xs:annotation>
+          <xs:documentation>Текст результата обработки заявления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ErrorDetails" type="sq_clt:FreeText4000Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Детальное описание результата обработки заявления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="VehicleEPassportStatusCodeType">
+    <xs:annotation>
+      <xs:documentation>Строка символов, представляющая краткое условное обозначение статуса электронного паспорта транспортного средства</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="clt_ru:Code2Type">
+      <xs:pattern value="\d{2}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="StatementNumberType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер заявления в СЭП</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:length value="17" />
+      <xs:pattern value="[A-Z,0-9]{17}" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

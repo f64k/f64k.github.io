@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:p_inf="urn:customs.ru:Information:SQDocuments:ParticipantInfo:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:ParticipantInfo:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Ответ на запрос информации по участнику ВЭД c крупными активами</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ParticipantInfo" type="p_inf:ParticipantInfoType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос информации по участнику ВЭД c крупными активами</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ParticipantInfoType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос информации по участнику ВЭД c крупными активами</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="InfoDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата, на которую предоставлены сведения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Participant" type="RUScat_ru:SubjectDetailsType">
+            <xs:annotation>
+              <xs:documentation>Сведения об участнике ВЭД</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AmountExecutedObligationsInfo" type="p_inf:AmountExecutedObligationsInfoType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Информация о суммах исполненной декларантом обязанности по уплате таможенных платежей, специальных, антидемпинговых, компенсационных пошлин</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NoPayCustomsSign" type="clt_ru:IndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Не исполненная в установленный срок обязанность по уплате таможенных платежей, специальных, антидемпинговых, компенсационных пошлин, пеней, процентов отсутствует (true - да, отсутствует, false - нет, присутствует)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NoPenaltySign" type="clt_ru:IndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Вступившие в силу и неисполненные в установленный срок постановления по делам об административных правонарушениях в области таможенного дела отсутствуют (true - да, отсутствует, false - нет, присутствует)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1040017E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AmountExecutedObligationsInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о суммах исполненной декларантом обязанности по уплате таможенных платежей, специальных, антидемпинговых, компенсационных пошлин</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TotalAmount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Общая сумма исполненной декларантом за три календарных года, предшествующих году, в котором подана декларация на товары, обязанности по уплате таможенных платежей, специальных, антидемпинговых, компенсационных пошлин</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AmountExecutedObligationsDetails" type="p_inf:AmountExecutedObligationsDetailsType" minOccurs="0" maxOccurs="3">
+        <xs:annotation>
+          <xs:documentation>Подробности исполнения декларантом обязанности по уплате таможенных платежей, специальных, антидемпинговых, компенсационных пошлин</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AmountExecutedObligationsDetailsType">
+    <xs:annotation>
+      <xs:documentation>Подробности исполнения декларантом обязанности по уплате таможенных платежей, специальных, антидемпинговых, компенсационных пошлин</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Year" type="clt_ru:DateYearCustType">
+        <xs:annotation>
+          <xs:documentation>Год</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Amount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

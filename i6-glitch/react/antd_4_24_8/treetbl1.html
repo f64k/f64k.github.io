@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>treetbl1 - Self Object Table</title>
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- Ant Design -->
+    <script src="https://cdn.jsdelivr.net/npm/antd@4.24.16/dist/antd.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/antd@4.24.16/dist/antd.min.css">
+    <style>
+        .container {
+            padding: 20px;
+            margin: 0 auto;
+            max-width: 1000px;
+        }
+        .tree-table .ant-table-row-expand-icon {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script>
+        const { createElement, useState } = React;
+        const ReactDOM = window.ReactDOM;
+        const antd = window.antd;
+        
+        const Table = antd.Table;
+        const Typography = antd.Typography;
+
+        // Ограничения для безопасности
+        const MAX_DEPTH = 3;
+        const MAX_ITEMS_PER_LEVEL = 50;
+        const visited = new WeakSet();
+
+        function convertObjectToDataSource(obj, depth = 0, parentKey = 'root') {
+            if (depth > MAX_DEPTH) return [];
+            if (visited.has(obj)) return [];
+            visited.add(obj);
+
+            return Object.entries(obj)
+                .slice(0, MAX_ITEMS_PER_LEVEL)
+                .map(([key, value], index) => {
+                    const isObject = typeof value === 'object' && value !== null;
+                    const currentKey = `${parentKey}-${key}-${index}`;
+                    
+                    return {
+                        key: currentKey,
+                        name: key,
+                        value: isObject ? null : value,
+                        type: typeof value,
+                        children: isObject ? convertObjectToDataSource(
+                            value, 
+                            depth + 1, 
+                            currentKey
+                        ) : null
+                    };
+                });
+        }
+
+        const columns = [
+            {
+                title: 'Property Name',
+                dataIndex: 'name',
+                key: 'name',
+                render: (name, record) => createElement('div', {
+                    style: { 
+                        paddingLeft: `${record.key.split('-').length * 12}px`,
+                        display: 'flex',
+                        alignItems: 'center'
+                    }
+                },
+                    record.children && createElement('span', {
+                        className: 'ant-table-row-expand-icon',
+                        style: { 
+                            border: '1px solid #d9d9d9',
+                            borderRadius: '2px',
+                            width: '15px',
+                            height: '15px',
+                            lineHeight: '12px',
+                            textAlign: 'center',
+                            marginRight: '8px'
+                        }
+                    }, '▶'),
+                    createElement('span', null, name)
+                )
+            },
+            {
+                title: 'Value',
+                dataIndex: 'value',
+                key: 'value',
+                render: (value) => value !== null ? 
+                    createElement('code', null, String(value)) : 
+                    createElement('span', { style: { color: '#999' }}, 'N/A')
+            },
+            {
+                title: 'Type',
+                dataIndex: 'type',
+                key: 'type',
+                render: (type) => createElement('span', { 
+                    style: { 
+                        color: type === 'object' ? '#c41d7f' : '#314659',
+                        fontWeight: 500
+                    }
+                }, type)
+            }
+        ];
+
+        function SelfTable() {
+            const [dataSource] = useState(() => 
+                convertObjectToDataSource(self)
+            );
+
+            return createElement(Table, {
+                columns: columns,
+                dataSource: dataSource,
+                bordered: true,
+                size: "small",
+                pagination: false,
+                className: 'tree-table',
+                expandable: {
+                    childrenColumnName: 'children',
+                    defaultExpandAllRows: true
+                }
+            });
+        }
+
+        function App() {
+            return createElement('div', { className: 'container' },
+                createElement(Typography.Title, { level: 2 }, 'Self Object Structure'),
+                createElement(SelfTable)
+            );
+        }
+
+        ReactDOM.createRoot(document.getElementById('root'))
+            .render(createElement(App));
+    </script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="urn:customs.ru:Information:CustomsDocuments:GuaranteeUnacceptanceNotif:5.21.0" version="5.21.0.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:cltESAD_cu="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:gui="urn:customs.ru:Information:CustomsDocuments:GuaranteeUnacceptanceNotif:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" schemaLocation="CUESADCommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Уведомление о невозможности использования обеспечения</xs:documentation>
+  </xs:annotation>
+  <xs:element name="GuaranteeUnacceptanceNotif" type="gui:GuaranteeUnacceptanceNotifType" />
+  <xs:complexType name="GuaranteeUnacceptanceNotifType">
+    <xs:annotation>
+      <xs:documentation>Уведомление о невозможности использования обеспечения</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:choice>
+            <xs:element name="TDNumber" type="cat_ru:GTDIDType">
+              <xs:annotation>
+                <xs:documentation>Номер транзитной декларации</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="TIRID" type="gui:TIRIDType">
+              <xs:annotation>
+                <xs:documentation>Номер книжки МДП</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="GuaranteeUnacceptanceInfo" type="gui:GuaranteeUnacceptanceInfoType">
+            <xs:annotation>
+              <xs:documentation>Сведения о невозможности использования обеспечения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute fixed="1006207E" name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="GuaranteeUnacceptanceInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о невозможности использования обеспечения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="MeasureCode" type="cltESAD_cu:GuaranteeCodeType">
+        <xs:annotation>
+          <xs:documentation>Код меры обеспечения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GuaranteeDocNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер документа обеспечения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" name="Reason" type="gui:ReasonType">
+        <xs:annotation>
+          <xs:documentation>Причина невозможности принятия обеспечения. Элемент Name может принимать следующие значения: DOC_NOT_FOUND - документ не найден в БД АС Обеспечение; DOC_EXPIRED - наступил срок, указанный в документе обеспечения, по истечении которого невозможно использование дополнения; FALSE_INFO - несоответствие сведений из документа обеспечения сведениям в ТД; LACK_OF_FUNDS - недостаточность суммы обеспечения; NO_FREE_FUNDS - отсутствие свободного остатка ден. средств; TECH_PROBLEM - наличие технических проблем</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReasonType">
+    <xs:annotation>
+      <xs:documentation>Причина невозможности принятия обеспечения. Элемент Name может принимать следующие значения: DOC_NOT_FOUND - документ не найден в БД АС Обеспечение; DOC_EXPIRED - наступил срок, указанный в документе обеспечения, по истечении которого невозможно использование дополнения; FALSE_INFO - несоответствие сведений из документа обеспечения сведениям в ТД; LACK_OF_FUNDS - недостаточность суммы обеспечения; NO_FREE_FUNDS - отсутствие свободного остатка ден. средств; TECH_PROBLEM - наличие технических проблем</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Name" type="clt_ru:Text40Type">
+        <xs:annotation>
+          <xs:documentation>Описание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Comment" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Комментарий</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TIRIDType">
+    <xs:annotation>
+      <xs:documentation>Номер книжки МДП</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TIRID" type="clt_ru:Code8Type">
+        <xs:annotation>
+          <xs:documentation>Номер книжки МДП.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TIRSeries" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Серия книжки МДП.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="TIRPageNumber" type="clt_ru:Count5Type">
+        <xs:annotation>
+          <xs:documentation>Номер листа книжки МДП.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

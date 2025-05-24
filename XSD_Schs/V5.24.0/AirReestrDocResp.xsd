@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:airresrq="urn:customs.ru:Information:SQDocuments:AirReestrDocResp:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:AirReestrDocResp:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сведения из реестра гражданских воздушных судов Российской Федерации</xs:documentation>
+  </xs:annotation>
+  <xs:element name="AirReestrDocResp" type="airresrq:AirReestrDocRespType">
+    <xs:annotation>
+      <xs:documentation>Сведения из реестра гражданских воздушных судов Российской Федерации</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="AirReestrDocRespType">
+    <xs:annotation>
+      <xs:documentation>Сведения из реестра гражданских воздушных судов Российской Федерации</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Aircraft" type="airresrq:AircraftType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Воздушное судно</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009363E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AircraftType">
+    <xs:annotation>
+      <xs:documentation>Воздушное судно</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AircraftInfo" type="airresrq:AircraftInfoType">
+        <xs:annotation>
+          <xs:documentation>Сведения о воздушном судне</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Owner" type="airresrq:OwnerType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о собственнике (собственниках) воздушного судна</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Register" type="airresrq:RegisterType">
+        <xs:annotation>
+          <xs:documentation>Сведения о государственной регистрации воздушного судна в Государственном реестре гражданских воздушных судов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegisterStatus" type="clt_ru:CodeVariable11Type">
+        <xs:annotation>
+          <xs:documentation>Статус воздушного судна в реестре (Включен/Исключен)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegisterRemove" type="airresrq:RegisterRemoveType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения об исключении воздушного судна из Государственного реестра гражданских воздушных судов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AircraftInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о воздушном судне</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Type" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Тип воздушного судна (наименование, присвоенное изготовителем)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Series" type="clt_ru:CodeVariable20Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Серийный (идентификационный) номер воздушного судна</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SignNumber" type="clt_ru:CodeVariable20Type">
+        <xs:annotation>
+          <xs:documentation>Государственный и регистрационный опознавательные знаки воздушного судна</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProduceDate" type="xs:date">
+        <xs:annotation>
+          <xs:documentation>Дата изготовления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProducerName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование изготовителя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OwnerType">
+    <xs:annotation>
+      <xs:documentation>Сведения о собственнике (собственниках) воздушного судна</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="INN" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element name="OrganizationName" type="clt_ru:FreeText250Type">
+            <xs:annotation>
+              <xs:documentation>Наименование организации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element name="Surname" type="clt_ru:NameType">
+            <xs:annotation>
+              <xs:documentation>Фамилия</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Name" type="clt_ru:NameType">
+            <xs:annotation>
+              <xs:documentation>Имя</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Patronymic" type="clt_ru:NameType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Отчество</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegisterType">
+    <xs:annotation>
+      <xs:documentation>Сведения о государственной регистрации воздушного судна в Государственном реестре гражданских воздушных судов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RegisterDate" type="xs:date">
+        <xs:annotation>
+          <xs:documentation>Дата выдачи свидетельства о регистрации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegisterNumber" type="clt_ru:CodeVariable20Type">
+        <xs:annotation>
+          <xs:documentation>Номер свидетельства о регистрации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegisterRemoveType">
+    <xs:annotation>
+      <xs:documentation>Сведения об исключении воздушного судна из Государственного реестра гражданских воздушных судов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RegisterRemoveNumber" type="clt_ru:CodeVariable20Type">
+        <xs:annotation>
+          <xs:documentation>Номер документа об исключении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegisterRemoveDate" type="xs:date">
+        <xs:annotation>
+          <xs:documentation>Дата исключения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegisterRemoveReason" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Причина исключения воздушного судна из Государственного реестра гражданских воздушных судов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

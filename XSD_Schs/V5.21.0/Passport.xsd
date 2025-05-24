@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:pass="urn:customs.ru:Information:RegistrationDocuments:Passport:5.21.0" targetNamespace="urn:customs.ru:Information:RegistrationDocuments:Passport:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Паспорт гражданина РФ</xs:documentation>
+  </xs:annotation>
+  <xs:element name="Passport" type="pass:PassportType" />
+  <xs:complexType name="PassportType">
+    <xs:annotation>
+      <xs:documentation>Паспорт гражданина РФ</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="CardSeries" type="clt_ru:CodeVariable5Type">
+            <xs:annotation>
+              <xs:documentation>Серия паспорта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CardNumber" type="clt_ru:Code6Type">
+            <xs:annotation>
+              <xs:documentation>Номер паспорта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OrganizationName" type="clt_ru:NameType">
+            <xs:annotation>
+              <xs:documentation>Наименование организации, выдавшей паспорт</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CardDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата выдачи паспорта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OrgCode" type="clt_ru:CodeVariable7Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код подразделения организации, выдавшей паспорт</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PersonInfo" type="pass:PersonInfoType">
+            <xs:annotation>
+              <xs:documentation>Сведения о физ. лице</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ResidencePlace" type="cat_ru:AddressType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Место жительства</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1001204E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="PersonInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о физ. лице</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonSurname" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Фамилия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Имя. </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonMiddleName" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Sex" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Пол: 1 - женский; 0 - мужской</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Birthday" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата рождения.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Birthplace" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Место рождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

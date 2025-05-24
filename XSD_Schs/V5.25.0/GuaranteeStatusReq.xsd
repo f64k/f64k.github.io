@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:cltExch_ru="urn:customs.ru:Information:ExchangeDocuments:ExchangeCommonLeafTypes:5.0.8" xmlns:gsreq="urn:customs.ru:Information:ExchangeDocuments:GuaranteeStatusReq:5.24.0" targetNamespace="urn:customs.ru:Information:ExchangeDocuments:GuaranteeStatusReq:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:ExchangeDocuments:ExchangeCommonLeafTypes:5.0.8" schemaLocation="ExchangeCommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос статуса процесса работы с дополнением к договору поручительства</xs:documentation>
+  </xs:annotation>
+  <xs:element name="GuaranteeStatusReq" type="gsreq:GuaranteeStatusReqType">
+    <xs:annotation>
+      <xs:documentation>Запрос статуса процесса работы с дополнением к договору поручительства</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GuaranteeStatusReqType">
+    <xs:annotation>
+      <xs:documentation>Запрос статуса процесса работы с дополнением к договору поручительства</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="RequestKind" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Вид запроса : 1 - запрос статуса процесса работы с дополнением  к договору поручительства ; 2 - запрос сведений о лицах, несущих солидарную ответственность; 3 -запрос на резервирование средств по 7 млрд; 4 -запрос на разрезервирование средств по 7 млрд; 5 - запрос сумм по договору поручительства</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsDoc" type="cat_ru:GTDIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер ДТ/ТД</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GRN" type="cltExch_ru:GuaranteeNumType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Cсылочный номер гарантии в транзите </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GuaranteeID" type="gsreq:GuaranteeIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер договора поручительства/Уникальный идентификатор дополнения к договору поручительства</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsReceiptRegNumber" type="gsreq:CustomsReceiptRegNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер таможенной расписки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="INN_Carrier" type="clt_ru:INNIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>ИНН перевозчика</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="INN_AEO" type="clt_ru:INNIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>ИНН уполномоченного экономического оператора / декларанта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Amount" type="clt_ru:AmountType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сумма резервирования</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TermGuaranty" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Предельный срок исполнения обязательства</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ObligationCode" type="clt_ru:CodeVariable6Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код вида обязательства</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1004099E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CustomsReceiptRegNumberType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер таможенной расписки</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:GTDIDType">
+        <xs:sequence>
+          <xs:element name="DocNumberPrefix" type="clt_ru:Code2Type">
+            <xs:annotation>
+              <xs:documentation>Префикс порядкового номера таможенной расписки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GuaranteeIDType">
+    <xs:annotation>
+      <xs:documentation>Номер договора поручительства/Уникальный идентификатор дополнения к договору поручительства</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AdditionalID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор, присваиваемый дополнению к договору поручительства при регистрации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ContractNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер договора поручительства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>XML Viewer</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        .xml-node {
+            margin-left: 2px;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin: 5px 0;
+        }
+
+        td {
+            border: 1px solid #ddd;
+            padding: 4px 8px;
+            font-family: monospace;
+        }
+
+        details {
+            margin-left: 1px;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="file" id="fileInput" accept=".xml" title="xml" />
+    <div id="output"></div>
+
+    <script src="/xml-manager.js"></script>
+
+    <script>
+        const objXMLParser = new XMLParser_3();
+        //objXMLParser.insertStylesInHead();
+
+        document
+            .getElementById("fileInput")
+            .addEventListener("change", function (e) {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    const xml = e.target.result;
+                    render(xml);
+                };
+
+                reader.readAsText(file);
+            });
+
+        function render(xmlString) {
+            const output = document.getElementById("output");
+            try {
+                objXMLParser.setLastXML(xmlString);
+                output.innerHTML = "";
+                objXMLParser.renderXML1(objXMLParser.rootTreeObject, output); // buildTreeRecursively
+            } catch (e) {
+                output.textContent = "Ошибка парсинга XML : " + e.message;
+            }
+        }
+
+        render();
+    </script>
+
+
+</body>
+
+</html>

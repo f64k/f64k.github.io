@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:iti="urn:customs.ru:Information:TreatmentDocuments:InoTreatmentInventory:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:TreatmentDocuments:InoTreatmentInventory:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Опись, прилагаемая к заявлению на переработку товаров вне таможенной территории</xs:documentation>
+  </xs:annotation>
+  <xs:element name="InoTreatmentInventory" type="iti:InoTreatmentInventoryType" />
+  <xs:complexType name="InoTreatmentInventoryType">
+    <xs:annotation>
+      <xs:documentation>Опись, прилагаемая к заявлению на переработку товаров вне таможенной территории</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Applicant" type="cat_ru:OrganizationType">
+            <xs:annotation>
+              <xs:documentation>Сведения о заявителе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="InventDocument" type="iti:InventDocumentType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Документ из описи</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1007001E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="InventDocumentType">
+    <xs:annotation>
+      <xs:documentation>Документ из описи</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="InvDocCode" type="clt_ru:CustomsDocumentCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код вида представляемого документа (заполняется в соответствии с классификатором видов документов, используемых при заявлении сведений в графе 44)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InvDocName" type="clt_ru:DocumentNameType">
+        <xs:annotation>
+          <xs:documentation>Вид документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InvDocNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер документа. При отсутствии номера заполняется "Б/Н"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InvDocPresentation" type="clt_ru:LetterIndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вид представления документа: "О" - оригинал, "К" - копия (заполняется прописными буквами кириллицы)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InvDocLists" type="clt_ru:Count5Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество листов в документе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InvDocCopies" type="clt_ru:Count5Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество экземпляров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Note" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Примечание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

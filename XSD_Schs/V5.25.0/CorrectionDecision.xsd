@@ -1,0 +1,276 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:corrd="urn:customs.ru:Information:CustomsDocuments:CorrectionDecision:5.24.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:CorrectionDecision:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Решение по Направлению, принятое структурным отделом таможни</xs:documentation>
+  </xs:annotation>
+  <xs:element name="CorrectionDecision" type="corrd:CorrectionDecisionType">
+    <xs:annotation>
+      <xs:documentation>Решение по Направлению, принятое структурным отделом таможни</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="CorrectionDecisionType">
+    <xs:annotation>
+      <xs:documentation>Решение по направлению, принятое структурным отделом таможни</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DTReference" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Ссылка на DocumentID того состояния ДТ, при котором было сформировано Направление для принятия решений по минимизации риска</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CoordReqNumber" type="clt_ru:Count5Type">
+            <xs:annotation>
+              <xs:documentation>Порядковый номер Направления, сформированного по ДТ в процессе ее оформления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ResolutionCustInspector" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Заключение инспектора таможни</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RefDocumentList" type="corrd:RefDocumentListType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Набор ссылок на документы, которыми руководствовался инспектор таможни при принятии решения по мере</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MeasureDecisions" type="corrd:MeasureDecisionsType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Решения по мерам по минимизации риска, принятые инспекторами структурных или координирующего подразделений таможни</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DTNumber" type="cat_ru:GTDIDType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006133E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DecisionArticlesType">
+    <xs:annotation>
+      <xs:documentation>Дела об административных правонарушениях, уголовные дела</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CaseCode" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Тип дела (1 - АП, 2 - УД)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DecisionArticleNumber" type="clt_ru:Text5Type">
+        <xs:annotation>
+          <xs:documentation>Номер статьи Кодекса Российской Федерации об административных правонарушениях (КоАП России), Уголовного Кодекса Российской Федерации (УК России)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ArticlePartNumber" type="clt_ru:CodeVariable2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер части статьи КоАП России, УК России</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InfractionNumber" type="clt_ru:CodeVariable20Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер дела об административном правонарушении или уголовного дела</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DecisionDescriptionType">
+    <xs:annotation>
+      <xs:documentation>Описание принятого решения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="InformationCode" type="clt_ru:DigitalIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Код информации: 1- Описание причины неприменения меры в силу объективных причин, применения не в соответствии с характеристиками, определенными в профиле риска, либо не в полном объеме; 2 - Отметка о результатах применения мер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DescriptionText" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Обоснование применения (неприменения) мер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MeasureDecisionsType">
+    <xs:annotation>
+      <xs:documentation>Решения по мерам по минимизации риска, принятые инспекторами структурных или координирующего подразделений таможни</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsNumeric" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Номер товара по ДТ, по которому выявлен риск.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RiskProfileRegDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации профиля риска</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RiskProfileNumber" type="RUSclt_ru:RiskProfileNumType">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер профиля риска</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RiskProfileNumberVersion" type="clt_ru:Quantity3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер версии профиля риска</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TerrActionCode" type="clt_ru:CodeVariable2Type">
+        <xs:annotation>
+          <xs:documentation>Код вида профиля риска. Возможные значения: 
+11 – общероссийский профиль риска;
+12 – региональный профиль риска;
+13 – зональный профиль риска;
+20 – целевой профиль риска;
+21 – целевой правоохранительный профиль риска;
+32 – профиль риска на основе моделей;
+55 – профиль риска, обязательный к применению;
+77 – профиль риска для идентификации категории уровня риска;
+88 – зависимый профиль риска.                       Для ориентировки возможные значения: 
+70 - информационная
+71 - блокирующая</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomCode" type="clt_ru:Code5Type">
+        <xs:annotation>
+          <xs:documentation>Код ТО, в котором зарегистрирован ПР </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RiskActionDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата принятия решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RiskActionTime" type="clt_ru:TimeCustType">
+        <xs:annotation>
+          <xs:documentation>Время принятия решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeasureCode" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Код меры на основании, которой было сформировано направление в функциональный отдел для принятия решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DecisionCustomCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код ТО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DecisionSign" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак применения мер по минимизации рисков в соответствии с профилем риска</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DecisionAcceptCode" type="clt_ru:Code2Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Код результатов применения мер по минимизации рисков (RSKRMERA.DBF)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DecisionDeclineCode" type="clt_ru:Code2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Обоснование причин неприменения меры, либо применения не в соответствии с характеристиками, определенными в профиле риска, либо не в полном объеме: "00" - мера применялась (значение по умолчанию);  "03" - мера по минимизации рисков не применялась по условиям профиля риска; "04" - Мера по минимизации риска не применялась в силу объективных причин. либо применялась не в соответствии с характеристиками, определенными в профиле риска, либо не в полном объеме</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DecisionDeclineReasonCode" type="clt_ru:Code2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код причины неприменения меры. Указывается для случая обоснования наличия объективных причин неприменения меры (поле DecisionDeclineCode='04')</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Mandatory" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак обязательности применения мер по минимизации рисков</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PointCode" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Этап проведения проверки на соответствие профилям риска</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:choice>
+        <xs:annotation>
+          <xs:documentation>Должностное лицо</xs:documentation>
+        </xs:annotation>
+        <xs:element name="PersonName" type="clt_ru:NameType">
+          <xs:annotation>
+            <xs:documentation>ФИО должностного лица таможенного органа</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="LNP" type="clt_ru:LNPIDType">
+          <xs:annotation>
+            <xs:documentation>ЛНП должностного лица таможенного органа</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, указанный на оттиске ЛНП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DecisionArticles" type="corrd:DecisionArticlesType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Дела об административных правонарушениях, уголовные дела</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DecisionDescription" type="corrd:DecisionDescriptionType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Дополнительная неформализованная информация - уровень меры</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RefDocumentListType">
+    <xs:annotation>
+      <xs:documentation>Набор ссылок на документы, которыми руководствовался инспектор таможни при принятии решения по мере</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="CusDesDocumentID" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Ссылка на DocumentID того документа, которым руководствовался инспектор таможни при принятии решения по мере</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocCode" type="clt_ru:CustomsDocumentCodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код вида документа. При наличии документа в Классификаторе видов документов, используемых при заявлении сведений в графе 44 ДТ, указывается этот код.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocName" type="clt_ru:DocumentNameType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Вид документа, которым руководствовался инспектор таможни при принятии решения по мере</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SectionNumber" type="clt_ru:Numeric1Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер раздела документа, которым руководствовался инспектор таможни при принятии решения по мере</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RecordNumber" type="clt_ru:Quantity5Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Порядковый номер записи в разделе документа, которым руководствовался инспектор таможни при принятии решения по мере</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Note" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Комментарий инспектора</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

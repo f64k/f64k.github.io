@@ -1,0 +1,1025 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Схемы ГИС ГМП -  аналог SQ.05031 -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:hfp="http://www.w3.org/2001/XMLSchema-hasFacetAndProperty" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:pei_res="urn:customs.ru:Information:SQDocuments:GisGmpPaymentExportInformationResponse:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:GisGmpPaymentExportInformationResponse:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Экспорт платежей (ответ на запрос)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="GisGmpPaymentExportInformationResponse" type="pei_res:GisGmpPaymentExportInformationResponseType">
+    <xs:annotation>
+      <xs:documentation>Экспорт платежей (ответ на запрос)</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GisGmpPaymentExportInformationResponseType">
+    <xs:annotation>
+      <xs:documentation>Экспорт платежей (ответ на запрос)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Id" type="clt_ru:Text50Type">
+            <xs:annotation>
+              <xs:documentation>Идентификатор ответа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Rgid" type="clt_ru:Text50Type">
+            <xs:annotation>
+              <xs:documentation>Идентификатор запроса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RecipientIdentifier" type="pei_res:URNType">
+            <xs:annotation>
+              <xs:documentation>УРН участника – получателя ответа на запрос</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Timestamp" type="clt_ru:DateTimeCustType">
+            <xs:annotation>
+              <xs:documentation>Дата и время формирования сообщения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="HasMore" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Признак окончания выборки (Допустимые значения: false- достигнут конец выборки; true- после последнего предоставленного элемента в выборке имеются другие)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Result" type="pei_res:ResultType">
+            <xs:annotation>
+              <xs:documentation>Результат обработки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009256E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AccDocType">
+    <xs:annotation>
+      <xs:documentation>Реквизиты платежного документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AccDocNo" type="pei_res:Text1-15TypePattern" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер платежного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AccDocDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата платежного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AcknowledgmentInfoType">
+    <xs:annotation>
+      <xs:documentation>Обозначение факта квитирования платежа с начислением либо установление у платежа признака «Услуга предоставлена»</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="SupplierBillID" type="pei_res:SupplierBillIDType">
+          <xs:annotation>
+            <xs:documentation>УИН, с которым сквитирован платеж. Присутствует в ответе в случае квитирования платежа с начислением (обозначение факта проведения процедуры квитирования начисления с платежом)</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="ServiceProvidedInfo" type="pei_res:ServiceProvidedInfoType">
+          <xs:annotation>
+            <xs:documentation>Информации об установлении платежу признака "Услуга предоставлена"</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AdditionalDataType">
+    <xs:annotation>
+      <xs:documentation>Дополнительные поля платежа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Name" type="pei_res:Text1-100TypePattern">
+        <xs:annotation>
+          <xs:documentation>Наименование поля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Value" type="pei_res:TextVariable255Type2">
+        <xs:annotation>
+          <xs:documentation>Значение поля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ServiceProvidedInfoType">
+    <xs:annotation>
+      <xs:documentation>Информации об установлении платежу признака "Услуга предоставлена"</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ServiceProvided" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Обозначение у платежа статуса "Услуга предоставлена"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AdditionalRepaymenInfo" type="pei_res:RepaymenInfoType">
+        <xs:annotation>
+          <xs:documentation>Дополнительные сведения о погашении платежа. Указывается в случае частичного учета платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RepaymenInfoType">
+    <xs:annotation>
+      <xs:documentation>Дополнительные сведения о погашении платежа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ResidualAmount" type="pei_res:LongIntegerType">
+        <xs:annotation>
+          <xs:documentation>Разность между суммой, указанной в платеже и сумм учета платежа. Целое число, показывающее остаток от суммы платежа с учетом частичного учета платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ServiceData" type="pei_res:ServiceDataType" maxOccurs="100">
+        <xs:annotation>
+          <xs:documentation>Дополнительные сведения о предоставлении услуги/ об учете платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ServiceDataType">
+    <xs:annotation>
+      <xs:documentation>Дополнительные сведения о предоставлении услуги/ об учете платежа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Amount" type="pei_res:LongIntegerType">
+        <xs:annotation>
+          <xs:documentation>Сумма, на которую была предоставлена услуга, в копейках</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CourtName" type="pei_res:Text1-400TypePattern">
+        <xs:annotation>
+          <xs:documentation>Наименование организации, принявшей решение об учете платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LawsuitInfo" type="pei_res:Text1-50TypePattern1">
+        <xs:annotation>
+          <xs:documentation>Реквизиты делопроизводства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ServiceDataID" type="pei_res:serviceDataIDType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор информации об учете платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersoneOfficial" type="pei_res:PersoneOfficialType">
+        <xs:annotation>
+          <xs:documentation>Информация о лице, принявшем решение об учете факта оплаты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PersoneOfficialType">
+    <xs:annotation>
+      <xs:documentation>Информация о лице, принявшем решение об учете факта оплаты</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Name" type="pei_res:Text1-100TypePattern2">
+        <xs:annotation>
+          <xs:documentation>Фамилия и инициалы должностного лица, принявшего решение об учете факта оплаты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OfficialPosition" type="pei_res:Text1-300TypePattern">
+        <xs:annotation>
+          <xs:documentation>Должность лица, принявшего решение об учете платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="BankType">
+    <xs:annotation>
+      <xs:documentation>Реквизиты структурного подразделения кредитной организации, принявшего платеж, организации почтовой связи</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Name" type="pei_res:Text1-160TypePattern" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование структурного подразделения кредитной организации или подразделения Банка России, в котором открыт счет</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BIK" type="clt_ru:BICIDType">
+        <xs:annotation>
+          <xs:documentation>БИК структурного подразделения кредитной организации или подразделения Банка России, в котором открыт счет</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CorrespondentBankAccount" type="clt_ru:AccountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер корреспондентского счета кредитной организации, открытый в подразделении Банка России</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="BudgetIndexType">
+    <xs:annotation>
+      <xs:documentation>Реквизиты платежа 101, 106-109</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Status" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Статус плательщика — реквизит 101 Распоряжения.						До 01.07.2021 реквизит платежа 101 «Статус плательщика» блока данных «Дополнительные реквизиты платежа» может принимать значение из диапазонов "01"-"13", "15"-"28".						C 01.07.2021 реквизит платежа 101 «Статус плательщика» блока данных «Дополнительные реквизиты платежа» может принимать значение из диапазонов "01"-"13", "15-29".						С 01.10.2021 реквизит платежа 101 «Статус плательщика» блока данных «Дополнительные реквизиты платежа» может принимать значение из диапазонов "01"-"08", "13","15"-"17", "19"-"20", "23"-"24", "27"-"30".					</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaytReason" type="pei_res:PaytReasonType">
+        <xs:annotation>
+          <xs:documentation>Показатель основания платежа — реквизит 106 Распоряжения.						С 01.01.2021 реквизит 106 «Показатель основания платежа» блока данных «Дополнительные реквизиты платежа» может содержать значение "0" или одно из следующих значений: ТП, ЗД, БФ, ТР, РС, ОТ, РТ, ПБ, ПР, АП, АР, ИН, ТЛ, БД, ПК, КВ, УВ, ИЛ, ТГ, ТБ, ТД, ПВ, ЗТ, 00.						С 01.10.2021 реквизит 106 «Показатель основания платежа» блока данных «Дополнительные реквизиты платежа» может содержать значение "0" или одно из следующих значений: ТП, ЗД, РС, ОТ, РТ, ПБ, ИН, ТЛ, ЗТ, ПК, КЭ, УВ, ИЛ, ТГ, ТБ, ТД, ПВ, 00.					</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TaxPeriod" type="pei_res:TaxPeriodType">
+        <xs:annotation>
+          <xs:documentation>						Показатель налогового периода или код таможенного органа, осуществляющего в соответствии с законодательством РФ функции по выработке государственной политики и нормативному регулированию, контролю и надзору в области таможенного дела – реквизит 107 Распоряжения.						Если длина значения в поле 10 символов, то:						символы 1-й и 2-й могут принимать значение: МС, КВ, ПЛ, ГД;						символы 4-й и 5-й могут принимать значение: для месячных платежей ‑ номер месяца текущего отчетного года, для квартальных платежей - номер квартала, для полугодовых - номер полугодия;						символы с 7-го по 10-й могут принимать значение: год, за который производится уплата налога;						символы 3-й и 6-й используются в качестве разделительных знаков, в них проставляется точка (".").						Если длина поля 8 символов, то все они должны быть цифрами.						Допускается указывать дату в формате "день.месяц.год".</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TaxDocNumber" type="pei_res:TextVariable15Type">
+        <xs:annotation>
+          <xs:documentation>Показатель номера документа – реквизит 108 Распоряжения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TaxDocDate" type="pei_res:TaxDocDateType">
+        <xs:annotation>
+          <xs:documentation>Показатель даты документа – реквизит 109 Распоряжения. Особенности заполнения:						первые два символа обозначают календарный день (могут принимать значения от 01 до 31);						4-й и 5-й символы - месяц (значения от 01 до 12);						с 7-го по 10-й   год;						в 3-м и 6-м символах в качестве разделительных знаков проставляется точка (".").						Значение «00» может быть указано в случае указания значения «00» в поле номер 106: Показатель основания платежа — реквизит 106 Распоряжения.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ChangeStatusInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о статусе извещения о приеме к исполнению распоряжения и основаниях изменения.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Meaning" type="pei_res:MeaningTypeEnum">
+        <xs:annotation>
+          <xs:documentation>Статус, отражающий изменение данных платежа. Возможные значения:						1 – новое;						2 – уточнение;						3 – уточнение об аннулировании;						4 – уточнение о деаннулировании (отмена аннулирования).</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Reason" type="pei_res:Text512Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Основание изменения. Указание является обязательным, если Meaning не равен «1»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ChangeDate" type="clt_ru:DateTimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата, а также сведения о периоде времени, в который осуществлено уточнение информации об уплате (до 21 часа или после 21 часа по местному времени), либо время уточнения информации об уплате</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OrgAccountType">
+    <xs:annotation>
+      <xs:documentation>Реквизиты банковского счета получателя средств</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AccountNumber" type="clt_ru:AccountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер банковского счета получателя платежа. В случае, когда получателем выступает кредитная организация, расчетный счет не обязателен для заполнения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Bank" type="pei_res:BankType">
+        <xs:annotation>
+          <xs:documentation>Данные банка, в котором открыт счет</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PartialPaytType">
+    <xs:annotation>
+      <xs:documentation>Информация о частичном платеже</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TransKind" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Вид операции. Проставляется шифр исполняемого распоряжения.						Возможные значения:						01 – платежное поручение;						06 – инкассовое поручение;						16 – платежный ордер.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaytNo" type="pei_res:Text3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер частичного платежа. Соответствует значению соответствующего реквизита распоряжения, по которому осуществляется частичное исполнение.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransContent" type="pei_res:Text16Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Содержание операции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SumResidualPayt" type="CategoryCust:IntegerCategoriesCust" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сумма остатка платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AccDoc" type="pei_res:AccDocType">
+        <xs:annotation>
+          <xs:documentation>Реквизиты платежного документа, по которому осуществляется частичное исполнение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PayeeType">
+    <xs:annotation>
+      <xs:documentation>Сведения о получателе средств</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Name" type="pei_res:Text2000TypePattern">
+        <xs:annotation>
+          <xs:documentation>Сокращенное наименование органа Федерального казначейства или сокращенное наименование финансового органа и в скобках - сокращенное наименование организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INN" type="clt_ru:INNIDType">
+        <xs:annotation>
+          <xs:documentation>ИНН организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KPP" type="clt_ru:KPPCodeType">
+        <xs:annotation>
+          <xs:documentation>КПП организации. Если первые цифры номера банковского счета получателя средств (AccountNumber) «40302», то допускается указание значения «0»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OGRN" type="clt_ru:OGRNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ОГРН организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrgAccount" type="pei_res:OrgAccountType">
+        <xs:annotation>
+          <xs:documentation>Реквизиты банковского счета получателя средств</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PayerType">
+    <xs:annotation>
+      <xs:documentation>Сведения о плательщике. Обязательно, если расчетный счет получателя средств открыт не на балансовом счете «40302»</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PayerIdentifier" type="pei_res:UniqIdentCodeType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор плательщика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PayerName" type="pei_res:Text2000TypePattern" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование плательщика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PayerAccount" type="clt_ru:AccountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер счета плательщика (при наличии) в организации, принявшей платеж</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaymentInfoType">
+    <xs:annotation>
+      <xs:documentation>Извещение о приеме к исполнению распоряжения (платеж)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SupplierBillID" type="pei_res:SupplierBillIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>УИН. Обязательно, если расчетный счет получателя средств открыт не на балансовом счете «40302». В случае отсутствия УИН указывается значение «0»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Purpose" type="pei_res:Text210TypePattern" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Назначение платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Amount" type="pei_res:LongIntegerType">
+        <xs:annotation>
+          <xs:documentation>Сумма платежа. Целое число, показывающее сумму в копейках</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReceiptDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата поступления распоряжения в банк плательщика. Обязательно для заполнения в случае поступления распоряжения в кредитную организацию</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KBK" type="pei_res:KBKType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>КБК. Обязательно, если расчетный счет получателя средств открыт не на балансовом счете «40302». В случае отсутствия следует указывать значение «0». Все символы одновременно не должны принимать значение ноль («0»)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OKTMO" type="clt_ru:CodeVariable11Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код по ОКТМО, указанный в распоряжении о переводе денежных средств. Обязательно, если расчетный счет получателя средств открыт не на балансовом счете «40302». В случае отсутствия следует указывать значение «0». Все знаки (цифры) одновременно не могут принимать значение ноль («0»)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransKind" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Вид операции. Указывается шифр платежного документа. Возможные значения: 01 – платежное поручение; 06 – инкассовое поручение; 16 – платежный ордер.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentId" type="pei_res:PaymentIdType">
+        <xs:annotation>
+          <xs:documentation>УИП, присвоенный участником, принявшим платеж</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentDate" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата приема к исполнению распоряжения плательщика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DeliveryDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата отсылки (вручения) плательщику документов в случае, если эти документы были отосланы (вручены) получателем средств плательщику</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ESIAID" type="pei_res:TextVariable255Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор учетной записи пользователя в ЕСИА. Обязателен для заполнения в случае оплаты с использованием порталов, интегрированных с ЕСИА</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentExecDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата исполнения распоряжения о переводе денежных средств после осуществления контроля достаточности денежных средств на банковском счете плательщика для исполнения. Заполняется для распоряжений, ранее помещенных банком в очередь не исполненных в срок распоряжений.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentOrg" type="pei_res:PaymentOrgType">
+        <xs:annotation>
+          <xs:documentation>Данные организации, принявшей платеж</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Payer" type="pei_res:PayerType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о плательщике. Обязательно, если расчетный счет получателя средств открыт не на балансовом счете «40302»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Payee" type="pei_res:PayeeType">
+        <xs:annotation>
+          <xs:documentation>Сведения о получателе средств</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BudgetIndex" type="pei_res:BudgetIndexType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Реквизиты платежа 101, 106-109. Обязательно, если расчетный счет получателя средств открыт не на балансовом счете «40302»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AccDoc" type="pei_res:AccDocType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Реквизиты платежного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AdditionalData" type="pei_res:AdditionalDataType" minOccurs="0" maxOccurs="10">
+        <xs:annotation>
+          <xs:documentation>Дополнительные поля платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PartialPayt" type="pei_res:PartialPaytType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация о частичном платеже</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AcknowledgmentInfo" type="pei_res:AcknowledgmentInfoType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Обозначение факта квитирования платежа с начислением либо установление у платежа признака «Услуга предоставлена»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RefundInfo" type="pei_res:RefundInfoType" minOccurs="0" maxOccurs="20">
+        <xs:annotation>
+          <xs:documentation>Сведения о возвратах денежных средств. Присутствует в ответе на запрос предоставления информации об уплате в случае осуществления возврата денежных средств</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IncomeInfo" type="pei_res:IncomeInfoType">
+        <xs:annotation>
+          <xs:documentation>Сведения о сопоставлении платежа и зачисления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ChangeStatusInfo" type="pei_res:ChangeStatusInfoType">
+        <xs:annotation>
+          <xs:documentation>Сведения о статусе извещения о приеме к исполнению распоряжения и основаниях изменения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaymentOrgType">
+    <xs:annotation>
+      <xs:documentation>Данные организации, принявшей платеж</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="Bank" type="pei_res:BankType">
+          <xs:annotation>
+            <xs:documentation>Реквизиты структурного подразделения кредитной организации, принявшего платеж, организации почтовой связи</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="UFK" type="pei_res:UFKType">
+          <xs:annotation>
+            <xs:documentation>Код ТОФК/УРН ТОФК. Если платеж принят ТОФК, то тег должен быть заполнен значением четырехсимвольного кода ТОФК. Если платеж принят Банком России или иной организацией, не являющейся кредитной организацией и не являющейся ТОФК, указывается УРН организации</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Other" type="pei_res:OtherType">
+          <xs:annotation>
+            <xs:documentation>Признак иного способа проведения платежа. В случае приема в кассу получателя платежа наличных денежных средств от плательщика, тег должен быть заполнен значением «CASH»</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="IncomeInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о сопоставлении платежа и зачисления</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="receiptIncomeStatus" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Статус сопоставление платежа и зачислений</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IncomeData" type="pei_res:IncomeType" minOccurs="0" maxOccurs="10">
+        <xs:annotation>
+          <xs:documentation>Данные сопоставленного зачисления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="IncomeType">
+    <xs:annotation>
+      <xs:documentation>Данные сопоставленного зачисления</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="IncomeId" type="pei_res:IncomeIdType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор зачисления, сопоставленного с платежом</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="isUncertain" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак отнесения зачисления к невыясненным поступлениям</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceIDDoc" type="pei_res:Text1-50TypePattern2">
+        <xs:annotation>
+          <xs:documentation>Идентификатор зачисления в ИС, формирующей зачисление</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceIDIS" type="pei_res:Text1-50TypePattern2">
+        <xs:annotation>
+          <xs:documentation>Код ИС, формирующей зачисление</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="amount" type="pei_res:LongType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сумма, указанная в извещении о зачислении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KBK" type="pei_res:KBKType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>КБК, указанный в извещении о зачислении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OKTMO" type="clt_ru:CodeVariable11Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код по ОКТМО, , указанный в извещении о зачислении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="payerIdentifier" type="pei_res:PayerIdentifierType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор плательщика, указанный в извещении о зачислении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INN" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН получателя средств, указанный в извещении о зачислении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KPP" type="clt_ru:KPPCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>КПП получателя средств, указанный в извещении о зачислении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AccountNumber" type="clt_ru:AccountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер казначейского счета получателя средств, указанный в извещении о зачислении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RefundInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о возвратах денежных средств. Присутствует в ответе на запрос предоставления информации об уплате в случае осуществления возврата денежных средств</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RefundId" type="pei_res:RefundIdType">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор извещения о возврате (УИВ) денежных средств по данному платежу</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Amount" type="pei_res:LongIntegerType">
+        <xs:annotation>
+          <xs:documentation>Сумма возврата денежных средств по данному платежу</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ResultType">
+    <xs:annotation>
+      <xs:documentation>Результат обработки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PaymentInfo" type="pei_res:PaymentInfoType" maxOccurs="100">
+        <xs:annotation>
+          <xs:documentation>Извещение о приеме к исполнению распоряжения (платеж)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="LongIntegerType">
+    <xs:annotation>
+      <xs:documentation>Целое неотрицательное число от 0 до 18446744073709551615</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:IntegerCategoriesCust">
+      <xs:minInclusive value="0" />
+      <xs:maxInclusive value="18446744073709551615" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PaymentIdType">
+    <xs:annotation>
+      <xs:documentation>Структура УИП</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:pattern value="1\d{15}((0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])\d{4})\d{8}">
+        <xs:annotation>
+          <xs:documentation>Структура УИП для кредитных организаций</xs:documentation>
+        </xs:annotation>
+      </xs:pattern>
+      <xs:pattern value="2\d{4}0{11}((0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])\d{4})\d{8}">
+        <xs:annotation>
+          <xs:documentation>Структура УИП для ТОФК</xs:documentation>
+        </xs:annotation>
+      </xs:pattern>
+      <xs:pattern value="3[a-fA-F0-9]{6}((0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])\d{4})\d{17}">
+        <xs:annotation>
+          <xs:documentation>Структура УИП для остальных участников</xs:documentation>
+        </xs:annotation>
+      </xs:pattern>
+      <xs:pattern value="\w{32}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="RefundIdType">
+    <xs:annotation>
+      <xs:documentation>Тип предназначен для указания уникального идентификатора возврата</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:pattern value="\d{8}((0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])\d{4})\d{9}" />
+      <xs:pattern value="^6\d{4}((0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])\d{4})\d{19}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SupplierBillIDType">
+    <xs:annotation>
+      <xs:documentation>УИН</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:pattern value="\w{20}" />
+      <xs:pattern value="\d{25}" />
+      <xs:pattern value="\d{15}" />
+      <xs:pattern value="0" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text160Type">
+    <xs:annotation>
+      <xs:documentation>Строка длиной до 160 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="160" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text16Type">
+    <xs:annotation>
+      <xs:documentation>Строка длиной не более 16 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="16" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text3Type">
+    <xs:annotation>
+      <xs:documentation>Строка длиной 3 символа</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="3" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TextVariable15Type">
+    <xs:annotation>
+      <xs:documentation>Строка длиной от 1 до 15 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="15" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TextVariable255Type">
+    <xs:annotation>
+      <xs:documentation>Строка длиной от 1 до 255 символов с паттерном \S+([\S\s]*\S+)*</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="255" />
+      <xs:pattern value="\S+([\S\s]*\S+)*" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TextVariable255Type2">
+    <xs:annotation>
+      <xs:documentation>Строка длиной от 1 до 255 символов с паттерном [^\s]+(\s+[^\s]+)*</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="255" />
+      <xs:pattern value="[^\s]+(\s+[^\s]+)*" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TextVariable600Type">
+    <xs:annotation>
+      <xs:documentation>Строка длиной от 1 до 600 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="600" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UniqIdentCodeType">
+    <xs:annotation>
+      <xs:documentation>Уникальный идентификационный номер</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:pattern value="0" />
+      <xs:pattern value="1((0[1-9])|(1[0-5])|(2[12456789])|(3[0]))[0-9a-zA-Zа-яА-Я]{19}">
+        <xs:annotation>
+          <xs:documentation>Идентификатор ФЛ</xs:documentation>
+        </xs:annotation>
+      </xs:pattern>
+      <xs:pattern value="200\d{14}[A-Z0-9]{2}\d{3}">
+        <xs:annotation>
+          <xs:documentation>Идентификатор ЮЛ или ИП</xs:documentation>
+        </xs:annotation>
+      </xs:pattern>
+      <xs:pattern value="300[0-9a-zA-Zа-яА-Я]{19}" />
+      <xs:pattern value="4[0]{9}\d{12}" />
+      <xs:pattern value="(2|3)00\d{10}[0]{9}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="KPPType">
+    <xs:annotation>
+      <xs:documentation>КПП юр. лица</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:pattern value="([^0^\D]\d|\d[^0^\D])\d{2}[A-Z0-9]{2}\d{3}">
+        <xs:annotation>
+          <xs:documentation>9 символов, пятый и шестой из которых могут быть прописными						(заглавными) латинскими буквами или цифрами, а все остальные только цифрами,						и при этом первый и второй знаки (цифры) не могут одновременно принимать						значение ноль ("0").					</xs:documentation>
+        </xs:annotation>
+      </xs:pattern>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PayerIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Идентификатор плательщика</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:pattern value="1((0[1-9])|(1[0-5])|(2[12456789])|(3[0]))[0-9a-zA-Zа-яА-Я]{19}">
+        <xs:annotation>
+          <xs:documentation>Идентификатор ФЛ</xs:documentation>
+        </xs:annotation>
+      </xs:pattern>
+      <xs:pattern value="200\d{14}[A-Z0-9]{2}\d{3}">
+        <xs:annotation>
+          <xs:documentation>Идентификатор ЮЛ или ИП</xs:documentation>
+        </xs:annotation>
+      </xs:pattern>
+      <xs:pattern value="(2|3)00\d{10}[0]{9}" />
+      <xs:pattern value="300[0-9a-zA-Zа-яА-Я]{19}" />
+      <xs:pattern value="4[0]{9}\d{12}" />
+      <xs:pattern value="0" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="IncomeIdType">
+    <xs:annotation>
+      <xs:documentation>Структура УИЗ для ТОФК</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:pattern value="4\d{4}((0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])\d{4})\d{19}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="serviceDataIDType">
+    <xs:annotation>
+      <xs:documentation>Идентификатор информации об учете факта оплаты</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:length value="24" />
+      <xs:pattern value="P[a-fA-F0-9]{6}\d{17}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="URNType">
+    <xs:annotation>
+      <xs:documentation>УРН</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:pattern value="[0-9a-fA-F]{6}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="KBKType">
+    <xs:annotation>
+      <xs:documentation>КБК</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:pattern value="[0-9a-zA-Zа-яА-Я]{20}" />
+      <xs:pattern value="0" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text1-15TypePattern">
+    <xs:annotation>
+      <xs:documentation>Строковое от 1 до 15 символов с паттерном</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="15" />
+      <xs:minLength value="1" />
+      <xs:pattern value="[\S\t ]*" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text1-100TypePattern2">
+    <xs:annotation>
+      <xs:documentation>Строковое от 1 до 100 символов с паттерном \S+([\S\s]*\S+)*</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="100" />
+      <xs:pattern value="\S+([\S\s]*\S+)*" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text1-100TypePattern">
+    <xs:annotation>
+      <xs:documentation>Строковое от 1 до 100 символов с паттерном [^\s]+(\s+[^\s]+)*</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="100" />
+      <xs:pattern value="[^\s]+(\s+[^\s]+)*" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text1-400TypePattern">
+    <xs:annotation>
+      <xs:documentation>Строковое от 1 до 400 символов с паттерном</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="400" />
+      <xs:pattern value="\S+([\S\s]*\S+)*" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text1-50TypePattern1">
+    <xs:annotation>
+      <xs:documentation>Строковое от 1 до 50 символов с паттерном</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="50" />
+      <xs:pattern value="\S+([\S\s]*\S+)*" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text1-300TypePattern">
+    <xs:annotation>
+      <xs:documentation>Строковое от 1 до 300 символов с паттерном</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="300" />
+      <xs:pattern value="\S+([\S\s]*\S+)*" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text1-160TypePattern">
+    <xs:annotation>
+      <xs:documentation>Строковое от 1 до 160 символов с паттерном</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="160" />
+      <xs:pattern value="\S+([\S\s]*\S+)*" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PaytReasonType">
+    <xs:annotation>
+      <xs:documentation>Формат показателя основания платежа</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="2" />
+      <xs:pattern value="[А-Я]{2}" />
+      <xs:pattern value="\d{2}" />
+      <xs:pattern value="0" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TaxPeriodType">
+    <xs:annotation>
+      <xs:documentation>Формат показателя налогового периода или код таможенного органа</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:pattern value="МС\.(0[0-9]|1[012])\.\d{4}" />
+      <xs:pattern value="КВ\.0[1-4]\.\d{4}" />
+      <xs:pattern value="ПЛ\.0[1-2]\.\d{4}" />
+      <xs:pattern value="ГД\.00\.\d{4}" />
+      <xs:pattern value="(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.\d{4}" />
+      <xs:pattern value="\d{8}" />
+      <xs:pattern value="0" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TaxDocDateType">
+    <xs:annotation>
+      <xs:documentation>Формат показателя даты документа – реквизит 109 Распоряжения.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:pattern value="(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.\d{4}" />
+      <xs:pattern value="00" />
+      <xs:pattern value="0" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MeaningTypeEnum">
+    <xs:annotation>
+      <xs:documentation>Формат статуса, отражающий изменение данных платежа</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:length value="1" />
+      <xs:enumeration value="1" />
+      <xs:enumeration value="2" />
+      <xs:enumeration value="3" />
+      <xs:enumeration value="4" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text512Type">
+    <xs:annotation>
+      <xs:documentation>Строковое до 512 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="512" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text2000TypePattern">
+    <xs:annotation>
+      <xs:documentation>Строковое до 2000 символов с паттерном</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="2000" />
+      <xs:pattern value="[\S\t ]*" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text210TypePattern">
+    <xs:annotation>
+      <xs:documentation>Строковое до 210 символов с паттерном</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="210" />
+      <xs:pattern value="[\S\t ]*" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UFKType">
+    <xs:annotation>
+      <xs:documentation>Формат Код ТОФК/УРН ТОФК</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="36" />
+      <xs:whiteSpace value="preserve" />
+      <xs:pattern value="\d{4}&quot;" />
+      <xs:pattern value="[a-zA-Z0-9]{6}" />
+      <xs:pattern value="\d{13}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="OtherType">
+    <xs:annotation>
+      <xs:documentation>Формат признака иного способа проведения платежа</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:enumeration value="CASH">
+        <xs:annotation>
+          <xs:documentation>Прием в кассу наличных денежных                                 средств                             </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text1-50TypePattern2">
+    <xs:annotation>
+      <xs:documentation>Строковое от 1 до 50 симолов, паттерн</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="50" />
+      <xs:pattern value="[^\s]+(\s+[^\s]+)*" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="LongType">
+    <xs:annotation>
+      <xs:documentation>Целое число от - 92233720368547758087 до 9223372036854775807</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:long">
+      <xs:minInclusive value="-9223372036854775808" />
+      <xs:maxInclusive value="9223372036854775807" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

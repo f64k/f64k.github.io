@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:nr="urn:customs.ru:Information:ExchangeDocuments:NotifReservation:5.24.0" xmlns:cltExch_ru="urn:customs.ru:Information:ExchangeDocuments:ExchangeCommonLeafTypes:5.0.8" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:ExchangeDocuments:NotifReservation:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:ExchangeDocuments:ExchangeCommonLeafTypes:5.0.8" schemaLocation="ExchangeCommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Уведомление о резервировании/о невозможности резервирования суммы обеспечения</xs:documentation>
+  </xs:annotation>
+  <xs:element name="NotifReservation" type="nr:NotifReservationType" />
+  <xs:complexType name="NotifReservationType">
+    <xs:annotation>
+      <xs:documentation>Уведомление о резервировании/о невозможности резервирования суммы обеспечения</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocumentDateTime" type="clt_ru:DateTimeCustType">
+            <xs:annotation>
+              <xs:documentation>Дата и время формирования электронного документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocSign" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Признак документа: 0 - уведомление об успешном резервировании; 1 - уведомление о частичном резервировании; 2 - уведомление о невозможности резервирования</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReservedAmount" type="clt_ru:AmountType">
+            <xs:annotation>
+              <xs:documentation>Зарезервированная сумма обеспечения уплаты таможенных пошлин, налогов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RequiredAmount" type="clt_ru:AmountType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сумма обеспечения, которая не может быть зарезервирована из-за отсутствия неиспользованного (свободного) остатка</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CurrencyCode" type="clt_ru:CurrencyA3CodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Буквенный код валюты</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Comment" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Примечание</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsPerson" type="cat_ru:CustomsPersonType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DeclRegNumber" type="nr:DocNumberType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер таможенного документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Customs" type="cat_ru:CustomsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код и наименование таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Participant" type="RUScat_ru:SubjectDetailsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Участник ВЭД, несущий обязательства по обеспечению</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Reasons" type="nr:ReasonsType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Описание обстоятельств, послуживших причиной невозможности резервирования суммы обеспечения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1004112E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DocNumberType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер таможенного документа</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:GTDIDType">
+        <xs:sequence>
+          <xs:element name="AddNumber" type="clt_ru:CodeVariable2Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дополнительная составляющая 3ей части номера (ЗВ)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ReasonsType">
+    <xs:annotation>
+      <xs:documentation>Описание обстоятельств, послуживших причиной невозможности резервирования суммы обеспечения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ReasonCode" type="cltExch_ru:ResultCodeType">
+        <xs:annotation>
+          <xs:documentation>Код</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReasonDescription" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

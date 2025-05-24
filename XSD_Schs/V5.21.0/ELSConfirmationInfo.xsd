@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:cat_crd="urn:customs.ru:CardCommonAggregateTypes:5.21.0" xmlns:conf="urn:customs.ru:Information:ELSDocuments:ELSConfirmationInfo:5.21.0" targetNamespace="urn:customs.ru:Information:ELSDocuments:ELSConfirmationInfo:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CardCommonAggregateTypes:5.21.0" schemaLocation="CardCommonAggregateTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Информация о подтверждении уплаты таможенных платежей</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ELSConfirmationInfo" type="conf:ELSConfirmationInfoType">
+		<xs:annotation>
+			<xs:documentation>Информация о подтверждении уплаты таможенных платежей</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ELSConfirmationInfoType">
+		<xs:annotation>
+			<xs:documentation>Информация о подтверждении уплаты таможенных платежей</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_crd:BaseDocType">
+				<xs:sequence>
+					<xs:element name="INN" type="clt_ru:INNIDType">
+						<xs:annotation>
+							<xs:documentation>ИНН</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="OrganizationName" type="clt_ru:NameType">
+						<xs:annotation>
+							<xs:documentation>Наименование организации</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ApplicationInfo" type="cat_ru:DocumentBaseType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Реквизиты заявления юридического лица, индивидуального предпринимателя или физического лица</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PeriodBegin" type="clt_ru:DateCustType">
+						<xs:annotation>
+							<xs:documentation>Начало запрашиваемого периода</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PeriodEnd" type="clt_ru:DateCustType">
+						<xs:annotation>
+							<xs:documentation>Окончание запрашиваемого периода</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ReportDate" type="clt_ru:DateCustType">
+						<xs:annotation>
+							<xs:documentation>Дата отчета</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PaymentInformation" type="conf:PaymentInformationType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Сведения о платеже</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomsDetails" type="cat_ru:CustomsType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Сведения о таможенном органе, сформировавшем отчет</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomsPerson" type="cat_ru:CustomsPersonType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1040026E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="BrokerType">
+		<xs:annotation>
+			<xs:documentation>Таможенный представитель</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="BrokerINN" type="clt_ru:INNIDType">
+				<xs:annotation>
+					<xs:documentation>ИНН организации Таможенного представителя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BrokerName" type="clt_ru:NameType">
+				<xs:annotation>
+					<xs:documentation>Наименование организации Таможенного представителя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocumentAmountType">
+		<xs:annotation>
+			<xs:documentation>Сумма денежных средств по документу</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PaymentModeCode" type="clt_ru:CUCustomsPaymentCodeType">
+				<xs:annotation>
+					<xs:documentation>Код вида платежа в соответствии с Классификатором  видов налогов, сборов и иных платежей, взимание которых возложено на таможенные органы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Amount" type="clt_ru:AmountType">
+				<xs:annotation>
+					<xs:documentation>Сумма денежных средств по документу</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentInformationType">
+		<xs:annotation>
+			<xs:documentation>Сведения о платеже</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DocumentReq" type="cat_ru:DocumentBaseType">
+				<xs:annotation>
+					<xs:documentation>Реквизиты документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocumentAmount" type="conf:DocumentAmountType">
+				<xs:annotation>
+					<xs:documentation>Сумма денежных средств по документу</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Broker" type="conf:BrokerType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Таможенный представитель</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

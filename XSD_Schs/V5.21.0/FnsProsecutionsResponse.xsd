@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:fp_res="urn:customs.ru:Information:SQDocuments:FnsProsecutionsResponse:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:FnsProsecutionsResponse:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Ответ на запрос о возбужденных налоговыми органами делах об административных правонарушениях</xs:documentation>
+  </xs:annotation>
+  <xs:element name="FnsProsecutionsResponse" type="fp_res:FnsProsecutionsResponseType" />
+  <xs:complexType name="FnsProsecutionsResponseType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос о возбужденных налоговыми органами делах об административных правонарушениях</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Information" type="fp_res:InformationType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Номер и дата акта проверки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009116E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="InformationType">
+    <xs:annotation>
+      <xs:documentation>Содержание правонарушения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="PhysicalPersonInfo" type="fp_res:ResPhysicalPersonInfoType">
+          <xs:annotation>
+            <xs:documentation>Сведения о физическом лице</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="OrganizationName" type="cat_ru:OrganizationBaseType">
+          <xs:annotation>
+            <xs:documentation>Наименование организации</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+      <xs:element name="Act" type="cat_ru:DocumentBaseType">
+        <xs:annotation>
+          <xs:documentation>Номер и дата акта проверки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Ruling" type="cat_ru:DocumentBaseType">
+        <xs:annotation>
+          <xs:documentation>Номер и дата постановления о прекращении производства по делу об АП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Protocol" type="cat_ru:DocumentBaseType">
+        <xs:annotation>
+          <xs:documentation>Номер и дата протокола об АП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Designation" type="cat_ru:DocumentBaseType">
+        <xs:annotation>
+          <xs:documentation>Номер и дата определения о возбуждении дела об АП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DesignationFailure" type="cat_ru:DocumentBaseType">
+        <xs:annotation>
+          <xs:documentation>Номер и дата определения об отказе в возбуждении дела об АП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Offense" type="fp_res:OffenseType">
+        <xs:annotation>
+          <xs:documentation>Содержание правонарушения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OffenseType">
+    <xs:annotation>
+      <xs:documentation>Содержание правонарушения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Article" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Статья</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Item" type="clt_ru:CodeVariable20Type">
+        <xs:annotation>
+          <xs:documentation>Пункт</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Part" type="clt_ru:CodeVariable20Type">
+        <xs:annotation>
+          <xs:documentation>Часть</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ResPhysicalPersonInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о физическом лице</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonFIO" type="cat_ru:PersonBaseType">
+        <xs:annotation>
+          <xs:documentation>ФИО лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BirthDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата рождения физического лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BirthPlace" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Место рождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INN" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН - Индивидуальный номер налогоплательщика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdentityCard" type="RUScat_ru:RUIdentityCardType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Документ, удостоверяющий личность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

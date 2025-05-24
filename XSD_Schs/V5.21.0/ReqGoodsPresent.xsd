@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:regp="urn:customs.ru:Information:CustomsDocuments:ReqGoodsPresent:5.21.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:ReqGoodsPresent:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос сведений о местонахождении товаров / о реквизитах ТО, в зоне деятельности которого находятся товары / Требование предоставления товаров в ТО</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ReqGoodsPresent" type="regp:ReqGoodsPresentType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений о местонахождении товаров / о реквизитах ТО, в зоне деятельности которого находятся товары / Требование предоставления товаров в ТО</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ReqGoodsPresentType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений о местонахождении товаров / о реквизитах ТО, в зоне деятельности которого находятся товары / Требование предоставления товаров в ТО</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="ReqDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата формирования запроса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReqTime" type="clt_ru:TimeCustType">
+            <xs:annotation>
+              <xs:documentation>Время формирования запроса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocSign" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Признак документа: 1 - запрос сведений о местонахождении товаров (на временном хранении, на прилегающей территории к СВХ, в ЗТК); 2 - запрос сведений о реквизитах ТО, в зоне деятельности которого находятся товары; 3 - требование  предоставления товаров в ТО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Customs" type="cat_ru:CustomsType">
+            <xs:annotation>
+              <xs:documentation>Код и наименование таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsPerson" type="cat_ru:CustomsPersonType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GTDID" type="cat_ru:GTDIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsLocation" type="regp:GoodsLocationType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения, на основании которых осуществляется запрос местонахождения товаров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006140E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="GoodsLocationType">
+    <xs:annotation>
+      <xs:documentation>Сведения, на основании которых осуществляется запрос местонахождения товаров</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TransportID" type="clt_ru:TransportMeansIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер транспортного средства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CarriageID" type="clt_ru:TransportMeansIDType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Номер вагона</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BillSerialNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер накладной (CMR, железнодорожной накладной, авианакладной, коносамента, почтовой декларации)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

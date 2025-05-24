@@ -1,0 +1,414 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Общие сложные типы для процедур переработки товаров на / вне таможенной территории / для внутреннего потребления -->
+<xs:schema xmlns:catProc_ru="urn:customs.ru:Information:ProcessingDocuments:ProcessingCommonAggregateTypes:5.24.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:catESAD_cu="urn:customs.ru:CUESADCommonAggregateTypesCust:5.24.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:ProcessingDocuments:ProcessingCommonAggregateTypes:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonAggregateTypesCust:5.24.0" schemaLocation="CUESADCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Общие сложные типы для процедур переработки товаров на / вне таможенной территории / для внутреннего потребления.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="BankInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о банке</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:OrganizationBaseType">
+        <xs:sequence>
+          <xs:element name="BankMFO" type="clt_ru:BankMFOType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>МФО банка</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OKPOID" type="clt_ru:OKPOIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код банка по ОКПО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BICID" type="clt_ru:BICIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>БИК банка</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SWIFTID" type="clt_ru:SWIFTIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>SWIFT код банка</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BankAccountRUB" type="clt_ru:AccountType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Номер рублевого (расчетного) банковского счета</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BankAccountVAL" type="clt_ru:ForeignAccountType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Номер валютного банковского счета</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CorrAccount" type="clt_ru:ForeignAccountType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер корреспондентского счета банка</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AccountDocType">
+    <xs:annotation>
+      <xs:documentation>Сведения о бухгалтерских документах</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="Position" type="clt_ru:Count3Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Порядковый номер позиции</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsNumber" type="clt_ru:Count3Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер товара в бухгалтерском документе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsQuantity" type="catESAD_cu:SupplementaryQuantityType" minOccurs="0" maxOccurs="3">
+            <xs:annotation>
+              <xs:documentation>Количество товара из бухгалтерского документа, вошедшего в позицию</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DocExtendedType">
+    <xs:annotation>
+      <xs:documentation>Сведения о представленных документах</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="CustomsDocumentCode" type="clt_ru:CustomsDocumentCodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код вида представленного документа в соответствии с классификатором документов и сведений (РК ТС №378)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ElectronicDocumentID" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Идентификатор документа, присвоенный информационной системой таможенных органов при представлении документа в электронном виде</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ElectronicArchID" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Идентификатор хранилища электронных документов при представлении документа в электронном виде</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocumentModeID" type="clt_ru:DocumentModeIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код вида представленного документа в соответствии с альбомом форматов электронных форм документов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="IdentificationMethodType">
+    <xs:annotation>
+      <xs:documentation>Способ (способы) идентификации иностранных товаров (товаров ЕАЭС) в продуктах переработки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="IdentificationMethodDescription" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание способа идентификации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AccountingSystem" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Информация об используемых заявителем системах учета (производственный, бухгалтерский, налоговый) </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="HeelsItem" type="catProc_ru:DocExtendedType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Реквизиты документов, содержащих сведения учета товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PermitNumberType">
+    <xs:annotation>
+      <xs:documentation>Номер разрешения на переработку товаров</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, зарегистрировавшего Разрешение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации Разрешения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProcessingProcedureCode" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Код таможенной процедуры переработки: 21- переработка вне ТТ; 51 - переработка на ТТ; 91 - переработка для внутреннего потребления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Number" type="clt_ru:GTDIDType">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер Разрешения по журналу регистрации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ProcessingBaseGoodsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товарах (базовый набор сведений)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsNamber" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Номер по порядку</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Наименование товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsTNVEDCode" type="clt_ru:GoodsNomenclatureCodeType">
+        <xs:annotation>
+          <xs:documentation>Код по ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsQuantity" type="catESAD_cu:SupplementaryQuantityType">
+        <xs:annotation>
+          <xs:documentation>Количество товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ProcessingDocsType">
+    <xs:annotation>
+      <xs:documentation>Реквизиты договора (договорров), на основании которого (-ых) товары помещаются под таможенную процедуру переработки</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="catProc_ru:DocExtendedType">
+        <xs:sequence>
+          <xs:element name="CompanyName" type="clt_ru:NameType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Наименование иностранной организации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ProcessingGoodsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товарах</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="catProc_ru:ProcessingBaseGoodsType">
+        <xs:sequence>
+          <xs:element name="GoodsRubCost" type="clt_ru:AmountType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Стоимость, руб</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Код  таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ProcessingOperationsType">
+    <xs:annotation>
+      <xs:documentation>Операции по переработке товаров и способы их совершения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OperationName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Название операции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OperationMethod" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание технологического процесса (способ совершения операции)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OperationTerm" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Срок совершения операции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ProcessingOrganizationType">
+    <xs:annotation>
+      <xs:documentation>Лицо (лица), непосредственно осуществляющее (ие) операции по переработке товаров</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:OrganizationBaseType">
+        <xs:sequence>
+          <xs:element name="Contact" type="cat_ru:ContactType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Контактная информация</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Address" type="RUScat_ru:RUAddressType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Адрес </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="FactoryPlace" type="RUScat_ru:RUAddressType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Адрес местонахождения его производственных  мощностей </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Contract" type="catProc_ru:DocExtendedType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о договоре между заявителем процедуры переработки и организацией-переработчиком</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ProcessingGoods" type="catProc_ru:ProcessingGoodsType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Иностранные товары, поступающие для совершения операций по переработке организациям переработчикам (для переработки на ТТ и для ВП)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ProcessingSubstituteGoodsType">
+    <xs:annotation>
+      <xs:documentation>Сведения об эквивалентных заменяемым продуктам переработки товарах</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="ReplacementGoogsIn" type="catProc_ru:ProcessingBaseGoodsType" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation>Замена иностранных товаров эквивалентными товарами ЕАЭС (переработка на ТТ)</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="ReplacementGoogsOut" type="catProc_ru:SubstituteGoodsType" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation>Замена продуктов переработки эквивалентными иностранными товарами (переработка вне ТТ)</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SubstituteGoodsType">
+    <xs:annotation>
+      <xs:documentation>Замена продуктов переработки эквивалентными иностранными товарами</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsNamber" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Номер по порядку</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Наименование иностранного товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsTNVEDCode" type="clt_ru:GoodsNomenclatureCodeType">
+        <xs:annotation>
+          <xs:documentation>Код иностранного товара по ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsQuantity" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Количество товаров в ЕИ по ТН ВЭД ЕАЭС </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeasureUnitQualifierName" type="clt_ru:MeasureUnitQualifierNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Краткое наименование единицы измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeasureUnitQualifierCode" type="clt_ru:MeasureUnitQualifierCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код единицы измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProcGoodsDescription" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Наименование продукта переработки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProcGoodsTNVEDCode" type="clt_ru:GoodsNomenclatureCodeType">
+        <xs:annotation>
+          <xs:documentation>Код продукта переработки по ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SubstituteType">
+    <xs:annotation>
+      <xs:documentation>Сведения о замене товаров для переработки эквивалентными товарами</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SubstituteGoods" type="catProc_ru:ProcessingSubstituteGoodsType">
+        <xs:annotation>
+          <xs:documentation>Описание товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MovingGoods" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о вывозе продуктов переработки до ввоза иностранных товаров (для перерабтки НА там территории)/ Сведения о ввозе эквивалентных иностранных товаров до вывоза товаров ЕАЭС (для перерабтки ВНЕ там территории)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EquivalenceDetails" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения, подтверждающие эквивалентность товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="WasteProductsType">
+    <xs:annotation>
+      <xs:documentation>Отходы переработки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="WasteProductsItem" type="catProc_ru:ProcessingGoodsType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Отходы переработки - описание товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IndicatorFurtherUse" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак возможности дальнейшего коммерческого использования отходов, 1 - возможно, 0 - невозможно</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:choice minOccurs="0">
+        <xs:element name="WasteOutProcedure" type="clt_ru:Text4Type" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>Код таможенной процедуры для выпуска отходов</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="WasteOutDisposalInfo" type="catProc_ru:WasteOutDisposalInfoType" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>Информация о распоряжении отходами (утилизация/ захоронение/ уничтожение и т.п.)</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="WasteOutDisposalInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о распоряжении отходами (утилизация/ захоронение/ уничтожение и т.п.)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="WasteOutDisposal" type="clt_ru:Text3MB" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Информация о распоряжении отходами (утилизация/ захоронение/ уничтожение и т.п.)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

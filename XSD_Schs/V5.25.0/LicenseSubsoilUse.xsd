@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:lsu="urn:customs.ru:Information:SertifDocuments:LicenseSubsoilUse:5.24.0" targetNamespace="urn:customs.ru:Information:SertifDocuments:LicenseSubsoilUse:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Лицензия на пользование недрами</xs:documentation>
+  </xs:annotation>
+  <xs:element name="LicenseSubsoilUse" type="lsu:LicenseSubsoilUseType" />
+  <xs:complexType name="LicenseSubsoilUseType">
+    <xs:annotation>
+      <xs:documentation>Лицензия на пользование недрами</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="LicensingAuthority" type="clt_ru:NameType">
+            <xs:annotation>
+              <xs:documentation>Наименование органа, выдавшего лицензию</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Aim" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Целевым назначением и видами работ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="StatusArea" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Статус участка недр: 0 - горного отвода, 1 - геологического отвода</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="EndDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата окончания действия лицензии </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RightSubsoilUse" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Право на пользование недрами</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegistrationNumber" type="lsu:RegistrationNumberType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер лицензии</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OrganizationReceiver" type="cat_ru:OrganizationType">
+            <xs:annotation>
+              <xs:documentation>Субъект предпринимательской деятельности, получивший данную лицензию</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RepresentativeOrganization" type="cat_ru:PersonBaseType">
+            <xs:annotation>
+              <xs:documentation>Лицо, представляющее субъект предпринимательской деятельности</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="LocationArea" type="cat_ru:AddressType">
+            <xs:annotation>
+              <xs:documentation>Расположение участка недр</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Verso" type="lsu:VersoType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Оборотная сторона</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PersonIssuingSignature" type="cat_ru:PersonSignatureType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Подпись уполномоченного лица </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SuperiorsSignature" type="cat_ru:PersonSignatureType">
+            <xs:annotation>
+              <xs:documentation>Подпись руководителя предприятия, получающего лицензию.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Application" type="lsu:ApplicationType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о приложениях, в которых копии документов и описание границ земельного участка/границ участка недр</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009008E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ApplicationType">
+    <xs:annotation>
+      <xs:documentation>Сведения о приложениях, в которых копии документов и описание границ земельного участка/границ участка недр</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="KIndApplication" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Тип приложения: true - приложение, описывающее границы земельного участка; false- приложение, описывающее границы участка недр </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NumberApplication" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Номер приложения </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SheetApplication" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Количество листов в приложении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OtherApplicationsType">
+    <xs:annotation>
+      <xs:documentation>Иные приложения </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="NameDocument" type="clt_ru:DocumentNameType">
+        <xs:annotation>
+          <xs:documentation>Название документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NumberSheets" type="clt_ru:Quantity3Type">
+        <xs:annotation>
+          <xs:documentation>Количество страниц</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegistrationNumberType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Series" type="clt_ru:Code3Type">
+        <xs:annotation>
+          <xs:documentation>Серия лицензии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Number" type="clt_ru:Code5Type">
+        <xs:annotation>
+          <xs:documentation>Номер лицензии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LicenseType" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Вид лицензии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="VersoType">
+    <xs:annotation>
+      <xs:documentation>Оборотная сторона</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TermsSubsoil" type="clt_ru:Quantity3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Условия пользования недрами</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CopySolutions" type="clt_ru:Quantity3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Копия  решения,  являющегося  основанием  предоставления  лицензии,</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LocationPlot" type="clt_ru:Quantity3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Схема расположения участка недр </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CopyJuridicalPersonRegistrationCertificate" type="clt_ru:Quantity3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Копия свидетельства о государственной регистрации юридического лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CopyTaxOrganRegistrationCertificate" type="clt_ru:Quantity3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Копия свидетельства о постановке пользователя недр на налоговый учет</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AreaInfo" type="clt_ru:Quantity3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Документ, содержащий  сведения  об   участке  недр</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ListPreviousUser" type="clt_ru:Quantity3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Перечисление  предыдущих  пользователей  данным участком недр </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="UserInfo" type="clt_ru:Quantity3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Краткая  справка о пользователе недр</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OtherApplications" type="lsu:OtherApplicationsType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Иные приложения </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

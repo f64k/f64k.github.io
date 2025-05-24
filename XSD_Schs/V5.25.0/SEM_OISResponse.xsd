@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:sem_cat="urn:customs.ru:Information:SEMDocuments:SEMCommonAggregateTypes:5.24.0" xmlns:ois_resp="urn:customs.ru:Information:CustomsDocuments:SEM_OISResponse:5.24.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:SEM_OISResponse:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:SEMDocuments:SEMCommonAggregateTypes:5.24.0" schemaLocation="SEMCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сервис ОИС - выходные данные</xs:documentation>
+  </xs:annotation>
+  <xs:element name="SEM_OISResponse" type="ois_resp:SEM_OISResponseType" />
+  <xs:complexType name="SEM_OISResponseType">
+    <xs:annotation>
+      <xs:documentation>Объекты интеллектуальной собственности</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Status" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Состояние отработки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Goods" type="ois_resp:ResultOISGoodsType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Информация о товарах</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1030004E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ResultOISGoodsType">
+    <xs:annotation>
+      <xs:documentation>Информация о товарах. В случае отсутствия информация по товарам не найдена</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="sem_cat:ResultGoodsType">
+        <xs:sequence>
+          <xs:element name="MessageDoc" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сообщение о наличии/ отсутствии кодов разрешительных документов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MessageIP" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сообщение о наличии/ отсутствии буквы "И" при наличии декларируемого товара в Реестре ОИС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MessageTov" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сообщение о совпадении заявленных сведений о товаре с данными из Реестра ОИС, но с отличием в наименовании товара -&gt;с пометкой о том, что товары для данного товарного знака в таможенном Реестре заявлены другие.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OISs" type="sem_cat:OISsType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Набор ОИС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

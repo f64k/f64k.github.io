@@ -1,0 +1,377 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:ndres="urn:customs.ru:Information:SQDocuments:NotarialRes:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:NotarialRes:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Ответ на представление сведений ЕИС нотариата</xs:documentation>
+  </xs:annotation>
+  <xs:element name="NotarialRes" type="ndres:NotarialResType">
+    <xs:annotation>
+      <xs:documentation>Ответ на представление сведений ЕИС нотариата</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="NotarialResType">
+    <xs:annotation>
+      <xs:documentation>Ответ на представление сведений ЕИС нотариата</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="NotaryName" type="clt_ru:FreeText500Type">
+            <xs:annotation>
+              <xs:documentation>ФИО нотариуса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Document" type="cat_ru:DocumentBaseType">
+            <xs:annotation>
+              <xs:documentation>Сведения о документе из реестра ЕИС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Attach" type="ndres:AttachType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Приложенный файла с отчетом и подписью</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReportBatch" type="ndres:ReportBatchType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Отчёт</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009208E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор электронного документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AssistantType">
+    <xs:annotation>
+      <xs:documentation>Проверка ВРИО</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ndres:CheckType">
+        <xs:sequence>
+          <xs:element name="Name" type="clt_ru:NameType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>ФИО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Order" type="cat_ru:DocumentBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Приказ о назначении</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="License" type="cat_ru:DocumentBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Лицензия</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AttachType">
+    <xs:annotation>
+      <xs:documentation>Электронная копия нотариально оформленного документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Name" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Имя файла документа с расширением</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:choice minOccurs="0">
+        <xs:element name="Base" type="clt_ru:Text3MB">
+          <xs:annotation>
+            <xs:documentation>Файл в формате base64</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="AttachmentFSLink" type="clt_ru:Text3MB">
+          <xs:annotation>
+            <xs:documentation>Ссылка на папку ФХ, в которой содержится передаваемое вложение</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CanDocumentsType">
+    <xs:annotation>
+      <xs:documentation>Отменящие документы</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ndres:CheckType">
+        <xs:sequence>
+          <xs:element name="CanDocument" type="ndres:CanDocumentType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Отменяющий документ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CanDocumentType">
+    <xs:annotation>
+      <xs:documentation>Отменящий документ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="NotaryId" type="clt_ru:CodeVariable8Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Фед. №</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NotaryName" type="ndres:String256Type">
+        <xs:annotation>
+          <xs:documentation>ФИО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocRegNum" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Реестровый номер документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ServerId" type="CategoryCust:IntegerCategoriesCust">
+        <xs:annotation>
+          <xs:documentation>Номер в реестре ЕИС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ServerTime" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации в реестре ЕИС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CheckType">
+    <xs:annotation>
+      <xs:documentation>Результат и описание проверки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Result" type="clt_ru:Text10Type">
+        <xs:annotation>
+          <xs:documentation>Результат проверки. Строка, принимает значения: "OK" - Успешно; "failure" - Неудачно.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Description" type="ndres:String1024Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание проверки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocumentType">
+    <xs:annotation>
+      <xs:documentation>Проверка документа</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ndres:CheckType">
+        <xs:sequence>
+          <xs:element name="DocId" type="clt_ru:Text150Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Идентификатор документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocRegNum" type="clt_ru:DocumentNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Реестровый номер</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocName" type="ndres:String1024Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Наименование документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ServerId" type="CategoryCust:IntegerCategoriesCust" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер в реестре ЕИС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ServerTime" type="clt_ru:DateTimeCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата регистрации в реестре ЕИС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="NotaryType">
+    <xs:annotation>
+      <xs:documentation>Проверка нотаруиса</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ndres:CheckType">
+        <xs:sequence>
+          <xs:element name="NotaryId" type="clt_ru:CodeVariable8Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Фед. №</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Name" type="ndres:String256Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>ФИО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Phone" type="ndres:String256Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Телефон</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Address" type="ndres:String256Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Адрес</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Order" type="cat_ru:DocumentBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Приказ о назначении</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="License" type="cat_ru:DocumentBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Лицензия</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Signature" type="clt_ru:Text3MB" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Образец подписи в формате base64</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Stamp" type="clt_ru:Text3MB" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Образец печати в формате base64</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="QrType">
+    <xs:annotation>
+      <xs:documentation>Проверка QR-кода</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ndres:CheckType">
+        <xs:sequence>
+          <xs:element name="Text" type="CategoryCust:TextCategoriesCust" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Текст</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Cms" type="clt_ru:Text3MB" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Cms в формате base64</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ReportBatchType">
+    <xs:annotation>
+      <xs:documentation>Отчёт</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FLK" type="ndres:CheckType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Форматно-логический контроль</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Notary" type="ndres:NotaryType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Проверка нотаруиса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Assistant" type="ndres:AssistantType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Проверка ВРИО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Document" type="ndres:DocumentType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Проверка документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Applicant" type="ndres:CheckType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Заявитель</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Blank" type="ndres:CheckType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Проверка бланков</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Qr" type="ndres:QrType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Проверка QR-кода</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CanDocuments" type="ndres:CanDocumentsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отменящие документы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Resolution" type="ndres:ResolutionType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Резолюция</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ResolutionType">
+    <xs:annotation>
+      <xs:documentation>Резолюция</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Result" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Код резолюции. Принимает значения:
+						1-Содержание электронного образа нотариально удостоверенного документа соответствует содержанию нотариально удостоверенного документа.
+						2-Содержание электронного образа нотариально удостоверенного документа не соответствует содержанию нотариально удостоверенного документа.
+						3-Невозможно подтвердить содержание. Электронный образ нотариально удостоверенного документа не поддается прочтению.
+						4-Невозможно подтвердить содержание. Отсутствует экземпляр нотариально удостоверенного документа.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Description" type="ndres:String1024Type">
+        <xs:annotation>
+          <xs:documentation>Содержание резолюции (соответствующее Result)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="String1024Type">
+    <xs:annotation>
+      <xs:documentation>Строка от 1 до 1024 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="1024" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="String256Type">
+    <xs:annotation>
+      <xs:documentation>Строка от 1 до 256 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="256" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

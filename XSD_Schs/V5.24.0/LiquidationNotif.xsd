@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:cltESAD_cu="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" xmlns:liq_notif="urn:customs.ru:Information:CustomsDocuments:LiquidationNotif:5.24.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:LiquidationNotif:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" schemaLocation="CUESADCommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Уведомление о намерении помещения иностранных товаров под таможенную процедуру уничтожения</xs:documentation>
+  </xs:annotation>
+  <xs:element name="LiquidationNotif" type="liq_notif:LiquidationNotifType">
+    <xs:annotation>
+      <xs:documentation>Уведомление о намерении помещения иностранных товаров под таможенную процедуру уничтожения</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="LiquidationNotifType">
+    <xs:annotation>
+      <xs:documentation>Уведомление о намерении помещения иностранных товаров под таможенную процедуру уничтожения</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Declarant" type="cat_ru:OrganizationBaseType">
+            <xs:annotation>
+              <xs:documentation>Сведения о лице, уведомляющем о намерении помещения товаров под таможенную процедуру уничтожения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="LiquidationGood" type="liq_notif:LiquidationGoodType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Информация об иностранном товаре, помещаемом под таможенную процедуру уничтожения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodLocation" type="cat_ru:AddressType">
+            <xs:annotation>
+              <xs:documentation>Место нахождения иностранных товаров, помещаемых под таможенную процедуру уничтожения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="LiquidationMethod" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Способ уничтожения иностранных товаров, помещаемых под таможенную процедуру уничтожения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="WithdrawReasons" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Краткое изложение причин, по которым декларант выводит товары из оборота (не вводит в оборот)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="LiquidationPlace" type="cat_ru:AddressType">
+            <xs:annotation>
+              <xs:documentation>Место уничтожения иностранного товара, помещаемого под таможенную процедуру уничтожения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="WasteProducts" type="liq_notif:WasteProductsType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения об отходах, которые образуются после совершения операций по уничтожению иностранного товара, помещаемого под таможенную процедуру уничтожения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006354E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="LiquidationGoodType">
+    <xs:annotation>
+      <xs:documentation>Информация об иностранном товаре, помещаемом под таможенную процедуру уничтожения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsNumeric" type="clt_ru:Count5Type">
+        <xs:annotation>
+          <xs:documentation>Номер товара по порядку</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodDescription" type="clt_ru:FreeText250Type" maxOccurs="4">
+        <xs:annotation>
+          <xs:documentation>Наименование иностранного товара, помещаемого под таможенную процедуру уничтожения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodTNVEDCode" type="clt_ru:CUGoodsNomenclatuerCodeType">
+        <xs:annotation>
+          <xs:documentation>Код иностранного товара, помещаемого под таможенную процедуру уничтожения, в соответствии с ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodQuantity" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество иностранного товара, помещаемого под таможенную процедуру уничтожения, с указанием единиц измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodCost" type="RUScat_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Стоимость иностранного товара, помещаемого под таможенную процедуру уничтожения, с указанием единиц измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="WasteProductsType">
+    <xs:annotation>
+      <xs:documentation>Сведения об отходах, которые образуются после совершения операций по уничтожению иностранного товара, помещаемого под таможенную процедуру уничтожения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="WasteDescription" type="clt_ru:FreeText250Type" maxOccurs="4">
+        <xs:annotation>
+          <xs:documentation>Наименование отхода в соответствии с Федеральным классификационным каталогом отходов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WasteCode" type="clt_ru:Code13Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код отхода в соответствии с Федеральным классификационным каталогом отходов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WasteTNVEDCode" type="clt_ru:CUGoodsNomenclatuerCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код отхода в соответствии с ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsProcedure" type="cltESAD_cu:CustomsModeCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Таможенная процедура, под которую планируется помещать отходы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WasteQuantity" type="cat_ru:SupplementaryQuantityType">
+        <xs:annotation>
+          <xs:documentation>Количество отходов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Document" type="cat_ru:DocumentBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Документ, подтверждающий факт уничтожения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WastePlace" type="cat_ru:AddressType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Местонахождение отходов до выпуска в соответствии с таможенной процедурой</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

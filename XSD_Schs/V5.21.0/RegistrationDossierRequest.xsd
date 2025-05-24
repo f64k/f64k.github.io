@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:rdrq="urn:customs.ru:Information:SQDocuments:RegistrationDossierRequest:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:RegistrationDossierRequest:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос на получение регистрационного досье (запрос)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="RegistrationDossierRequest" type="rdrq:RegistrationDossierRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос на получение регистрационного досье (запрос)</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RegistrationDossierRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос на получение регистрационного досье (запрос)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Dossier" type="rdrq:DossierType">
+            <xs:annotation>
+              <xs:documentation>Сведения для получения регистрационного досье</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RequestPerson" type="rdrq:PersonType">
+            <xs:annotation>
+              <xs:documentation>Лицо, запрашивающее сведения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentIDType" use="required" fixed="1009340E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор электронного документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DossierType">
+    <xs:annotation>
+      <xs:documentation>Сведения для получения регистрационного досье</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CitizenLastname" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Фамилия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CitizenFirstname" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Имя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CitizenGivenname" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CitizenBirthday" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата рождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocId" type="clt_ru:IdentityCardNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор документа. Если документ имеет Серию, то Серию указывать первой. 
+Далее без пробелов и иных разделителей указывать номер документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocIssuedate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата выдачи документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegionCode" type="clt_ru:Code4Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Регион запроса. Используется справочник регионов (субъектов федерации).
+В случае запроса - в качестве кода указывать четыре первые цифры кода субъекта федерации по ОКАТО.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegType" type="rdrq:RegistrationRequestType">
+        <xs:annotation>
+          <xs:documentation>Тип регистрации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CallbackData" type="rdrq:Text60Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Данные автора – контакты для уточнения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PersonType">
+    <xs:annotation>
+      <xs:documentation>Пользователь запрашивающей организации</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonSurname" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Фамилия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Имя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonMiddleName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Отчество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные простые прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="RegistrationRequestType">
+    <xs:annotation>
+      <xs:documentation>Словарь "Тип регистрации: Запрос"</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="clt_ru:Code2Type">
+      <xs:enumeration value="01">
+        <xs:annotation>
+          <xs:documentation>Регистрация по месту жительства</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="02">
+        <xs:annotation>
+          <xs:documentation>Регистрация по месту пребывания</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="03">
+        <xs:annotation>
+          <xs:documentation>Всё</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text60Type">
+    <xs:annotation>
+      <xs:documentation>Текстовое описание. До 60 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="60" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

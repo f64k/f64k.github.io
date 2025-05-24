@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:mpco="urn:customs.ru:Information:CustomsDocuments:MPOCommon:5.24.0" xmlns:mal="urn:customs.ru:Information:RegistrationDocuments:MPOAppIrretrLoss:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:RegistrationDocuments:MPOAppIrretrLoss:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:CustomsDocuments:MPOCommon:5.24.0" schemaLocation="MPOCommon.xsd" />
+  <xs:annotation>
+    <xs:documentation>Обращение о безвозвратной утрате МПО</xs:documentation>
+  </xs:annotation>
+  <xs:element name="MPOAppIrretrLoss" type="mal:MPOAppIrretrLossType">
+    <xs:annotation>
+      <xs:documentation>Обращение о безвозвратной утрате МПО</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="MPOAppIrretrLossType">
+    <xs:annotation>
+      <xs:documentation>Обращение о безвозвратной утрате МПО</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="AuthorizedOperator" type="mpco:AuthorizedOperatorType">
+            <xs:annotation>
+              <xs:documentation>Уполномоченный оператор</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MPOReestr" type="mpco:MPO_RegistrationType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер реестра МПО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AppDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата обращения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MPO_ID" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Уникальный номер записи МПО в реестре</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MPORegNum" type="clt_ru:Code13Type">
+            <xs:annotation>
+              <xs:documentation>Номер МПО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MPOGoods" type="mpco:GoodsType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Товары МПО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Comments" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Обстоятельства, при которых МПО и пересылаемые в нем товары были безвозвратно утрачены </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006369E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+</xs:schema>

@@ -1,0 +1,263 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_crd="urn:customs.ru:CardCommonAggregateTypes:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" xmlns:infdq="urn:customs.ru:Information:ELSDocuments:InfDocQuota:5.21.0" targetNamespace="urn:customs.ru:Information:ELSDocuments:InfDocQuota:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CardCommonAggregateTypes:5.21.0" schemaLocation="CardCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сведения о документах, установливающих количественные или стоимостные ограничения на свободное перемещение товаров через таможенную границу и их исполнении</xs:documentation>
+  </xs:annotation>
+  <xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd" />
+  <xs:element name="InfDocQuota" type="infdq:InfDocQuotaType" />
+  <xs:complexType name="InfDocQuotaType">
+    <xs:annotation>
+      <xs:documentation>Сведения о документах, установливающих количественные или стоимостные ограничения на свободное перемещение товаров через таможенную границу и их исполнении</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocNumber" type="cat_ru:DocumentBaseType">
+            <xs:annotation>
+              <xs:documentation>Номер и дата документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ActionBegin" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата начала действия</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ActionEnd" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата окончания действия</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Direction" type="clt_ru:CUCustomsProcedureType">
+            <xs:annotation>
+              <xs:documentation>Направление перемещения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocRegistration" type="cat_ru:DocumentBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер и дата документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Agreement" type="infdq:AgreementType">
+            <xs:annotation>
+              <xs:documentation>Сведения о соглашении</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Sender" type="infdq:SenderRecipientType">
+            <xs:annotation>
+              <xs:documentation>Отправитель</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Recipient" type="infdq:SenderRecipientType">
+            <xs:annotation>
+              <xs:documentation>Получатель</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AccreditCust" type="infdq:AccreditFaceType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Уполномоченное лицо в ФТС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AccreditDep" type="infdq:AccreditFaceType">
+            <xs:annotation>
+              <xs:documentation>Уполномоченное лицо в ведомстве</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="QuotaInfo" type="infdq:QuotaGoodsType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Квотируемое количество/сумма</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1040055E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AgreementType">
+    <xs:annotation>
+      <xs:documentation>Реквизиты соглашения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AgreementNumber" type="cat_ru:DocumentBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер и дата соглашения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AgreementCountryAlpha2" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код страны alpha-2 (две буквы латинского алфавита) страны соглашения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AgreementCode" type="clt_ru:Count10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код соглашения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AgreementName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование соглашения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Custom" type="cat_ru:CustomsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ТО соглашения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SenderRecipientType">
+    <xs:annotation>
+      <xs:documentation>Сведения об отправителе/получателе</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Name" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование отправителя/получателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Address" type="RUSclt_ru:AddressTextType">
+        <xs:annotation>
+          <xs:documentation>Адрес отправителя/получателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AdditionalInfo" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дополнительная информация об отправителе/получателе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AccreditFaceType">
+    <xs:annotation>
+      <xs:documentation>Уполномоченное лицо</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AccreditFIO" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>ФИО уполномоченного лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AccreditPost" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Должность уполномоченного лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="QuotaGoodsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о квоте по товару</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Position" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Номер позиции товара в перечне (списке)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="QuotaGoodsCode" type="clt_ru:GoodsNomenclatureCodeType">
+        <xs:annotation>
+          <xs:documentation>Код товара по ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="QuotaGoodsName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Краткое наименование товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="QuotaSize" type="infdq:QuotaSizeType">
+        <xs:annotation>
+          <xs:documentation>Размер квоты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="QuotaExecution" type="infdq:QuotaExecutionType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Исполнение квоты по документу</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="QuotaExecutionType">
+    <xs:annotation>
+      <xs:documentation>Размер квоты.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CurrentQuotaExecution" type="infdq:QuotaSizeType">
+        <xs:annotation>
+          <xs:documentation>Исполнение квоты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DeclExecution" type="infdq:DeclNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="QuotaSizeType">
+    <xs:annotation>
+      <xs:documentation>Размер квоты.</xs:documentation>
+    </xs:annotation>
+    <xs:choice>
+      <xs:sequence>
+        <xs:element name="QuotaQuantity" type="clt_ru:QuantityBasisType" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>Квотируемое количество в основных единицах измерения.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="QuotaQuantityDEI" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>Квотируемое количество в дополнительных единицах измерения.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+      <xs:element name="QuotaSumma" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Квотируемая сумма</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="DeclNumberType">
+    <xs:annotation>
+      <xs:documentation>Составной тип. Регистрационный номер ДТ и номер товара.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:annotation>
+        <xs:documentation>Составной тип.  Регистрационный номер ДТ/справочный номер ТПО/справочный номер ТР.</xs:documentation>
+      </xs:annotation>
+      <xs:extension base="cat_crd:GTDIDType">
+        <xs:sequence>
+          <xs:element name="GoodsNumber" type="clt_ru:Count5Type">
+            <xs:annotation>
+              <xs:documentation>Номер товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsName" type="clt_ru:FreeText250Type">
+            <xs:annotation>
+              <xs:documentation>Наименование товара по ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Preference" type="clt_ru:CodeVariable7Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Предоставленная преференция. Значение графы 36.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Perfdate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата исполнения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

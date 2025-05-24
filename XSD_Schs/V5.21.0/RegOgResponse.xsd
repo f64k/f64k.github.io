@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:rorres="urn:customs.ru:Information:SQDocuments:RegOgResponse:5.21.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:RegOgResponse:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Ответ на запрос сведений из реестра "Специальные разрешения на перевозку ОГ"  по запросу данных отдельно взятого разрешения</xs:documentation>
+  </xs:annotation>
+  <xs:element name="RegOgResponse" type="rorres:RegOgResponseType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос сведений из реестра "Специальные разрешения на перевозку ОГ" по запросу данных отдельно взятого разрешения</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RegOgResponseType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос сведений из реестра "Специальные разрешения на перевозку ОГ" по запросу данных отдельно взятого разрешения</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="RequestID" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Идентификатор пакета данных</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OGPermitList" type="rorres:OGPermitListType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Список разрешений ОГ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009290E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CargoDetailType">
+    <xs:annotation>
+      <xs:documentation>Опасный груз, разрешенный к перевозке</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OON" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер по ООН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Class" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Класс</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Name" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Наименование</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CargoListType">
+    <xs:annotation>
+      <xs:documentation>Перечень опасных грузов, разрешенных к перевозке</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Cargo" type="rorres:CargoDetailType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о грузе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OGPermitListType">
+    <xs:annotation>
+      <xs:documentation>Перечень разрешений</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OGPermit" type="rorres:OGPermitType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Данные по разрешению ОГ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OGPermitType">
+    <xs:annotation>
+      <xs:documentation>Сведения о разрешении</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Number" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер разрешения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BegDate" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата начала действия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EndDate" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата окончания действия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FormTypeCode" type="rorres:DRtnTrFormTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Тип разрешения ОГ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AutoTypeName" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Марка ТС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ModelName" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Модель ТС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AutoNumber" type="rorres:DRtnTrAutoNumberType">
+        <xs:annotation>
+          <xs:documentation>Регистрационный № ТС</xs:documentation>
+          <xs:documentation>Регистрационный номер ТС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CompanyName" type="rorres:Text200Type">
+        <xs:annotation>
+          <xs:documentation>Наименование компании, которой выдано разрешение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Status" type="rorres:DRtnTrOgStatusType">
+        <xs:annotation>
+          <xs:documentation>Статус спецразрешения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StopDate" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата приостановки/аннулирования/прекращения действия разрешения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Information" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Примечание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Route" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Маршрут</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrganizationName" type="rorres:Text255Type">
+        <xs:annotation>
+          <xs:documentation>Наименование организации, выдавшей разрешение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CargoSender" type="RUScat_ru:SubjectDetailsType">
+        <xs:annotation>
+          <xs:documentation>Грузоотправитель</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CargoSenderName" type="rorres:Text255Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Полное наименование грузоотправителя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CargoRecipient" type="RUScat_ru:SubjectDetailsType">
+        <xs:annotation>
+          <xs:documentation>Грузополучатель</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CargoRecipientName" type="rorres:Text255Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Полное наименование грузополучателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Trailer1Number" type="clt_ru:TransportMeansIDType">
+        <xs:annotation>
+          <xs:documentation>Рег. № прицепа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Trailer2Number" type="clt_ru:TransportMeansIDType">
+        <xs:annotation>
+          <xs:documentation>Рег. № п/прицепа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TripCount" type="clt_ru:Quantity5Type">
+        <xs:annotation>
+          <xs:documentation>Количество поездок, указанных в разрешении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TripCountFact" type="clt_ru:Quantity5Type">
+        <xs:annotation>
+          <xs:documentation>Количество выполненных поездок по разрешению</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Restrictions" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Ограничения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SpConditions" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Особые условия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CargoList" type="rorres:CargoListType">
+        <xs:annotation>
+          <xs:documentation>Перечень опасных грузов, разрешенных к перевозке</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные простые прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="DRtnTrAutoNumberType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер ТС</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="12" />
+      <xs:pattern value="[0-9a-zA-Zа-яА-Я \-]*" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DRtnTrFormTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Тип разрешения ОГ</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[5|6]{1}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DRtnTrOgStatusType">
+    <xs:annotation>
+      <xs:documentation>Статус спецразрешения</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{1}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text200Type">
+    <xs:annotation>
+      <xs:documentation>Текстовая строка длиной до 200 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="0" />
+      <xs:maxLength value="200" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text255Type">
+    <xs:annotation>
+      <xs:documentation>Текстовая строка длиной до 255 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="0" />
+      <xs:maxLength value="255" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

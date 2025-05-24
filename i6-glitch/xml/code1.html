@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>XML Viewer Comparison</title>
+    <style>
+      .table22 {
+        max-width: 1200px;
+      }
+      .editor-container {
+        margin: 20px;
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      .editor-title {
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+      #xmlInput {
+        margin: 20px;
+        padding: 5px;
+      }
+      pre {
+        background: #f5f5f5;
+        padding: 10px;
+        border-radius: 3px;
+        overflow-x: auto;
+      }
+      .CodeMirror {
+        border: 1px solid #ddd;
+        height: auto;
+      }
+      #ace-editor {
+        height: 300px;
+        border: 1px solid #ddd;
+      }
+    </style>
+
+    <!-- Подключение стилей -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/codemirror.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.4/theme-chrome.min.css"
+    />
+  </head>
+  <body>
+    <input type="file" id="xmlInput" accept=".xml" />
+
+    <table class="table22" border>
+      <tr>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+      </tr>
+    </table>
+    <div class="editor-container">
+      <div class="editor-title">4. Ace Editor</div>
+      <div id="ace-editor"></div>
+    </div>
+    <div class="editor-container">
+      <div class="editor-title">3. CodeMirror</div>
+      <textarea id="codemirror-editor"></textarea>
+    </div>
+    <div class="editor-container">
+      <div class="editor-title">2. Prism.js</div>
+      <pre><code id="prism-editor" class="language-xml"></code></pre>
+    </div>
+    <div class="editor-container">
+      <div class="editor-title">1. Highlight.js</div>
+      <pre><code id="hljs-editor" class="language-xml"></code></pre>
+    </div>
+    <script>
+      class XMLManager {
+        constructor() {
+          this.testXML = `<?xml version="1.0"?>
+    <catalog>
+        <book id="bk101">
+            <author>Гамбургер, А.</author>
+            <title>XML для начинающих</title>
+            <price>19.99</price>
+        </book>
+        <book id="bk102">
+            <author>Рильке, Р. М.</author>
+            <title>Продвинутый XML</title>
+            <price>29.99</price>
+        </book>
+    </catalog>`;
+
+          this.subscribers = [];
+          this.currentXML = "";
+        }
+
+        async updateXML(xml) {
+          try {
+            const parsed = await this.parseXML(xml);
+            this.currentXML = parsed;
+            localStorage.setItem("lastXML", parsed);
+            this.notifySubscribers(parsed);
+          } catch (error) {
+            console.error("Ошибка парсинга XML:", error);
+            alert("Некорректный XML-документ");
+          }
+        }
+
+        parseXML(xml) {
+          return new Promise((resolve, reject) => {
+            try {
+              const parser = new DOMParser();
+              const doc = parser.parseFromString(xml, "text/xml");
+
+              if (doc.documentElement.nodeName === "parsererror") {
+                throw new Error(doc.documentElement.textContent);
+              }
+
+              resolve(new XMLSerializer().serializeToString(doc));
+            } catch (error) {
+              reject(error);
+            }
+          });
+        }
+
+        onUpdate(callback) {
+          this.subscribers.push(callback);
+        }
+
+        notifySubscribers(xml) {
+          this.subscribers.forEach((cb) => cb(xml));
+        }
+      }
+
+      // Загрузка скриптов с обработкой порядка
+      const loadScript = (src) =>
+        new Promise((resolve, reject) => {
+          const script = document.createElement("script");
+          script.src = src;
+          script.onload = resolve;
+          script.onerror = () => reject(new Error(`Ошибка загрузки: ${src}`));
+          document.head.appendChild(script);
+        });
+
+      const initializeEditors = async () => {
+        const xmlManager = new XMLManager();
+
+        // Загрузка зависимостей
+        await loadScript(
+          "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"
+        );
+        await loadScript(
+          "https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"
+        );
+        await loadScript(
+          "https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-xml-doc.min.js"
+        );
+        await loadScript(
+          "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/codemirror.min.js"
+        );
+        await loadScript(
+          "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/mode/xml/xml.min.js"
+        );
+        await loadScript(
+          "https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.4/ace.js"
+        );
+
+        // Инициализация редакторов
+        const cmEditor = CodeMirror.fromTextArea(
+          document.getElementById("codemirror-editor"),
+          {
+            lineNumbers: true,
+            mode: "xml",
+            readOnly: true,
+            lineWrapping: true,
+          }
+        );
+
+        const aceEditor = ace.edit("ace-editor", {
+          maxLines: 20,
+          showPrintMargin: false,
+        });
+        aceEditor.setTheme("ace/theme/chrome");
+        aceEditor.session.setMode("ace/mode/xml");
+        aceEditor.setReadOnly(true);
+
+        // Обработчик загрузки файла
+        document
+          .getElementById("xmlInput")
+          .addEventListener("change", async (e) => {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = async (e) => {
+              await xmlManager.updateXML(e.target.result);
+            };
+
+            reader.readAsText(file);
+          });
+
+        // Обновление всех редакторов
+        const updateEditors = (xml) => {
+          // Highlight.js
+          const hljsEditor = document.getElementById("hljs-editor");
+          hljsEditor.textContent = xml;
+          hljs.highlightElement(hljsEditor);
+
+          // Prism.js
+          const prismEditor = document.getElementById("prism-editor");
+          prismEditor.textContent = xml;
+          Prism.highlightElement(prismEditor);
+
+          // CodeMirror
+          cmEditor.setValue(xml);
+
+          // Ace Editor
+          aceEditor.setValue(xml, -1);
+          aceEditor.clearSelection();
+        };
+
+        // Подписка на изменения
+        xmlManager.onUpdate(updateEditors);
+
+        // Загрузка сохраненного XML
+        const savedXML = localStorage.getItem("lastXML");
+        if (savedXML) {
+          await xmlManager.updateXML(savedXML);
+        } else {
+          await xmlManager.updateXML(xmlManager.testXML);
+        }
+      };
+
+      // Запуск приложения после загрузки страницы
+      window.addEventListener("DOMContentLoaded", initializeEditors);
+    </script>
+  </body>
+</html>

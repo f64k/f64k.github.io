@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Обмен сведениями между КПС "Постконтроль" и АПС "Задолженность" -->
+<xs:schema xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:dbp="urn:customs.ru:Information:SQDocuments:DebtorPropertyInfoCertif:5.24.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:SQDocuments:DebtorPropertyInfoCertif:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Аналитическая справка об имущественном положении юридического лица (индивидуального предпринимателя)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="DebtorPropertyInfoCertif" type="dbp:DebtorPropertyInfoCertifType">
+    <xs:annotation>
+      <xs:documentation>Аналитическая справка об имущественном положении юридического лица (индивидуального предпринимателя)</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DebtorPropertyInfoCertifType">
+    <xs:annotation>
+      <xs:documentation>Аналитическая справка об имущественном положении юридического лица (индивидуального предпринимателя)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="CertifReqs" type="cat_ru:GTDIDType">
+            <xs:annotation>
+              <xs:documentation>Номер аналитической справки об имущественном положении</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustPerson" type="cat_ru:PersonBaseType">
+            <xs:annotation>
+              <xs:documentation>Сведения о лице, подписавшем аналитическую справку об имущественном положении</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ControlForm" type="dbp:ControlFormType">
+            <xs:annotation>
+              <xs:documentation>Форма таможенного контроля</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ControlActReqs" type="cat_ru:DocumentBaseType">
+            <xs:annotation>
+              <xs:documentation>Реквизиты акта таможенной проверки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PropertyDetected" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Факт установления имущества (0 - не установлено, 1 - установлено)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DebtorInfo" type="RUScat_ru:SubjectDetailsType">
+            <xs:annotation>
+              <xs:documentation>Сведения о проверяемом лице</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PropertyInfo" type="dbp:PropertyInfoType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения об имуществе.Заполняется обязательно в случае проставления пользователем отметки об установлении имущества.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PropertyInfoDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата получения сведений об имуществе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PropertyInfoSource" type="clt_ru:FreeText250Type">
+            <xs:annotation>
+              <xs:documentation>Источник сведений об имуществе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CertifFormDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата составления Аналитической справки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CertifSignDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата подписания Аналитической справки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SendDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата отправки Аналитической справки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006360E">
+          <xs:annotation>
+            <xs:documentation>Служебный идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные сложные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ControlFormType">
+    <xs:annotation>
+      <xs:documentation>Форма таможенного контроля</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ControlFormCode" type="clt_ru:Text10Type">
+        <xs:annotation>
+          <xs:documentation>Код формы таможенного контроля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ControlFormDescr" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Описание формы таможенного контроля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PropertyInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения об имуществе</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PropertyNumber" type="clt_ru:Quantity11Type">
+        <xs:annotation>
+          <xs:documentation>Номер по порядку</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PropertyName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование имущества</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PropertyQuantity" type="clt_ru:Quantity18point3Type">
+        <xs:annotation>
+          <xs:documentation>Количество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PropertyQuantityOKEI" type="clt_ru:Code3Type">
+        <xs:annotation>
+          <xs:documentation>Единица измерения - код по ОКЕИ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PropertyDescr" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Индивидуальные признаки имущества</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PropertyCost" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Стоимость имущества</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PropertyDestination" type="RUSclt_ru:FreeText1000Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Адрес местонахождения (при наличии)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

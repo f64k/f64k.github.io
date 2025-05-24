@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>AMQP Chat</title>
+    <script type="module">
+        //<!-- https://www.jsdelivr.com/package/npm/@cloudamqp/amqp-client -->
+        //import { AMQPWebSocketClient } from 'https://cdn.jsdelivr.net/npm/@cloudamqp/amqp-client@3.2.1/+esm'
+        //import { AMQPWebSocketClient } from 'https://cdn.jsdelivr.net/npm/@cloudamqp/amqp-client@3.2.1/dist/amqp-websocket-client.mjs'
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="flex flex-col h-screen ">
+    <header>
+        <div class="flex gap-2 bg-gradient-to-b from-sky-100 to-zinc-100">
+            <span class="mx-2 text-2xl text-sky-900 hover:text-shadow-lg font-bold">AMQP Chat</span>
+            <input id="amqps" type="text" class="flex-1 rounded-md px-3 py-1 shadow-[inset_0_0_4px]"
+                placeholder="amqps://<username>:<password>@<host>/<vhost>" />
+            <button id="connect" class="px-2 py-1 mx-1 rounded text-white bg-indigo-500 shadow-lg hover:shadow-indigo-500/50 hover:bg-indigo-400 transition">Connect</button>
+        </div>
+        <div id="status" class="text-rose-900 bg-gradient-to-b from-zinc-100 to-sky-100 text-right"> ••• °°° </div>
+    </header>
+
+    <main class="flex-1 overflow-hidden flex">
+        <aside class="bg-gradient-to-b from-sky-100 via-rose-200 to-teal-100 p-3 overflow-y-auto flex flex-col gap-1 ">
+            <button id="clearOldMessages" class="px-2 py-1 rounded text-rose-100 shadow-lg bg-rose-800 hover:bg-rose-700 hover:shadow-rose-700/50 ">Clear</button>
+            <textarea id="textarea" rows=15></textarea>
+        </aside>
+        <section class="flex-1 rounded-md shadow-[inset_0_0_3px] hover:shadow-[inset_0_0_3px_#506] overflow-y-auto">
+            <div id="messages"></div>
+        </section>
+        <aside class="p-3 bg-gradient-to-b from-sky-100 to-teal-100 overflow-y-auto flex flex-col">
+            <button id="createConsumer"
+                class="px-2 py-1 rounded text-white shadow-lg bg-teal-800 hover:bg-teal-700 hover:shadow-teal-700/50 transition">Create
+                Consumer</button>
+            <hr class="my-2" />
+            <input id="newMessage" class="rounded-md px-3 py-1 shadow-[inset_0_0_4px]" />
+            <button id="sendNewMessage" class="px-2 py-1 rounded bg-zinc-300 hover:bg-zinc-200 hover:shadow-lg transition">Send</button>
+        </aside>
+        <!--<iframe id="iframe" class="w-[400px]" src="https://dog.lmq.cloudamqp.com"></iframe>-->
+    </main>
+
+    <footer
+        class="flex bg-teal-100 [&>a]:m-1 [&>a]:px-1 [&>a]:py-0 [&>a]:rounded [&>a]:bg-slate-300 [&>a:hover]:bg-slate-200">
+        <a target="_blank" href="https://dog.lmq.cloudamqp.com/">dog.lmq.cloudamqp.com</a>
+        <a target="_blank" href="https://www.cloudamqp.com/docs/amqp_over_websockets.html">amqp_over_websockets</a>
+        <a target="_blank" href="https://docs.cloudamqp.com/cloudamqp_api.html">CloudAMQP API</a>
+        <a target="_blank" href="https://dog.lmq.cloudamqp.com/docs/#/">LavinMQ API</a>
+        <a target="_blank" href="https://github.com/cloudamqp/amqp-client">GitHub amqp-client</a>
+        <a target="_blank" href="https://api.cloudamqp.com/console/7b6d11f9-b4c5-4e82-9d94-9d84001e4f2a/details">console api.cloudamqp.com</a>
+    </footer>
+</body>
+
+<script type=module>
+    import { AMQPWebSocketClient } from 'https://cdn.jsdelivr.net/npm/@cloudamqp/amqp-client@3.2.1/dist/amqp-websocket-client.mjs'
+    // eсть ещё альтернатива STOMP // https://www.cloudamqp.com/blog/RabbitMQ-and-WebSockets.html  //  https://www.cloudamqp.com/docs/stomp_over_websockets.html
+
+
+    class ChatManager {
+        constructor(objSettings) {
+            if (!objSettings) { console.error("objSettings is null"); debugger; };
+            this.objSettings = objSettings;
+            this.strAmqps = null;
+            this.amqp = null;
+            this.chnl = null;
+            this.que = null;
+        }
+
+        setStatus(strStatus) {
+            this.objSettings.elementStatus.textContent = strStatus;
+        }
+
+        getNowString() {
+            const now = new Date(), formatted = `${(now.getDate() + '').padStart(2, '0')}.${(now.getMonth() + 1 + '').padStart(2, '0')}.${now.getFullYear()} ${(now.getHours() + '').padStart(2, '0')}:${(now.getMinutes() + '').padStart(2, '0')}:${(now.getSeconds() + '').padStart(2, '0')}`;
+            return formatted;
+        }
+
+        parseAmqps(strAmqps) {
+            // amqps://<username>:<password>@<host>/<vhost>
+            const arrAmqps = strAmqps.replace("amqps://", "").replace("@", ";").replace(":", ";").replace("/", ";").split(";");
+            const [up, pp, urlAmqps, vhost] = arrAmqps;
+            const urlWs = `wss://${urlAmqps}/ws/amqp`;
+            return [urlWs, vhost, up, pp];
+        }
+
+        isConnected() {
+            return this.amqp && this.amqp.closed == false; // && this.ch;
+        }
+
+        getConnectionInfo() {
+            if (this.isConnected()) {
+                const strInfo0 = `connected to ${this.que.name}`;
+                const strInfo1 = `соединение ${this.getElapsedTime()}`;
+                return strInfo1;
+            } else {
+                return 'not connected !!!';
+            }
+        }
+
+        getElapsedTime() {
+            const timeNow = performance.now();
+            const strConnectedDiff = `${(timeNow - this.timeConnected).toFixed(2)} ms`;
+            const strHeartBeatDiff = `${(timeNow - this.timeLastHeartBeat).toFixed(2)} ms`;
+            return strHeartBeatDiff + " / " + strConnectedDiff;
+        }
+
+        async connectAsync(amqpstring) {
+            try {
+                this.strAmqps = amqpstring;
+                if (!this.strAmqps) return;
+                const [urlWs, vhost, up, pp] = this.parseAmqps(this.strAmqps);
+                console.log(urlWs, vhost, up, pp);
+                this.amqp = new AMQPWebSocketClient(urlWs, vhost, up, pp);
+                const fnOldAmpqOnerror = this.amqp.onerror;
+                this.amqp.onerror = async (err) => {
+                    // Error : connection not cleanly closed (1006)
+                    // Close Code 1006 is a special code that means the connection was closed abnormally (locally) by the browser implementation.
+                    this.setStatus(`${this.getElapsedTime()} : ${err}`); // AMQPWebSocketClient
+                    if (fnOldAmpqOnerror) { fnOldAmpqOnerror(err); }
+                    //await this.disconnectAsync();
+                };
+                const amqpConnected = await this.amqp.connect(); // AMQPWebSocketClient
+                if (!(amqpConnected === this.amqp)) { debugger; }
+                this.timeConnected = performance.now();
+                if (amqpConnected.closed == false) {
+                    this.chnl = await this.amqp.channel(); // AMQPChannel
+                    this.chnl.onerror = (err) => { debugger; this.setStatus(`${err}`); };
+                    this.que = await this.chnl.queue("");
+                    if (this.que) {
+                        this.que.onerror = (err) => { debugger; this.setStatus(`${err}`); };
+                        await this.que.bind("amq.fanout");
+                        this.timeLastHeartBeat = performance.now();
+                    }
+                } else {
+                    debugger;
+                }
+            } catch (err) {
+                console.error(err);
+                debugger;
+                this.setStatus(`connectAsync Error: ${err}`);
+            }
+        }
+
+        async createConsumerAsync(funcReceiveMessageCallback) {
+            if (this.que && !this.que.channel.closed && !this.que.channel.connection.closed) {
+                if(this.consumer && !this.consumer.closed && !this.consumer.channel.closed && !this.consumer.channel.connection.closed) {
+                    this.setStatus(`уже есть consumer.tag=${this.consumer.tag}`);
+                } else {
+                    // в чем разница с basicConsume ?
+                    this.consumer = await this.que.subscribe({ noAck: false }, (msg) => {
+                        console.log(msg);
+                        const strMsg = `${msg.consumerTag.slice(-8)} ${msg.bodyToString()}`;
+                        funcReceiveMessageCallback(strMsg);
+                        msg.ack()
+                    });
+                    this.setStatus(`создан новый consumer.tag=${this.consumer.tag}`);
+                }
+            } else {
+                this.setStatus(`this.que is null or undefined or closed`);
+            }
+        }
+
+        async sendToQueueAsync(strMsg) {
+            if (this.chnl && !this.chnl.closed && !this.chnl.connection.closed) {
+                const formattedNow = this.getNowString();
+                const textToSend = ` ${formattedNow} ` + strMsg;
+                await this.chnl.basicPublish("amq.fanout", "", textToSend.trim(), { contentType: "text/plain" })
+                this.timeLastHeartBeat = performance.now();
+                const queData = await this.que.channel.queueDeclare(this.que.name, {passive: true});
+                this.setStatus(`сообщений : ${queData.messageCount} | ${formattedNow} | ${this.getElapsedTime()}`);
+            } else {
+                this.setStatus(`this.chnl is null or undefined or closed`);
+            }
+        }
+
+        async disconnectAsync() {
+            if (this.amqp) {
+                await this.amqp.close();
+                this.amqp = null;
+            }
+            if (this.chnl) {
+                await this.chnl.close();
+                this.chnl = null;
+            }
+            if (this.que) {
+                await this.que.close();
+                this.que = null;
+            }
+            if (this.consumer) {
+                await this.consumer.close();
+                this.consumer = null;
+            }
+            this.setStatus("disconnected");
+        }
+
+    } // class ChatManager
+
+
+    const spanStatus = document.getElementById("status");
+    const buttonConnect = document.getElementById("connect");
+    buttonConnect.addEventListener("click", buttonConnectClick);
+    const inputAmqps = document.getElementById("amqps");
+    if (inputAmqps.value === "") {
+        inputAmqps.value = localStorage.getItem("amqps");
+    }
+    const divMessages = document.getElementById("messages");
+
+    const inputNewMessage = document.getElementById("newMessage");
+    const buttonSendNewMessage = document.getElementById("sendNewMessage");
+    buttonSendNewMessage.addEventListener("click", buttonSendNewMessageClick);
+
+    const buttonCreateConsumer = document.getElementById("createConsumer");
+    buttonCreateConsumer.addEventListener("click", buttonCreateConsumerClick);
+
+    const textarea = document.getElementById("textarea");
+    const input = document.getElementById("message")
+
+    const objChatManager = new ChatManager({ elementStatus: spanStatus });
+
+    function receiveMessageCallback(strMsg) {
+        textarea.value += strMsg + "\n";
+        const divNewMsg = document.createElement("div");
+        divNewMsg.textContent = strMsg;
+        divNewMsg.className = "shadow-md bg-zinc-100 border-2 rounded-md p-2 m-1";
+        divMessages.appendChild(divNewMsg);
+    }
+
+    async function buttonConnectClick(e) {
+        try {
+            if (!objChatManager.isConnected()) {
+                if (inputAmqps.value) {
+                    await objChatManager.connectAsync(inputAmqps.value);
+                    if (objChatManager.isConnected()) {
+                        if (localStorage.getItem("amqps") !== inputAmqps.value) {
+                            localStorage.setItem("amqps", inputAmqps.value);
+                        }
+                        spanStatus.textContent = objChatManager.getConnectionInfo();
+                        //debugger;
+                    }
+                } else {
+                    spanStatus.textContent = `Please enter amqps://<username>:<password>@<host>/<vhost>`;
+                }
+            } else {
+                spanStatus.textContent = `Уже есть коннект ${objChatManager.getConnectionInfo()}`;
+            }
+        } catch (err) {
+            spanStatus.textContent = `Exception : ${err}`;
+        }
+    }
+
+    async function buttonCreateConsumerClick(e) {
+        try {
+            await objChatManager.createConsumerAsync(receiveMessageCallback);
+        } catch (err) {
+            spanStatus.textContent = `Failed to create consumer. ${err}`;
+        }
+    }
+
+    async function buttonSendNewMessageClick(e) {
+        try {
+            await objChatManager.sendToQueueAsync(inputNewMessage.value);
+            //inputNewMessage.value = "";
+        } catch (err) {
+            spanStatus.textContent = `Failed to send message. ${err}`;
+        }
+    }
+
+
+
+    document.getElementById("clearOldMessages").addEventListener("click", (e) => {
+        textarea.value = "";
+        divMessages.innerHTML = "";
+    });
+
+
+    async function startOld() {
+        try {
+            debugger;
+            const conn = await amqp.connect();
+            const ch = await conn.channel();
+
+            debugger;
+            attachPublish(ch);
+            const q = await ch.queue("");
+            await q.bind("amq.fanout");
+            const consumer = await q.subscribe({ noAck: false }, (msg) => {
+                console.log(msg)
+                textarea.value += msg.bodyToString() + "\n"
+                msg.ack()
+            });
+        } catch (err) {
+            console.error("Error", err, "reconnecting in 1s")
+            debugger;
+            //disablePublish()
+            //setTimeout(start, 1000)
+        }
+    }
+
+    function disablePublishOld() {
+        debugger;
+        document.forms[0].onsubmit = (e) => { alert("Disconnected, waiting to be reconnected") }
+    }
+
+</script>
+
+</html>

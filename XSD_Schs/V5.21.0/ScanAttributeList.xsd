@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:sal="urn:customs.ru:Information:CustomsDocuments:ScanAttributeList:5.21.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:ScanAttributeList:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Сканированный документ</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ScanAttributeList" type="sal:ScanAttributeListType">
+		<xs:annotation>
+			<xs:documentation>Сканированный документ</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ScanAttributeListType">
+		<xs:annotation>
+			<xs:documentation>Сканированный документ</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="DocList" type="sal:DocListType">
+						<xs:annotation>
+							<xs:documentation>Реквизиты сканированного документа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RegNum" type="cat_ru:GTDIDType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Регистрационный номе запроса на сканирование</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DocumentBody" type="sal:DocBodyType" minOccurs="0" maxOccurs="24">
+						<xs:annotation>
+							<xs:documentation>Тело  документа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1004129E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы.</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="Text4MB">
+		<xs:annotation>
+			<xs:documentation>Данные в кодировке Base64. До 4Мбайт</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="5872025"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="DocListType">
+		<xs:annotation>
+			<xs:documentation>Реквизиты сканированного документа</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:DocumentBaseType">
+				<xs:sequence>
+					<xs:element name="RequestPositionID" type="clt_ru:DocumentIDType">
+						<xs:annotation>
+							<xs:documentation>Идентификатор позиции в исходном запросе</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Position" type="clt_ru:Count2Type">
+						<xs:annotation>
+							<xs:documentation>Порядковый номер записи в запросе на сканирование</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="NumPP" type="clt_ru:Count2Type">
+						<xs:annotation>
+							<xs:documentation>Порядковый номер файла в случае, если документ сканирован в несколько приемов (1 - один лист)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ScanCustoms" type="sal:ScanCustomsType">
+						<xs:annotation>
+							<xs:documentation>Сведения о сканировании</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DocCode" type="clt_ru:CustomsDocumentCodeType">
+						<xs:annotation>
+							<xs:documentation>Код вида документа (заполняется в соответствии с классификатором видов документов, используемых при заявлении сведений в графе 44)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ScanID" type="clt_ru:DocumentIDType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Идентификатор сканированного документа </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DocumentBeginActionsDate" type="clt_ru:DateCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дата начала действия документа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DocumentEndActionsDate" type="clt_ru:DateCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дата окончания действия документа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Declarant" type="cat_ru:OrganizationBaseType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Информация об участнике ВЭД</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CheckList" type="sal:CheckListType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Лист проверки документа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Comments" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Общие комментарии</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ScanCustomsType">
+		<xs:annotation>
+			<xs:documentation>Информация о сканировании документа</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+				<xs:annotation>
+					<xs:documentation>Код ТО сканирования</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LNP" type="clt_ru:LNPIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ЛНП сканировавшего лица</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LNPCustomsCode" type="clt_ru:CustomsCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код таможенного органа, указанный на оттиске ЛНП</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ScanDate" type="clt_ru:DateTimeCustType">
+				<xs:annotation>
+					<xs:documentation>Дата и время сканирования</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CheckListType">
+		<xs:annotation>
+			<xs:documentation>Лист проверки документа</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CheckCode" type="clt_ru:CodeVariable3Type">
+				<xs:annotation>
+					<xs:documentation>Код типа проверки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CheckDesc" type="clt_ru:FreeText250Type">
+				<xs:annotation>
+					<xs:documentation>Описание типа проверки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Comment" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Комментарии</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Obligation" type="clt_ru:DigitalIndicatorType">
+				<xs:annotation>
+					<xs:documentation>Обязательность проверки: 
+1-Да;
+2-Нет;
+3-обязательна для определенных видов документов
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Result" type="clt_ru:IndicatorType">
+				<xs:annotation>
+					<xs:documentation>Результат проверки: false (0)- не пройдена, true (1) - пройдена
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocBodyType">
+		<xs:annotation>
+			<xs:documentation>Тело документа с бинарными данными</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PageNum" type="clt_ru:Count2Type">
+				<xs:annotation>
+					<xs:documentation>Номер страницы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FileName" type="clt_ru:Text50Type">
+				<xs:annotation>
+					<xs:documentation>Имя файла</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FileData" type="sal:Text4MB">
+				<xs:annotation>
+					<xs:documentation>Данные файла  в кодировке BASE64</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

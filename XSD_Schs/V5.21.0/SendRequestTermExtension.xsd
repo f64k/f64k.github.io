@@ -1,0 +1,370 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:srte="urn:customs.ru:Information:SQDocuments:SendRequestTermExtension:5.21.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:SendRequestTermExtension:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Заявление на изменение срока представления документов (информации) при взаимодействии со СМЭВ</xs:documentation>
+  </xs:annotation>
+  <xs:element name="SendRequestTermExtension" type="srte:SendRequestTermExtensionType">
+    <xs:annotation>
+      <xs:documentation>Заявление на изменение срока представления документов (информации) при взаимодействии со СМЭВ</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="SendRequestTermExtensionType">
+    <xs:annotation>
+      <xs:documentation>Заявление на изменение срока представления документов (информации) при взаимодействии со СМЭВ</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="OriginalSend" type="srte:OriginalSendType">
+            <xs:annotation>
+              <xs:documentation>Сведения о запросе документов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Statement" type="srte:StatementType">
+            <xs:annotation>
+              <xs:documentation>Сведения о заявлении</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ClientOrganizationInfo" type="srte:ClientOrganizationInfoType">
+            <xs:annotation>
+              <xs:documentation>Лицо, направляющее заявление</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AddTerm" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Количество рабочих дней, на которое запрашивается продление срока (1-7)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocumentDeclineCode" type="clt_ru:CodeVariable2Type">
+            <xs:annotation>
+              <xs:documentation>Код причины невозможности предоставления документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocumentDecline" type="RUSclt_ru:FreeText1000Type">
+            <xs:annotation>
+              <xs:documentation>Причина невозможности предоставления документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CommentDecline" type="srte:FreeText1500" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Обоснование причин продления срока подтверждающих документов (копий документов) и информации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ClientExecutorInfo" type="srte:ClientExecutorInfoType">
+            <xs:annotation>
+              <xs:documentation>Представитель Лица, подготовивший заявление (исполнитель)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ClientSignerInfo" type="srte:ClientSignerInfoType">
+            <xs:annotation>
+              <xs:documentation>Уполномоченный представитель Лица, подписавший заявление (подписант)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Files" type="srte:FilesType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о передаваемом файле заявления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ProvingDocs" type="srte:ProvingDocsType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о файлах дополнительных документов, подтверждающих обоснованность продление срока представления подтверждающих документов (копий документов) и информации (приложения)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009283E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ClientExecutorInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о представителе Лица, подготовившем заявление</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ClientExecutorLastName" type="srte:NameType">
+        <xs:annotation>
+          <xs:documentation>Фамилия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ClientExecutorFirstName" type="srte:NameType">
+        <xs:annotation>
+          <xs:documentation>Имя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ClientExecutorMiddleName" type="srte:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ClientExecutorPhone" type="srte:PhoneType">
+        <xs:annotation>
+          <xs:documentation>Контактный телефон (с кодом города)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ClientExecutorMail" type="srte:MailType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Адрес электронной почты </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ClientOrganizationInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о Лице, направляющем заявление</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Name" type="RUSclt_ru:FreeText1000Type">
+        <xs:annotation>
+          <xs:documentation>Сокращенное наименование организации (в случае ЮЛ) или ФИО (в случае ИП))</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INN" type="clt_ru:INNIDType">
+        <xs:annotation>
+          <xs:documentation>ИНН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KPP" type="clt_ru:KPPCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>КПП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OGRN" type="clt_ru:OGRNIDType">
+        <xs:annotation>
+          <xs:documentation>ОГРН/ОГРНИП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ClientSignerInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения об уполномоченном представителе Лица, подписавшем заявление</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ClientSignerLastName" type="srte:NameType">
+        <xs:annotation>
+          <xs:documentation>Фамилия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ClientSignerFirstName" type="srte:NameType">
+        <xs:annotation>
+          <xs:documentation>Имя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ClientSignerMiddleName" type="srte:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ClientSignerFunction" type="srte:FunctionType">
+        <xs:annotation>
+          <xs:documentation>Должность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CredDocument" type="srte:CredDocumentType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о документе, подтверждающем полномочия подписанта (доверенность)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CredDocumentType">
+    <xs:annotation>
+      <xs:documentation>Сведения о документе, подтверждающим полномочия подписанта (доверенность)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CredDocumentPathID" type="clt_ru:Count4Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер файла доверенности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CredDocument" type="srte:FileType">
+        <xs:annotation>
+          <xs:documentation>Файл образа доверенности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CredSignature" type="srte:FileType">
+        <xs:annotation>
+          <xs:documentation>Файл-подписи образа доверенности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FilesType">
+    <xs:annotation>
+      <xs:documentation>Сведения о передаваемом файле заявления</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FilesDocument" type="srte:FileType">
+        <xs:annotation>
+          <xs:documentation>Файл с образом заявления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FilesSignature" type="srte:FileType">
+        <xs:annotation>
+          <xs:documentation>Файл-подписи с образом заявления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OriginalSendType">
+    <xs:annotation>
+      <xs:documentation>Сведения о запросе документов, во исполнение которого представляются документы</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OriginalRequestID" type="RUSclt_ru:Text32Type">
+        <xs:annotation>
+          <xs:documentation>Идентификатор запроса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AuthorityCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, направившего запрос</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AuthorityName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование таможенного органа, направившего запрос</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ProvingDocsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о файлах дополнительных документов, подтверждающих обоснованность продление срока представления подтверждающих документов (копий документов) и информации (приложения)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocumentPathID" type="clt_ru:Count4Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер файла приложения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentTypeCode" type="clt_ru:CodeVariable3Type">
+        <xs:annotation>
+          <xs:documentation>Код типа приложения (документа)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Document" type="srte:FileType">
+        <xs:annotation>
+          <xs:documentation>Файл образа приложения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CredSignature" type="srte:FileType">
+        <xs:annotation>
+          <xs:documentation>Файл-подписи образа приложения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="StatementType">
+    <xs:annotation>
+      <xs:documentation>Сведения о заявлении</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RequestID" type="RUSclt_ru:Text32Type">
+        <xs:annotation>
+          <xs:documentation>Идентификатор заявления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SendTM" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата заявления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AuthorityRequestID" type="clt_ru:CodeVariable20Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер заявления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FileType">
+    <xs:annotation>
+      <xs:documentation>Файлы</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FileName" type="srte:FreeText255" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Имя (идентификатор) файла вложения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FileType" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Тип (формат) файла вложения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IsZipped" type="CategoryCust:IndicatorCategoriesCust" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак, упакован ли файл в zip-архив</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FileData" type="CategoryCust:BinaryDataCategoriesCust">
+        <xs:annotation>
+          <xs:documentation>Данные файла в кодировке BASE64</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные простые прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="FreeText255">
+    <xs:annotation>
+      <xs:documentation>Текстовая строка. До 255 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="255" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FreeText1500">
+    <xs:annotation>
+      <xs:documentation>Текстовая строка. До 1500 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="1500" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PhoneType">
+    <xs:annotation>
+      <xs:documentation>Контактный телефон исполнителя (с кодом города)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="([0-9]|\+){1,20}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MailType">
+    <xs:annotation>
+      <xs:documentation>Адрес электронной почты исполнителя</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="45" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FunctionType">
+    <xs:annotation>
+      <xs:documentation>Должность подписанта</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="128" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NameType">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="70" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

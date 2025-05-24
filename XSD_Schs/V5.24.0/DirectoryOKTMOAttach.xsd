@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:doa="urn:customs.ru:Information:SQDocuments:DirectoryOKTMOAttach:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:SQDocuments:DirectoryOKTMOAttach:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Данные справочника ОКТМО</xs:documentation>
+  </xs:annotation>
+  <xs:element name="DirectoryOKTMOAttach" type="doa:DirectoryOKTMOAttachType">
+    <xs:annotation>
+      <xs:documentation>Данные справочника ОКТМО</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DirectoryOKTMOAttachType">
+    <xs:annotation>
+      <xs:documentation>Данные справочника ОКТМО</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="OktmoNSIInfo" type="doa:OktmoNSIInfoType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Нормативно-справочная информация о коде по ОКТМО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009331E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="OktmoNSIInfoType">
+    <xs:annotation>
+      <xs:documentation>Нормативно-справочная информация о коде по ОКТМО</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RegionCode" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Код региона</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AreaCode" type="clt_ru:Code3Type">
+        <xs:annotation>
+          <xs:documentation>Код района/города МО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CityCode" type="clt_ru:Code3Type">
+        <xs:annotation>
+          <xs:documentation>Код поселения МО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LocalCode" type="clt_ru:Code3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код населенного пункта МО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ControlNum" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Контрольное число</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Section" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Код раздела</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Code" type="doa:CodeType">
+        <xs:annotation>
+          <xs:documentation>Код (совокупный код)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Name" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование территории</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CentreName" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дополнительная информация</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Clarification" type="doa:FreeText8000Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LastChangeNum" type="clt_ru:CodeVariable3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер изменения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LastChangeType" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Тип изменения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ChangeDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата принятия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IntroductionDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата введения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="UpdateDate" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата и время обновления справочника</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="CodeType">
+    <xs:annotation>
+      <xs:documentation>Код</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:pattern value="\d{8}|\d{11}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FreeText8000Type">
+    <xs:annotation>
+      <xs:documentation>Текстовая строка. До 8000 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="0" />
+      <xs:maxLength value="8000" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

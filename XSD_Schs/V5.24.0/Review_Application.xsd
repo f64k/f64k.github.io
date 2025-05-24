@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:ra="urn:customs.ru:Information:CustomsDocuments:Review_Application:5.24.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:Review_Application:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Заявка на проведение рецензирования</xs:documentation>
+  </xs:annotation>
+  <xs:element name="Review_Application" type="ra:Review_ApplicationType">
+    <xs:annotation>
+      <xs:documentation>Заявка на проведение рецензирования</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="Review_ApplicationType">
+    <xs:annotation>
+      <xs:documentation>Заявка на проведение рецензирования</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="BasisOfReview" type="clt_ru:FreeText250Type">
+            <xs:annotation>
+              <xs:documentation>Основание проведения рецензирования</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ApplicationNumber" type="ra:ReviewNumberType">
+            <xs:annotation>
+              <xs:documentation>Номер Заявки на проведение рецензирования</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReviewKind" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Вид рецензирования: 1 - плановое, 2 - внеплановое</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ExpertSummary" type="ra:ExpertSummaryType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Заключение эксперта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SMSInfo" type="ra:SMSInfoType">
+            <xs:annotation>
+              <xs:documentation>Научно-методическая секция </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Speciality" type="ra:SpecialityType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Специальность</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ExpertiseType" type="clt_ru:Text50Type" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Вид экспертизы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReportDate" type="clt_ru:DateTimeCustType">
+            <xs:annotation>
+              <xs:documentation>Дата, до которой должен быть представлен отчет о рецензировании </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReviewInitiator" type="ra:ReviewInitiatorType">
+            <xs:annotation>
+              <xs:documentation>Инициатор рецензирования</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentIDType" use="required" fixed="1051039E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ExpertSummaryType">
+    <xs:annotation>
+      <xs:documentation>Заключение эксперта</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ExpertSummaryNumber" type="clt_ru:Text40Type">
+        <xs:annotation>
+          <xs:documentation>Номер заключения эксперта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExpertSummaryDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата заключения эксперта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReviewInitiatorType">
+    <xs:annotation>
+      <xs:documentation>Инициатор рецензирования</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:PersonBaseType">
+        <xs:sequence>
+          <xs:element name="CustomsCode" type="cat_ru:CustomsType">
+            <xs:annotation>
+              <xs:documentation>Таможенный орган</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="StructuralSubdivision" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Структурное подразделение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ReviewNumberType">
+    <xs:annotation>
+      <xs:documentation>Номер документа по рецензированию</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Letter" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Буквенный признак документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SMSCode" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Код НМС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Date" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Number" type="clt_ru:Code5Type">
+        <xs:annotation>
+          <xs:documentation>Номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SMSInfoType">
+    <xs:annotation>
+      <xs:documentation>Научно-методическая секция</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SMSCode" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Код НМС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Name" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SpecialityType">
+    <xs:annotation>
+      <xs:documentation>Сведения о специальности</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SpecialityCode" type="clt_ru:CodeVariable2Type">
+        <xs:annotation>
+          <xs:documentation>Код специальности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Name" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование специальности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

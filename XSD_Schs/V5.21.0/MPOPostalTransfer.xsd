@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Бланк почтового перевода по МПО Ф.112эп по требованию Быкова А.М. из ГУФТД -->
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:mpost="urn:customs.ru:CustomsCardDoc:MPOPostalTransfer:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:CustomsCardDoc:MPOPostalTransfer:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Бланк почтового перевода по МПО Ф.112эп</xs:documentation>
+  </xs:annotation>
+  <xs:element name="MPOPostalTransfer" type="mpost:MPOPostalTransferType">
+    <xs:annotation>
+      <xs:documentation>Бланк почтового перевода по МПО Ф.112эп</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="MPOPostalTransferType">
+    <xs:annotation>
+      <xs:documentation>Бланк почтового перевода по МПО Ф.112эп</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="TPORegNumber" type="mpost:TPORegNumberType">
+            <xs:annotation>
+              <xs:documentation>Справочный номер ТПО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MPORegNum" type="mpost:MPORegNumType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер МПО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Payer" type="mpost:PayerType">
+            <xs:annotation>
+              <xs:documentation>Плательщик (отправитель)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Payee" type="RUScat_ru:SubjectDetailsBankType">
+            <xs:annotation>
+              <xs:documentation>Получатель платежа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Amount" type="clt_ru:AmountType">
+            <xs:annotation>
+              <xs:documentation>Общая сумма почтового перевода</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TextMessage" type="clt_ru:Text150Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Текст сообщения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CODIndicator" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Признак наложенного платежа (0 - нет, 1 - да)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="HomeDeliveryIndicator" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Признак доставки на дом (0 - нет, 1 - да)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NotificationIndicator" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Признак уведомления (0 - нет, 1 - да)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DataProcessingConsent" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Cогласие на обработку данных (0 - нет, 1 - да)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ConsentReceiveInform" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Cогласие на получение информации и подтверждение номера телефона (0 - нет, 1 - да)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Confirmation" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Подтверждение того, что отправитель является должностным лицом, назначаемым Президентом или Правительством РФ  (0 - нет, 1 - да)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1040007E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="MPORegNumType">
+    <xs:annotation>
+      <xs:documentation>Номер МПО</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, зарегистрировавшего документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MPO_Number" type="clt_ru:Code13Type">
+        <xs:annotation>
+          <xs:documentation>Уникальный номер МПО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="NoResidentType">
+    <xs:annotation>
+      <xs:documentation>Сведения о нерезидентах РФ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="MigrationCardSeries" type="clt_ru:Code4Type">
+        <xs:annotation>
+          <xs:documentation>Серия миграционной карты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MigrationCardNumber" type="clt_ru:CodeVariable10Type">
+        <xs:annotation>
+          <xs:documentation>Номер миграционной карты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MigrationCardDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата выдачи миграционной карты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateBegin" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Начало срока пребывания</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateEnd" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Окончание срока пребывания</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PayerType">
+    <xs:annotation>
+      <xs:documentation>Реквизиты плательщика</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:SubjectDetailsBankType">
+        <xs:sequence>
+          <xs:element name="HomeDeliveryIndicator" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Признак плательщика (1 - физическое лицо, 0 - юридическое лицо)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ResidentIndicator" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Признак резидетства РФ  (0 - нерезидент, 1 - резидент)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PayerBornDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата рождения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NoResident" type="mpost:NoResidentType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о нерезидентах РФ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TPORegNumberType">
+    <xs:annotation>
+      <xs:documentation>Справочный номер ТПО</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, зарегистрировавшего документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocNumber" type="clt_ru:Code10Type">
+        <xs:annotation>
+          <xs:documentation>Номер документа по журналу регистрации/типографский номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:catWH_ru="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonAggregateTypesCust:5.21.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:wh_ai="urn:customs.ru:Information:WarehouseDocuments:WHActInspectionRes:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:WarehouseDocuments:WHActInspectionRes:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonAggregateTypesCust:5.21.0" schemaLocation="WarehouseCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Выявленные в ходе таможенного досмотра (осмотра) несоответствия товаров, находящихся на временном хранении, ранее заявленным сведениям</xs:documentation>
+  </xs:annotation>
+  <xs:element name="WHActInspectionRes" type="wh_ai:WHActInspectionResType">
+    <xs:annotation>
+      <xs:documentation>Выявленные в ходе таможенного досмотра (осмотра) несоответствия товаров, находящихся на временном хранении, ранее заявленным сведениям</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="WHActInspectionResType">
+    <xs:annotation>
+      <xs:documentation>Выявленные в ходе таможенного досмотра (осмотра) несоответствия товаров, находящихся на временном хранении, ранее заявленным сведениям</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="ActNumber" type="clt_ru:DocumentNumberType">
+            <xs:annotation>
+              <xs:documentation>Номер акта таможенного досмотра (осмотра)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ActType" type="clt_ru:LetterIndicatorType">
+            <xs:annotation>
+              <xs:documentation>Типа акта: "0" - таможенный досмотр, "1" - таможенный осмотр</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="InspectionDateTime" type="clt_ru:DateTimeCustType">
+            <xs:annotation>
+              <xs:documentation>Дата и время таможенного досмотра (осмотра)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="WarehouseOwner" type="catWH_ru:WarehouseOwnerType">
+            <xs:annotation>
+              <xs:documentation>Данные о владельце склада (иного меcта) ВХ, на котором находятся товары</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DO1Report" type="catWH_ru:WareHouseReportLinkDataType">
+            <xs:annotation>
+              <xs:documentation>Данные об отчете о принятии по форме ДО-1, товары из которого были досмотрены / осмотрены</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Consignee" type="catWH_ru:ConsigneeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Данные о получателе товаров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Document" type="catWH_ru:WhPresentDocType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Данные о товаросопроводительном документе (ДТ, ТД, книжка МДП, накладные, товаротранспортные документы)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Good" type="wh_ai:GoodInspectionResultType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Данные о результатах таможенного досмотра (осмотра) товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Container" type="clt_ru:ContainerIdentityType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Номера контейнеров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1008040E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="GoodInspectionResultType">
+    <xs:annotation>
+      <xs:documentation>Комплексный тип для описания результатов таможенного досмотра (осмотра) товара на временном хранении</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="catWH_ru:WhGoodType">
+        <xs:sequence>
+          <xs:element name="DocBruttoWeight" type="clt_ru:QuantityBasisType">
+            <xs:annotation>
+              <xs:documentation>Вес брутто товаров по документам (кг.)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BillDocument" type="catWH_ru:WhBillDocumentType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Товаросопроводительная накладная</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsDamageFlag" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Признак повреждения товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DamageDesc" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="16">
+            <xs:annotation>
+              <xs:documentation>Описание повреждения товаров и упаковки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsViolationFlag" type="clt_ru:LetterIndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Признак выявленных несоответствий относительно имеющихся у инспектора документов: 1 - по весу нетто; 2 -по количеству товаров, в единицах измерения, отличных от кг; 3 - по описанию; 4 - по иным признакам</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsViolationDesc" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="16">
+            <xs:annotation>
+              <xs:documentation>Описание иных  признаков несоответствия. Заполняется при GoodsViolationFlag = 4 - по иным признакам</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

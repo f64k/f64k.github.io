@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cmr="urn:customs.ru:Information:CustomsDocuments:CompareRes:5.21.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:catESAD_cu="urn:customs.ru:CUESADCommonAggregateTypesCust:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:CompareRes:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CUESADCommonAggregateTypesCust:5.21.0" schemaLocation="CUESADCommonAggregateTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Результат сравнения электронных документов</xs:documentation>
+	</xs:annotation>
+	<xs:element name="CompareRes" type="cmr:CompareResType">
+		<xs:annotation>
+			<xs:documentation>Результат сравнения электронных документов</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="CompareResType">
+		<xs:annotation>
+			<xs:documentation>Результат сравнения электронных документов</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="DTRegNum" type="cat_ru:GTDIDType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Номер ДТ</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DocCompare" type="cmr:DocCompareType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Сравниваемые документы</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SavedGoodLinks" type="cmr:SavedGoodLinksType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Результат привязки квот разрешительных документов</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Decision" type="clt_ru:Numeric1Type">
+						<xs:annotation>
+							<xs:documentation>Общий результат сравнения: 0 - успешное сравнение, 1 - сравнение не завершено , 2 - критичное несовпадение</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" default="1061003E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GroupType">
+		<xs:annotation>
+			<xs:documentation>Группа элементов</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Name" type="clt_ru:FreeText500Type">
+				<xs:annotation>
+					<xs:documentation>Наименование группы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Matching" type="cmr:TegXPathType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Сравниваемые элементы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocCompareType">
+		<xs:annotation>
+			<xs:documentation>Сравниваемые документы</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NameDoc" type="clt_ru:Text150Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NumberDoc" type="clt_ru:Text150Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocID" type="clt_ru:DocumentIDType">
+				<xs:annotation>
+					<xs:documentation>ID документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Group" type="cmr:GroupType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Группы сравнения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Decision" type="clt_ru:Numeric1Type">
+				<xs:annotation>
+					<xs:documentation>Результат сравнения: 0 - успешное сравнение, 1 - сравнение не завершено , 2 - критичное несовпадение</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocGoodType">
+		<xs:annotation>
+			<xs:documentation>Сведения о квотируемом товаре</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DocID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ID документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodNum" type="clt_ru:Count5Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GroupNum" type="clt_ru:Count5Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер группы в товаре</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Xpath" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Xpath к товару</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ErrorLevelsType">
+		<xs:annotation>
+			<xs:documentation>Уровни критичности ошибок</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="StageNum" type="clt_ru:CodeVariable2Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Номер этапа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ErrLevel" type="clt_ru:CodeVariable2Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Уровень критичности на этапе</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GoodCompleteType">
+		<xs:annotation>
+			<xs:documentation>Завершенность привязок квот по товарам ДТ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GoodNum" type="clt_ru:Count5Type">
+				<xs:annotation>
+					<xs:documentation>Номер товара ДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Complete" type="clt_ru:IndicatorType">
+				<xs:annotation>
+					<xs:documentation>Признак 0 остатка по товару ДТ по всем единицам</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GoodLinksType">
+		<xs:annotation>
+			<xs:documentation>Результат привязки квот по товару</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ConfirmAuto" type="clt_ru:IndicatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Признак автоматической привязки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ConfirmDate" type="clt_ru:DateTimeCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата и время привязки квоты</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocGoodDT" type="cmr:DocGoodType">
+				<xs:annotation>
+					<xs:documentation>Сведения о квотируемом товаре ДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocGoodRD" type="cmr:DocGoodType">
+				<xs:annotation>
+					<xs:documentation>Сведения о квотируемом товаре РД</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ConfirmDT" type="catESAD_cu:SupplementaryQuantityType" minOccurs="0" maxOccurs="3">
+				<xs:annotation>
+					<xs:documentation>Списание квоты по ДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ConfirmRD" type="catESAD_cu:SupplementaryQuantityType" minOccurs="0" maxOccurs="3">
+				<xs:annotation>
+					<xs:documentation>Списание квоты по РД</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SavedGoodLinksType">
+		<xs:annotation>
+			<xs:documentation>Результат привязки квот разрешительных документов</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GoodsLink" type="cmr:GoodLinksType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Результат привязки квот по товару</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodComplete" type="cmr:GoodCompleteType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Завершенность привязок квот по товарам ДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TegXPathType">
+		<xs:annotation>
+			<xs:documentation>Сравниваемый элемент</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GoodsNumber" type="clt_ru:Count3Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер товара в ДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Id" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Уникальный идентификатор</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Name" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование элемента</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ErrLevels" type="cmr:ErrorLevelsType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Уровени ошибок</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ErrCode" type="clt_ru:FreeText250Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код ошибки.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ErrorName" type="clt_ru:FreeText250Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование ошибки.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CriterionGroup" type="clt_ru:CodeVariable4Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Группа критериев</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CriterionNum" type="clt_ru:CodeVariable4Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код критерия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="XPath" type="cmr:DocPathType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Cравниваемые элементы в документах</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Result" type="clt_ru:Numeric1Type">
+				<xs:annotation>
+					<xs:documentation>Результат сравнения: 0 - полное совпадние, 1 - не совпадение допустимо,  2 - частичное совпадение, 3- не совпадение </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CompareDate" type="clt_ru:DateTimeCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата и время формирование результата</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Comment" type="clt_ru:FreeText250Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Комментарии</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocPathType">
+		<xs:annotation>
+			<xs:documentation>Сравниваемый элемент документа</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Document" type="cat_ru:DocumentBaseType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Сведения о документе</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ModeID" type="clt_ru:DocumentModeIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код документа в альбоме форматов</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocCode" type="clt_ru:Code5Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код вида документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="XPath" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>XPath к сравниваемому элементу в документах</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocContent" type="clt_ru:FreeText250Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Значение из документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:catESAD_ru="urn:customs.ru:RUCommonAggregateTypes:5.24.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:cltESAD_cu="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:goom="urn:customs.ru:Information:CustomsDocuments:GTDoutCustomsMark:5.25.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:GTDoutCustomsMark:5.25.0" elementFormDefault="qualified" version="5.25.0.0">
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" schemaLocation="CUESADCommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:RUCommonAggregateTypes:5.24.0" schemaLocation="RUESADCommonAggregateTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Служебные отметки ДТ</xs:documentation>
+	</xs:annotation>
+	<xs:element name="GTDoutCustomsMark" type="goom:GTDoutCustomsMarkType"/>
+	<xs:complexType name="GTDoutCustomsMarkType">
+		<xs:annotation>
+			<xs:documentation>Служебные отметки ДТ</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="Comments" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Комментарий</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="GTDDocumentID" type="clt_ru:DocumentIDType">
+						<xs:annotation>
+							<xs:documentation>Уникальный идентификатор ДТ к которой относятся служебные отметки (GUID).</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="GTDOutResolution" type="goom:GTDOutResolutionType">
+						<xs:annotation>
+							<xs:documentation>Принятые решения по ДТ.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="GTDOutCommonMark" type="goom:GTDOutCommonMarkType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Служебные отметки ДТ </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="GTDOutGoodsResolution" type="goom:GTDOutGoodsResolutionType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Служебные отметки и принятые решения по товарам.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="GTDID" type="goom:DocNumberType">
+						<xs:annotation>
+							<xs:documentation>Регистрационный номер основного документа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="AddID" type="goom:DocNumberType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Регистрационный номер связанного документа (Номер ДТ для указания в Заявлении о выпуске до подачи)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TechID" type="clt_ru:Text50Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Системный идентификатор</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006078E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы.</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="DocNumberType">
+		<xs:annotation>
+			<xs:documentation>Регистрационный номер исходного документа</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:GTDIDType">
+				<xs:sequence>
+					<xs:element name="AddNumber" type="clt_ru:CodeVariable2Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дополнительная составляющая 3ей части номера </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="CustCostMethodType">
+		<xs:annotation>
+			<xs:documentation>Признак корректировки и метод определения таможенной стоимости (гр. 43 ДТ) </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CustomsCostCorrectMark" type="clt_ru:LetterIndicatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Признак корректировки таможенной стоимости.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CustomsCostCorrectMethod" type="cltESAD_cu:CustomsCostAppraiseMethodType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер метода определения таможенной стоимости. Заполняется в соответствии с классификатором методов определения таможенной стоимости.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GTDOutCommonMarkType">
+		<xs:annotation>
+			<xs:documentation>Служебные отметки ДТ </xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="catESAD_ru:RUESADCommonOfficialMarkType">
+				<xs:sequence>
+					<xs:element name="GoodsPresentDate" type="clt_ru:DateCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дата предъявления товаров</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="GoodsPresentTime" type="clt_ru:TimeCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Время предъявления  товаров</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GTDOutGoodsResolutionType">
+		<xs:annotation>
+			<xs:documentation>Служебные отметки и принятые решения по товарам.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GoodsNumeric" type="clt_ru:Count5Type">
+				<xs:annotation>
+					<xs:documentation>Номер товара по ДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FKSIGN" type="clt_ru:Numeric1Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Признак корректировки, связанной с добавлением  товаров</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GTDOutGoodsResult" type="goom:GTDOutResolutionType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Принятые решения по товарам</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GTDOutGoodsMark" type="catESAD_ru:RUESADCommonOfficialMarkType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Служебные отметки по товарам.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CustCostMethod" type="goom:CustCostMethodType">
+				<xs:annotation>
+					<xs:documentation>Признак корректировки и метод определения таможенной стоимости (гр. 43 ДТ) </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GTDOutResolutionType">
+		<xs:annotation>
+			<xs:documentation>Принятые решения по ДТ / товарам.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="catESAD_ru:RUESADDecisionType">
+				<xs:sequence>
+					<xs:element name="FoundationDes" type="goom:FoundationType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Обоснование принятого решения </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PersonName" type="clt_ru:NameType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>ФИО должностного лица таможенного органа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="FoundationType">
+		<xs:annotation>
+			<xs:documentation>Обоснование принятого решения</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="FoundationCode" type="clt_ru:CodeVariable5Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код обоснования принятого решения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FoundationText" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Текст обоснования</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ResolutionCode" type="clt_ru:CodeVariable6Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код описания принятого решения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ResolutionDescription" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Описание принятого решения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Recommendation" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Рекомендации по устранению причин </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

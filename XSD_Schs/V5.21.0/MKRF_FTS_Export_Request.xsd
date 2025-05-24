@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:MKRF_Req="urn:customs.ru:Information:CustomsDocuments:MKRF_FTS_Export_Request:5.21.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:MKRF_FTS_Export_Request:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос на предоставление сведений: Экспертного заключения, Заключения (разрешительного документа) на вывоз или временный вывоз культурных ценностей / Запрос для передачи сведений о факте вывоза или временного вывоза культурных ценностей</xs:documentation>
+  </xs:annotation>
+  <xs:element name="MKRF_FTS_Export_Request" type="MKRF_Req:MKRF_FTS_Export_RequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос на предоставление сведений: Экспертного заключения, Заключения (разрешительного документа) на вывоз или временный вывоз культурных ценностей / Запрос для передачи сведений о факте вывоза или временного вывоза культурных ценностей</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="MKRF_FTS_Export_RequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос на предоставление сведений: Экспертного заключения, Заключения (разрешительного документа) на вывоз или временный вывоз культурных ценностей / Запрос для передачи сведений о факте вывоза или временного вывоза культурных ценностей</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:choice>
+            <xs:element name="ReqPermitExp" type="MKRF_Req:ReqPermitExpType">
+              <xs:annotation>
+                <xs:documentation>Запрос на предоставление сведений: Экспертного заключения, Заключения (разрешительного документа) на вывоз или временный вывоз культурных ценностей</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="ReqInfoExp" type="MKRF_Req:ReqInfoExpType" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>Запрос для передачи сведений о факте вывоза или временного вывоза культурных ценностей</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1050032E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="Text100Type">
+    <xs:annotation>
+      <xs:documentation>Символьные данные. До 100 символов. Текстовый</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="100" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ReqInfoExpType">
+    <xs:annotation>
+      <xs:documentation>Запрос для передачи сведений о факте вывоза или временного вывоза культурных ценностей</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ExpertiseNumber" type="cat_ru:DocumentBaseType">
+        <xs:annotation>
+          <xs:documentation>Номер экспертного заключения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Declaration" type="cat_ru:GTDIDType">
+        <xs:annotation>
+          <xs:documentation>Таможенная декларация</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Date" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата вывоза объекта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReqPermitExpType">
+    <xs:annotation>
+      <xs:documentation>Запрос на предоставление сведений: Экспертного заключения, Заключения (разрешительного документа) на вывоз или временный вывоз культурных ценностей</xs:documentation>
+    </xs:annotation>
+    <xs:choice>
+      <xs:element name="TID" type="MKRF_Req:Text100Type">
+        <xs:annotation>
+          <xs:documentation>TID радиочастотной метки (RFID)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ResolutionNumber" type="cat_ru:DocumentBaseType">
+        <xs:annotation>
+          <xs:documentation>Номер заключения (разрешительного документа)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExpertiseNumber" type="cat_ru:DocumentBaseType">
+        <xs:annotation>
+          <xs:documentation>Номер экспертного заключения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PassportNumber" type="MKRF_Req:Text100Type">
+        <xs:annotation>
+          <xs:documentation>Номер паспорта музыкального инструмента</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+</xs:schema>

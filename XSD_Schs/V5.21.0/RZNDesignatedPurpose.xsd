@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:desprs="urn:customs.ru:Information:SQDocuments:RZNDesignatedPurpose:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:SQDocuments:RZNDesignatedPurpose:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Подтверждение целевого назначения для медицины/сведения о подтверждении целевого назначения ввозимого товара (Минтранс)/сведения о подтверждении целевого назначения ввозимого товара (Минпромторг)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="RZNDesignatedPurpose" type="desprs:RZNDesignatedPurposeType" />
+  <xs:complexType name="RZNDesignatedPurposeType">
+    <xs:annotation>
+      <xs:documentation>Подтверждение целевого назначения для медицины/сведения о подтверждении целевого назначения ввозимого товара (Минтранс)/сведения о подтверждении целевого назначения ввозимого товара (Минпромторг)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="BDRDID" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Идентификатор документа по БД РД</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocSign" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Признак документа:  2 - сведения о целевом назначении для медицины; 3 - сведения о подтверждении целевого назначения ввозимого товара (Минтранс); 4 - сведения о подтверждении целевого назначения ввозимого товара (Минпромторг)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Confirmation" type="desprs:ConfirmationType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Подтверждение (Удостоверение)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Holder" type="desprs:OrganizationType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Держатель подтверждения (Получатель подтверждающего письма)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Consignee" type="RUScat_ru:SubjectDetailsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Грузополучатель</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Contract" type="cat_ru:DocumentBaseType">
+            <xs:annotation>
+              <xs:documentation>Контракт</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsDescription" type="desprs:GoodsDescriptionType">
+            <xs:annotation>
+              <xs:documentation>Описание товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TargetMedOrg" type="RUScat_ru:SubjectDetailsType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Медицинская организация (объект), для которой предназначен ввозимый товар</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ConfirmationLetter" type="cat_ru:DocumentBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Письмо о подтверждении целевого назначения товара для медицинских целей</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009050E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ConfirmationType">
+    <xs:annotation>
+      <xs:documentation>Подтверждение (Удостоверение)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="Duration" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Срок действия</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GoodsDescriptionType">
+    <xs:annotation>
+      <xs:documentation>Описание товара</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsName" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="4">
+        <xs:annotation>
+          <xs:documentation>Наименование изделия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OriginCountry" type="clt_ru:CountryA3CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Страна происхождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Manufacturer" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Производитель</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsPurpose" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Целевое назначение товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ModelMark" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Модель (марка) товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Quantity" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OrganizationType">
+    <xs:annotation>
+      <xs:documentation>Сведения об организации</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:SubjectDetailsType">
+        <xs:sequence>
+          <xs:element name="OrgSign" type="clt_ru:DigitalIndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Признак: 0 - физ. лицо; 1 - юр. лицо</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AuthorizedPerson" type="cat_ru:PersonBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Уполномоченное лицо</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

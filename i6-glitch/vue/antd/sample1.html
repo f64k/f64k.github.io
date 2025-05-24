@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ant Design Vue - SPA Макет (CDN)</title>
+    <!-- 1. Подключаем CSS Ant Design Vue -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ant-design-vue@4.2.6/dist/reset.css" />
+    <!-- Примечание: reset.css опционален, но рекомендован Ant Design Vue 4.x -->
+    <!-- Основные стили Ant Design Vue -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ant-design-vue@4.2.6/dist/antd.min.css" />
+
+    <!-- Небольшие пользовательские стили -->
+    <style>
+        #app {
+            height: 100vh; /* Занимаем всю высоту экрана */
+        }
+        .logo {
+            height: 32px;
+            /* background: rgba(255, 255, 255, 0.2); */
+            margin: 16px;
+            color: white;
+            font-size: 18px;
+            line-height: 32px;
+            text-align: center;
+            overflow: hidden;
+        }
+        .site-layout .site-layout-background {
+            background: #fff;
+        }
+        .content-area {
+            padding: 24px;
+            min-height: 360px;
+        }
+         [data-theme='dark'] .site-layout .site-layout-background {
+            background: #141414;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 2. Контейнер для Vue приложения -->
+    <div id="app">
+        <a-config-provider :locale="ruRU"> <!-- Оборачиваем для локализации -->
+            <a-layout style="min-height: 100vh">
+                <!-- Боковое меню -->
+                <a-layout-sider v-model:collapsed="collapsed" collapsible>
+                    <div class="logo">MyApp</div>
+                    <a-menu theme="dark" v-model:selectedKeys="selectedKeys" mode="inline" @click="handleMenuClick">
+                        <a-menu-item key="dashboard">
+                            <pie-chart-outlined />
+                            <span>Дашборд</span>
+                        </a-menu-item>
+                        <a-menu-item key="profile">
+                            <user-outlined />
+                            <span>Профиль</span>
+                        </a-menu-item>
+                        <a-menu-item key="settings">
+                            <setting-outlined />
+                            <span>Настройки</span>
+                        </a-menu-item>
+                    </a-menu>
+                </a-layout-sider>
+
+                <!-- Основная часть -->
+                <a-layout class="site-layout">
+                    <!-- Шапка -->
+                    <a-layout-header class="site-layout-background" style="padding: 0 16px; display: flex; align-items: center; justify-content: space-between;">
+                         <a-typography-title :level="4" style="color: inherit; margin: 0;">
+                            {{ pageTitle }}
+                         </a-typography-title>
+                         <a-button type="primary" @click="showWelcomeMessage">Показать приветствие</a-button>
+                    </a-layout-header>
+
+                    <!-- Контент -->
+                    <a-layout-content style="margin: 0 16px">
+                        <a-breadcrumb style="margin: 16px 0">
+                            <a-breadcrumb-item>Главная</a-breadcrumb-item>
+                            <a-breadcrumb-item>{{ breadcrumbItem }}</a-breadcrumb-item>
+                        </a-breadcrumb>
+                        <div class="site-layout-background content-area">
+                            <!-- Условный рендеринг контента в зависимости от activeView -->
+                            <div v-if="activeView === 'dashboard'">
+                                <a-typography-title :level="3">Дашборд</a-typography-title>
+                                <a-typography-paragraph>
+                                    Добро пожаловать на главную страницу вашего приложения!
+                                </a-typography-paragraph>
+                                <a-card title="Статистика">
+                                    <p>Здесь может быть ваша статистика...</p>
+                                    <a-button type="dashed">Обновить</a-button>
+                                </a-card>
+                            </div>
+
+                            <div v-if="activeView === 'profile'">
+                                <a-typography-title :level="3">Профиль пользователя</a-typography-title>
+                                <a-alert message="Информация о пользователе" type="info" show-icon />
+                                <a-descriptions title="Детали" bordered style="margin-top: 20px;">
+                                    <a-descriptions-item label="Имя">Иван Иванов</a-descriptions-item>
+                                    <a-descriptions-item label="Email">ivan.ivanov@example.com</a-descriptions-item>
+                                    <a-descriptions-item label="Роль">Администратор</a-descriptions-item>
+                                </a-descriptions>
+                            </div>
+
+                            <div v-if="activeView === 'settings'">
+                                <a-typography-title :level="3">Настройки</a-typography-title>
+                                <a-typography-paragraph>
+                                    Управляйте настройками приложения здесь.
+                                </a-typography-paragraph>
+                                <a-space direction="vertical" style="width: 100%;">
+                                     <a-switch v-model:checked="darkMode" checked-children="Темная" un-checked-children="Светлая" @change="toggleTheme" />
+                                     <a-input v-model:value="someSetting" placeholder="Введите значение настройки" />
+                                     <a-button @click="saveSettings">Сохранить настройки</a-button>
+                                     <a-result
+                                        v-if="settingsSaved"
+                                        status="success"
+                                        title="Настройки успешно сохранены!"
+                                        sub-title="Ваши изменения были применены."
+                                      >
+                                     </a-result>
+                                </a-space>
+                            </div>
+                        </div>
+                    </a-layout-content>
+
+                    <!-- Подвал -->
+                    <a-layout-footer style="text-align: center">
+                        Ant Design Vue SPA Example ©{{ new Date().getFullYear() }}
+                    </a-layout-footer>
+                </a-layout>
+            </a-layout>
+        </a-config-provider>
+    </div>
+
+    <!-- 3. Подключаем скрипты -->
+    <!-- Сначала Vue.js -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <!-- Затем Dayjs (необходим для некоторых компонентов Antdv, например DatePicker) -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <!-- Локализация для Dayjs (пример для русского) -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/locale/ru.js"></script>
+    <!-- Важно: активируем локаль dayjs -->
+    <script>dayjs.locale('ru');</script>
+    <!-- Затем Ant Design Vue -->
+    <script src="https://cdn.jsdelivr.net/npm/ant-design-vue@4.2.6/dist/antd.js"></script>
+    <!-- Локализация для Ant Design Vue (пример для русского) -->
+    <script src="https://cdn.jsdelivr.net/npm/ant-design-vue@4.2.6/dist/locale/ru_RU.js"></script>
+
+    <!-- 4. Скрипт нашего Vue приложения -->
+    <script>
+        // Извлекаем нужные функции из глобального объекта Vue
+        const { createApp, ref, computed, watch } = Vue;
+        // Получаем Ant Design Vue из глобального объекта
+        const antd = window.antd;
+      debugger;
+        // Получаем компоненты иконок (они становятся доступны глобально после загрузки antd.js)
+        const { PieChartOutlined, UserOutlined, SettingOutlined } = antdIcons;
+
+        // Получаем локаль Ant Design Vue
+        const ruRU = antd.locales.ru_RU;
+
+        // Создаем Vue приложение
+        const app = createApp({
+            // Используем Composition API через setup()
+            setup() {
+                // --- Реактивное состояние ---
+                const collapsed = ref(false); // Состояние бокового меню (свернуто/развернуто)
+                const activeView = ref('dashboard'); // Текущий активный "раздел" или "страница"
+                const selectedKeys = ref(['dashboard']); // Выбранный ключ в меню (массив, т.к. a-menu ожидает массив)
+                const someSetting = ref(''); // Пример поля для настроек
+                const settingsSaved = ref(false); // Флаг сохранения настроек
+                const darkMode = ref(false); // Состояние темной темы
+
+                // --- Вычисляемые свойства ---
+                const pageTitle = computed(() => {
+                    switch(activeView.value) {
+                        case 'dashboard': return 'Дашборд';
+                        case 'profile': return 'Профиль';
+                        case 'settings': return 'Настройки';
+                        default: return 'Мое Приложение';
+                    }
+                });
+
+                const breadcrumbItem = computed(() => {
+                    // Просто дублируем pageTitle для примера
+                    return pageTitle.value;
+                });
+
+                 // --- Методы ---
+                const handleMenuClick = (menuInfo) => {
+                    // console.log('click ', menuInfo);
+                    activeView.value = menuInfo.key; // Обновляем активный вид
+                    // selectedKeys обновится автоматически через v-model
+                    settingsSaved.value = false; // Сбрасываем флаг при переходе
+                };
+
+                const showWelcomeMessage = () => {
+                    antd.message.success(`Добро пожаловать в раздел "${pageTitle.value}"!`);
+                };
+
+                const saveSettings = () => {
+                     console.log('Сохранение настройки:', someSetting.value);
+                     antd.notification.open({
+                        message: 'Настройки сохранены',
+                        description: `Значение "${someSetting.value}" было сохранено (имитация).`,
+                        icon: Vue.h(antdIcons.CheckCircleOutlined, { style: 'color: #108ee9' }),
+                    });
+                    settingsSaved.value = true;
+                     // Здесь могла бы быть логика отправки на сервер
+                };
+
+                const toggleTheme = (checked) => {
+                    // console.log('Dark mode:', checked);
+                    // Ant Design Vue v4 использует CSS переменные для тем
+                    // Для переключения темы через JS нужно менять атрибут на body или html
+                    // Это базовый пример, для полноценной темы нужно больше настроек
+                     if (checked) {
+                        document.documentElement.setAttribute('data-theme', 'dark');
+                        // Или можно использовать функцию antd для динамической смены темы, если она доступна в UMD
+                        // antd.ConfigProvider.config({ theme: antd.theme.darkAlgorithm }); // Проверить доступность в CDN версии
+                     } else {
+                        document.documentElement.removeAttribute('data-theme');
+                        // antd.ConfigProvider.config({ theme: antd.theme.defaultAlgorithm });
+                     }
+                      antd.message.info(`Тема изменена на ${checked ? 'темную' : 'светлую'}`);
+                };
+
+                // --- Наблюдатели (Watchers) ---
+                 watch(activeView, (newView, oldView) => {
+                    console.log(`Переход с '${oldView}' на '${newView}'`);
+                    // Можно выполнять действия при смене "страницы"
+                });
+
+                // --- Возвращаем все, что нужно использовать в шаблоне ---
+                return {
+                    collapsed,
+                    activeView,
+                    selectedKeys,
+                    pageTitle,
+                    breadcrumbItem,
+                    someSetting,
+                    settingsSaved,
+                    darkMode,
+                    ruRU, // Передаем локаль в шаблон для a-config-provider
+
+                    // Методы
+                    handleMenuClick,
+                    showWelcomeMessage,
+                    saveSettings,
+                    toggleTheme,
+
+                    // Иконки (если они нужны прямо в шаблоне без авто-импорта)
+                    // PieChartOutlined, // Они уже глобальны в antdIcons
+                    // UserOutlined,
+                    // SettingOutlined
+                };
+            },
+             // Регистрируем компоненты иконок глобально для удобства
+            components: {
+                PieChartOutlined,
+                UserOutlined,
+                SettingOutlined
+            }
+        });
+
+        // Регистрируем Ant Design Vue как плагин
+        app.use(antd);
+
+        // Монтируем приложение в DOM
+        app.mount('#app');
+
+    </script>
+
+</body>
+</html>

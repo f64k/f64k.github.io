@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:catESAD_cu="urn:customs.ru:CUESADCommonAggregateTypesCust:5.24.0" xmlns:ro_req="urn:customs.ru:Information:SQDocuments:MvdVehiclesRegActionsOwnersReq:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:MvdVehiclesRegActionsOwnersReq:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonAggregateTypesCust:5.24.0" schemaLocation="CUESADCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос сведений о регистрационных действиях транспортных средств и их владельцах</xs:documentation>
+  </xs:annotation>
+  <xs:element name="MvdVehiclesRegActionsOwnersReq" type="ro_req:MvdVehiclesRegActionsOwnersReqType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений о регистрационных действиях транспортных средств и их владельцах</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="MvdVehiclesRegActionsOwnersReqType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений о регистрационных действиях транспортных средств и их владельцах</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="VehicleInfo" type="ro_req:VehicleInfoType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о транспортном средстве</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:element name="LegalOwnerInfo" type="RUScat_ru:RUOrganizationBaseType">
+              <xs:annotation>
+                <xs:documentation>Сведения о владельце (ЮЛ)</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="PrivateOwnerInfo" type="ro_req:PrivateOwnerInfoType">
+              <xs:annotation>
+                <xs:documentation>Сведения о владельце (ФЛ)</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009198E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="PrivateOwnerInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о владельце (ФЛ)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:PersonBaseType">
+        <xs:sequence>
+          <xs:element name="BirthDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата рождения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="INN" type="clt_ru:INNIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>ИНН</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IdentityCard" type="RUScat_ru:RUIdentityCardType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Документ, удостоверяющий личность</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="VehicleInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о транспортном средстве</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="catESAD_cu:AutomobileBaseType">
+        <xs:sequence>
+          <xs:element name="PTS" type="cat_ru:TransportMeansPassportType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Серия и номер текущего ПТС или первичного ПТС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegistrationPlate" type="clt_ru:CodeVariable10Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Государственный регистрационный знак</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

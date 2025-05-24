@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:catWH_ru="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonAggregateTypesCust:5.21.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:whgou="urn:customs.ru:Information:WarehouseDocuments:WHGoodOut:5.21.0" xmlns:cltESAD_cu="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:WarehouseDocuments:WHGoodOut:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonAggregateTypesCust:5.21.0" schemaLocation="WarehouseCommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" schemaLocation="CUESADCommonLeafTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Информирование о ходе таможенного оформления / Уведомление о возможности выдачи товаров со склада (иного места) ВХ</xs:documentation>
+	</xs:annotation>
+	<xs:element name="WHGoodOut" type="whgou:WHGoodOutType">
+		<xs:annotation>
+			<xs:documentation>Информирование о ходе таможенного оформления / Уведомление о возможности выдачи товаров со склада (иного места) ВХ</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="WHGoodOutType">
+		<xs:annotation>
+			<xs:documentation>Информирование о ходе таможенного оформления / Уведомление о возможности выдачи товаров со склада (иного места) ВХ</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="DocumentKind" type="whgou:DocumentKindType">
+						<xs:annotation>
+							<xs:documentation>Вид документа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DocumentName" type="clt_ru:DocumentNameType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Наименование документа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RegisterNumber" type="cat_ru:GTDIDType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Номер по журналу регистрации ТО (заполняется в случае Уведомления о возможности выдачи)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SendDate" type="clt_ru:DateCustType">
+						<xs:annotation>
+							<xs:documentation>Дата направления Информирования / Уведомления</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SendTime" type="clt_ru:TimeCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Время направления Информирования / Уведомления</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ReleaseDate" type="clt_ru:DateCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дата выпуска (заполняется в случае Уведомления о возможности выдачи)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomsProcedure" type="whgou:CustomsProcedureType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Сведения о таможенной процедуре из гр.1 ДТ</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Comments" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Комментарии</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Customs" type="cat_ru:CustomsType">
+						<xs:annotation>
+							<xs:documentation>Сведения о таможенном органе</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomsPerson" type="catWH_ru:WHCustomInspectorType">
+						<xs:annotation>
+							<xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DeliveryGoods" type="whgou:DeliveryGoodsType" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Описание товаров Информирования / Уведомления</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TotalPackageNumber" type="clt_ru:PakageNumberType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Общее количество мест товара</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ProduceDocuments" type="catWH_ru:WhPresentDocType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Сведения о документе, в котором зафиксированы выявленные сведения / Сведения о выпускающем документе</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SVHLicenceNumber" type="whgou:SVHLicenceNumberType">
+						<xs:annotation>
+							<xs:documentation>Номер лицензии СВХ</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1008021E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы.</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="DocumentKindType">
+		<xs:annotation>
+			<xs:documentation>Перечислимый тип вида документа</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:TextCategoriesCust">
+			<xs:enumeration value="DtRegistration">
+				<xs:annotation>
+					<xs:documentation>Сведения из зарегистрированной декларации о товарах</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DtCancelation">
+				<xs:annotation>
+					<xs:documentation>Сведения об отзыве, отмене подачи декларации о товарах, об аннулирвании выпуска</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DtIssueProhibited">
+				<xs:annotation>
+					<xs:documentation>Сведения о приостановке срока выпуска, об отказе в выпуске товаров, об ином решении по декларации</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DtIssueSuspended">
+				<xs:annotation>
+					<xs:documentation>Сведения о продлении срока выпуска, о продлении приостановки сроков выпуска товаров по декларации</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DtGoodsChanged">
+				<xs:annotation>
+					<xs:documentation>Сведения об изменении характеристик товаров на временном хранении, выявленные при проведении таможенного контроля</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GoodOutDecision">
+				<xs:annotation>
+					<xs:documentation>Уведомление о возможности выдачи товаров с СВХ</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GoodsArticulType">
+		<xs:annotation>
+			<xs:documentation>Марка, модель, артикул, сорт товара на временном хранении. Текстовый. От 1 до 50 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:TextCategoriesCust">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="DeliveryGoodsType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для описания сведений о товара</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Consignee" type="catWH_ru:ConsigneeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Грузополучатель</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Transport" type="catWH_ru:WhTransportType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Описание транспортного средства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodInfo" type="whgou:GoodInfoType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Описание товаров</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WhGoodOutDO1GoodLinkType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для указания товара из УВВ на товар отчета ДО-1, который может быть выдан</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DO1Date" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата отчета о принятии по форме ДО-1</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DO1Number" type="clt_ru:GTDIDType">
+				<xs:annotation>
+					<xs:documentation>Номер отчета о принятии по форме ДО-1, присвоенный оформляющей системой владельца СВХ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DO1GoodNumber" type="clt_ru:Count10Type">
+				<xs:annotation>
+					<xs:documentation>Валовый номер товара в отчете о приняти по форме ДО-1</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GoodInfoType">
+		<xs:annotation>
+			<xs:documentation>Описание товаров</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="catWH_ru:WhGoodType">
+				<xs:sequence>
+					<xs:element name="PakagePartQuantity" type="clt_ru:PakageNumberType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Количество грузовых мест, занятое товаром частично</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Container" type="catWH_ru:WHContainerInformationType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Описание контейнера</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TransportDoc" type="cat_ru:DocumentBaseType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Сведения о транспортном документе</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="GoodsGroupDescription" type="whgou:GoodsGroupDescriptionType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Описание группы товаров одного наименования с отличающимися от других групп характеристиками</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DO1GoodLink" type="whgou:WhGoodOutDO1GoodLinkType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Указание на товар из отчета о принятии по форме ДО-1</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomsDecisionCode" type="clt_ru:Code2Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Код решения по товару в соответствии с классификатором решений, принимаемых ТО</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GoodsGroupDescriptionType">
+		<xs:annotation>
+			<xs:documentation>Описание группы товаров одного наименования с отличающимися от других групп характеристиками</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Описание группы товаров с учетом дополнительных характеристик (качественных, технических, коммерческих), необходимых для классификации товара и для исчисления таможенной стоимости. В случае отсутствия описания группы товаров указывается символ «:» (двоеточие). В случае информирования на основании ДТ — Гр. 31 ДТ, первый подраздел</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsGroupInformation" type="whgou:GoodsGroupInformationType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Характеристика товаров в группе</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GoodsGroupInformationType">
+		<xs:annotation>
+			<xs:documentation>Характеристика товаров в группе</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="InfoDescription" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="4">
+				<xs:annotation>
+					<xs:documentation>Наименование артикула</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Manufacturer" type="clt_ru:NameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Сведения о производителе</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TradeMark" type="clt_ru:NameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Тов. знак, место происхождения, объект авторского права, смежных прав, патент и т.д.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsMark" type="whgou:GoodsArticulType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Марка товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsModel" type="whgou:GoodsArticulType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Модель товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsMarking" type="whgou:GoodsArticulType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Уникальный идентификатор вида продукта (товара) или артикул товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsStandard" type="whgou:GoodsArticulType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Стандарт (ГОСТ, ОСТ, СПП, СТО, ТУ)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsSort" type="whgou:GoodsArticulType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Сорт</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Dimensions" type="whgou:GoodsArticulType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Размеры</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SerialNumber" type="whgou:GoodsArticulType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Серийный номер</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsGroupQuantity" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Количество товаров. В случае информирования на основании ДТ — Гр.31 ДТ, первый подраздел</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SVHLicenceNumberType">
+		<xs:annotation>
+			<xs:documentation>Номер лицензии СВХ</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:DocumentBaseType">
+				<xs:sequence>
+					<xs:element name="DocumentModeCode" type="clt_ru:LetterIndicatorType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Тип документа: 1 - Лицензия; 2 - Свидетельство</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="CustomsProcedureType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для описания сведений о таможенной процедуре из гр.1 ДТ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CustomsProcedure" type="clt_ru:CUCustomsProcedureType">
+				<xs:annotation>
+					<xs:documentation>Направление перемещения товаров ("ИМ" "ЭК")</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MainCustomsModeCode" type="cltESAD_cu:CustomsModeCodeType">
+				<xs:annotation>
+					<xs:documentation>Код таможенной процедуры</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

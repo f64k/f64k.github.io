@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:scl="urn:customs.ru:Information:CustomsDocuments:ScanCheckList:5.24.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:ScanCheckList:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Лист проверки документа, представленного на бумажном носителе</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ScanCheckList" type="scl:ScanCheckListType">
+    <xs:annotation>
+      <xs:documentation>Лист проверки документа, представленного на бумажном носителе</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ScanCheckListType">
+    <xs:annotation>
+      <xs:documentation>Лист проверки документа, представленного на бумажном носителе</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="CheckList" type="scl:CheckListType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Лист проверки документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1004145E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CheckListType">
+    <xs:annotation>
+      <xs:documentation>Лист проверки документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CheckCode" type="clt_ru:CodeVariable3Type">
+        <xs:annotation>
+          <xs:documentation>Код типа проверки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CheckDesc" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Описание типа проверки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Obligation" type="clt_ru:DigitalIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Обязательность проверки: 
+1-Да;
+2-Нет;
+3-обязательна для определенных видов документов
+</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocCode" type="clt_ru:CustomsDocumentCodeType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Код вида документа, для которого актуальна проверка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Instruction" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Порядок заполнения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

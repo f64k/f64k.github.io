@@ -1,0 +1,360 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:pttf="urn:customs.ru:Information:ExchangeDocuments:PetitionToFTS:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" targetNamespace="urn:customs.ru:Information:ExchangeDocuments:PetitionToFTS:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Обращение в ФТС от участника ВЭД</xs:documentation>
+  </xs:annotation>
+  <xs:element name="PetitionToFTS" type="pttf:PetitionToFTSType">
+    <xs:annotation>
+      <xs:documentation>Обращение в ФТС от участника ВЭД</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="PetitionToFTSType">
+    <xs:annotation>
+      <xs:documentation>Обращение в ФТС от участника ВЭД</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="SendDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата создания сообщения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SendTime" type="clt_ru:TimeCustType">
+            <xs:annotation>
+              <xs:documentation>Время создания сообщения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PetitionType" type="pttf:ApplicationInfoType">
+            <xs:annotation>
+              <xs:documentation>Вид обращения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PetitionOrganization" type="pttf:PetitionOrganizationType">
+            <xs:annotation>
+              <xs:documentation>Сведения об организации, направившей обращение в ФТС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PetitionCustoms" type="pttf:PetitionCustomsType">
+            <xs:annotation>
+              <xs:documentation>Структурное подразделение ФТС, которому адресовано обращение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OutcomingNumber" type="pttf:OutcomingNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Исходящий номер документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PersCabRegistration" type="pttf:PersCabRegistrationType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Реквизиты регистрации обращения в ЛК</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Annotation" type="clt_ru:FreeText500Type" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Аннотация</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MessageText" type="pttf:TextSectionType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Содержание сообщения (уведомления)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AttachedDocsIndicator" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Признак наличия приложений в документе (0 - нет, 1 - есть)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GeneralDocSheetNumber" type="clt_ru:SheetNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Количество страниц основного документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AttachedDocuments" type="pttf:AttachedDocumentType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Предоставляемые документы, приложенные к сообщению</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Notes" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Комментарии</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1050030E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="PetitionOrganizationType">
+    <xs:annotation>
+      <xs:documentation>Сведения об организации, направившей обращение в ФТС</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Organization" type="RUScat_ru:OrganizationType">
+        <xs:annotation>
+          <xs:documentation>Сведения об организации, сформировавшей обращение в ФТС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrganizationPerson" type="cat_ru:PersonBaseType">
+        <xs:annotation>
+          <xs:documentation>Подпись представителя организации, сформировавшего обращение в ФТС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PetitionCustomsType">
+    <xs:annotation>
+      <xs:documentation>Структурное подразделение ФТС, которому адресовано обращение</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="pttf:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsOfficeName" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ApplicationInfoType">
+    <xs:annotation>
+      <xs:documentation>Вид обращения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ApplicationName" type="clt_ru:Text150Type">
+        <xs:annotation>
+          <xs:documentation>Вид обращения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ApplicationType" type="clt_ru:Quantity2Type">
+        <xs:annotation>
+          <xs:documentation>Вид обращения (1 - обращение, 2 - жалоба, 3 - запрос информации, документов, 4 - вопрос по применению таможенного законодательства, 5 - заявление на предоставление отсрочки/рассрочки уплаты там.платежей, 9 - другое)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AttachedDocumentType">
+    <xs:annotation>
+      <xs:documentation>Информация о документе</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="RequestPositionID" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Идентификатор позиции в запросе (для запрошенных документов)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RequestPosition" type="clt_ru:Count3Type">
+            <xs:annotation>
+              <xs:documentation>Порядковый номер записи в запросе (для запрошенных документов)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ArchDeclID" type="clt_ru:ArchiveDeclarantIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Уникальный идентификатор декларанта в Электронном Архиве Декларанта  (используется при запросе документа из архива)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ArchID" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Уникальный идентификатор архива декларанта (используется при запросе документа из архива)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ArchDocID" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Уникальный идентификатор документа в архиве (используется при запросе документа из архива)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ArchDocumentID" type="clt_ru:ArchiveDocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Уникальный идентификатор документа (используется при запросе документа из архива)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ArchDocStatus" type="clt_ru:ArchStatusCodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Статус документа в архиве</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocCode" type="clt_ru:CustomsDocumentCodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код вида запрашиваемого документа (заполняется в соответствии с классификатором видов документов, используемых при заявлении сведений в графе 44 ДТ)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocumentModeID" type="clt_ru:DocumentModeIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код вида представленного документа в соответствии с альбомом форматов электронных форм документов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocBeginDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата начала действия представленного документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocEndDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата окончания действия представленного документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ArchDocDate" type="clt_ru:DateTimeCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата/время помещения документа в архив (последнего изменения документа)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocumentBody" type="pttf:MessageDocBodyType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Представленный документ, приложенный к сообщению</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PageNumber" type="clt_ru:SheetNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер страницы документа / файла</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PagesAmount" type="clt_ru:SheetNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Общее количество страниц документа / файлов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="MessageDocBodyType">
+    <xs:annotation>
+      <xs:documentation>Тело документа с бинарными данными</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FileName" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Имя файла</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FileData" type="clt_ru:Text3MB">
+        <xs:annotation>
+          <xs:documentation>Данные файла в кодировке BASE64</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TextParagrType">
+    <xs:annotation>
+      <xs:documentation>Параграф текста</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TextPara" type="clt_ru:FreeText500Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Параграф текста</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TextTable" type="pttf:TextTableType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Табличная часть текста</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TextSectionType">
+    <xs:annotation>
+      <xs:documentation>Текстовый раздел документа</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="pttf:TextParagrType">
+        <xs:sequence>
+          <xs:element name="SectionName" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Наименование раздела</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TextTableType">
+    <xs:annotation>
+      <xs:documentation>Табличный раздел документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TextTableText" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Текст</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TextTableDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TextTableSum" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сумма</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TextTableCurrency" type="clt_ru:CurrencyNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Валюта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TextTableComment" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Комментарии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OutcomingNumberType">
+    <xs:annotation>
+      <xs:documentation>Исходящий номер документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Исходящий номер документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата исходящего документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PersCabRegistrationType">
+    <xs:annotation>
+      <xs:documentation>Реквизиты регистрации обращения в ЛК</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RegistrationNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер регистрации документа в ЛК</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации документа в ЛК</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="CustomsCodeType">
+    <xs:annotation>
+      <xs:documentation>Код таможенного органа. 8 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:pattern value="[0-9]{8}" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

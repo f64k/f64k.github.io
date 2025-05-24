@@ -1,0 +1,422 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Схемы ГИС ГМП -  аналог документа - Экспорт платежей ответ на запрос (SQ.05031).xsd -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:pe_res="urn:customs.ru:Information:SQDocuments:GisGmpPaymentExportResponse:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:GisGmpPaymentExportResponse:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Экспорт платежей (ответ на запрос)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="GisGmpPaymentExportResponse" type="pe_res:GisGmpPaymentExportResponseType" />
+  <xs:complexType name="GisGmpPaymentExportResponseType">
+    <xs:annotation>
+      <xs:documentation>Экспорт платежей (ответ на запрос)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:choice>
+            <xs:element name="Payments" type="pe_res:PaymentsType">
+              <xs:annotation>
+                <xs:documentation>Перечень платежей</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="Quittances" type="pe_res:QuittancesType">
+              <xs:annotation>
+                <xs:documentation>Перечень квитанций</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="Charges" type="pe_res:ChargesType">
+              <xs:annotation>
+                <xs:documentation>Перечень начислений</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009122E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="BalanceType">
+    <xs:annotation>
+      <xs:documentation>Разность между суммой, указанной в начислении и суммой платежей. Целое число, показывающее сумму в копейках. Отрицательное значение информирует о переплате</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:IntegerCategoriesCust">
+      <xs:totalDigits value="20" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="BankNameType">
+    <xs:annotation>
+      <xs:documentation>Наименование банка. До 200 символов. Текстовый</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="200" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CodeVariable25Type">
+    <xs:annotation>
+      <xs:documentation>Код (до 25 символов)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="0" />
+      <xs:maxLength value="25" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CodeVariable63Type">
+    <xs:annotation>
+      <xs:documentation>Символьная строка от 1 до 63 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="63" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="OtherType">
+    <xs:annotation>
+      <xs:documentation>Иные способы проведения платежа (Признак, означающий иные способы проведения платежа (CASH - прием в кассу наличных денежных средств))</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:enumeration value="CASH">
+        <xs:annotation>
+          <xs:documentation>Прием в кассу наличных денежных средств</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="QuittanceWithPaymentStatusType">
+    <xs:annotation>
+      <xs:documentation>Статус квитирования с платежами 1 - сквитировано 2 - предв. сквитировано 3 - не сквитировано 4 - сквитировано с отсутствующим в системе платежом 5 - принудительно сквитировано по инициативе АН/ГАН с платежом</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:length value="1" />
+      <xs:enumeration value="1" />
+      <xs:enumeration value="2" />
+      <xs:enumeration value="3" />
+      <xs:enumeration value="4" />
+      <xs:enumeration value="5" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="RefundIdType">
+    <xs:annotation>
+      <xs:documentation>Уникальный идентификатор возврата (УИВ)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:pattern value="\d{8}((0?[1-9]|[12][0-9]|3[01])(0?[1-9]|1[012])\d{4})\d{9}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SystemIdentifierType">
+    <xs:annotation>
+      <xs:documentation>УРН участника (не банка) или четырехсимвольный код ТОФК</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="4" />
+      <xs:maxLength value="32" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UniqIdentCode25Type">
+    <xs:annotation>
+      <xs:documentation>Уникальный идентификационный номер</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="25" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="BankType">
+    <xs:annotation>
+      <xs:documentation>Данные банка плательщика</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="BankName" type="pe_res:BankNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование структурного подразделения кредитной организации или  подразделения Банка России, в котором открыт счет</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:choice>
+        <xs:element name="BICID" type="clt_ru:BICIDType">
+          <xs:annotation>
+            <xs:documentation>БИК банка</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="SWIFTID" type="clt_ru:SWIFTIDType">
+          <xs:annotation>
+            <xs:documentation>SWIFT код банка</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+      <xs:element name="CorrespondentBankAccount" type="clt_ru:AccountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер корреспондентского счета кредитной организации, открытый в подразделении Банка России</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ChargeInfoType">
+    <xs:annotation>
+      <xs:documentation>Данные начисления</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ChargeData" type="CategoryCust:BinaryDataCategoriesCust">
+        <xs:annotation>
+          <xs:documentation>Данные начисления, полученные при импорте от АН/ГАН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ChargeSignature" type="CategoryCust:BinaryDataCategoriesCust" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Данные файла ЭП начисления, загруженного от АН/ГАН в ГИС ГМП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AmountToPay" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Остаток суммы подлежащей уплате, указанной в начислении (в копейках)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="QuittanceWithPaymentStatus" type="pe_res:QuittanceWithPaymentStatusType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Статус квитирования с платежами 1 - сквитировано 2 - предв. сквитировано 3 - не сквитировано 4 - сквитировано с отсутствующим в системе платежом 5 - принудительно сквитировано по инициативе АН/ГАН с платежом</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IsRevoked" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак аннулированного начисления: true - начисление аннулировано; false - начисление действующее</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RevokedDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата установки признака аннулированного начисления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ChargesType">
+    <xs:annotation>
+      <xs:documentation>Перечень начислений</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="HasMore" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>false - достигнут конец выборки, true - после последней выгруженной сущности в выборке имеются другие</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NeedReRequest" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>true - Требуется перезапрос. В случае если для получения ответа задействуются внешняя система и ответ от неё не был получен (внешняя система недоступна либо поучена ошибка) </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ChargeInfo" type="pe_res:ChargeInfoType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Данные начисления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaymentIdentificationDataType">
+    <xs:annotation>
+      <xs:documentation>Данные для идентификации платежа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="Bank" type="pe_res:BankType">
+          <xs:annotation>
+            <xs:documentation>Данные банка плательщика</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Other" type="pe_res:OtherType">
+          <xs:annotation>
+            <xs:documentation>Признак, означающий иные способы проведения платежа (CASH - прием в кассу наличных денежных средств)</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="UFK" type="clt_ru:DocumentIDType">
+          <xs:annotation>
+            <xs:documentation>УРН участника (не банка), проведшего платеж, присвоенный при регистрации в ГИС ГМП. Если платеж проведен ТОФК, то элемент должен быть заполнен значением четырехсимвольного кода ТОФК</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+      <xs:element name="SystemIdentifier" type="pe_res:SystemIdentifierType">
+        <xs:annotation>
+          <xs:documentation>УРН участника (не банка), проведшего платеж, присвоенный при регистрации в ГИС ГМП. Если платеж проведен ТОФК, то элемент должен быть заполнен значением четырехсимвольного кода ТОФК</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaymentInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о платеже</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PaymentData" type="CategoryCust:BinaryDataCategoriesCust">
+        <xs:annotation>
+          <xs:documentation>Данные платежа, полученные при импорте от АП/ГАП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentSignature" type="CategoryCust:BinaryDataCategoriesCust" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Данные файла ЭП платежа, переданного в ГИС ГМПАП/ГАП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentStatus" type="pe_res:PaymentStatusType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Признак "Сквитировано с начислением"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaymentStatusType">
+    <xs:annotation>
+      <xs:documentation>Признак "Сквитировано с начислением"</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Name" type="pe_res:CodeVariable63Type">
+        <xs:annotation>
+          <xs:documentation>Обозначение. Для обозначения факта квитирования платежа с начислением в Name указывается значение «Сквитировано с начислением».</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Value" type="pe_res:CodeVariable25Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код, уточнение. Для обозначения факта квитирования платежа с начислением в Value указывается УИН, c которым сквитирован платеж.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaymentsType">
+    <xs:annotation>
+      <xs:documentation>Перечень платежей</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="HasMore" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак недостижения конца выборки (false — достигнут конец выборки, true — после последней выгруженной сущности в выборке имеются другие)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NeedReRequest" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак необходимости перезапроса (true - Требуется перезапрос. В случае если для получения ответа задействуются внешняя система и ответ от неё не был получен (внешняя  система недоступна либо поучена ошибка)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentInfo" type="pe_res:PaymentInfoType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Информация о платежах</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RefundType">
+    <xs:annotation>
+      <xs:documentation>Сведения о возврате денежных средств. Присутствует в квитанции в случае осуществления возврата денежных средств по платежу, с которым сквитировано начисление</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RefundId" type="pe_res:RefundIdType">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор возврата (УИВ)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Amount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма возврата</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="QuittancesType">
+    <xs:annotation>
+      <xs:documentation>Перечень квитанций</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="HasMore" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак недостижения конца выборки (false — достигнут конец выборки, true — после последней выгруженной сущности в выборке имеются другие)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Quittance" type="pe_res:QuittanceType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Данные созданной квитанции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="QuittanceType">
+    <xs:annotation>
+      <xs:documentation>Данные созданной квитанции</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SupplierBillID" type="pe_res:UniqIdentCode25Type">
+        <xs:annotation>
+          <xs:documentation>УИН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CreationDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата создания квитанции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BillStatus" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Статус, присвоенный начислению при создании квитанции: 1-cквитировано; 2-предварительно сквитировано; 3-не сквитировано; 4-сквитировано с отсутствующим платежом; 5- принудительно сквитировано по инициативе АН/ГАН с платежом</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PayeeINN" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН получателя средств из платежа. Присутствует в квитанции в случае несовпадения значения этого реквизита в платеже и начислении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PayeeKPP" type="clt_ru:KPPCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>КПП получателя средств из платежа. Присутствует в квитанции в случае несовпадения значения этого реквизита в платеже и начислении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KBK" type="clt_ru:CodeVariable20Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>КБК из платежа. Заполняется в случае несовпадения этого реквизита в данных платежа с данными начисления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OKTMO" type="clt_ru:CodeVariable11Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код ОКТМО из платежа. Присутствует в квитанции в случае несовпадения значения этого реквизита в платеже и начислении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Balance" type="pe_res:BalanceType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Разность между суммой, указанной в начислении и суммой платежей. Целое число, показывающее сумму в копейках. Отрицательное значение информирует о переплате</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PayerIdentifier" type="pe_res:UniqIdentCode25Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор плательщика из платежа. Присутствует в квитанции в случае несовпадения значения этого реквизита в платеже и начислении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AccountNumber" type="clt_ru:AccountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер счета получателя средств из платежа. Присутствует в квитанции в случае несовпадения значения этого реквизита в платеже и начислении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BIK" type="clt_ru:BICIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>БИК банка получателя средств из платежа. Присутствует в квитанции в случае несовпадения значения этого реквизита в платеже и начислении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentIdentificationData" type="pe_res:PaymentIdentificationDataType">
+        <xs:annotation>
+          <xs:documentation>Данные, необходимые для идентификации платежа, сквитированного с начислением</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Refund" type="pe_res:RefundType" minOccurs="0" maxOccurs="20">
+        <xs:annotation>
+          <xs:documentation>Сведения о возврате денежных средств. Присутствует в квитанции в случае осуществления возврата денежных средств по платежу, с которым сквитировано  начисление</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IsRevoked" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак аннулированной квитанции (true - квитанция аннулирована; false - квитанция действующая)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

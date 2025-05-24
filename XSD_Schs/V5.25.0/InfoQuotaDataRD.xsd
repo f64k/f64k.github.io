@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:catESAD_cu="urn:customs.ru:CUESADCommonAggregateTypesCust:5.24.0" xmlns:cltESAD_cu="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" xmlns:iqdrd="urn:customs.ru:Information:CustomsDocuments:InfoQuotaDataRD:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:InfoQuotaDataRD:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" schemaLocation="CUESADCommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonAggregateTypesCust:5.24.0" schemaLocation="CUESADCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Информация о квоте разрешительного документа / Справка об исполнении лицензии</xs:documentation>
+  </xs:annotation>
+  <xs:element name="InfoQuotaDataRD" type="iqdrd:InfoQuotaDataRDType">
+    <xs:annotation>
+      <xs:documentation>Информация о квоте разрешительного документа / Справка об исполнении лицензии</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:simpleType name="SignedQuantityType">
+    <xs:annotation>
+      <xs:documentation>Числовое значение. Допускает отрицательные значения. Всего до 24 цифр. 8 знаков после запятой</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:NumericCategoriesCust">
+      <xs:fractionDigits value="8" />
+      <xs:totalDigits value="24" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="InfoQuotaDataRDType">
+    <xs:annotation>
+      <xs:documentation>Информация о квоте разрешительного документа / Справка об исполнении лицензии</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocKind" type="clt_ru:LetterIndicatorType">
+            <xs:annotation>
+              <xs:documentation>Тип документа: 1 - Информация о квоте разрешительного документа; 2 - Справка об исполнении лицензии</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BDRDID" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Уникальный номер по БД РД</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Status" type="clt_ru:Count2Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о статусе РД (1 - ACTIVE - Действует; 2 - SUSPENDED - Действие приостановлено; 3 - PARTIALSUSPENSION - Действие временно приостановлено; 4 - REVIVED - Действие возобновлено; 5 - DISCONTINUED - Действие прекращено; 6 - EXTENDED - Продлено; 7 - CANCELED - Аннулировано; 8 - ARCHIVED - Архивно; 9 - NOTPUBLISHED - Не опубликован; 10 - EXCLUDEDREG - Исключен из реестра)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="UseDateTime" type="clt_ru:DateTimeCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата и время последнего списания квот</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RDDocument" type="iqdrd:DocumentLicenseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о разрешительном документе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OwnerOrganization" type="cat_ru:OrganizationType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения об организации - владельце лицензии</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsRestriction" type="iqdrd:CustomsRestrictionType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Подразделение таможенного органа, в функции которого входит обеспечение соблюдения запретов и ограничений</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsPerson" type="iqdrd:CustomsPersonType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Goods" type="iqdrd:GoodsDescriptionType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о товарах РД</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TotalSupplementaryQuantity" type="RUScat_ru:SupplementaryQuantity24point8Type" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Исходное количество товара по всему РД</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TotalBalanceQuantity" type="iqdrd:Quantity24point8Type" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Остаток квоты по всему РД</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RemoveControlReason" type="clt_ru:DigitalIndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Основание для снятия лицензии с контроля: 0 - истечение срока действия лицензии; 1 - исчерпание количества товара, предусмотренного лицензией; 2 - заявление владельца лицензии; 3 - уведомление о прекращении (приостановлении) действия лицензии</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Notes" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дополнительная информация</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006250E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CustomsPersonType">
+    <xs:annotation>
+      <xs:documentation>Должностное лицо</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:CustomsPersonType">
+        <xs:sequence>
+          <xs:element name="Contact" type="cat_ru:ContactType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Контактная информация должностного лица таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SignDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата подписания документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CustomsRestrictionType">
+    <xs:annotation>
+      <xs:documentation>Таможенный орган</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:CustomsType">
+        <xs:sequence>
+          <xs:element name="CustomsAddress" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Адрес таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Contact" type="cat_ru:ContactType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Контактная информация</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DocumentLicenseType">
+    <xs:annotation>
+      <xs:documentation>Сведения о лицензии</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="PrDocumentTerm" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Срок действия документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocumentCode" type="clt_ru:CustomsDocumentCodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код вида документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IssueOrganization" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Наименование организации, выдавшей лицензию</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Quantity24point8Type">
+    <xs:annotation>
+      <xs:documentation>Количество в дополнительной единице измерения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsQuantity" type="iqdrd:SignedQuantityType">
+        <xs:annotation>
+          <xs:documentation>Количество товара в единице измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeasureUnitQualifierName" type="cltESAD_cu:MeasureUnitQualifierNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Условное обозначение единицы измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeasureUnitQualifierCode" type="cltESAD_cu:MeasureUnitQualifierCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код по классификатору единиц измерения и счета Евразийского экономического союза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GoodsDescriptionType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товарах</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsNumber" type="clt_ru:Count6Type">
+        <xs:annotation>
+          <xs:documentation>Номер товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SupplementaryQuantity" type="catESAD_cu:SupplementaryQuantityType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Исходное количество и единицы измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BalanceQuantity" type="iqdrd:Quantity24point8Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Остаток квоты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

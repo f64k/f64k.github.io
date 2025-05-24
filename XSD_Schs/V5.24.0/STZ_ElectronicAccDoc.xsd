@@ -1,0 +1,526 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Приказ ФТС России от 28 июня 2023 г. № 558 «Об утверждении порядка ведения учета товаров, помещенных под таможенную процедуру свободной таможенной зоны, и (или) товаров, изготовленных (полученных) из товаров, помещенных под таможенную процедуру свободной таможенной зоны, с использованием автоматизированных информационных систем учета, состава сведений, доступ к которым должен быть обеспечен в соответствии с частью 12 статьи 21 Федерального закона от 24 июня 2023 г. № 266-ФЗ «О свободной экономической зоне на территориях Донецкой Народной Республики, Луганской Народной Республики, Запорожской области и Херсонской области», а также порядка доступа к таким сведениям» 
+Приказы ФТС России от 20.11.2023 №№ 1077, 1078, 1079 об утверждении порядков ведения учета товаров, помещенных под таможенную процедуру свободной таможенной зоны, и (или) товаров, изготовленных (полученных) из товаров, помещенных под таможенную процедуру свободной таможенной зоны, и совершаемых с такими товарами операций с использованием автоматизированной информационной системы бухгалтерского учета-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:catProc_ru="urn:customs.ru:Information:ProcessingDocuments:ProcessingCommonAggregateTypes:5.24.0" xmlns:stz_ead="urn:customs.ru:Information:ExchangeDocuments:STZ_ElectronicAccDoc:5.24.0" targetNamespace="urn:customs.ru:Information:ExchangeDocuments:STZ_ElectronicAccDoc:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:Information:ProcessingDocuments:ProcessingCommonAggregateTypes:5.24.0" schemaLocation="ProcessingCommonAggregateTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Электронный учетный документ (ЭУД)</xs:documentation>
+	</xs:annotation>
+	<xs:element name="STZ_ElectronicAccDoc" type="stz_ead:STZ_ElectronicAccDocType">
+		<xs:annotation>
+			<xs:documentation>Электронный учетный документ (ЭУД)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="STZ_ElectronicAccDocType">
+		<xs:annotation>
+			<xs:documentation>Электронный учетный документ (ЭУД)</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="DocType" type="clt_ru:Numeric1Type">
+						<xs:annotation>
+							<xs:documentation>Тип документа: 1 - ЭУД, 2- дополнение к ЭУД</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Customs" type="cat_ru:CustomsType">
+						<xs:annotation>
+							<xs:documentation>Сведения о таможенном органе</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="EAD_IdentifNumber" type="stz_ead:EAD_NumberType">
+						<xs:annotation>
+							<xs:documentation>Идентификационный номер ЭУД</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="AddEAD_Number" type="clt_ru:Count5Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Номер дополнения к ЭУД по порядку (обязательно при DocType=2) </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="INN" type="clt_ru:INNIDType">
+						<xs:annotation>
+							<xs:documentation>ИНН лица, подающего ЭУД</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="EAD_FormationDate" type="clt_ru:DateCustType">
+						<xs:annotation>
+							<xs:documentation>Дата формирования ЭУД</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="AddEAD_Date" type="clt_ru:DateCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дата формирования дополнения к ЭУД</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="EAD_Sign" type="clt_ru:LetterIndicatorType">
+						<xs:annotation>
+							<xs:documentation>Признак ЭУД: 1- СТЗ; 2 - ПП </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="GoodsSTZ" type="stz_ead:GoodsSTZType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Сведения о товарах, помещенных под таможенную процедуру свободной таможенной зоны</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ManufacturedGoods" type="stz_ead:ManufacturedGoodsType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Сведения о товарах, изготовленных (полученных) из товаров, помещенных под таможенную процедуру СТЗ</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DocList" type="stz_ead:DocListType" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Опись документов</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SignatoryInformation" type="stz_ead:SignatoryInformationType">
+						<xs:annotation>
+							<xs:documentation>Сведения о подписанте ЭУД</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="EAD_ReferralDate" type="clt_ru:DateCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дата направления ЭУД</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="AddEAD_Quantity" type="clt_ru:Count3Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Количество дополнений к ЭУД</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1060044E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="AnotherCustomsProcedureType">
+		<xs:annotation>
+			<xs:documentation>Помещение товаров под иную таможенную процедуру в целях завершения действия таможенной процедуры СТЗ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DeclarationKindCode" type="clt_ru:CUCustomsProcedureType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код тип перемещения (ИМ/ЭК) </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CustomsModeCode" type="clt_ru:Code2Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код таможенной процедуры</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DT_Number" type="cat_ru:GTDIDType">
+				<xs:annotation>
+					<xs:documentation>Номер декларации на товары</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsNumeric" type="clt_ru:Count3Type">
+				<xs:annotation>
+					<xs:documentation>Номер товара в декларации на товары</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InfQuantity" type="stz_ead:ExportGoodsFromFEZType">
+				<xs:annotation>
+					<xs:documentation>Сведения о количестве</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DestructionUnusableGoodsType">
+		<xs:annotation>
+			<xs:documentation>Уничтожение или передача на уничтожение товаров, пришедших в негодность</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PermissionNumber" type="cat_ru:DocumentBaseType">
+				<xs:annotation>
+					<xs:documentation>Номер разрешения таможенного органа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Quantity" type="cat_ru:SupplementaryQuantityType" maxOccurs="3">
+				<xs:annotation>
+					<xs:documentation>Количество</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocListType">
+		<xs:annotation>
+			<xs:documentation>Сведения о документе</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="catProc_ru:DocExtendedType">
+				<xs:sequence>
+					<xs:element name="Position" type="clt_ru:Count3Type">
+						<xs:annotation>
+							<xs:documentation>Порядковый номер позиции</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SheetsNumber" type="clt_ru:Count3Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Количество листов </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="EAD_ListType">
+		<xs:annotation>
+			<xs:documentation>Перечень ЭУД</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="EAD_IdentifNumber" type="stz_ead:EAD_NumberType">
+				<xs:annotation>
+					<xs:documentation>Номер ЭУД</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EAD_GoodsNumber" type="clt_ru:Count5Type">
+				<xs:annotation>
+					<xs:documentation>Номер товара в ЭУД</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Quantity" type="cat_ru:SupplementaryQuantityType" maxOccurs="3">
+				<xs:annotation>
+					<xs:documentation>Количество товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EAD_NumberType">
+		<xs:annotation>
+			<xs:documentation>Номер ЭУД</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="INN" type="clt_ru:INNIDType">
+				<xs:annotation>
+					<xs:documentation>ИНН плательшика</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EAD_Date" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата составления</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Number" type="clt_ru:Count10Type">
+				<xs:annotation>
+					<xs:documentation>Порядковый номер документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsKind" type="clt_ru:CodeVariable3Type">
+				<xs:annotation>
+					<xs:documentation>Признак товара, на который формируется ЭУД: СТЗ - товары помещенные, под процедуру СТЗ; ПП - товары, изготовленные (полученные) с использованием товаров, помещенных под процедуру СТЗ </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NumPP" type="clt_ru:Quantity2Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Порядковый номер версии ЭУД</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ExportGoodsFromFEZType">
+		<xs:annotation>
+			<xs:documentation>Вывоз товаров с территории СЭЗ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PermissionNumber" type="cat_ru:DocumentBaseType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Разрешительный документ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Quantity" type="cat_ru:SupplementaryQuantityType" maxOccurs="3">
+				<xs:annotation>
+					<xs:documentation>Количество</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GoodsInfoType">
+		<xs:annotation>
+			<xs:documentation>Сведения о товарах (базовый набор)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" maxOccurs="4">
+				<xs:annotation>
+					<xs:documentation>Наименование товара (торговое, коммерческое или иное традиционное наименование)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TradeMark" type="clt_ru:NameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Тов. знак, место происхождения, объект авторского права, смежных прав, патент и т.д.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsMark" type="clt_ru:Text50Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Марка товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsModel" type="clt_ru:Text50Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Модель товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsMarking" type="clt_ru:Text50Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Артикул товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsSort" type="clt_ru:Text50Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Сорт товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsStandard" type="clt_ru:Text50Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Стандарт (ГОСТ, ОСТ, СПП, СТО, ТУ)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SerialNumber" type="clt_ru:Text50Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Заводские номера</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GoodsPlacementAndUseType">
+		<xs:annotation>
+			<xs:documentation>Сведения о размещении и использовании товара на территории ОЭЗ/ ТОР/СП Владивосток</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TransferToStorage" type="stz_ead:TransferToStorageType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Передача на складирование (хранение)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransferToProduction" type="stz_ead:TransferToProductionType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Передача в производство</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UseForConstruction" type="stz_ead:UseForConstructionType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Использование для строительства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ConsumptionGoodsProdActivities" type="stz_ead:ExportGoodsFromFEZType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Потребление товаров на территории СЭЗ в рамках производственной деятельности в соответствии с пп.4 п.1 ст.205 ТК ЕАЭС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OtherConsumptionGoods" type="stz_ead:ExportGoodsFromFEZType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Потребление товаров в случаях, определенных Решением Совета Евразийской экономической комиссии от 20 декабря 2017 г. N 88</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DestructionGoods" type="stz_ead:ExportGoodsFromFEZType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Уничтожение товаров вследствие аварии, действия непреодолимой силы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DestructionUnusableGoods" type="stz_ead:DestructionUnusableGoodsType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Уничтожение или передача на уничтожение товаров, пришедших в негодность</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransferRightsOwnership" type="stz_ead:ExportGoodsFromFEZType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Передача прав владения, пользования и (или) распоряжения товарами</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AnotherCustomsProcedure" type="stz_ead:AnotherCustomsProcedureType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Помещение товаров под иную таможенную процедуру в целях завершения действия таможенной процедуры СТЗ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ExportGoodsFromFEZ" type="stz_ead:ExportGoodsFromFEZType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Вывоз товаров с территории СЭЗ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GoodsSTZType">
+		<xs:annotation>
+			<xs:documentation>Сведения о товарах, помещенных под таможенную процедуру свободной таможенной зоны</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="EAD_GoodsNumber" type="clt_ru:Count5Type">
+				<xs:annotation>
+					<xs:documentation>Номер товара в ЭУД</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsInfo" type="stz_ead:GoodsInfoType">
+				<xs:annotation>
+					<xs:documentation>Сведения о товарах</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsTNVEDCode" type="clt_ru:CUGoodsNomenclatuerCodeType">
+				<xs:annotation>
+					<xs:documentation>Классификационный код товара в соответствии с ЕТН ВЭД ЕАЭС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AccountingDocDetails" type="cat_ru:DocumentBaseType">
+				<xs:annotation>
+					<xs:documentation>Реквизиты документа бухгалтерского учета</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DT_Number" type="cat_ru:GTDIDType">
+				<xs:annotation>
+					<xs:documentation>Номер декларации на товары</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsNumeric" type="clt_ru:Count3Type">
+				<xs:annotation>
+					<xs:documentation>Номер товара в декларации на товары</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AccountingData" type="cat_ru:SupplementaryQuantityType" maxOccurs="3">
+				<xs:annotation>
+					<xs:documentation>Данные бухгалтерского учета</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DT_Data" type="cat_ru:SupplementaryQuantityType" maxOccurs="3">
+				<xs:annotation>
+					<xs:documentation>Данные из декларации на товары</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsPlacementAndUse" type="stz_ead:GoodsPlacementAndUseType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Сведения о размещении и использовании товара на территории ОЭЗ/ ТОР/ свободного порта Вдадивосток</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ManufacturedGoodsType">
+		<xs:annotation>
+			<xs:documentation>Сведения о товарах, изготовленных (полученных) из товаров, помещенных под таможенную процедуру СТЗ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="EAD_GoodsNumber" type="clt_ru:Count5Type">
+				<xs:annotation>
+					<xs:documentation>Номер товара в ЭУД</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsInfo" type="stz_ead:GoodsInfoType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Сведения о товарах</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsTNVEDCode" type="clt_ru:CUGoodsNomenclatuerCodeType">
+				<xs:annotation>
+					<xs:documentation>Классификационный код товара в соответствии с ЕТН ВЭД ЕАЭС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AccountingDocDetails" type="cat_ru:DocumentBaseType">
+				<xs:annotation>
+					<xs:documentation>Реквизиты документа бухгалтерского учета</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsStatus" type="clt_ru:LetterIndicatorType">
+				<xs:annotation>
+					<xs:documentation>Статус товара: 1 - иностранный товар; 2 - товар ЕАЭС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Conclusion" type="cat_ru:DocumentBaseType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер заключения о статусе товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsQuantity" type="cat_ru:SupplementaryQuantityType" maxOccurs="3">
+				<xs:annotation>
+					<xs:documentation>Количество товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EAD_List" type="stz_ead:EAD_ListType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Перечень уникальных идентификационных номеров ЭУД по товарам, помещенным под таможенную процедуру СТЗ, и использованным при изготовлении (получении) данного товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ManufacturedGoodsPlacementAndUse" type="stz_ead:GoodsPlacementAndUseType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Сведения о размещении и использовании изготовленного (полученного) товара на территории ОЭЗ/ ТОР/ свободного порта Вдадивосток</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SignatoryInformationType">
+		<xs:annotation>
+			<xs:documentation>Сведения о лице, подписавшем ЭУД</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:PersonBaseType">
+				<xs:sequence>
+					<xs:element name="AuthoritesDocument" type="cat_ru:DocumentBaseType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Сведения о документе, удостоверяющем полномочия</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TransferToProductionType">
+		<xs:annotation>
+			<xs:documentation>Передача в производство</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GoodsInfo" type="stz_ead:GoodsInfoType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Сведения о товарах, которые будут изготовлены</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UsingTarget" type="clt_ru:LetterIndicatorType">
+				<xs:annotation>
+					<xs:documentation>Цель использования товара: 1 - переработка; 2 - обеспечение производственных процессов и технологий при производстве продукции </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InfQuantity" type="stz_ead:ExportGoodsFromFEZType">
+				<xs:annotation>
+					<xs:documentation>Сведения о количестве товара, переданного в производство</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransferToStorageType">
+		<xs:annotation>
+			<xs:documentation>Передача на складирование</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Storage" type="clt_ru:FreeText250Type">
+				<xs:annotation>
+					<xs:documentation>Место хранения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InfQuantity" type="stz_ead:ExportGoodsFromFEZType">
+				<xs:annotation>
+					<xs:documentation>Сведения о количестве</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UseForConstructionType">
+		<xs:annotation>
+			<xs:documentation>Использование для строительства</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ConstructionName" type="clt_ru:FreeText250Type">
+				<xs:annotation>
+					<xs:documentation>Наименование объекта строительства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InfQuantity" type="stz_ead:ExportGoodsFromFEZType">
+				<xs:annotation>
+					<xs:documentation>Сведения о количестве</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

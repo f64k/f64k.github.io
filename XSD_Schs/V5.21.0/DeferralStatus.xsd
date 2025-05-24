@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+Проект Приказа ФТС "Об утверждении формы заявления о предоставлении отсрочки или рассрочки уплаты ввозных таможенных пошлин, налогов, перечня сведений, подлежащих указанию в заявлении, и порядков его заполнения и рассмотрения, а также об утверждении форм решений о предоставлении, отказе в предоставлении отсрочки или рассрочки уплаты ввозных таможенных пошлин, налогов, формы графика поэтапной уплаты сумм ввозных таможенных пошлин, налогов"
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:defs="urn:customs.ru:Information:CommercialFinanceDocuments:DeferralStatus:5.21.0" targetNamespace="urn:customs.ru:Information:CommercialFinanceDocuments:DeferralStatus:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Cтатус Решения о предоставлении отсрочки или рассрочки уплаты ввозных таможенных пошлин, налогов / Результат резервирования сумм по Решению</xs:documentation>
+  </xs:annotation>
+  <xs:element name="DeferralStatus" type="defs:DeferralStatusType">
+    <xs:annotation>
+      <xs:documentation>Cтатус Решения о предоставлении отсрочки или рассрочки уплаты ввозных таможенных пошлин, налогов / Результат резервирования сумм по Решению</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DeferralStatusType">
+    <xs:annotation>
+      <xs:documentation>Cтатус Решения о предоставлении отсрочки или рассрочки уплаты ввозных таможенных пошлин, налогов / Результат резервирования сумм по Решению</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocType" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Тип документа: 0 - статус Решения, 1 - Результат резервирования сумм по Решению</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ResType" type="clt_ru:Numeric1Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Результат резервирования: 0 - успешное резервирование, 1 - отказ в резервировании</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ResCode" type="clt_ru:CodeVariable3Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код ошибки резервирования</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ResCodeDesc" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Описание ошибки резервирования</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BlockStatus" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Признак блокировки Решения: 0 - действует, 1 - заблокировано</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BlockDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата блокировки Решения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DecisionRegNumber" type="defs:DecisionRegNumberType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер Решения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DTNumber" type="cat_ru:GTDIDType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Регистрационные номера ДТ, по которым ранее было проведено резервирование по Решению</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BeforeAmount" type="defs:PaymentType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Исходный остаток до резервирования</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AfterAmount" type="defs:PaymentType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Остаток в результате планируемого / совершенного резервирования</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1002039E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DecisionRegNumberType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер Решения о предоставлении / об отказе в предоставлении отсрочки или рассрочки уплаты ввозных таможенных пошлин, налогов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, зарегистрировавшего Решение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации Решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AbbTermsPay" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Аббревиатура в части Решений, касающихся условия обязательства уплаты таможенных платежей: "ОП" – отсрочка; "РП" – рассрочка.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AbbBasis" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Аббревиатура основания: "-" – в случаях, касающихся отсрочки, предоставление которой предусмотрено пунктом 1 статьи 59 ТК ЕАЭС; "О" – в иных случаях.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SerialNumberPrefix" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Префикс порядкового номера Решения по журналу регистрации, указывающий на вид принятого решения об отсрочке или рассрочке уплаты ввозных таможенных пошлин, налогов: "Р" - решение о предоставлении; "О" - решение об отказе в предоставлении; "А" - решение об аннулировании решения в предоставлении.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SerialNumber" type="clt_ru:Code4Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер Решения по журналу регистрации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaymentType">
+    <xs:annotation>
+      <xs:documentation>Отстаток зарезервированных сумм таможенных платежей по отсрочке (рассрочке)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ImportCustomsDuty" type="CategoryCust:NumericCategoriesCust" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Остаток суммы по ввозной таможенной пошлине (+.-)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Excise" type="CategoryCust:NumericCategoriesCust" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Остаток суммы акцизов (+.-)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ValueAddedTax" type="CategoryCust:NumericCategoriesCust" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Остаток суммы НДС (+.-)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

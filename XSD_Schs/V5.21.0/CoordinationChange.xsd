@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:coc="urn:customs.ru:Information:CustomsDocuments:CoordinationChange:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:CoordinationChange:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Лист согласования внесения изменений в ДТ</xs:documentation>
+  </xs:annotation>
+  <xs:element name="CoordinationChange" type="coc:CoordinationChangeType">
+    <xs:annotation>
+      <xs:documentation>Лист согласования внесения изменений в ДТ</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="CoordinationChangeType">
+    <xs:annotation>
+      <xs:documentation>Лист согласования внесения изменений в ДТ</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocDate" type="clt_ru:DateTimeCustType">
+            <xs:annotation>
+              <xs:documentation>Дата и время документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DecisionNum" type="clt_ru:DocumentNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер проекта Решения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsPerson" type="RUScat_ru:CustomsPersonDetails" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Должностное лицо ТО, сформировавшее проект решения </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DTNum" type="cat_ru:GTDIDType">
+            <xs:annotation>
+              <xs:documentation>Номер ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Reason" type="clt_ru:FreeText500Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Основание для внесения изменений</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CoordinationList" type="coc:CoordinationListType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Перечень согласований</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CheifPerson" type="RUScat_ru:CustomsPersonDetails" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Начальник таможни, принявший решение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TotalResolution" type="clt_ru:IndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Общее решение: 0/false - не согласовано;    1 /true - согласовано</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Comment" type="clt_ru:FreeText500Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Комментарии</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ChangeDate" type="clt_ru:DateTimeCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата и время фактичекой корректировки ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1051034E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CoordinationListType">
+    <xs:annotation>
+      <xs:documentation>Перечень согласований</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Person" type="RUScat_ru:CustomsPersonDetails" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Лицо, проводящее согласование</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CoordDate" type="clt_ru:DateTimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата и время принятия решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Department" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Наименование структурного подразделения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ResolutionDep" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак согласования: 0/false - не согласовано;    1 /true - согласовано</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

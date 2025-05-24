@@ -1,0 +1,637 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:rllrs="urn:customs.ru:Information:SQDocuments:RosleshozLesegaisResponse:5.24.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" targetNamespace="urn:customs.ru:Information:SQDocuments:RosleshozLesegaisResponse:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Рослесхоз. Ответ на запрос сведений из Единой государственной автоматизированной информационной системы учета древесины и сделок с ней.
+ Выписка по документу.</xs:documentation>
+  </xs:annotation>
+  <xs:element name="RosleshozLesegaisResponse" type="rllrs:RosleshozLesegaisResponseType">
+    <xs:annotation>
+      <xs:documentation>Рослесхоз. Ответ на запрос сведений из Единой государственной автоматизированной информационной системы учета древесины и сделок с ней.
+ Выписка по документу.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RosleshozLesegaisResponseType">
+    <xs:annotation>
+      <xs:documentation>Рослесхоз. Ответ на запрос сведений из Единой государственной автоматизированной информационной системы учета древесины и сделок с ней.
+  Выписка по документу.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="RequestGUID" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Уникальный идентификатор запроса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocVidimusResponse" type="rllrs:DocVidimusResponseType">
+            <xs:annotation>
+              <xs:documentation>Ответ на Запрос выписки по документу</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009378E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CompanyType">
+    <xs:annotation>
+      <xs:documentation>Юридическое лицо</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CompanyINN" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OGRN" type="clt_ru:OGRNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ОГРН </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CompanyName" type="clt_ru:FreeText500Type" maxOccurs="2">
+        <xs:annotation>
+          <xs:documentation>Название компании</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StringAddress" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Адрес</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CompositionHardwoodType">
+    <xs:annotation>
+      <xs:documentation>Состав отчуждаемой древесины</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SumVolume" type="rllrs:VolumeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Объем отчуждаемой древесины</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WoodAlienation" type="rllrs:WoodAlienationType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Отчуждаемая древесина</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ContractHardwoodDealVidimusType">
+    <xs:annotation>
+      <xs:documentation>Декларация о сделке с древесиной</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SellerType" type="rllrs:SellerType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вид продавца (собственник / комиссионер)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DeclaredBy" type="rllrs:PartyType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Автор декларации (продавец/ покупатель)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InputSellerDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата ввода Продавцом</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SignSellerDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата подписания Продавцом</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InputBuyerDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата ввода Покупателем</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SignBuyerDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата подписания Покупателем</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SellerParty" type="rllrs:ContractPartyType">
+        <xs:annotation>
+          <xs:documentation>Продавец</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BuyerParty" type="rllrs:ContractPartyType">
+        <xs:annotation>
+          <xs:documentation>Покупатель</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Contract" type="rllrs:ContractType">
+        <xs:annotation>
+          <xs:documentation>Контракт</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PreviousContractInformation" type="rllrs:ContractInformationType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о предыдущих договорах купли-продажи древесины</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdentityDoc" type="rllrs:DocDataType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Документ - основание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WarehousingSite" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Место складирования </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CompositionHardwood" type="rllrs:CompositionHardwoodType">
+        <xs:annotation>
+          <xs:documentation>Состав отчуждаемой древесины</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="HardwoodReport" type="rllrs:HardwoodReportType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Отчеты по отчуждаемой древесине </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="HardwoodMarking" type="rllrs:HardwoodMarkingType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Маркировка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReleaseInformation" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о возможности осуществления выпуска товара (статус            действительности/недействительности декларации о сделке с древесиной для целей таможенного контроля)
+</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ContractInformationType">
+    <xs:annotation>
+      <xs:documentation>Сведения о договоре купли-продажи древесины
+            </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Additional" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что договор является                     дополнительным соглашением к основному договору
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ContractNumber" type="clt_ru:Text150Type">
+        <xs:annotation>
+          <xs:documentation>Номер договора</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ContractDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата договора</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ContractEndDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата окончания договора</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MarkingInformation" type="rllrs:HardwoodMarkingType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о маркировке</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ContractPartyType">
+    <xs:annotation>
+      <xs:documentation>Справочник Реестр участников сделок с атрибутами каждого типа</xs:documentation>
+    </xs:annotation>
+    <xs:choice>
+      <xs:element name="Company" type="rllrs:CompanyType">
+        <xs:annotation>
+          <xs:documentation>Юридическое лицо / Иное лицо</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IP" type="rllrs:IPType">
+        <xs:annotation>
+          <xs:documentation>Индивидуальный предприниматель </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Person" type="rllrs:PersonType">
+        <xs:annotation>
+          <xs:documentation>Физическое лицо</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ForeignCompany" type="rllrs:ForeignCompanyType">
+        <xs:annotation>
+          <xs:documentation>Иностранная компания</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="ContractType">
+    <xs:annotation>
+      <xs:documentation>Реквизиты договора</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocNum" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Номер документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SignDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата подписания ОИВ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EndDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата окончания</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Additional" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак того, что договор является                     дополнительным соглашением к основному договору
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DistrictType">
+    <xs:annotation>
+      <xs:documentation>Федеральный округ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FullName" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Наименование</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Name" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Короткое название</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CodeInEng" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Код на английском</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocDataType">
+    <xs:annotation>
+      <xs:documentation>Справочник Документов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Type" type="clt_ru:Text150Type">
+        <xs:annotation>
+          <xs:documentation>Тип документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocNum" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Номер документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SignDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата подписания </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Volume" type="rllrs:VolumeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Объем, м3</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:choice minOccurs="0">
+        <xs:element name="RegistryMember" type="rllrs:ContractPartyType" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>Сторона сделки</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="ExecutiveAgencyMember" type="rllrs:ExecutiveAgencyType" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>ОИВ</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+      <xs:element name="Member" type="rllrs:ContractPartyType">
+        <xs:annotation>
+          <xs:documentation>Сторона сделки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocVidimusResponseType">
+    <xs:annotation>
+      <xs:documentation>Ответ на Запрос выписки по документу</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DeclarationNumber" type="clt_ru:Text40Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер декларации о сделке с древесиной</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InputDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата ввода в ЕГАИС / Дата подачи ДСД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExecutiveAgency" type="rllrs:ExecutiveAgencyType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ОИВ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ContractHardwoodDealVidimus" type="rllrs:ContractHardwoodDealVidimusType">
+        <xs:annotation>
+          <xs:documentation>Декларация о сделке с древесиной</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ExecutiveAgencyType">
+    <xs:annotation>
+      <xs:documentation>Справочник ОИВ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Region" type="rllrs:RegionType">
+        <xs:annotation>
+          <xs:documentation>Субъекты РФ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StringAddress" type="clt_ru:FreeText500Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Адрес</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Name" type="clt_ru:FreeText500Type" maxOccurs="2">
+        <xs:annotation>
+          <xs:documentation>Наименование</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LandType" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Тип земли</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ForeignCompanyType">
+    <xs:annotation>
+      <xs:documentation>Иностранная компания</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Name" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Название</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Code" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Код</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StringAddress" type="clt_ru:FreeText500Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Адрес</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Country" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Страна</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HardwoodMarkingType">
+    <xs:annotation>
+      <xs:documentation>Маркировка</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TagNum" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Номер бирки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TagDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата маркировки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CurrentVolume" type="rllrs:VolumeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Объем без учета коры, м3</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WoodClass" type="rllrs:WoodClassType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Класс древесины</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HardwoodReportType">
+    <xs:annotation>
+      <xs:documentation>Отчет по отчуждаемой древесине </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Num" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WoodAlienation" type="rllrs:WoodAlienationType">
+        <xs:annotation>
+          <xs:documentation>Отчуждаемая древесина</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ResultVolume" type="rllrs:VolumeType">
+        <xs:annotation>
+          <xs:documentation>Объем итого, м3</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PartiesType" type="rllrs:PartyType">
+        <xs:annotation>
+          <xs:documentation>Сторона подачи отчета продавец / покупатель</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InputDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата входящая</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="IPType">
+    <xs:annotation>
+      <xs:documentation>Индивидуальный предприниматель</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OGRNIP" type="clt_ru:CodeVariable20Type">
+        <xs:annotation>
+          <xs:documentation>ОГРНИП </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Person" type="rllrs:PersonType">
+        <xs:annotation>
+          <xs:documentation>Физическое лицо</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PersonType">
+    <xs:annotation>
+      <xs:documentation>Физическое лицо</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonINN" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LastName" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Фамилия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FirstName" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Имя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MiddleName" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StringAddress" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Адрес</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegionType">
+    <xs:annotation>
+      <xs:documentation>Субъекты РФ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="District" type="rllrs:DistrictType">
+        <xs:annotation>
+          <xs:documentation>Федеральный округ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CodeISO" type="clt_ru:CodeVariable10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код ISO</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Name" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Наименование</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="WoodAlienationType">
+    <xs:annotation>
+      <xs:documentation>Отчуждаемая древесина</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Num" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Sort" type="rllrs:WoodClassType">
+        <xs:annotation>
+          <xs:documentation>Видовой состав </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Assortment" type="rllrs:WoodClassType">
+        <xs:annotation>
+          <xs:documentation>Сортиментный состав</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OKPD" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код ОКПД 2</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsNomenclatureCode" type="clt_ru:GoodsNomenclatureCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код ТНВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Volume" type="rllrs:VolumeType">
+        <xs:annotation>
+          <xs:documentation>Объем древесины по договору, м3</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ResidialVolume" type="rllrs:VolumeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Объем имеющийся на остатках, м3</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="WoodClassType">
+    <xs:annotation>
+      <xs:documentation>Справочник ТНВЕД/ОКПД2</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Name" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Наименование</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OKPD" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код ОКПД 2</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ValuableWood" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Ценная порода</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные простые прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="SellerType">
+    <xs:annotation>
+      <xs:documentation>Вид продавца (собственник\комиссионер)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:enumeration value="Собственник" />
+      <xs:enumeration value="Комиссионер" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="VolumeType">
+    <xs:annotation>
+      <xs:documentation>Объем, дробное число до третьего знака после запятой</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:NumericCategoriesCust">
+      <xs:pattern value="(\d+)?([\.,]\d{1,3})" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PartyType">
+    <xs:annotation>
+      <xs:documentation>Сторона подачи документа (продавец\покупатель)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:enumeration value="Продавец" />
+      <xs:enumeration value="Покупатель" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

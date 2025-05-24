@@ -1,0 +1,688 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xrp="urn:customs.ru:Information:SQDocuments:x-ray_protocol:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:x-ray_protocol:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Протокол анализа рентгеноскопического изображения</xs:documentation>
+	</xs:annotation>
+	<xs:element name="x-ray_protocol" type="xrp:x-ray_protocolType">
+		<xs:annotation>
+			<xs:documentation>Протокол анализа рентгеноскопического изображения</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="x-ray_protocolType">
+		<xs:annotation>
+			<xs:documentation>Протокол анализа рентгеноскопического изображения</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="id" type="clt_ru:Text40Type">
+						<xs:annotation>
+							<xs:documentation>Идентификатор файла рентгеноскопического изображения (идентификатор сканирования)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="scan_path" type="clt_ru:FreeText250Type">
+						<xs:annotation>
+							<xs:documentation>Путь до каталога сканирования относительно системы</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="protocol_id" type="xrp:protocol_id" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Идентификатор файла анализа изображения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="class_areas" type="xrp:class_areasType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Выделенный в файле рентгеноскопического изображения класс (товарная группа и позиция)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="heterogeneity_areas" type="xrp:heterogeneity_areasType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Выделенные в файле рентгеноскопического изображения неоднородные зоны</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="illegal_areas" type="xrp:illegal_areasType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Выделенный в файле рентгеноскопического изображения запрещенный или ограниченный к перемещению объект</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="chart" type="xrp:chart2Type">
+						<xs:annotation>
+							<xs:documentation>Свойства диаграмм сравнения массы и мест</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="property" type="xrp:propertyType">
+						<xs:annotation>
+							<xs:documentation>Дополнительная информация для отображения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="resolution_table" type="xrp:tableType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Описание столбцов таблицы с данными результата анализа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="resolution" type="xrp:resolutionType">
+						<xs:annotation>
+							<xs:documentation>Результат анализа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="voi_src" type="xrp:voi_srcType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Список DocumentID извлеченный из Voi_src</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1051035E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="chart1Type">
+		<xs:annotation>
+			<xs:documentation>Свойства диаграмм детальной информации</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="discrepancies" type="xrp:diagramma2Type">
+				<xs:annotation>
+					<xs:documentation>Свойства диаграммы расхождения по массе товара выделенного и по ТСД (диаграмму 1)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="loading" type="xrp:diagramma1Type">
+				<xs:annotation>
+					<xs:documentation>Свойства диаграммы загрузки товара (диаграмму 2)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="identity_image" type="xrp:diagramma1Type">
+				<xs:annotation>
+					<xs:documentation>Свойства диаграммы тождественности по изображению (диаграмму 3)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="identity_tsd" type="xrp:diagramma1Type">
+				<xs:annotation>
+					<xs:documentation>Свойства диаграммы тождественности по ТСД (диаграмму 4)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="chart2Type">
+		<xs:annotation>
+			<xs:documentation>Свойства диаграмм сравнения массы и мест</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="weight_tsd" type="xrp:diagramma2Type">
+				<xs:annotation>
+					<xs:documentation>Свойства диаграммы сравнения массы по ТСД</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="spaces" type="xrp:diagramma2Type">
+				<xs:annotation>
+					<xs:documentation>Свойства диаграммы сравнения количества мест выделенных и по ТСД</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="gross_weight" type="xrp:diagramma2Type">
+				<xs:annotation>
+					<xs:documentation>Свойства диаграммы сравнения массы брутто товара выделенного и по ТСД</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="class_areasType">
+		<xs:annotation>
+			<xs:documentation>Выделенный в файле рентгеноскопического изображения класс (товарная группа и позиция)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="clt_ru:Count10Type">
+				<xs:annotation>
+					<xs:documentation>Идентификатор выделенного в файле рентгеноскопического изображения класса (товарной группы и позиции)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="display_region" type="clt_ru:IndicatorType">
+				<xs:annotation>
+					<xs:documentation>Признак отображения полигонов на изображении: 0 - нет, 1 - есть</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="goods_class_name" type="clt_ru:Text50Type">
+				<xs:annotation>
+					<xs:documentation>Наименование выделенного класса (товарных групп и позиций)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!--xs:element name="icon" type="CategoryCust:BinaryDataCategoriesCust">
+				<xs:annotation>
+					<xs:documentation>Иконка, отбражающаяся для выделенного класса (товарных групп и позиций)</xs:documentation>
+				</xs:annotation>
+			</xs:element-->
+			<xs:element name="tsd_goods" type="xrp:tableType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Описание столбцов таблицы с данными из документов</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="regions_table" type="xrp:tableType">
+				<xs:annotation>
+					<xs:documentation>Описание столбцов таблицы области класса</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="region" type="xrp:regionType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Выделенная в файле рентгеноскопического изображения область класса (товарной группы и позиции)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="chart" type="xrp:chart1Type">
+				<xs:annotation>
+					<xs:documentation>Свойства диаграмм детальной информации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="columnType">
+		<xs:annotation>
+			<xs:documentation>Столбец таблицы</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="clt_ru:Count3Type">
+				<xs:annotation>
+					<xs:documentation>Идентификатор столбца таблицы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="name" type="clt_ru:Text50Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Значение заголовка столбца таблицы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="value" type="clt_ru:FreeText500Type">
+				<xs:annotation>
+					<xs:documentation>Значение столбца таблицы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="line" type="xrp:lineType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Строка таблицы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="total" type="clt_ru:Text50Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Значение итоговой строки столбца таблицы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="diagramma1Type">
+		<xs:annotation>
+			<xs:documentation>Свойства диаграммы загрузки / тождественности</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="name" type="clt_ru:Text150Type">
+				<xs:annotation>
+					<xs:documentation>Название диаграммы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="color_bg" type="clt_ru:Code6Type">
+				<xs:annotation>
+					<xs:documentation>Цвет фона диаграммы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="color" type="clt_ru:Code6Type">
+				<xs:annotation>
+					<xs:documentation>Цвет показателя диаграммы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="value" type="clt_ru:Text50Type">
+				<xs:annotation>
+					<xs:documentation>Значение показателя диаграммы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="diagramma2Type">
+		<xs:annotation>
+			<xs:documentation>Свойства диаграммы сравнения / расхождения</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="name" type="clt_ru:Text150Type">
+				<xs:annotation>
+					<xs:documentation>Название диаграммы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="top_color" type="clt_ru:Code6Type">
+				<xs:annotation>
+					<xs:documentation>Цвет верхней полоски диаграммы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="top_name" type="clt_ru:Text50Type">
+				<xs:annotation>
+					<xs:documentation>Название отображаемое для верхней полоски диаграммы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="top_color_font" type="clt_ru:Code6Type">
+				<xs:annotation>
+					<xs:documentation>Цвет шрифта для надписи на верхней полоски диаграммы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="top_value" type="clt_ru:Text50Type">
+				<xs:annotation>
+					<xs:documentation>Значение показателя верхней полоски диаграммы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="bottom_color" type="clt_ru:Code6Type">
+				<xs:annotation>
+					<xs:documentation>Цвет нижней полоски диаграммы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="bottom_name" type="clt_ru:Text50Type">
+				<xs:annotation>
+					<xs:documentation>Название отображаемое для нижней полоски диаграммы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="bottom_color_font" type="clt_ru:Code6Type">
+				<xs:annotation>
+					<xs:documentation>Цвет шрифта для надписи на нижней полоски диаграммы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="bottom_value" type="clt_ru:Text50Type">
+				<xs:annotation>
+					<xs:documentation>Значение показателя нижней полоски диаграммы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="heterogeneity_areasType">
+		<xs:annotation>
+			<xs:documentation>Выделенные в файле рентгеноскопического изображения неоднородные зоны</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="clt_ru:Count10Type">
+				<xs:annotation>
+					<xs:documentation>Идентификатор выделенной в файле рентгеноскопического изображения неоднородной зоны</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="display_region" type="clt_ru:IndicatorType">
+				<xs:annotation>
+					<xs:documentation>Признак отображения полигонов на изображении: 0 - нет, 1 - есть</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="heterogeneity_name" type="clt_ru:Text50Type">
+				<xs:annotation>
+					<xs:documentation>Наименование выделенного класса неоднородных зон</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!--xs:element name="icon" type="CategoryCust:BinaryDataCategoriesCust">
+				<xs:annotation>
+					<xs:documentation>Иконка, отбражающаяся для выделенного класса неоднородных зон</xs:documentation>
+				</xs:annotation>
+			</xs:element-->
+			<xs:element name="region" type="xrp:regionType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Выделенная в файле рентгеноскопического изображения область неоднородной зоны</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="illegal_areasType">
+		<xs:annotation>
+			<xs:documentation>Выделенный в файле рентгеноскопического изображения запрещенный или ограниченный к перемещению объект</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="clt_ru:Count10Type">
+				<xs:annotation>
+					<xs:documentation>Идентификатор выделенного в файле рентгеноскопического изображения запрещенного или ограниченного к перемещению объекта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="region" type="xrp:regionType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Выделенная в файле рентгеноскопического изображения область запрещенного или ограниченного к перемещению объекта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="labelType">
+		<xs:annotation>
+			<xs:documentation>Подпись для выделенного полигона области</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="label_text" type="clt_ru:FreeText500Type">
+				<xs:annotation>
+					<xs:documentation>Текст подписи для выделенного полигона области</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="label_x" type="clt_ru:Count5Type">
+				<xs:annotation>
+					<xs:documentation>Координата X расположения подписи для выделенного полигона области</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="label_y" type="clt_ru:Count5Type">
+				<xs:annotation>
+					<xs:documentation>Координата Y расположения подписи для выделенного полигона области</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="label_color" type="clt_ru:Code6Type">
+				<xs:annotation>
+					<xs:documentation>Цвет подписи для выделенного полигона области</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="label_visibility" type="clt_ru:Quantity4point2Type">
+				<xs:annotation>
+					<xs:documentation>Прозрачность подписи для выделенного полигона области</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="label_font_size" type="clt_ru:Count3Type">
+				<xs:annotation>
+					<xs:documentation>Размер шрифта подписи для выделенного полигона области</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="label_font_bold" type="clt_ru:IndicatorType">
+				<xs:annotation>
+					<xs:documentation>Признак жирности шрифта подписи для выделенного полигона области: 0 - нет, 1 - есть</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="label_font_italics" type="clt_ru:IndicatorType">
+				<xs:annotation>
+					<xs:documentation>Признак курсива шрифта подписи для выделенного полигона области: 0 - нет, 1 - есть</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="label_font_underline" type="clt_ru:IndicatorType">
+				<xs:annotation>
+					<xs:documentation>Признак подчеркивания шрифта подписи для выделенного полигона области: 0 - нет, 1 - есть</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="lineType">
+		<xs:annotation>
+			<xs:documentation>Строка таблицы</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="clt_ru:Count5Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Идентификатор строки таблицы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="value" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Значение строки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="hint" type="clt_ru:FreeText500Type">
+				<xs:annotation>
+					<xs:documentation>Текст всплывающей подсказки при наведении мыши на элемент таблицы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="pointType">
+		<xs:annotation>
+			<xs:documentation>Координаты точки выделенного полигона области</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="clt_ru:Count5Type">
+				<xs:annotation>
+					<xs:documentation>Номер точки выделенного полигона области</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="x" type="clt_ru:Count5Type">
+				<xs:annotation>
+					<xs:documentation>X-координата точки выделенного полигона области</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="y" type="clt_ru:Count5Type">
+				<xs:annotation>
+					<xs:documentation>Y-координата точки выделенного полигона области</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="propertyType">
+		<xs:annotation>
+			<xs:documentation>Дополнительная информация для отображения</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="heterogeneity_table" type="xrp:tableType">
+				<xs:annotation>
+					<xs:documentation>Таблица раздела неоднородных зон</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="illegal_table" type="xrp:tableType">
+				<xs:annotation>
+					<xs:documentation>Таблица раздела запрещенных или ограниченных к перемещению объектов</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="region_lineType">
+		<xs:annotation>
+			<xs:documentation>Линия выделенного полигона области</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="line_color" type="clt_ru:Code6Type">
+				<xs:annotation>
+					<xs:documentation>Цвет линии выделенного полигона области</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="line_visibility" type="clt_ru:Quantity4point2Type">
+				<xs:annotation>
+					<xs:documentation>Прозрачность линии выделенного полигона области</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="line_width" type="clt_ru:Count3Type">
+				<xs:annotation>
+					<xs:documentation>Толщина линии выделенного полигона области</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="line_type" type="clt_ru:LetterIndicatorType">
+				<xs:annotation>
+					<xs:documentation>Тип линии выделенного полигона области: 1 - сплошная, 2 - пунктир, 3 - точки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="regionType">
+		<xs:annotation>
+			<xs:documentation>Выделенные в файле рентгеноскопического изображения области</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="display" type="clt_ru:IndicatorType">
+				<xs:annotation>
+					<xs:documentation>Признак отображения области на изображении: 0 - нет, 1 - есть</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="line" type="xrp:region_lineType">
+				<xs:annotation>
+					<xs:documentation>Линия выделенного полигона области</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="fill_color" type="clt_ru:Code6Type">
+				<xs:annotation>
+					<xs:documentation>Цвет заливки выделенного полигона области</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="fill_visibility" type="clt_ru:Quantity4point2Type">
+				<xs:annotation>
+					<xs:documentation>Прозрачность заливки выделенного полигона области</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="label" type="xrp:labelType">
+				<xs:annotation>
+					<xs:documentation>Подпись для выделенного полигона области</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="region_hint" type="clt_ru:FreeText500Type">
+				<xs:annotation>
+					<xs:documentation>Текст всплывающей подсказки при наведении мыши на полигон области</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="region_z" type="clt_ru:Count5Type">
+				<xs:annotation>
+					<xs:documentation>Z-координата полигона области</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="region_weight" type="clt_ru:Count8Type">
+				<xs:annotation>
+					<xs:documentation>Вес области</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="column" type="xrp:columnType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Столбец таблицы области</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="count" type="clt_ru:Count5Type">
+				<xs:annotation>
+					<xs:documentation>Количество точек полигона области</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="point" type="xrp:pointType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Координаты точки выделенного полигона области</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="resolutionType">
+		<xs:annotation>
+			<xs:documentation>Результат анализа</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="service" type="clt_ru:Text50Type">
+				<xs:annotation>
+					<xs:documentation>Решение сервиса по рентгеноскопическому изображению: Без подозрения / Под подозрением</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="service_decision" type="clt_ru:IndicatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Решение принятое сервисом по результатам анализа: 0 - без подозрений, 1 - под подозрением</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="auto_decision" type="clt_ru:IndicatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Признак определяющий, что решение по протоколу принято автоматически: 0 - результат решения пользователя принимается автоматически по результатам анализа сервиса, 1 - результат должен получиться по решению пользователя--></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="class_flag" type="clt_ru:IndicatorType">
+				<xs:annotation>
+					<xs:documentation>Признак выделения соответствия товара: 0 - нет, 1 - есть</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="class_name" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Название секции соответствия товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="heterogeneity_flag" type="clt_ru:IndicatorType">
+				<xs:annotation>
+					<xs:documentation>Признак выделения неоднородных зон: 0 - нет, 1 - есть</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="heterogeneity_name" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Название секции неоднородных зон</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="illegal_flag" type="clt_ru:IndicatorType">
+				<xs:annotation>
+					<xs:documentation>Признак выделения запрещенных или ограниченных к перемещению объектов: 0 - нет, 1 - есть</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="illegal_name" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Название секции запрещенных или ограниченных к перемещению объектов</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="title" type="clt_ru:FreeText500Type">
+				<xs:annotation>
+					<xs:documentation>Строка, выводимая в решение результата анализа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="color_button" type="clt_ru:Code6Type">
+				<xs:annotation>
+					<xs:documentation>Цвет кнопки решения результата анализа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!--xs:element name="icon" type="CategoryCust:BinaryDataCategoriesCust">
+				<xs:annotation>
+					<xs:documentation>Иконка, отображающаяся для решения результата анализа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="display_type" type="clt_ru:IndicatorType">
+				<xs:annotation>
+					<xs:documentation>Режим отображения списка классов: 0 - мелкие значки, 1 - крупные значки</xs:documentation>
+				</xs:annotation>
+			</xs:element-->
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tableType">
+		<xs:annotation>
+			<xs:documentation>Таблица</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="name" type="clt_ru:Text50Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Название таблицы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="columns_count" type="clt_ru:Count3Type">
+				<xs:annotation>
+					<xs:documentation>Число столбцов в таблице</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lines_count" type="clt_ru:Count3Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Число строк в таблице</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="column" type="xrp:columnType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Столбец таблицы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="voi_srcType">
+		<xs:annotation>
+			<xs:documentation>Список DocumentID извлеченный из Voi_src</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ed_container_document_id" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>DocumentID, извлеченный из VOI_SRC->Object->ED_Container->DocumentID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="voi_order_document_id" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>DocumentID, извлеченный из VOI_SRC->Object->ED_Container->ContainerDoc->DocBody->Signature->Object->VoiOrder->DocumentID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="voi_instrinspection_document_id" type="clt_ru:DocumentIDType">
+				<xs:annotation>
+					<xs:documentation>DocumentID, извлеченный из VOI_SRC->Object->ED_Container->ContainerDoc->DocBody->Signature->Object->Voi_InstrInspection->DocumentID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="protocol_id">
+		<xs:annotation>
+			<xs:documentation>Идентификатор файла анализа изображения</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="date" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата формирования каталога сканирования</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="idk" type="clt_ru:CodeVariable20Type">
+				<xs:annotation>
+					<xs:documentation>Идентификатор ИДК на котором было произведено сканирование</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="serial_num" type="clt_ru:Count8Type">
+				<xs:annotation>
+					<xs:documentation>Порядковый номер сканирования в очереди анализа относительно даты сканирования и ИДК</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

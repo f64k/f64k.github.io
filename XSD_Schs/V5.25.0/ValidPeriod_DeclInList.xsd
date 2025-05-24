@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:vpdl="urn:customs.ru:Information:GuaranteeDocuments:ValidPeriod_DeclInList:5.24.0" targetNamespace="urn:customs.ru:Information:GuaranteeDocuments:ValidPeriod_DeclInList:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Перечень декларантов - крупных плательщиков</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ValidPeriod_DeclInList" type="vpdl:ValidPeriod_DeclInListType">
+		<xs:annotation>
+			<xs:documentation>Перечень декларантов - крупных плательщиков</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ValidPeriod_DeclInListType">
+		<xs:annotation>
+			<xs:documentation>Перечень декларантов - крупных плательщиков</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="Declarant" type="vpdl:DeclarantType" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Декларант - крупный плательщик</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1050043E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="DeclarantType">
+		<xs:annotation>
+			<xs:documentation>Декларант - крупный плательщик</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="INN" type="clt_ru:INNIDType">
+				<xs:annotation>
+					<xs:documentation>ИНН декларанта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DeclarantName" type="clt_ru:NameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование декларанта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BegDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата начала периода</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EndDate" type="clt_ru:DateCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата окончания периода</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

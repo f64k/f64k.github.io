@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:rdrd="urn:customs.ru:Information:CustomsDocuments:RequestDataRD:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:RequestDataRD:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Запрос перечня разрешительных документов</xs:documentation>
+	</xs:annotation>
+	<xs:element name="RequestDataRD" type="rdrd:RequestDataRDType">
+		<xs:annotation>
+			<xs:documentation>Запрос перечня разрешительных документов</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="RequestDataRDType">
+		<xs:annotation>
+			<xs:documentation>Запрос перечня разрешительных документов</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="DocNumber" type="clt_ru:FreeText250Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Номер документа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DocCode" type="clt_ru:CustomsDocumentCodeType">
+						<xs:annotation>
+							<xs:documentation>Код вида документа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DocType" type="clt_ru:IndicatorType">
+						<xs:annotation>
+							<xs:documentation>Тип документа, если true- квотируемый, false - неквотируемый.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DocDate" type="clt_ru:DateCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дата документа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="FormNumber" type="clt_ru:Count8Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Номер бланка</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Contract" type="rdrd:ContractType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Контракт</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006116E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="ContractType">
+		<xs:annotation>
+			<xs:documentation>Контракт</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ConNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер контракта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ConDateSignature" type="clt_ru:DateCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата подписания контракта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

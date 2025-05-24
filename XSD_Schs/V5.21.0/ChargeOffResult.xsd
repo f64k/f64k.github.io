@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:catExch_ru="urn:customs.ru:Information:ExchangeDocuments:ExchangeCommonAggregateTypes:5.21.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cores="urn:customs.ru:Information:ExchangeDocuments:ChargeOffResult:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:ExchangeDocuments:ChargeOffResult:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:Information:ExchangeDocuments:ExchangeCommonAggregateTypes:5.21.0" schemaLocation="ExchangeCommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Результаты списания средств с лицевого счета участника ВЭД</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ChargeOffResult" type="cores:ChargeOffResultType" />
+  <xs:complexType name="ChargeOffResultType">
+    <xs:annotation>
+      <xs:documentation>Результаты списания средств с лицевого счета участника ВЭД</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+            <xs:annotation>
+              <xs:documentation>Код таможенного органа, осуществляющего запрос.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ResponseStatus" type="cores:ListStatusType">
+            <xs:annotation>
+              <xs:documentation>Список статусов ответа.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PaymentOrder" type="cores:PaymentOrderType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Платежные поручения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ListCurrency" type="cores:CurrencyType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Список валют, по которым недостаточно средств при списании средств (только для статуса D)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GTDID" type="cat_ru:GTDIDType">
+            <xs:annotation>
+              <xs:documentation>Номер ДТ, для которой проводилось списание средств</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1004004E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CurrencyType">
+    <xs:annotation>
+      <xs:documentation>Список валют.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CurrencyCode" type="clt_ru:CurrencyA3CodeType">
+        <xs:annotation>
+          <xs:documentation>Код валюты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Amount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма нехватки средств в валюте</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ListStatusType">
+    <xs:annotation>
+      <xs:documentation>Список статусов ответа.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ResponseStatus" type="clt_ru:CodeVariable3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Статус ответа: FDK - ошибка в запросе; FDL - ошибка в присланной ДТ; FLS - внутренняя  ошибка программного средств учета и контроля; 	A - ДТ имеется в БД и не может быть заменена; B - ДТ заблокирована или с ней работает инспектором отдела федеральных таможенных платежей;  P - плательщик не зарегистрирован в программном средстве учета и контроля таможенных платежей; 	U - отправитель или получатель не зарегистрирован в программном средстве учета и контроля таможенных платежей;  V - обнаружено несоответствие сумм в документе контроля платежей суммам в графе B ДТ;  D - недостаточно средств для списания; K - орг-ция имеет задолженность;	M - орг-ции запрещено удаленное списание средств;  RE - списание по указанной ДТ уже производилось, произведено повторное списание. </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaymentOrderType">
+    <xs:annotation>
+      <xs:documentation>Платежные поручения.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PaymentID" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер платежного поручения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CurrencyCode" type="clt_ru:CurrencyA3CodeType">
+        <xs:annotation>
+          <xs:documentation>Код валюты ПП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Balance" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Остаток средств на ПП после списания</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ShortageAssets" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сумма нехватки средств после списания (только для статуса ответа D)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата платежного поручения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentIndication" type="catExch_ru:PaymentIndicationType">
+        <xs:annotation>
+          <xs:documentation>Признаки ПП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

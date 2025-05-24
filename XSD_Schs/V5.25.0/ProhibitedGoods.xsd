@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="urn:customs.ru:Information:TransportDocuments:ProhibitedGoods:5.24.0" version="5.24.0.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:cltTrans_ru="urn:customs.ru:Information:TransportDocuments:TransportCommonLeafTypesCust:5.14.3" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:pipg="urn:customs.ru:Information:TransportDocuments:ProhibitedGoods:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:TransportDocuments:TransportCommonLeafTypesCust:5.14.3" schemaLocation="TransportCommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Документ о товарах запрещенных или ограниченных к ввозу</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ProhibitedGoods" type="pipg:ProhibitedGoodsType" />
+  <xs:complexType name="ProhibitedGoodsType">
+    <xs:annotation>
+      <xs:documentation>Документ о товарах запрещенных или ограниченных к ввозу</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="ShipInfo" type="pipg:ShipInfoType">
+            <xs:annotation>
+              <xs:documentation>Сведения о морском/воздушном судне</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocumentInfo" type="cat_ru:DocumentBaseType">
+            <xs:annotation>
+              <xs:documentation>Сведения о документе о товарах запрещенных или ограниченных к ввозу</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="ArmsInfo" type="pipg:ProhibitedSubjectInfoType">
+            <xs:annotation>
+              <xs:documentation>Информация о наличии оружия и боеприпасов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="CurrencyInfo" type="pipg:CurrencyInfoType">
+            <xs:annotation>
+              <xs:documentation>Информация о валюте и валютных ценностях</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="DrugsSubstanceInfo" type="pipg:DrugsSubstanceInfoType">
+            <xs:annotation>
+              <xs:documentation>Сведения о наличии лекарственных средств</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="PermitionDocs" type="pipg:PermitionDocsType">
+            <xs:annotation>
+              <xs:documentation>Информация о разрешительных документах</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute default="1003001E" name="DocumentModeID" type="clt_ru:DocumentModeIDType">
+          <xs:annotation>
+            <xs:documentation>Уникальный идентификатор документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CurrencyInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о валюте и валютных ценностях</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Amout" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CurrencyCode" type="clt_ru:CurrencyA3CodeType">
+        <xs:annotation>
+          <xs:documentation>Код вида валюты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DrugsSubstanceInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о наличии лекарственных средств</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="pipg:ProhibitedSubjectInfoType">
+        <xs:sequence>
+          <xs:element name="DrugsType" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Тип лекарственного средства. 1 - наркотические; 2 - сильнодействующие; 3 - психотропные; 4 - ядовитые</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PermitionDocsType">
+    <xs:annotation>
+      <xs:documentation>Информация о разрешительных документах</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="DocumentDescriprion" type="clt_ru:FreeText250Type">
+            <xs:annotation>
+              <xs:documentation>Описание разрешительного документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PermitDocOrganization" type="clt_ru:NameType">
+            <xs:annotation>
+              <xs:documentation>Наименование организации, выдавшей разрешительный документ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ProhibitedSubjectInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о товаре, на который накладывается запрет или ограничение</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:SupplementaryQuantityType">
+        <xs:sequence>
+          <xs:element name="Name" type="clt_ru:NameType">
+            <xs:annotation>
+              <xs:documentation>Наименование</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Description" type="clt_ru:FreeText250Type">
+            <xs:annotation>
+              <xs:documentation>Описание товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ShipInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о морском/воздушном судне</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ShipName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Наименование морского/воздушного судна</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ShipFlag" type="clt_ru:CountryA2CodeType">
+        <xs:annotation>
+          <xs:documentation>Код страны принадлежности морского/воздушного судна</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DepaturePort" type="cltTrans_ru:PortNameType">
+        <xs:annotation>
+          <xs:documentation>Порт/аэропорт отправления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

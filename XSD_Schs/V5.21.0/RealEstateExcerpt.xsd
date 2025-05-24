@@ -1,0 +1,589 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" elementFormDefault="qualified" targetNamespace="urn:customs.ru:Information:SQDocuments:RealEstateExcerpt:5.21.0" version="5.21.0.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:ree="urn:customs.ru:Information:SQDocuments:RealEstateExcerpt:5.21.0" xmlns:sq_clt="urn:customs.ru:Information:SQDocuments:SQCommonLeafTypesCust:5.0.10" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:SQDocuments:SQCommonLeafTypesCust:5.0.10" schemaLocation="SQCommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос сведений из Единого государственного реестра прав на недвижимое имущество и сделок с ним</xs:documentation>
+  </xs:annotation>
+  <xs:element name="RealEstateExcerpt" type="ree:RealEstateExcerptType" />
+  <xs:complexType name="RealEstateExcerptType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений из Единого государственного реестра прав на недвижимое имущество и сделок с ним</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ApplicationSourceSystemID" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Идентификатор заявления на ЕПГУ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ApplicationID" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Идентификатор заявки в АПС "Электронные Госуслуги-2"</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" name="RequestData" type="ree:RequestDataType">
+            <xs:annotation>
+              <xs:documentation>Запрашиваемые сведения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RequestPerson" type="ree:RequestPersonType">
+            <xs:annotation>
+              <xs:documentation>Сведения об организации запрашивающей сведения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Payment" type="ree:PaymentType">
+            <xs:annotation>
+              <xs:documentation>Оплата</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Delivery" type="ree:DeliveryType">
+            <xs:annotation>
+              <xs:documentation>Способ обмена информацией</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="AppliedDocuments" type="ree:PresentedDocsType">
+            <xs:annotation>
+              <xs:documentation>Сведения о приложенных документах</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="MunicipalService" type="ree:MunicipalServiceType">
+            <xs:annotation>
+              <xs:documentation>Государственная или муниципальная услуга</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute fixed="1009070E" name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AddressElementType">
+    <xs:annotation>
+      <xs:documentation>Адресный элемент</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Type" type="clt_ru:CodeVariable10Type">
+        <xs:annotation>
+          <xs:documentation>Тип адресного элемента</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Name" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование адресного элемента</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AddressType">
+    <xs:annotation>
+      <xs:documentation>Адрес</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:AddressType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="KLADRCode" type="clt_ru:CodeVariable20Type">
+            <xs:annotation>
+              <xs:documentation>Код адреса по КЛАДР</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="OKATO" type="clt_ru:CodeVariable11Type">
+            <xs:annotation>
+              <xs:documentation>ОКАТО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="UnformalizedDescription" type="sq_clt:FreeText4000Type">
+            <xs:annotation>
+              <xs:documentation>Неформализованное описание</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="District" type="ree:AddressElementType">
+            <xs:annotation>
+              <xs:documentation>Район</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="UrbanDistrict" type="ree:AddressElementType">
+            <xs:annotation>
+              <xs:documentation>Городской район</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="RuralPlace" type="ree:AddressElementType">
+            <xs:annotation>
+              <xs:documentation>Сельсовет</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DeliveryType">
+    <xs:annotation>
+      <xs:documentation>Способ обмена информацией</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="WebService" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак отправки XML-документа с использованием вэб-сервисов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InterDepartmentRequest" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что запрос является межведомственным</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="NameOKU" type="sq_clt:FreeText4000Type">
+        <xs:annotation>
+          <xs:documentation>В виде бумажного документа при личном обращении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="PostAddress" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>В виде бумажного документа посредством почтового отправления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="EmailAddress" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>В виде электронного документа посредством электронной почты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="LinkEmail" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>В виде ссылки на электронный документ посредством электронной почты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ReqSign" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Признак: 1 - Запрос копии документа (Указываются вид (наименование) и реквизиты договора (сделки)); 2 - Справка о содержании правоустанавливающих документов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DescribeContract" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Положения, интересующие заявителя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdentityDoc" type="RUScat_ru:RUIdentityCardType">
+        <xs:annotation>
+          <xs:documentation>Документ, удостоверяющий личность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="Object" type="ree:EstateObjectType">
+        <xs:annotation>
+          <xs:documentation>Объект</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DocumentDetails" type="cat_ru:DocumentBaseType">
+        <xs:annotation>
+          <xs:documentation>Реквизиты документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EstateObjectType">
+    <xs:annotation>
+      <xs:documentation>Объект недвижимости</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ObjectSign" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Тип объекта: 0 - земельный участок; 1 - объект недвижимости</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="EstateObjectSign" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Тип объекта недвижимости: 1 - помещение; 2 - здание; 3 - иное</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="HousingSign" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что объект недвижимости является жилым (квартира, жилой дом)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="IsRoom" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что помещение является комнатой</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="AreaValue" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Площадь объекта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="AreaUnit" type="clt_ru:CodeVariable4Type">
+        <xs:annotation>
+          <xs:documentation>Единица измерения площади</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ObjectDescription" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Описание объекта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CadastrNumber" type="clt_ru:Text40Type">
+        <xs:annotation>
+          <xs:documentation>Кадастровый номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="AdditionalInfo" type="sq_clt:FreeText4000Type">
+        <xs:annotation>
+          <xs:documentation>Дополнительная информация</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Внутренний идентификатор</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ConditionCadastrNum" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Условный кадастровый номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Address" type="ree:AddressType">
+        <xs:annotation>
+          <xs:documentation>Адрес объекта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MunicipalServiceType">
+    <xs:annotation>
+      <xs:documentation>Государственная или муниципальная услуга</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BaseRequest" type="sq_clt:FreeText4000Type">
+        <xs:annotation>
+          <xs:documentation>Основание запроса сведений</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="NormativeAct" type="sq_clt:FreeText4000Type">
+        <xs:annotation>
+          <xs:documentation>Положение нормативного акта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Post" type="clt_ru:PostType">
+        <xs:annotation>
+          <xs:documentation>Должность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="AnswerDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Срок ожидаемого ответа на межведомственный запрос</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ServiceName" type="sq_clt:FreeText4000Type">
+        <xs:annotation>
+          <xs:documentation>Наименование услуги</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ServiceCode" type="clt_ru:CodeVariable11Type">
+        <xs:annotation>
+          <xs:documentation>Код услуги</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OwnerType">
+    <xs:annotation>
+      <xs:documentation>Владелец объекта недвижимого имущества</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:SubjectDetailsType">
+        <xs:sequence>
+          <xs:element name="OrgSign" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Признак: 1 - физ. лицо; 2 - юр. лицо ; 3 - орган государственной власти или орган местного самоуправления; 4 - иностранное юр. лицо</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="BirthDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата рождения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="InsuranceNumber" type="clt_ru:CodeVariable14Type">
+            <xs:annotation>
+              <xs:documentation>СНИЛС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="RegDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата государственной регистрации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="PreviousName" type="clt_ru:NameType">
+            <xs:annotation>
+              <xs:documentation>Предыдущее наименование</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="GovernanceCode" type="clt_ru:Code13Type">
+            <xs:annotation>
+              <xs:documentation>Тип органа государственной власти или органа местного самоуправления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="RegCountry" type="clt_ru:CountryNameType">
+            <xs:annotation>
+              <xs:documentation>Страна регистрации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="RegNum" type="clt_ru:DocumentNumberType">
+            <xs:annotation>
+              <xs:documentation>Номер регистрации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ID" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Внутренний идентификатор</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ContactInfo" type="clt_ru:FreeText250Type">
+            <xs:annotation>
+              <xs:documentation>Контактная информация</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="EgrpID" type="clt_ru:DocumentNumberType">
+            <xs:annotation>
+              <xs:documentation>Идентификатор в базе данных ЕГРП</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AgentKind" type="clt_ru:CodeVariable14Type">
+            <xs:annotation>
+              <xs:documentation>Вид представительства</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="FactAddress" type="ree:AddressType">
+            <xs:annotation>
+              <xs:documentation>Адрес преимущественного проживания субъекта / Зарегистрированный адрес субъекта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="PreviousIdentityDocs" type="RUScat_ru:RUIdentityCardType">
+            <xs:annotation>
+              <xs:documentation>Предыдущие документы удостоверения личности</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="PresentedDocs" type="ree:PresentedDocsType">
+            <xs:annotation>
+              <xs:documentation>Представленные документы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PaymentType">
+    <xs:annotation>
+      <xs:documentation>Оплата</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FreeServiceSign" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак наличия права на безвозмездное предоставление сведений в соответствии со статьей 8 Закона о регистрации (122-ФЗ)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="ReasonsDocuments" type="ree:PresentedDocsType">
+        <xs:annotation>
+          <xs:documentation>Документы основания получение сведений без оплаты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PresentedDocsType">
+    <xs:annotation>
+      <xs:documentation>Представленные документы</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:RUIdentityCardType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Register" type="clt_ru:NameType">
+            <xs:annotation>
+              <xs:documentation>Регистратор (ФИО нотариуса)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Note" type="clt_ru:FreeText250Type">
+            <xs:annotation>
+              <xs:documentation>Особые отметки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="StartDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата начала действия</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="EndDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата прекращения действия</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ImageFile" type="clt_ru:FreeText250Type">
+            <xs:annotation>
+              <xs:documentation>Имя файла с изображением</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ImageReference" type="clt_ru:FreeText250Type">
+            <xs:annotation>
+              <xs:documentation>Электронный адрес изображения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="RegDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата государственной регистрации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="RegNum" type="clt_ru:DocumentNumberType">
+            <xs:annotation>
+              <xs:documentation>Номер регистрации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="AppendFileType" type="clt_ru:Code2Type">
+            <xs:annotation>
+              <xs:documentation>Тип  приложенного файла по классификатору</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="AppendFileName" type="clt_ru:FreeText250Type">
+            <xs:annotation>
+              <xs:documentation>Имя приложенного файла</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Quantity" type="ree:QuantityType">
+            <xs:annotation>
+              <xs:documentation>Количество</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="QuantityType">
+    <xs:annotation>
+      <xs:documentation>Количество</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="OriginalSign" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак подлинности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Quantity" type="clt_ru:Count6Type">
+        <xs:annotation>
+          <xs:documentation>Кол-во экземпляров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SheetQuantity" type="clt_ru:Count6Type">
+        <xs:annotation>
+          <xs:documentation>Количество листов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RequestDataType">
+    <xs:annotation>
+      <xs:documentation>Запрашиваемые сведения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RequestSign" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Выписка из Единого государственного реестра: 1 - об объекте недвижимости; 2 -  о правах отдельного лица на имеющиеся у него объекты недвижимого имущества; 3 - сведения по документу; 4 - о признании правообладателя недееспособным или ограниченно дееспособным</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="EstateObject" type="ree:EstateObjectType">
+        <xs:annotation>
+          <xs:documentation>Объект недвижимости</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Owner" type="ree:OwnerType">
+        <xs:annotation>
+          <xs:documentation>Владелец объекта недвижимого имущества</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Territory" type="ree:TerritoryType">
+        <xs:annotation>
+          <xs:documentation>Территория РФ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="RequestPeriod" type="ree:RequestPeriodType">
+        <xs:annotation>
+          <xs:documentation>Период времени, за который необходимо предоставить сведения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="DocRequest" type="ree:DocRequestType">
+        <xs:annotation>
+          <xs:documentation>Запрос документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RequestPeriodType">
+    <xs:annotation>
+      <xs:documentation>Период времени, за который необходимо предоставить сведения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="StartDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Начало периода</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EndDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Конец периода</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RequestPersonType">
+    <xs:annotation>
+      <xs:documentation>Сведения об организации запрашивающей сведения</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ree:OwnerType">
+        <xs:sequence>
+          <xs:element name="PersonKind" type="clt_ru:CodeVariable14Type">
+            <xs:annotation>
+              <xs:documentation>Вид заявителя</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IdentificationSign" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Признак подтверждения личности заявителя</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Agent" type="ree:OwnerType">
+            <xs:annotation>
+              <xs:documentation>Доверенное лицо</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TerritoryType">
+    <xs:annotation>
+      <xs:documentation>Территория РФ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="IsRussiaTerritory" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак действительности/размещения по всей территории РФ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="RegionCode" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Регион (код)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

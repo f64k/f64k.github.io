@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:mpi="urn:customs.ru:Information:ELSDocuments:ELSMoneyPledgeInfo:5.24.0" targetNamespace="urn:customs.ru:Information:ELSDocuments:ELSMoneyPledgeInfo:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сведения о состоянии денежного залога</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ELSMoneyPledgeInfo" type="mpi:ELSMoneyPledgeInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о состоянии денежного залога</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ELSMoneyPledgeInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о состоянии денежного залога</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocumentDateTime" type="clt_ru:DateTimeCustType">
+            <xs:annotation>
+              <xs:documentation>Дата и время создания/изменения электронного документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocumentVersionNumber" type="clt_ru:CodeVariable2Type">
+            <xs:annotation>
+              <xs:documentation>Номер версии документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IsTest" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Признак тестового документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MoneyPledgeInfo" type="mpi:CustomsReceiptType">
+            <xs:annotation>
+              <xs:documentation>Сведения о денежном залоге</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1040046E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="CodeVariable26Type">
+    <xs:annotation>
+      <xs:documentation>Символьная строка (буквы, цифры, знаки) используемая для краткого (и (или) независимого от языка) представления или замены определенных значений или текстовых свойств. От 1 до 26 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="26" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="BaseDocumentType">
+    <xs:annotation>
+      <xs:documentation>Документ - основание</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocumentName" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentNumber" type="clt_ru:Text150Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BaseDocCustomsCode" type="clt_ru:CustomsCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, зарегистрировавшего документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CustomsReceiptType">
+    <xs:annotation>
+      <xs:documentation>Сведения о ТР</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsReceiptNumber" type="mpi:DocumentType">
+        <xs:annotation>
+          <xs:documentation>Номер ТР</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsReceiptCurrencyCode" type="clt_ru:CurrencyA3CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код валюты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsReceiptAmount" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Текущая  сумма остатка денежного залога по ТР. Остаток денежных средств в валюте  ТР без разбивки по КБК.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PostDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата изменения суммы остатка денежного залога по ТР</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BaseDocument" type="mpi:BaseDocumentType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Документ - основание изменения суммы денежного залога по ТР</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MoneyPledgeProvDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата предоставления денежного залога</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OperationType" type="clt_ru:CodeVariable2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>1 - Получение сведений об оплаченной ТР из АИС «Ордер»; 2 - Аннулирование оплаченной ТР в АПС «Лицевые счета»; 3 - Списание невостребованного денежного залога; 4 - Исключение ТР из акта списания невостребованных денежных средств; 5 - Зачет залога в счет авансовых платежей; 6 - Отмена решения о зачете денежного залога в счет будущих платежей; 7 - Решение о зачете денежного залога в счет погашения задолженности; 8 - Отмена решения о зачете денежного залога в счет погашения задолженности; 9 - Зачет денежного залога в счет уплаты таможенных пошлин, налогов / погашения задолженности; 10 - Отмена решения о зачете денежного залога в счет исполнения обязанности по уплате таможенных пошлин, налогов; 11 - Решение о возврате денежного залога; 12 - Отмена решения о возврате денежного залога; 13 - Отказ в возврате денежного залога, поступивший из вышестоящего таможенного органа или МОУФК; 14 - Зачет залога в счет уплаты таможенных пошлин, налогов в государстве ТС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OperationAmount" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сумма операции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocumentType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер таможенного документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, зарегистрировавшего документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentNumber" type="mpi:CodeVariable26Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

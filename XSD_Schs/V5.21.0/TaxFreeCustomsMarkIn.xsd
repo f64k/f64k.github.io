@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:tfr_cmi="urn:customs.ru:Information:CustomsDocuments:TaxFreeCustomsMarkIn:5.21.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:TaxFreeCustomsMarkIn:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Внутренние служебные отметки к чеку TaxFree</xs:documentation>
+  </xs:annotation>
+  <xs:element name="TaxFreeCustomsMarkIn" type="tfr_cmi:TaxFreeCustomsMarkInType">
+    <xs:annotation>
+      <xs:documentation>Внутренние служебные отметки к чеку TaxFree</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="TaxFreeCustomsMarkInType">
+    <xs:annotation>
+      <xs:documentation>Внутренние служебные отметки к чеку TaxFree</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="TaxFreeID" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Уникальный номер чека TaxFree</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TaxFreeNumber" type="clt_ru:Text50Type">
+            <xs:annotation>
+              <xs:documentation>Порядковый номер чека TaxFree</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TaxFreeDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата чека TaxFree</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Decision" type="clt_ru:Numeric1Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Решение ТО: 0 - товары в полном объеме вывезены с территории ЕАЭС, 1 - товары частично вывезены с территории ЕАЭС, 2 - сведения в чеке не соответствуют нормативной базе РФ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsMarkIn" type="tfr_cmi:CustomsMarkInType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Служебные отметки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006320E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CustomsMarkInType">
+    <xs:annotation>
+      <xs:documentation>Служебные отметки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="StageMarkIdentifier" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор проставленной технологической отметки - 1 (номер этапа)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NoteMarkIdentifier" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Идентификатор проставленной технологической отметки  -  2 (тип примечания)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StageDescription" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание отметки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MarkDescription" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Служебная запись </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsPerson" type="RUScat_ru:CustomsPersonDetails" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateTimeInf" type="clt_ru:DateTimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата и время проставления отметки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

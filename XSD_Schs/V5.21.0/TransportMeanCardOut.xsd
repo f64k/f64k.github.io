@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:catESAD_ru="urn:customs.ru:RUCommonAggregateTypes:5.21.0" xmlns:TMCout="urn:customs.ru:Information:CustomsDocuments:TransportMeanCardOut:5.21.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:TransportMeanCardOut:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUCommonAggregateTypes:5.21.0" schemaLocation="RUESADCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Карточка транспортного средства. Внешний формат</xs:documentation>
+  </xs:annotation>
+  <xs:element name="TransportMeanCardOut" type="TMCout:TransportMeanCardOutType">
+    <xs:annotation>
+      <xs:documentation>Карточка транспортного средства. Внешний формат</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="TransportMeanCardOutType">
+    <xs:annotation>
+      <xs:documentation>Карточка транспортного средства. Внешний формат</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="GTDDocumentID" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Уникальный идентификатор ДТ.  Используется для привязки к ДТ при представлении отдельно от ДТ.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TransportOwner" type="catESAD_ru:TransportOwnerType">
+            <xs:annotation>
+              <xs:documentation>Владелец ТС. Для  физических лиц заполняются Фамилия, Имя, Отчество, для юридических - Наименование.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TransportManufacturer" type="catESAD_ru:TransportManufacturerType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Изготовитель транспортного средства.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ESADTransportMeanCard" type="catESAD_ru:ESADTransportMeanCardType">
+            <xs:annotation>
+              <xs:documentation>Карточка транспортного средства. Сведения о транспортном средстве.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Document" type="cat_ru:DocumentBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Наименование, номер и дата документа (ТД, ТПО, иной документ)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CardNumber" type="cat_ru:GTDIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Учетный номер карточки (формат аналогичен формату номера ДТ).</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TransportCategoryCode3" type="clt_ru:CodeVariable3Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код категории ТС (2-3 знака)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="VehicleEPassportId" type="TMCout:VehicleEPassportIdType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер электронного паспорта транспортного средства</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006082E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="VehicleEPassportIdType">
+    <xs:annotation>
+      <xs:documentation>Строка символов, идентифицирующая электронный паспорт транспортного средства</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:pattern value="[0-9]{15}" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

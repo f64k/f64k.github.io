@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:catESAD_cu="urn:customs.ru:CUESADCommonAggregateTypesCust:5.21.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:gcl="urn:customs.ru:Information:CustomsDocuments:GoodsComponentList:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:GoodsComponentList:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonAggregateTypesCust:5.21.0" schemaLocation="CUESADCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Поставка компонентами - Список компонентов</xs:documentation>
+  </xs:annotation>
+  <xs:element name="GoodsComponentList" type="gcl:GoodsComponentListType" />
+  <xs:complexType name="ComponentsListType">
+    <xs:annotation>
+      <xs:documentation>Поставка компонентами - Список компонентов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsNumeric" type="clt_ru:Count3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер товара в итоговой декларации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MechanismUnit" type="gcl:MechanismUnitType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о функциональном блоке или компоненте товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MechanismUnitType">
+    <xs:annotation>
+      <xs:documentation>Сведения о функциональном блоке</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="catESAD_cu:ComponentDescriptionType">
+        <xs:sequence>
+          <xs:element name="UnitDescription" type="clt_ru:FreeText250Type">
+            <xs:annotation>
+              <xs:documentation>Наименование ФБ / Раздела списка (ПРОЧИЕ КОМПОНЕНТЫ)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MechUnitPart" type="gcl:MechUnitPartType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о компоненте функционального блока</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GoodsComponentListType">
+    <xs:annotation>
+      <xs:documentation>Поставка компонентами - Список компонентов</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="GTDDocumentID" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Уникальный идентификатор ДТ.  Используется для привязки к ДТ при представлении отдельно от ДТ.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ComponentsList" type="gcl:ComponentsListType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Поставка компонентами - Список компонентов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GTDID" type="cat_ru:GTDIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006089E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="MechUnitPartType">
+    <xs:annotation>
+      <xs:documentation>Сведения о компоненте функционального блока</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="catESAD_cu:MechUnitPartType">
+        <xs:sequence>
+          <xs:element name="ServiceID" type="clt_ru:Count10Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Служебный номер компонента</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ComponentNumber" type="clt_ru:Text50Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Cборочный номер компонента</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

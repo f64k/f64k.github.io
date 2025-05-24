@@ -1,0 +1,529 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:fsbngp="urn:customs.ru:Information:SQDocuments:FsbNonGrataPersonRequest:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:FsbNonGrataPersonRequest:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос сведений о лицах, в отношении которых приняты решения о неразрешении въезда в РФ, решения об отмене решения о неразрешении въезда в РФ </xs:documentation>
+  </xs:annotation>
+  <xs:element name="FsbNonGrataPersonRequest" type="fsbngp:FsbNonGrataPersonRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений о лицах, в отношении которых приняты решения о неразрешении въезда в РФ, решения об отмене решения о неразрешении въезда в РФ </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="FsbNonGrataPersonRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений о лицах, в отношении которых приняты решения о неразрешении въезда в РФ, решения об отмене решения о неразрешении въезда в РФ </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="TimeStamp" type="clt_ru:DateTimeCustType">
+            <xs:annotation>
+              <xs:documentation>Дата и время формирования запроса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="UID" type="clt_ru:Text50Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Уникальный идентификатор (UID) АИС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CodeFOIV" type="fsbngp:Code7Type">
+            <xs:annotation>
+              <xs:documentation>Код ФОИВ (Общероссийский классификатор органов государственной власти и управления ОК 006-2011 )</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="StopEntranceFTS" type="fsbngp:StopEntranceFTSType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Неразрешение въезда (ФТС)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CancelEntranceFTS" type="fsbngp:CancelEntranceFTSType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Въезд в РФ разрешен (ФТС)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="File" type="fsbngp:FileType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Прикладываемые файлы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009379E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="FileType">
+    <xs:annotation>
+      <xs:documentation>Файл</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FileName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Название файла</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FileMimeType" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Расширение файла (image/jpeg или image/pjpeg).</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FileData" type="CategoryCust:BinaryDataCategoriesCust">
+        <xs:annotation>
+          <xs:documentation>Данные файлов-вложений в кодировке BASE64</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SignaturePKCS7" type="CategoryCust:BinaryDataCategoriesCust">
+        <xs:annotation>
+          <xs:documentation>ЭЦП вложения в формате PKCS#7 detached в кодировке BASE64</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="StopEntranceFTSType">
+    <xs:annotation>
+      <xs:documentation>Въезд в РФ не разрешен (ФТС)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Kind" type="clt_ru:Numeric1Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Тип запроса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OptionalPhysicalPersonLatin" type="fsbngp:PhysicalPersonLatinType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ФИО латинчское написание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OptionalPhysicalPersonCyrillic" type="fsbngp:PhysicalPersonCyrillicType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ФИО кириллическое написание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Sex" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Пол (ОК 018-2014)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Birthday" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата рождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PlaceBirthday" type="fsbngp:string-2000" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Место рождения (при наличии)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Citizenship" type="fsbngp:CitizenshipType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о документе личности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Subdivision" type="fsbngp:SubdivisionType">
+        <xs:annotation>
+          <xs:documentation>Сведения о подразделении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Decision" type="fsbngp:DecisionStopType">
+        <xs:annotation>
+          <xs:documentation>Сведения о решении о неразрешении въезда в Российскую Федерацию в отношении иностранного гражданина или лица без гражданства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Additional_Information" type="fsbngp:string-10000" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дополнительные сведения, имеющиеся у ФОИВ и способствующие однозначной идентификации лица (при наличии)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AppliedDocument" type="fsbngp:AppliedDocumentType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Фотография лица, дактилоскопическая информация  сканированные копии документов, способствующие однозначной идентификации лица (при наличии)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CancelEntranceFTSType">
+    <xs:annotation>
+      <xs:documentation>Отмена решения о неразрешении въезда (ФТС)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Kind" type="clt_ru:Count10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Тип запроса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PhysicalPersonLatin" type="fsbngp:PhysicalPersonLatinType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ФИО латиница</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PhysicalPersonCyrillic" type="fsbngp:PhysicalPersonCyrillicType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ФИО кириллица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Sex" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Пол (ОК 018-2014)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Birthday" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата рождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Citizenship" type="clt_ru:CountryN3CodeType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Гражданство Общероссийский классификатор стран мира ОК (МК (ИСО 3166) 004-97) 025-2001 (ОКСМ)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Subdivision" type="fsbngp:SubdivisionType">
+        <xs:annotation>
+          <xs:documentation>Сведения о подразделении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DecisionCancel" type="fsbngp:DecisionCancelFTSType">
+        <xs:annotation>
+          <xs:documentation>Решение об отмене решения о неразрешении въезда в Российскую Федерацию в отношении иностранного гражданина или лица без гражданства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Additional_Information" type="fsbngp:string-10000" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дополнительные сведения, имеющиеся у ФОИВ и способствующие однозначной идентификации лица (при наличии)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PhysicalPersonLatinType">
+    <xs:annotation>
+      <xs:documentation>ФИО латиница (при наличии)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FamilyName" type="fsbngp:latin-500" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Фамилия (латинское написание) (при наличии)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FirstName" type="fsbngp:latin-500" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Имя (латинское написание) (при наличии)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Patronymic" type="fsbngp:latin-500" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчество (другие именные компоненты) (латинское написание) (при наличии)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PhysicalPersonCyrillicType">
+    <xs:annotation>
+      <xs:documentation>ФИО кириллица (при наличии)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FamilyName" type="fsbngp:cyrill-500" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Фамилия (кириллическое написание)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FirstName" type="fsbngp:cyrill-500" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Имя (кириллическое написание)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Patronymic" type="fsbngp:cyrill-500" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчество (другие именные компоненты) (кириллическое написание) (при наличии)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PersonCyrillicType">
+    <xs:annotation>
+      <xs:documentation>ФИО кириллица</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FamilyName" type="fsbngp:cyrill-500">
+        <xs:annotation>
+          <xs:documentation>Фамилия (кириллическое написание)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FirstName" type="fsbngp:cyrill-500">
+        <xs:annotation>
+          <xs:documentation>Имя (кириллическое написание)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Patronymic" type="fsbngp:cyrill-500" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчество (другие именные компоненты) (кириллическое написание) (при наличии)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DecisionStopType">
+    <xs:annotation>
+      <xs:documentation>Решение о неразрешении въезда (МВД, Минобороны, ФСИН)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Base" type="fsbngp:string-4000">
+        <xs:annotation>
+          <xs:documentation>Правовое основание принятия решения о неразрешении въезда</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Number" type="fsbngp:string-50">
+        <xs:annotation>
+          <xs:documentation>Номер решения о неразрешении въезда</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateDecision" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата принятия решения о неразрешении въезда</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Fact" type="fsbngp:string-10000">
+        <xs:annotation>
+          <xs:documentation>Обстоятельства послужившие основанием для принятия решения о неразрешении въезда</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateEnd" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата окончания действия решения о неразрешении въезда (при наличии)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateNotification" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата уведомления иностранного гражданина или лица без гражданства о неразрешении въезда (при наличии)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WhoNotification" type="fsbngp:string-1000" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Территориальный орган (подразделение) уполномоченного федерального органа исполнительной власти, уведомивший иностранного гражданина или лицо без гражданства о решении о неразрешении въезда (при наличии)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SubdivisionType">
+    <xs:annotation>
+      <xs:documentation>Сведения о подразделении</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="NameSubdivision" type="fsbngp:string-1000">
+        <xs:annotation>
+          <xs:documentation>Уполномоченное подразделение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Contact" type="fsbngp:ContactType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Контактные данные</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DecisionCancelFTSType">
+    <xs:annotation>
+      <xs:documentation>Решение об отмене неразрешения въезда (ФТС)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="NumberCancel" type="fsbngp:string-50">
+        <xs:annotation>
+          <xs:documentation>Номер решения о неразрешении въезда</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateNumberCancel" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата принятия решения о неразрешении въезда</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Fact" type="fsbngp:string-10000">
+        <xs:annotation>
+          <xs:documentation>Обстоятельства послужившие основанием для принятия решения о неразрешении въезда</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Number" type="fsbngp:string-50">
+        <xs:annotation>
+          <xs:documentation>Номер решения о разрешении въезда</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DatePermissions" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата принятия решения о разрешении въезда</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CitizenshipType">
+    <xs:annotation>
+      <xs:documentation>Гражданство и сведения о документе (необязательное)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Nationality" type="clt_ru:CountryN3CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Гражданство (Общероссийский классификатор стран мира ОК (МК (ИСО 3166) 004-97) 025-2001 (ОКСМ))</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NumberDocument" type="fsbngp:string-50" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер документа удостверяющего личность (при наличии)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateDelivery" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата выдачи документа, удостоверяющего личность (при наличии)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonalNo" type="fsbngp:string-50" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Личный номер (Personal No.) (при наличии)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ContactType">
+    <xs:annotation>
+      <xs:documentation>Контактные данные</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Employee" type="fsbngp:PersonCyrillicType">
+        <xs:annotation>
+          <xs:documentation>Сведение о сотруднике</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Phone" type="fsbngp:string-20">
+        <xs:annotation>
+          <xs:documentation>Телефон</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AppliedDocumentType">
+    <xs:annotation>
+      <xs:documentation>Описание блока вложений</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocumentID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Уникальное наименование вложения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Name" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Имя файла</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BusinessName" type="fsbngp:BusinessNameType">
+        <xs:annotation>
+          <xs:documentation>Бизнес-наименование</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор файла</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Content" type="CategoryCust:BinaryDataCategoriesCust" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Контент файла в base-64</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="Code7Type">
+    <xs:annotation>
+      <xs:documentation>Код. 7 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:length value="7" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="string-10000">
+    <xs:annotation>
+      <xs:documentation>10000 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="10000" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="string-4000">
+    <xs:annotation>
+      <xs:documentation>4000 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="4000" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="string-2000">
+    <xs:annotation>
+      <xs:documentation>2000 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="2000" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="string-1000">
+    <xs:annotation>
+      <xs:documentation>1000 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="1000" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="cyrill-500">
+    <xs:annotation>
+      <xs:documentation>Кириллица, длиной до 500 символов, цифры не допускаются.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="500" />
+      <xs:minLength value="1" />
+      <xs:pattern value="[а-яА-ЯёЁ\-\s.]{1,500}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="latin-500">
+    <xs:annotation>
+      <xs:documentation>Латиница, длиной до 500 символов, цифры не допускаются.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="500" />
+      <xs:minLength value="1" />
+      <xs:pattern value="[a-zA-Z\-\s.]{1,500}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="string-50">
+    <xs:annotation>
+      <xs:documentation>50 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="50" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="string-20">
+    <xs:annotation>
+      <xs:documentation>20 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="20" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="BusinessNameType">
+    <xs:annotation>
+      <xs:documentation>Бизнес-наименование</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:enumeration value="Photo" />
+      <xs:enumeration value="Fingerprint" />
+      <xs:enumeration value="Scan" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

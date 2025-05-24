@@ -1,0 +1,491 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- возможно код вида документа 01153 (fscnpr:Authorization/fscnpr:DocType=4)
+код вида документа 01154 (fscnpr:Authorization/fscnpr:DocType=5 или 6)
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" xmlns:fscnpr="urn:customs.ru:Information:SQDocuments:FsTekConclPermit:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:FsTekConclPermit:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Заключение / Разрешение в целях экспортного контроля</xs:documentation>
+  </xs:annotation>
+  <xs:element name="FsTekConclPermit" type="fscnpr:FsTekConclPermitType" />
+  <xs:complexType name="FsTekConclPermitType">
+    <xs:annotation>
+      <xs:documentation>Заключение / Разрешение в целях экспортного контроля</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="BDRDID" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Идентификатор документа по БД РД</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsDescription" type="fscnpr:GoodsType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Товары Разрешения/Заключения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ConslusionsDocument" type="fscnpr:ConslusionsDocumentType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Электронные документы, прикрепленные к идентификационному заключению</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BriefSpecifications" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Краткие технические характеристики продукции</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="InfoForExportControl" type="clt_ru:FreeText500Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дополнительная информация для целей экспортного контроля</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DestinationCountryType" type="clt_ru:IndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Признак отношения стран к странам назначения или отправления. Может принимать значения: 0 - страны назначения; 1 - страны отправления.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DestinationCountry" type="clt_ru:FreeText500Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Список кодов альфа-2 стран назначения (отправления)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CountryListPriznak" type="clt_ru:Numeric1Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Признак, характеризующий список стран назначения (отправления):   0 - все страны (элемент DestinationCountry не содержит данных); 1 - все страны, кроме санкционных (элемент DestinationCountry не содержит данных); 2 - страны, перечисленные в DestinationCountry; 3 - кроме стран, указанных в элементе DestinationCountry</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="FlagEconomicSteps" type="clt_ru:IndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Признак применения специальных экономических мер в отношении стран назначения (отправления). Может принимать значения: 0 - специальные экономические меры не применяются; 1 - применяются специальные экономические меры, установленные нормативным правовым актом с указанием его номера и даты.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ActEconomicSteps" type="fscnpr:DocumentType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Aкт, устанавливающий в отношении стран назначения (отправления) специальные экономические меры</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TermReturns" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Срок  возврата товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Authorization" type="fscnpr:AuthorizationType">
+            <xs:annotation>
+              <xs:documentation>Разрешение/Заключение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Contract" type="fscnpr:ContractType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о договорах (контрактах, соглашениях)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Expertise" type="fscnpr:DocumentType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о государственной экспертизе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="FlagWeapon" type="clt_ru:Numeric1Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Признак отношения объектов экспертизы к элементам оружия массового поражения и средствам его доставки, иным видам вооружения и военной техники, либо приобретения их в интересах организаций или физических лиц, причастных к террористической деятельности. Может принимать значения: 0 - не выявлены; 1 - имеются; 2 - проведение анализа не требуется.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AuthorizedPerson" type="fscnpr:AuthorizedPersonType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Уполномоченное должностное лицо, подписавшее разрешение/заключение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReleaseOrg" type="fscnpr:OrganizationType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Наименование организации, выдавшей заключение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Consignee" type="fscnpr:OrganizationType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Наименование иностранного получателя товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="FlagEconomicStepsIn" type="clt_ru:IndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Признак применения специальных экономических мер в отношении стран назначения (отправления). Может принимать значения: 0 - специальные экономические меры не применяются; 1 - применяются специальные экономические меры, установленные нормативным правовым актом с указанием его номера и даты.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ActEconomicStepsIn" type="fscnpr:DocumentType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Aкт, устанавливающий в отношении иностранных участников внешнеэкономической операции специальные экономические меры</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Applicant" type="fscnpr:OrganizationType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Заявитель</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ImpExp" type="RUScat_ru:RUOrganizationNameAddrType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Продавец / Покупатель</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="EndUser" type="fscnpr:EndUserType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о конечных пользователях</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NoticeOfCancellation" type="fscnpr:DocumentType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Уведомление об аннулировании</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NoticeOfSuspension" type="fscnpr:DocumentType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Уведомление о приостановлении</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NoticeOfResume" type="fscnpr:DocumentType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Уведомление о возобновлении</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CheckList_Items" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Позиции контрольных списков</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CheckList_Codes" type="clt_ru:Text50Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Коды контрольных списков, перечисленные через запятую</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ObjectsOfExpertExamination" type="fscnpr:ObjectsOfExpertExaminationType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения об объектах экспертизы (продукции)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IdentifResult" type="RUSclt_ru:FreeText4000Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Общие выводы по результатам идентификации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009046E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AuthorizationType">
+    <xs:annotation>
+      <xs:documentation>Разрешение/Заключение</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="Status" type="clt_ru:Numeric1Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Состояние разрешения: 1 - действует, 2 - приостановлено, 3 - возобновлено действие, 4 - действие прекращено, 5 - действие завершено</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Zkl_srokp" type="clt_ru:Numeric1Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Признак срока действия заключения: 0 - «без ограничения срока действия»; 1 - «в течение срока выполнения обязательств»</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocType" type="clt_ru:Numeric1Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>1 - для заключений, выдаваемых центрами независимой идентификационной экспертизы; 2 - для заключений, выдаваемых ФСТЭК России; 3 - для разрешений КЭК РФ на экспорт; 4 - для разрешений КЭК РФ на временный вывоз; 5 - Идентификационные заключения, выдаваемые экспертными организациями; 6 - Идентификационные заключения, выдаваемые ФСТЭК России</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Opt_Cod" type="clt_ru:Numeric1Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код вида внешнеэкономической операции: 0 - вывоз из РФ, 1 - временный вывоз из РФ, 2 -ввоз в РФ, 3 - временный ввоз в РФ, 4 - вывоз из РФ – ввоз в РФ, 5  - передача технических данных  </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Opt_Note" type="clt_ru:FreeText500Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Примечание по внешнеэкономической операции</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="OrganizationType">
+    <xs:annotation>
+      <xs:documentation>Сведения об организации</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:RUOrganizationNameAddrType">
+        <xs:sequence>
+          <xs:element name="IdentityCard" type="RUScat_ru:RUIdentityCardType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Документ, удостоверяющий личность</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Contact" type="cat_ru:ContactType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Контактная информация</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="EndUserType">
+    <xs:annotation>
+      <xs:documentation>Сведения конечном пользователе продукции</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:RUOrganizationNameAddrType">
+        <xs:sequence>
+          <xs:element name="CountryEndUse" type="clt_ru:CountryA2CodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код страны конечного использования (Альфа-2)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GoodsType">
+    <xs:annotation>
+      <xs:documentation>Товары Разрешения/Заключения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Number" type="clt_ru:Count6Type">
+        <xs:annotation>
+          <xs:documentation>Номер объекта экспертизы (продукции)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" maxOccurs="16">
+        <xs:annotation>
+          <xs:documentation>Описание товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsNomenclatureCode" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Список кодов ТН ВЭД ЕАЭС через запятую</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsQuantity" type="RUScat_ru:SupplementaryQuantity24point8Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsCategoryCode" type="clt_ru:Numeric1Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код категории продукции: 0 - Программное обеспечение; 1 - Конструкционные и иные материалы, за исключением ядерных и радиоактивных материалов; 2 - Ядерные и радиоактивные материалы, а также изделия их содержащие; 3 - Химические вещества и соединения, за исключением ядерных и радиоактивных материалов; 4 - Биологические агенты и субстанции; 5 - Оборудование (приборы, устройства) серийного производства; 6 - Оборудование (приборы, устройства), изготовленное по индивидуальным заказам; 7 - Технологии в форме технических данных; 8 - Технологии в форме технической помощи, за исключением услуг по обучению; 9 - Услуги по обучению.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FlagEconomicSteps" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак применения специальных экономических мер к объекту экспертизы. Может принимать значения: 0 - специальные экономические меры не применяются; 1 - применяются специальные экономические меры, установленные нормативным правовым актом с указанием его номера и даты.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ActEconomicSteps" type="fscnpr:DocumentType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Aкт, устанавливающий специальные экономические меры</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ConslusionsListItems" type="fscnpr:ConslusionsListType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Позиции (пункты) контрольных списков, выбранные для сравнительного анализа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Conslusions" type="fscnpr:ConslusionsType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Результаты сравнительного анализа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BriefSpecifications" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание продукции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ConslusionsDocumentType">
+    <xs:annotation>
+      <xs:documentation>Сведения об эл. документах, прикрепленных к заключению</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocumentName" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Наименование документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата добавления документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentNameBD" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Оригинальное наименование файла в БД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FileName" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Наименование файла в выгрузке</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FileData" type="clt_ru:Text3MB" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Данные файла  в кодировке BASE64</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ConslusionsListType">
+    <xs:annotation>
+      <xs:documentation>Сведения о позициях (пунктах) контрольных списков</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="NumberItem" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Номер позиции (пункта) контрольного списка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NumberSection" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Номер раздела контрольного списка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CodeConslusionsList" type="clt_ru:CodeVariable2Type">
+        <xs:annotation>
+          <xs:documentation>Код контрольного списка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ConslusionsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о результатах сравнительного анализа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ConslusionsDescription" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="16">
+        <xs:annotation>
+          <xs:documentation>Описание позиции (пункта) контрольного списка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProductDetail" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="16">
+        <xs:annotation>
+          <xs:documentation>Характеристики объекта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Decision" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Выводы. Может принимать значения: 0 - не соответствует контролируемым товарам (технологиям); 1 - соответствует контролируемым товарам (технологиям).</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AuthorizedPersonType">
+    <xs:annotation>
+      <xs:documentation>Подпись уполномоченного должностного лица</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FIO" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>ФИО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonPost" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Должность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocumentType">
+    <xs:annotation>
+      <xs:documentation>Реквизиты документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Number" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Date" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExpirationDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Срок действия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ContractType">
+    <xs:annotation>
+      <xs:documentation>Реквизиты контракта (соглашения)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="fscnpr:DocumentType">
+        <xs:sequence>
+          <xs:element name="Name" type="clt_ru:FreeText500Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Наименование</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ExpirationCode" type="clt_ru:IndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Признак срока действия контракта (соглашения). Может принимать значения: 0 - без ограничения срока действия; 1 - в течение срока выполнения обязательств;</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Note" type="clt_ru:FreeText500Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Примечание к контракту (соглашению)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ObjectsOfExpertExaminationType">
+    <xs:annotation>
+      <xs:documentation>Сведения об объектах экспертизы (продукции)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ProdObjectNumeric" type="clt_ru:Count6Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер объекта экспертизы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProdDescription" type="clt_ru:FreeText250Type" maxOccurs="16">
+        <xs:annotation>
+          <xs:documentation>Наименование продукции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProdCategoryCode" type="clt_ru:Numeric1Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код категории продукции: 0 - Программное обеспечение; 1 - Конструкционные и иные материалы, за исключением ядерных и радиоактивных материалов; 2 - Ядерные и радиоактивные материалы, а также изделия их содержащие; 3 - Химические вещества и соединения, за исключением ядерных и радиоактивных материалов; 4 - Биологические агенты и субстанции; 5 - Оборудование (приборы, устройства) серийного производства; 6 - Оборудование (приборы, устройства), изготовленное по индивидуальным заказам; 7 - Технологии в форме технических данных; 8 - Технологии в форме технической помощи, за исключением услуг по обучению; 9 - Услуги по обучению</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProdQuantity" type="RUScat_ru:SupplementaryQuantity24point8Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество продукции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsNomenclatureCode" type="clt_ru:GoodsNomenclatureCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BriefSpecifications" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Краткие технические характеристики продукции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

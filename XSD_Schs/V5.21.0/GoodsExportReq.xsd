@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:catSCVV="urn:customs.ru:SCVVCommonAggregateTypesCust:5.21.0" xmlns:GExReq="urn:customs.ru:Information:CustomsDocuments:GoodsExportReq:5.21.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:GoodsExportReq:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:SCVVCommonAggregateTypesCust:5.21.0" schemaLocation="SCVVCommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос сведений о фактически вывезенных товарах по декларации</xs:documentation>
+  </xs:annotation>
+  <xs:element name="GoodsExportReq" type="GExReq:GoodsExportReqType" />
+  <xs:complexType name="GoodsExportReqType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений о фактически вывезенных товарах по декларации</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="EECEDocHeaderAddInfo" type="RUScat_ru:EECEDocHeaderAddInfoType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дополнительные технологические реквизиты электронного документа (сведений)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DateBegin" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата начала периода, за который запрашивается информация</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DateEnd" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата окончания периода, за который запрашивается информация</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BorderPointCode" type="clt_ru:Code6Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код пограничного пункта пропуска.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Customs" type="cat_ru:CustomsType">
+            <xs:annotation>
+              <xs:documentation>Таможенный орган</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsPerson" type="cat_ru:CustomsPersonType">
+            <xs:annotation>
+              <xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DTID" type="catSCVV:GTDInqType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер ДТ.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1020101E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

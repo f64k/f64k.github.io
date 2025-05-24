@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XML-валидация по XSD (чистый фронт)</title>
+
+  <!-- xmllint.js (libxml2 + Emscripten) -->
+  <!--<script src="https://unpkg.com/xmllint/xmllint.js"></script>-->
+  <script src="https://unpkg.com/xmllint@0.1.1/xmllint.js"></script>
+
+  <style>
+    body {font-family: system-ui, sans-serif; margin: 2rem;}
+    .ok     {color: green;}
+    .error  {color: red;  white-space: pre-wrap;}
+  </style>
+</head>
+<body>
+
+<h2>XML ⇢ XSD валидация в браузере</h2>
+
+<label>XML-файл: <input type="file" id="xmlFile" accept=".xml"/></label><br><br>
+<label>XSD-файл: <input type="file" id="xsdFile" accept=".xsd,.xml"/></label><br><br>
+
+<button id="runBtn" disabled>Проверить</button>
+
+<hr>
+<div id="result"></div>
+
+<script>
+  const xmlInput = document.getElementById('xmlFile');
+  const xsdInput = document.getElementById('xsdFile');
+  const runBtn   = document.getElementById('runBtn');
+  const result   = document.getElementById('result');
+
+  // включаем кнопку, когда выбраны оба файла
+  [xmlInput, xsdInput].forEach(inp => inp.addEventListener('change', () => {
+    runBtn.disabled = !(xmlInput.files.length && xsdInput.files.length);
+  }));
+
+  runBtn.addEventListener('click', async () => {
+    result.textContent = 'Читаю файлы…';
+    const [xmlText, xsdText] = await Promise.all([
+      readFile(xmlInput.files[0]),
+      readFile(xsdInput.files[0])
+    ]);
+
+    try {
+      const res = xmllint.validateXML({xml: xmlText, schema: xsdText});
+
+      if (!res.errors) {
+        result.className = 'ok';
+        result.textContent = '✅ Документ валиден!';
+      } else {
+        result.className = 'error';
+        result.textContent = '❌ Ошибки:\n' + res.errors.join('\n');
+      }
+    } catch (e) {
+      result.className = 'error';
+      result.textContent = '😢 Что-то пошло не так:\n' + e;
+    }
+  });
+
+  function readFile(file){
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onerror = () => reject(reader.error);
+      reader.onload  = () => resolve(reader.result);
+      reader.readAsText(file);
+    });
+  }
+</script>
+
+</body>
+</html>

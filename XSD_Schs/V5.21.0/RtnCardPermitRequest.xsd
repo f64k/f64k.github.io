@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:rcpreq="urn:customs.ru:Information:SQDocuments:RtnCardPermitRequest:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:RtnCardPermitRequest:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос сведений из реестра разрешений ОГ, реестра разрешительных документов, реестра карточек допуска</xs:documentation>
+  </xs:annotation>
+  <xs:element name="RtnCardPermitRequest" type="rcpreq:RtnCardPermitRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений из реестра разрешений ОГ, реестра разрешительных документов, реестра карточек допуска</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RtnCardPermitRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений из реестра разрешений ОГ, реестра разрешительных документов, реестра карточек допуска</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Number" type="clt_ru:DocumentNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Серия и номер бланка карточки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AutoNumber" type="rcpreq:DRtnTrAutoNumberType" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер ТС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CertificateNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер удостоверения допуска</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009294E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные простые прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="DRtnTrAutoNumberType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер ТС</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="12" />
+      <xs:pattern value="[0-9a-zA-Zа-яА-Я \-]*" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

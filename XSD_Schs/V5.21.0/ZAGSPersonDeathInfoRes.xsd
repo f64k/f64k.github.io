@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:zagsd="urn:customs.ru:Information:SQDocuments:ZAGSPersonDeathInfoRes:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:ZAGSPersonDeathInfoRes:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Предоставление из ЕГР ЗАГС сведений об актах гражданского состояния (сведения о смерти физического лица)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ZAGSPersonDeathInfoRes" type="zagsd:ZAGSPersonDeathInfoResType">
+    <xs:annotation>
+      <xs:documentation>Предоставление из ЕГР ЗАГС сведений об актах гражданского состояния (сведения о смерти физического лица)</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ZAGSPersonDeathInfoResType">
+    <xs:annotation>
+      <xs:documentation>Предоставление из ЕГР ЗАГС сведений об актах гражданского состояния (сведения о смерти физического лица)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Result" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Результат обработки поступившего запроса. Принимает значение: 1 – по поступившему запросу сведения в ЕГР ЗАГС найдены; 2 – по поступившему запросу сведения в ЕГР ЗАГС отсутствуют или не переданы из региональной системы; 3 – по поступившему запросу нельзя однозначно определить сведения в ЕГР ЗАГС.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RecordDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата, на которую сформированы сведения по поступившему запросу</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RecordStatus" type="clt_ru:Code2Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Статус актовой записи, найденной по поступившему запросу о наличии актовой записи. Принимает значение: 01 – Запись акта первичная; 02 – Запись акта восстановлена; 03 – Запись акта аннулирована; 04 – Запись аннулированного акта восстановлена по решению суда; 07 – В запись акта внесены изменения (исправления).</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RecordNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер записи акта гражданского состояния, указанный в запросе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PersonDeathInfo" type="zagsd:PersonDeathInfoType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о государственной регистрации смерти</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009271E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="PersonDeathInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о государственной регистрации смерти</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RecordNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер записи акта о смерти</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RecordDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата составления записи акта о смерти</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RecordStatus" type="zagsd:RecordStatus">
+        <xs:annotation>
+          <xs:documentation>Сведения о статусе записи акта о смерти</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ZAGS" type="zagsd:ZAGSType">
+        <xs:annotation>
+          <xs:documentation>Сведения об органе ЗАГС, которым произведена государственная регистрация смерти</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DeathCert" type="cat_ru:DocumentBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о выданном Свидетельстве о смерти</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RecordInfo" type="zagsd:RecordInfoType">
+        <xs:annotation>
+          <xs:documentation>Передаваемые сведения о государственной регистрации смерти</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RecordStatus">
+    <xs:annotation>
+      <xs:documentation>Сведения о статусе записи акта о смерти</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="StartDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата начала действия статуса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StatusCode" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Код статуса. Принимает значение: 01 – Запись акта первичная; 02 – Запись акта восстановлена; 03 – Запись акта аннулирована; 04 – Запись аннулированного акта восстановлена по решению суда; 07 – В запись акта внесены изменения (исправления)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StatusName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование статуса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ZAGSType">
+    <xs:annotation>
+      <xs:documentation>Сведения об органе ЗАГС, которым произведена государственная регистрация смерти</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ZAGSName" type="clt_ru:FreeText500Type" maxOccurs="2">
+        <xs:annotation>
+          <xs:documentation>Полное наименование органа ЗАГС, которым произведена государственная регистрация акта гражданского состояния</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ZAGSCode" type="clt_ru:Code8Type">
+        <xs:annotation>
+          <xs:documentation>Код органа ЗАГС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RecordInfoType">
+    <xs:annotation>
+      <xs:documentation>Передаваемые сведения о государственной регистрации смерти</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonInfo" type="zagsd:PersonInfoType">
+        <xs:annotation>
+          <xs:documentation>Сведения об умершем</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DeathDocument" type="zagsd:DeathDocumentType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о документе, подтверждающем факт смерти</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PersonInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения об умершем</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Name" type="cat_ru:PersonBaseType">
+        <xs:annotation>
+          <xs:documentation>ФИО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BirthDate" type="zagsd:DateType">
+        <xs:annotation>
+          <xs:documentation>Дата рождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Gender" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Пол. Принимает значение: 1 – мужской; 2 – женский.
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CitizenshipCountryCode" type="clt_ru:CountryN3CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код страны гражданства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CitizenshipCountryName" type="clt_ru:CountryNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Полное наименование страны гражданства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DeathReason" type="zagsd:DeathReasonType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о причинах смерти</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BirthPlace" type="RUScat_ru:RUAddressType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Место рождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LastAddress" type="RUScat_ru:RUAddressType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Последнее место жительства умершего</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdentityCard" type="RUScat_ru:RUIdentityCardType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о документе, удостоверяющем личность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DeathDate" type="zagsd:DateType">
+        <xs:annotation>
+          <xs:documentation>Дата смерти</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DeathPlace" type="RUScat_ru:RUAddressType">
+        <xs:annotation>
+          <xs:documentation>Место смерти</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeathDocumentType">
+    <xs:annotation>
+      <xs:documentation>Сведения о документе, подтверждающем факт смерти</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="Code" type="clt_ru:Code5Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код вида документа, подтверждающего факт смерти</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:element name="OrganizationName" type="clt_ru:FreeText250Type" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>Наименование органа, выдавшего документ</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="FIOIP" type="cat_ru:PersonBaseType" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>Фамилия, имя, отчество индивидуального предпринимателя, осуществляющего медицинскую деятельность</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="FIOFL" type="cat_ru:PersonBaseType" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>Фамилия, имя, отчество физического лица, представившего заявление</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DateType">
+    <xs:annotation>
+      <xs:documentation>Дата</xs:documentation>
+    </xs:annotation>
+    <xs:choice>
+      <xs:element name="Date" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MonthYear" type="clt_ru:MonthYearType">
+        <xs:annotation>
+          <xs:documentation>Месяц и год</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Year" type="clt_ru:DateYearCustType">
+        <xs:annotation>
+          <xs:documentation>Год</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="DeathReasonType">
+    <xs:annotation>
+      <xs:documentation>Сведения о причинах смерти</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ReasonCode" type="clt_ru:CodeVariable10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код причины смерти</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Reason" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Причина смерти</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

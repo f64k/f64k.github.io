@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:cltESAD_cu="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" xmlns:tnvin="urn:customs.ru:Information:CustomsDocuments:PreliminaryTNVEDCodeIn:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:PreliminaryTNVEDCodeIn:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+	<xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" schemaLocation="CUESADCommonLeafTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Предварительное решение по классификации товара в соответствии с единой ТН ВЭД ЕАЭС (Внутренний формат)</xs:documentation>
+	</xs:annotation>
+	<xs:element name="PreliminaryTNVEDCodeIn" type="tnvin:PreliminaryTNVEDCodeInType">
+		<xs:annotation>
+			<xs:documentation>Предварительное решение по классификации товара в соответствии с единой ТН ВЭД ЕАЭС (Внутренний формат)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PreliminaryTNVEDCodeInType">
+		<xs:annotation>
+			<xs:documentation>Предварительное решение по классификации товара в соответствии с единой ТН ВЭД ЕАЭС (Внутренний формат)</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="DocType" type="clt_ru:Numeric1Type">
+						<xs:annotation>
+							<xs:documentation>Тип документа: 1 - запрос/поиск предварительных решений, 2 - результат запроса/поиска, 3 - решение инспектора</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:choice>
+						<xs:element name="Request" type="tnvin:RequestType">
+							<xs:annotation>
+								<xs:documentation>Запрос/поиск предварительных решений  (DocType = 1)</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Result" type="tnvin:ResultType">
+							<xs:annotation>
+								<xs:documentation>Результат запроса/поиска (DocType = 2)</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="InspMark" type="tnvin:DTParamsType">
+							<xs:annotation>
+								<xs:documentation>Отметки инспектора  (DocType = 3)</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006357E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PreliminaryTNVEDType">
+		<xs:annotation>
+			<xs:documentation>Результат поиска</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Date" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата принятия решения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocKind" type="clt_ru:Numeric1Type">
+				<xs:annotation>
+					<xs:documentation>Тип формы документа: 0 - по Решению Комиссии ТС от 20.05.2010 № 260; 1 - по Решению Коллегии ЕЭК от 11.07.2017 года № 84; 2 - по Решению Коллегии ЕЭК от 17.04.2018 года № 58</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Status" type="clt_ru:CodeVariable2Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код статуса 5 - «действует», 6 - «изменено» (означает, что также действует), 7 - «отозвано», 8 - «действие прекращено», 9 - «утратило силу», 10 - «отменено»</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StatusText" type="clt_ru:FreeText250Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Описание статуса</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DateEnd" type="clt_ru:DateCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата окончания срока действия предварительного решения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TNVEDCode" type="clt_ru:GoodsNomenclatureCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код товара по ТН ВЭД ЕАЭС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsInfoTNVEDCode" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Сведения о товаре, необходимые для классификации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RationaleDecision" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Обоснование принятия решения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Mark" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Служебные отметки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AddMarkCustomsObjects" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Дополнительная информация для таможенных целей (при необходимости), которую должен принять во внимание таможенный орган при таможенном декларировании товара, в отношении которого принято предварительное решение (например, сведения о документах уполномоченных органов исполнительной власти государств-членов, производителей товара, подтверждающих отнесение товара к 10-значному коду, указанному в графе 6 формы предварительного решения)
+							</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MarkChange" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Пояснение к письму на «изменение» предварительного решения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DuplicateSing" type="clt_ru:IndicatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Признак выдачи дубликата</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Customs" type="cat_ru:CustomsType">
+				<xs:annotation>
+					<xs:documentation>Наименование таможенного органа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Declarant" type="tnvin:DeclarantType">
+				<xs:annotation>
+					<xs:documentation>Сведения о заявителе</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegistrationNumber" type="clt_ru:DocumentNumberType">
+				<xs:annotation>
+					<xs:documentation>Регистрационный номер</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Goods" type="tnvin:GoodsType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Товар</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PersonSignature" type="cat_ru:PersonSignatureType">
+				<xs:annotation>
+					<xs:documentation>Подпись должностного лица таможенного органа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы.</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="DeclarantType">
+		<xs:annotation>
+			<xs:documentation>Сведения о заявителе</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:OrganizationType">
+				<xs:sequence>
+					<xs:element name="Chief" type="cat_ru:PersonBaseType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Руководитель (заместителя руководителя)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DTParamsType">
+		<xs:annotation>
+			<xs:documentation>Сведения из ДТ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GTDID" type="cat_ru:GTDIDType">
+				<xs:annotation>
+					<xs:documentation>Номер ДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LNP" type="clt_ru:LNPIDType">
+				<xs:annotation>
+					<xs:documentation>Код ЛНП инспектора</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="G011" type="clt_ru:Text150Type">
+				<xs:annotation>
+					<xs:documentation>Направление перемещения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="G081" type="clt_ru:INNIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ИНН получателя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="G082" type="clt_ru:Text150Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование получателя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="G091" type="clt_ru:INNIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ИНН лица, ответственного за фин. урегулирование</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="G092" type="clt_ru:Text150Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наим. отв. за финрегулир-е</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="G141" type="clt_ru:INNIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ИНН декларанта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="G142" type="clt_ru:Text150Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование декларанта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsParams" type="tnvin:GoodsParamsType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Реквизиты товаров</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DTResultType">
+		<xs:annotation>
+			<xs:documentation>Результат запроса предварительных решений по реквизитам ДТ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GoodsNumber" type="clt_ru:Count3Type">
+				<xs:annotation>
+					<xs:documentation>Номер товара в ДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PredecisionID" type="tnvin:PredecisionIDType">
+				<xs:annotation>
+					<xs:documentation>Предварительное решение из графы 44 ДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ResCode" type="tnvin:ResCodeType">
+				<xs:annotation>
+					<xs:documentation>Код результата</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ResText" type="clt_ru:FreeText500Type">
+				<xs:annotation>
+					<xs:documentation>Текст результата</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GoodsInformationType">
+		<xs:annotation>
+			<xs:documentation>Характеристика товара</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GoodsMark" type="cltESAD_cu:GoodsArticulType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Марка (модель) товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsMarking" type="cltESAD_cu:GoodsArticulType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Артикул товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsStandard" type="cltESAD_cu:GoodsArticulType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Стандарт (ГОСТ, ОСТ, СПП, СТО, ТУ)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsSort" type="cltESAD_cu:GoodsArticulType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Сорт / Сорт или группа сортов (для лесо- и пиломатериалов)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="WoodSortiment" type="cltESAD_cu:WoodAssortiment" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование сортимента (для лесоматериалов товарной позиции 4403)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="WoodKind" type="cltESAD_cu:WoodKindType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Порода древесины</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Dimensions" type="cltESAD_cu:GoodsArticulType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Размеры</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GoodsParamsType">
+		<xs:annotation>
+			<xs:documentation>Реквизиты товара</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GoodsNumber" type="clt_ru:Count3Type">
+				<xs:annotation>
+					<xs:documentation>Номер товара в ДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PredecisionID" type="tnvin:PredecisionIDType">
+				<xs:annotation>
+					<xs:documentation>Предварительное решение из графы 44 ДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TNVEDCode" type="clt_ru:GoodsNomenclatureCodeType">
+				<xs:annotation>
+					<xs:documentation>Код товара в соответствии с ТН ВЭД ЕАЭС заявленный в ДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="G33Name" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование товара в соответствии с ТН ВЭД ЕАЭС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="G31" type="clt_ru:Text3MB">
+				<xs:annotation>
+					<xs:documentation>Сведения о товаре из графы G31 ДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InspNote" type="RUSclt_ru:FreeText4000Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Служебные отметки инспектора в ДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InspResolution" type="tnvin:InspResolutionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Решение инспектора  (DocType = 3)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GoodsType">
+		<xs:annotation>
+			<xs:documentation>Товар</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GoodDescription" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Наименование товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsInformation" type="tnvin:GoodsInformationType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Характеристика товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="INNType">
+		<xs:annotation>
+			<xs:documentation>Поиск предварительных решений по ИНН</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="INN8" type="clt_ru:INNIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ИНН (графа 8)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="INN9" type="clt_ru:INNIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ИНН (графа 9)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="INN14" type="clt_ru:INNIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ИНН (графа 14)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InspResolutionType">
+		<xs:annotation>
+			<xs:documentation>Решение инспектора</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="InspResCode" type="tnvin:InspResCodeType">
+				<xs:annotation>
+					<xs:documentation>Код решения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InspResText" type="clt_ru:FreeText500Type">
+				<xs:annotation>
+					<xs:documentation>Текст решения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InspResNote" type="RUSclt_ru:FreeText4000Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Пояснение к решению</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PredecisionIDType">
+		<xs:annotation>
+			<xs:documentation>ИД предварительного решения</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PreDecsNum" type="clt_ru:DocumentNumberType">
+				<xs:annotation>
+					<xs:documentation>№ предварительного решения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PreDecsDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата предварительного решения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PreliminaryTNVEDResType">
+		<xs:annotation>
+			<xs:documentation>Предварительное решение</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DTResult" type="tnvin:DTResultType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Результат запроса предварительного решения по реквизитам ДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PreliminaryTNVED" type="tnvin:PreliminaryTNVEDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Предварительное решение по классификации товара в соответствии с единой ТН ВЭД ЕАЭС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RequestType">
+		<xs:annotation>
+			<xs:documentation>Запрос</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="DTParams" type="tnvin:DTParamsType">
+				<xs:annotation>
+					<xs:documentation>Запрос предварительных решений по реквизитам ДТ /решение инспектора</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="INN" type="tnvin:INNType">
+				<xs:annotation>
+					<xs:documentation>Поиск предварительных решений по ИНН</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsName" type="clt_ru:Text50Type">
+				<xs:annotation>
+					<xs:documentation>Поиск предварительных решений по наименованию товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TNVEDCode" type="clt_ru:GoodsNomenclatureCodeType">
+				<xs:annotation>
+					<xs:documentation>Поиск предварительных решений по ТН ВЭД ЕАЭС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="ResultType">
+		<xs:annotation>
+			<xs:documentation>Результат</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PreliminaryTNVEDRes" type="tnvin:PreliminaryTNVEDResType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Список предварительных решений</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="InspResCodeType">
+		<xs:annotation>
+			<xs:documentation>Код решения</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="clt_ru:Numeric1Type">
+			<xs:enumeration value="0">
+				<xs:annotation>
+					<xs:documentation>соответствует</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>не соответствует</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ResCodeType">
+		<xs:annotation>
+			<xs:documentation>Код результата</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="clt_ru:Numeric1Type">
+			<xs:enumeration value="0">
+				<xs:annotation>
+					<xs:documentation>найдено, требуется решение инспектора</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>не найдено</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>не действует</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>не соответствует</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

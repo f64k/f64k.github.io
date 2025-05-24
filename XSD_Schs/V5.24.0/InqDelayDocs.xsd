@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="urn:customs.ru:Information:CustomsDocuments:InqDelayDocs:5.24.0" version="5.24.0.0" xmlns:catESAD_ru="urn:customs.ru:RUCommonAggregateTypes:5.24.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:idd="urn:customs.ru:Information:CustomsDocuments:InqDelayDocs:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUCommonAggregateTypes:5.24.0" schemaLocation="RUESADCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Обращение о разрешении представления документов в определенный срок.</xs:documentation>
+  </xs:annotation>
+  <xs:element name="InqDelayDocs" type="idd:InqDelayDocsType" />
+  <xs:complexType name="InqDelayDocsType">
+    <xs:annotation>
+      <xs:documentation>Обращение о разрешении представления документов в определенный срок</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="SendDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата направления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="SendTime" type="clt_ru:TimeCustType">
+            <xs:annotation>
+              <xs:documentation>Время направления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Applicant" type="cat_ru:OrganizationType">
+            <xs:annotation>
+              <xs:documentation>Сведения о заявителе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" name="DelayDocDescription" type="idd:DelayDocDescriptionType">
+            <xs:annotation>
+              <xs:documentation>Описание документов, которые предполагается представить в определенный срок</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="GTDNumber" type="cat_ru:GTDIDType">
+            <xs:annotation>
+              <xs:documentation>Справочный номер ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute fixed="1006016E" name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DelayDocDescriptionType">
+    <xs:annotation>
+      <xs:documentation>Описание документов, которые предполагается представить в определенный срок</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="catESAD_ru:DocumentDescriptionType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="DelayReason" type="clt_ru:FreeText250Type">
+            <xs:annotation>
+              <xs:documentation>Причина, по которой документ не может быть представлен немедленно</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="DocumentFormSign" type="clt_ru:DigitalIndicatorType">
+            <xs:annotation>
+              <xs:documentation>Признак формы представления документа: 0 - в электронной форме, 1 - в виде бумажного документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="RequestPositionID" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Идентификатор позиции в запросе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

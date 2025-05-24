@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:cltComFin_ru="urn:customs.ru:Information:CommercialFinanceDocuments:CommercialFinanceCommonLeafTypesCust:5.8.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:infrg="urn:customs.ru:Information:SQDocuments:InFringer:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:InFringer:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:CommercialFinanceDocuments:CommercialFinanceCommonLeafTypesCust:5.8.0" schemaLocation="CommercialFinanceCommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сведения из реестра нарушителей</xs:documentation>
+  </xs:annotation>
+  <xs:element name="InFringer" type="infrg:InFringerType" />
+  <xs:complexType name="InFringerType">
+    <xs:annotation>
+      <xs:documentation>Сведения из реестра нарушителей</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocSign" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Признак документа (0 - Сведения из реестра нарушителей; 1 - Сведения из реестра нарушителей - отметка об оплате штрафа)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ViolatorsList" type="infrg:ViolatorsListType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Список сведений из реестра нарушителей</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009034E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DriverType">
+    <xs:annotation>
+      <xs:documentation>Водитель</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:PersonBaseType">
+        <xs:sequence>
+          <xs:element name="DriverBirthDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата рождения водителя</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DriverBirthPlace" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Место рождения водителя</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PaymentRecipientType">
+    <xs:annotation>
+      <xs:documentation>Получатель платежа и его реквизиты</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:SubjectDetailsBankType">
+        <xs:sequence>
+          <xs:element name="CBC" type="cltComFin_ru:CBCType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код бюджетной классификации (КБК) платежа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ViolatorsListType">
+    <xs:annotation>
+      <xs:documentation>Тип описания списка сведений</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ViolatorID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор записи в реестре нарушителей</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ResolutionOrgName" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование ПК, на котором составлено постановление</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InspectionDateTime" type="clt_ru:DateTimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата/время контроля (проверки)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PenaltySum" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сумма штрафа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PenaltyStatus" type="clt_ru:Code10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Статус штрафа: REALLY - Действительно; APPEALED - Обжаловано; CANCELLED - Отменено по жалобе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PenaltyOrganization" type="RUScat_ru:SubjectDetailsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Организация, на которую наложен штраф</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IsVerbalWarning" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак замены штрафа на устное замечание или предупреждение: 1 - штраф заменен на устное предупреждение; 0 - нет замены штрафа на устное предупреждение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IsMAP" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак: штраф наложен при перевозке МАП или при перевозке на территории РФ: 1 - МАП; 0 - РФ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IsPaid" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Отметка об оплате</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AutoLawName" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Статья нарушения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Carrier" type="RUScat_ru:SubjectDetailsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Перевозчик</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DriverName" type="infrg:DriverType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Водитель</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ViolatorForm" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вид нарушителя (Водитель, Должностное лицо, Юридическое лицо, Грузоотправитель, Индивидуальный предприниматель, Гражданин, Собственник)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ViolatorName" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Нарушитель (ФИО или наименование)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ViolatorBirthDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата рождения нарушителя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ViolatorBirthPlace" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Место рождения нарушителя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ViolatorAddress" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Адрес нарушителя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Resolution" type="cat_ru:DocumentBaseType">
+        <xs:annotation>
+          <xs:documentation>Постановление</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ResolutionEmployee" type="cat_ru:PersonBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Инспектор, составивший постановление (утвердивший постановление)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TSInfo" type="cat_ru:TransportMeansBaseType">
+        <xs:annotation>
+          <xs:documentation>Регистрационные данные ТС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentRecipient" type="infrg:PaymentRecipientType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Получатель платежа и его реквизиты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

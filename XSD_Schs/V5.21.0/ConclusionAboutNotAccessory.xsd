@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:conana="urn:customs.ru:Information:SQDocuments:ConclusionAboutNotAccessory:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:ConclusionAboutNotAccessory:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Заключение ФСВТС России</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ConclusionAboutNotAccessory" type="conana:ConclusionAboutNotAccessoryType" />
+  <xs:complexType name="ConclusionAboutNotAccessoryType">
+    <xs:annotation>
+      <xs:documentation>Заключение ФСВТС России</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="BDRDID" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Идентификатор документа по БД РД</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" maxOccurs="4">
+            <xs:annotation>
+              <xs:documentation>Наименование и описание товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Conclusion" type="conana:ConclusionType">
+            <xs:annotation>
+              <xs:documentation>Заключение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PVN" type="clt_ru:IndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Признак продукции военного назначения (0 - не ПВН, 1 - ПВН)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="REKF" type="clt_ru:IndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Рекомендация обратиться в ФСТЭК России (0 - нет рекомендации, 1 - рекомендовано обращение)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Status" type="clt_ru:IndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Статус (1 - действует, 0 - не действует)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DateIzm" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата поступления информации о досрочном окончании срока действия заключения из УТОВЭК/ФСВТС. Дата изменения статуса на «недействительно».</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ContractInfo" type="cat_ru:DocumentBaseType">
+            <xs:annotation>
+              <xs:documentation>Реквизиты контракта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ConclusionReceiver" type="RUScat_ru:SubjectDetailsType">
+            <xs:annotation>
+              <xs:documentation>Организация, получившая заключение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AuthorizedPerson" type="cat_ru:PersonSignatureType">
+            <xs:annotation>
+              <xs:documentation>Уполномоченное должностное лицо, подписавшее заключение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="VTS_TOV" type="conana:VTS_TovType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Товары заключения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009045E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ConclusionType">
+    <xs:annotation>
+      <xs:documentation>Заключение</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="Duration" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Cрок действия заключения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="VTS_TovType">
+    <xs:annotation>
+      <xs:documentation>Товары </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Name_Prod" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Наименование продукции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Obozn_Prod" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Обозначение продукции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SerN_Prod" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Серийные номера</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Rekv_Prod" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Реквизиты документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Kol_Prod" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество продукции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Primech" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Примечание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Prizn_Bloc" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Признак блокирования продукции: 0 - не блокировать; 1 - блокировать продукцию для ввоза/вывоза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

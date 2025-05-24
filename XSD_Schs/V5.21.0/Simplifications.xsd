@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:smpf="urn:customs.ru:Information:SQDocuments:Simplifications:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:Simplifications:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сведения о применении (неприменении) Упрощений</xs:documentation>
+  </xs:annotation>
+  <xs:element name="Simplifications" type="smpf:SimplificationsType" />
+  <xs:complexType name="SimplificationsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о применении (неприменении) Упрощений</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Simplification" type="smpf:SimplificationType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о применении (неприменении) Упрощений</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009165E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="SimplificationType">
+    <xs:annotation>
+      <xs:documentation>Сведения о применении (неприменении) Упрощений</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TaxPayerType" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Код вида налогоплатльщика: 1 - Юридическое лицо; 2 - Индивидуальный предприниматель;</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TaxPayerInfo" type="cat_ru:OrganizationBaseType">
+        <xs:annotation>
+          <xs:documentation>Сведения о ЮЛ/ИП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации ЮЛ или ИП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegOrg" type="smpf:TaxOrganID5Type">
+        <xs:annotation>
+          <xs:documentation>Код налогового органа (справочник СПРО), зарегистрировавшего ЮЛ или ИП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AuthorityDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата постановки налогоплательщика на учет в налоговом органе по месту нахождения ЮЛ (месту жительства ИП)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AuthorityOrg" type="clt_ru:TaxOrganIDType">
+        <xs:annotation>
+          <xs:documentation>Код налогового органа (справочник СОУН), осуществляющего учет налогоплательщика по месту нахождения ЮЛ (месту жительства ИП)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationWithdrawDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата снятия с учета налогоплательщика в налоговом органе по месту нахождения ЮЛ (месту жительства ИП)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SimplificationInfo" type="smpf:SimplificationInfoType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о применяемом упрощении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReestrExclusionDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата исключения резидента из реестра резидентов ОЭЗ в Калининградской области</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BusinessCeasementWithdrawDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата снятия с учета в связи прекращением предпринимательской деятельности (реорганизацией, ликвидацией)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SimplificationInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о применяемом упрощении</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TaxPayerCode" type="clt_ru:Numeric1Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код категории налогоплательщика:
+1 - резидент особой экономической зоны в Калининградской области;
+2 - налогоплательщик, который по состоянию на 1 апреля 2006 года осуществлял свою деятельность в                соответствии с положениями Федерального закона от 22.01.1996 № 13-ФЗ "Об особой экономической зоне в Калининградской области                </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SimplificationTypeCode" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Код вида применяемого упрощения:
+1 - Единый сельскохозяйственный налог (ЕСХН); 2 - Упрощенная система налогообложения (УСНО); 3 - Единый налог на вмененный доход (ЕНВД); 4 - Патентная система налогообложения (Патент); 5 - Применение статьи 149 НКРФ; 6 - Применение статьи 145 НКРФ           </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NKRFArticleAcceptionDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата, с которой налогоплательщик приобретает  право на применение подпункта 1.1 статьи 151 НКРФ в связи с окончанием применения Упрощений</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NKRFArticleDeclineDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата, с которой налогоплательщик утрачивает право на применение подпункта 1.1 статьи 151 НКРФ в связи с применением Упрощений</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="TaxOrganID5Type">
+    <xs:annotation>
+      <xs:documentation>Код налогового органа согласно справочнику органов, осуществляющих государственную регистрацию юридических лиц и индивидуальных предпринимателей (Справочник СПРО). 5 символов. Числовой
+            </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:pattern value="\d{5}" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

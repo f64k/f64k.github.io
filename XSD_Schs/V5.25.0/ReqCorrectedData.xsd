@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:cltESAD_ru="urn:customs.ru:RUCommonLeafTypes:5.4.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:rcd="urn:customs.ru:Information:CustomsDocuments:ReqCorrectedData:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:ReqCorrectedData:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUCommonLeafTypes:5.4.0" schemaLocation="RUESADCommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Требование на корректировку сведений, заявленных в декларации на товары</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ReqCorrectedData" type="rcd:ReqCorrectedDataType" />
+  <xs:complexType name="ReqCorrectedDataType">
+    <xs:annotation>
+      <xs:documentation>Требование на корректировку сведений, заявленных в декларации на товары.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="RequestDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата требования на корректировку.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RequestNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер запроса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TKPunkt" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер статьи ТК ЕАЭС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Declarant" type="cat_ru:OrganizationBaseType">
+            <xs:annotation>
+              <xs:documentation>Лицо,  декларирующее товары. Наименование / ФИО (для физических лиц)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Uncertainty" type="rcd:UncertaintyType">
+            <xs:annotation>
+              <xs:documentation>Выявленные несоответствия</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Instruction" type="rcd:InstructionReqType">
+            <xs:annotation>
+              <xs:documentation>Действия,  необходимые для устранения несоответствий</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Customs" type="cat_ru:CustomsType">
+            <xs:annotation>
+              <xs:documentation>Код и наименование таможенного органа.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsPerson" type="cat_ru:CustomsPersonType">
+            <xs:annotation>
+              <xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GTDNumber" type="cat_ru:GTDIDType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006005E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="BadDocumentType">
+    <xs:annotation>
+      <xs:documentation>Документ с ошибками</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор документа с ошибками.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocName" type="clt_ru:DocumentNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Название документа с ошибками</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocModeID" type="clt_ru:DocumentModeIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код вида ошибочного документа  (значение атрибута DocumentModeID).</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ListError" type="rcd:ListErrorType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Список ошибок, подлежащих исправлению</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InstructionReqType">
+    <xs:annotation>
+      <xs:documentation>Какие сведения (документы) и в какой срок необходимо скорректировать (представить) в таможенный орган</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DateLimit" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Срок, в который необходимо выполнить действия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InstructionDescription" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание действий</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InstrDocument" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Документ,  в соответствии с которым требуется выполнение действий</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ListErrorType">
+    <xs:annotation>
+      <xs:documentation>Список ошибок, подлежащих исправлению</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ErrCode" type="cltESAD_ru:PZKErrorCodeType">
+        <xs:annotation>
+          <xs:documentation>Код ошибки.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ErrorName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование ошибки.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ErrDescription" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Подробное описание ошибки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GTDGoodsNumber" type="clt_ru:Count5Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер товара по ДТ/списку</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ErrElement" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Имя ошибочного узла/элемента/атрибута </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ErrField" type="clt_ru:Text10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер графы ДТ/ДТС/КТС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SuccessContent" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Верное значение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ErrLevel" type="clt_ru:DigitalIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Уровень ошибки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CodeOrder" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код нормативного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ErrElementDesc" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание поля в котором найдена ошибка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CorrectValue" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Верное (ожидаемое) значение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="UncertaintyType">
+    <xs:annotation>
+      <xs:documentation>Выявленные несоответствия</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="UncertDescription" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание выявленных несоответствий</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BadDocument" type="rcd:BadDocumentType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о документе, содержащем ошибки (ДТ, ДТС, опись) для которого требуется техническая корректировка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

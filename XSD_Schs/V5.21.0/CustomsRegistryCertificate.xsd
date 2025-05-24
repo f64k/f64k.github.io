@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:regcer="urn:customs.ru:Information:CustomsDocuments:CustomsRegistryCertificate:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:CustomsRegistryCertificate:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Свидетельство о включении в реестр уполномоченных экономических операторов/таможенных перевозчиков/владельцев складов временного хранения/владельцев магазинов беспошлинной торговли/владельцев таможенных складов</xs:documentation>
+  </xs:annotation>
+  <xs:element name="CustomsRegistryCertificate" type="regcer:CustomsRegistryCertificateType" />
+  <xs:complexType name="CustomsRegistryCertificateType">
+    <xs:annotation>
+      <xs:documentation>Свидетельство о включении в реестр уполномоченных экономических операторов/таможенных перевозчиков/владельцев складов временного хранения/владельцев магазинов беспошлинной торговли/владельцев таможенных складов</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocSign" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Признак свидетельства о включении в реестр: 1 - УЭО; 2 - таможенных перевозчиков; 3 - владельцев СВХ; 4 - владельцев магазинов беспошлинной торговли; 5 - владельцев таможенных складов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IssueDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата выдачи свидетельства/подписи документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CertificateRegNumber" type="clt_ru:DocumentNumberType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер свидетельства</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Simplification" type="clt_ru:LetterIndicatorType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Специальное упрощение (УЭО)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="WarehouseType" type="clt_ru:IndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Признак того, что склад является открытым</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TotalSquare" type="clt_ru:QuantityBasisType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Общая площадь МБТ/склада, кв. м</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IssueCustoms" type="cat_ru:CustomsType">
+            <xs:annotation>
+              <xs:documentation>Сведения о таможенном органе, выдавшем свидетельство</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SimplificOperationCustoms" type="cat_ru:CustomsType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Таможенные органы, в которых могут производиться таможенные операции (УЭО)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Guarantee" type="regcer:AmountCustomsPaymentType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения об обеспечении уплаты таможенных платежей</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegisteredOrganization" type="regcer:RegisteredOrganizationType">
+            <xs:annotation>
+              <xs:documentation>Сведения об организации, зарегистрированной в качестве УЭО/таможенного перевозчика/владельца СВХ/владельца МБТ/владельца таможенного склада</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ChiefCustomsPerson" type="cat_ru:PersonBaseType">
+            <xs:annotation>
+              <xs:documentation>Руководитель таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsOperationPlace" type="regcer:GoodsOperationPlaceType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Характеристика местонахождения помещения, открытой площадки, иной территории</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1001104E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AmountCustomsPaymentType">
+    <xs:annotation>
+      <xs:documentation>Сведения об обеспечении уплаты таможенных платежей</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PaymentWayCode" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Код способа обеспечения уплаты таможенных платежей в соответствии с классификатором способов обеспечения уплаты таможенных пошлин, налогов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Amount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма обеспечения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Currency" type="clt_ru:CurrencyA3CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код валюты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GoodsOperationPlaceType">
+    <xs:annotation>
+      <xs:documentation>Характеристика местонахождения помещения, открытой площадки, иной территории</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PlaceSign" type="clt_ru:Numeric1Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак места: 1 - торговый зал (МБТ); 2 - склад (МБТ); 3 - открытая площадка; 4 - помещение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PlaceDescription" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание места</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PlaceVolume" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Объем помещения (полезный), куб. м</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PlaceSquare" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Площадь открытой площадки (полезная), кв. м</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Address" type="cat_ru:AddressType">
+        <xs:annotation>
+          <xs:documentation>Местонахождение помещения, открытой площадки, иной территории</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegisteredOrganizationType">
+    <xs:annotation>
+      <xs:documentation>Сведения об организации, зарегистрированной в качестве УЭО/таможенного перевозчика/владельца СВХ/владельца МБТ/владельца таможенного склада</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:SubjectDetailsType">
+        <xs:sequence>
+          <xs:element name="BranchDescription" type="cat_ru:CUBranchDescriptionType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения об обособленном подразделении</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

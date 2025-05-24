@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:rdr="urn:customs.ru:Information:CustomsDocuments:RepudDeclRegistration:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:RepudDeclRegistration:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Решение об отказе в регистрации таможенного документа</xs:documentation>
+	</xs:annotation>
+	<xs:element name="RepudDeclRegistration" type="rdr:RepudDeclRegistrationType">
+		<xs:annotation>
+			<xs:documentation>Решение об отказе в регистрации таможенного документа</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="RepudDeclRegistrationType">
+		<xs:annotation>
+			<xs:documentation>Решение об отказе в регистрации таможенного документа</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="RegNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Регистрационный номер листа отказа в регистрации ДТ</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DocumentSign" type="clt_ru:Numeric1Type">
+						<xs:annotation>
+							<xs:documentation>Признак документа: 0 - отказ в регистрации КДТ; 1 - иное</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DecisionDate" type="clt_ru:DateTimeCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дата и время решения </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Organization" type="cat_ru:OrganizationBaseType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Наименование декларанта или таможенного представителя</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DescriptionReasons" type="rdr:DescriptionReasonsType" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Описание причины отказа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomsPersonSignature" type="rdr:CustomsPersonSignatureType">
+						<xs:annotation>
+							<xs:documentation>Подпись должностного лица</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DeclRegNumber" type="cat_ru:GTDIDType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Регистрационный номер таможенной декларации</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DeclarantRequest" type="cat_ru:DocumentBaseType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Обращение декларанта о внесении изменений (дополнений) в таможенную декларацию</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006103E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы.</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="CustomsPersonSignatureType">
+		<xs:annotation>
+			<xs:documentation>Подпись должностного лица</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:CustomsPersonType">
+				<xs:sequence>
+					<xs:element name="IssueDate" type="clt_ru:DateCustType">
+						<xs:annotation>
+							<xs:documentation>Дата подписания.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DescriptionReasonsType">
+		<xs:annotation>
+			<xs:documentation>Описание причины отказа</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CodeReasonRefusal" type="clt_ru:CodeVariable6Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код причины отказа в регистрации </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReasonRefusal" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Причина отказа в регистрации ДТ в соответствии со статьей 111 ТК ЕАЭС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Comment" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Примечание</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

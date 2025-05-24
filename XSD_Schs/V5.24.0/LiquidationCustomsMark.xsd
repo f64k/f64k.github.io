@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:lqcm="urn:customs.ru:Information:CustomsDocuments:LiquidationCustomsMark:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:LiquidationCustomsMark:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Отметки таможенного органа на Заявлении об уничтожении товаров и (или) упаковки, пришедших в негодность</xs:documentation>
+  </xs:annotation>
+  <xs:element name="LiquidationCustomsMark" type="lqcm:LiquidationCustomsMarkType">
+    <xs:annotation>
+      <xs:documentation>Отметки таможенного органа на Заявлении об уничтожении товаров и (или) упаковки, пришедших в негодность</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="LiquidationCustomsMarkType">
+    <xs:annotation>
+      <xs:documentation>Отметки таможенного органа на Заявлении об уничтожении товаров и (или) упаковки, пришедших в негодность</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="ApplicationRegNumber" type="lqcm:ApplicationRegNumberType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер заявления на уничтожение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsMark" type="lqcm:CustomsMarkType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Таможенные отметки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Customs" type="cat_ru:CUCustomsType">
+            <xs:annotation>
+              <xs:documentation>Уполномоченный таможенный орган</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006187E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ApplicationRegNumberType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер заявления на уничтожение</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, зарегистрировавшего документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SerialNumber" type="clt_ru:Code9Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер документа по журналу регистрации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CustomsMarkType">
+    <xs:annotation>
+      <xs:documentation>Таможенные отметки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsDecision" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Тип решения таможенного органа: 1 - разрешение на уничтожение; 2 - продление срока уничтожения; 3 - отказ в выдаче разрешения; 4 - отказ в продлении срока уничтожения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ComposeDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата проставления таможенных отметок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsControl" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак необходимости применения таможенного наблюдения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RefusalReasons" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Причины невозможности выдачи разрешения на уничтожение/отказа в продлении срока</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FinalLiquidationDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Срок уничтожения по решению таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProlongFoundation" type="cat_ru:DocumentBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Основание продления срока уничтожения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsPerson" type="cat_ru:CustomsPersonType">
+        <xs:annotation>
+          <xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

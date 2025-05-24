@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!---->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" xmlns:ai_res="urn:customs.ru:Information:SQDocuments:AbodeInfoResponse:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:AbodeInfoResponse:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Ответ на запрос регистрации по месту пребывания</xs:documentation>
+	</xs:annotation>
+	<xs:element name="AbodeInfoResponse" type="ai_res:AbodeInfoResponseType">
+		<xs:annotation>
+			<xs:documentation>Ответ на запрос регистрации по месту пребывания</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AbodeInfoResponseType">
+		<xs:annotation>
+			<xs:documentation>Ответ на запрос регистрации по месту пребывания</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="FIO" type="ai_res:FIOType">
+						<xs:annotation>
+							<xs:documentation>ФИО физического лица</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="BirthDate" type="clt_ru:DateCustType">
+						<xs:annotation>
+							<xs:documentation>Дата рождения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:choice>
+						<xs:element name="PassportRF" type="ai_res:PassportRFType">
+							<xs:annotation>
+								<xs:documentation>Данные паспорта РФ</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="ForeignPassport" type="ai_res:ForeignPassportType">
+							<xs:annotation>
+								<xs:documentation>Данные заграничного паспорта</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="BirthCertificate" type="ai_res:BirthCertificateType">
+							<xs:annotation>
+								<xs:documentation>Данные свидетельства о рождении</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+					<xs:element name="AdditionalRegistrationAddress" type="ai_res:AdditionalRegistrationAddressType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Сведения об адресе регистрации</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentIDType" use="required" fixed="1009391E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор электронного документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="AdditionalRegistrationAddressType">
+		<xs:annotation>
+			<xs:documentation>Сведения об адресе регистрации</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RegistrationAddress" type="RUSclt_ru:AddressTextType">
+				<xs:annotation>
+					<xs:documentation>Сведения об адресе регистрации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegistrationDateFrom" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата начала срока регистрации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegistrationDateTo" type="clt_ru:DateCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата окончания регистрации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BirthCertificateType">
+		<xs:annotation>
+			<xs:documentation>Реквизиты свидетельства о рождении</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Series" type="ai_res:BirthCertificateSeriesType">
+				<xs:annotation>
+					<xs:documentation>Серия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Number" type="clt_ru:CodeVariable6Type">
+				<xs:annotation>
+					<xs:documentation>Номер</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IssueDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата выдачи документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FIOType">
+		<xs:annotation>
+			<xs:documentation>ФИО физического лица</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="FamilyName" type="clt_ru:NameType">
+				<xs:annotation>
+					<xs:documentation>Фамилия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FirstName" type="clt_ru:NameType">
+				<xs:annotation>
+					<xs:documentation>Имя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Patronymic" type="clt_ru:NameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Отчество</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ForeignPassportType">
+		<xs:annotation>
+			<xs:documentation>Реквизиты заграничного паспорта гражданина Российской Федерации</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Series" type="clt_ru:CodeVariable2Type">
+				<xs:annotation>
+					<xs:documentation>Серия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Number" type="clt_ru:CodeVariable7Type">
+				<xs:annotation>
+					<xs:documentation>Номер</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IssueDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата выдачи документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PassportRFType">
+		<xs:annotation>
+			<xs:documentation>Реквизиты паспорта гражданина Российской Федерации</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Series" type="clt_ru:Code4Type">
+				<xs:annotation>
+					<xs:documentation>Серия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Number" type="clt_ru:Code6Type">
+				<xs:annotation>
+					<xs:documentation>Номер</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IssueDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата выдачи документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="BirthCertificateSeriesType">
+		<xs:annotation>
+			<xs:documentation>Серия свидетельства о рождении</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="clt_ru:CodeVariable14Type">
+			<xs:maxLength value="13"/>
+			<xs:pattern value="[IVXLCDM]{1,10}[\-][А-Я]{2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

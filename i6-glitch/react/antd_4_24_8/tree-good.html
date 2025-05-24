@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>tree_good - Self Object Tree</title>
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- Ant Design -->
+    <script src="https://cdn.jsdelivr.net/npm/antd@4.24.16/dist/antd.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/antd@4.24.16/dist/antd.min.css">
+    <style>
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .tree-container {
+            margin-top: 20px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            padding: 10px;
+            max-height: 90vh;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script>
+        const { createElement, useState } = React;
+        const ReactDOM = window.ReactDOM;
+        const antd = window.antd;
+        
+        const Tree = antd.Tree;
+        const Typography = antd.Typography;
+
+        // Ограничения для безопасности
+        const MAX_DEPTH = 3;
+        const MAX_ITEMS_PER_LEVEL = 50;
+        const visited = new WeakSet();
+
+        function convertObjectToTreeData(obj, depth = 0, path = 'root') {
+            if (depth > MAX_DEPTH) return [];
+            if (visited.has(obj)) return [];
+            visited.add(obj);
+
+            return Object.entries(obj)
+                .slice(0, MAX_ITEMS_PER_LEVEL)
+                .map(([key, value]) => {
+                    const isObject = typeof value === 'object' && value !== null;
+                    const nodeKey = `${path}-${key}`;
+
+                    return {
+                        key: nodeKey,
+                        title: createElement('div', null,
+                            createElement('span', { style: { marginRight: 8 }}, 
+                                isObject ? '📁' : '📄'),
+                            key,
+                            !isObject && createElement('span', { 
+                                style: { 
+                                    color: '#666',
+                                    marginLeft: 8,
+                                    fontFamily: 'monospace'
+                                }
+                            }, String(value))
+                        ),
+                        children: isObject ? convertObjectToTreeData(
+                            value, 
+                            depth + 1, 
+                            nodeKey
+                        ) : null
+                    };
+                });
+        }
+
+        function SelfTree() {
+            const [treeData] = useState(() => 
+                convertObjectToTreeData(self)
+                //convertObjectToTreeData(antd)
+            );
+
+            return createElement(Tree, {
+                treeData: treeData,
+                showLine: true,
+                defaultExpandAll: true,
+                style: { background: 'white' }
+            });
+        }
+
+        function App() {
+            return createElement('div', { className: 'container' },
+                createElement(Typography.Title, null, 'Self Object Structure'),
+                createElement('div', { className: 'tree-container' },
+                    createElement(SelfTree)
+                )
+            );
+        }
+
+        ReactDOM.createRoot(document.getElementById('root'))
+            .render(createElement(App));
+    </script>
+</body>
+</html>

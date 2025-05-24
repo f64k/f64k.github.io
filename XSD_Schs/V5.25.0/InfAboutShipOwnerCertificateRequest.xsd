@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:iasocr="urn:customs.ru:Information:SQDocuments:InfAboutShipOwnerCertificateRequest:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:InfAboutShipOwnerCertificateRequest:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd"/>
+		<xs:annotation>
+			<xs:documentation>Запрос сведений из свидетельства о праве собственности на судно</xs:documentation>
+		</xs:annotation>	
+	<xs:element name="InfAboutShipOwnerCertificateRequest" type="iasocr:InfAboutShipOwnerCertificateRequestType">
+		<xs:annotation>
+			<xs:documentation>Запрос сведений из свидетельства о праве собственности на судно</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="InfAboutShipOwnerCertificateRequestType">
+		<xs:annotation>
+			<xs:documentation>Запрос сведений из свидетельства о праве собственности на судно</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="GUID" type="iasocr:IdType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Идентификатор запроса</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="StatementDate" type="clt_ru:DateTimeCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дата и время направления запроса</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Sender" type="iasocr:TextMax2048Type">
+						<xs:annotation>
+							<xs:documentation>Наименование органа, осуществляющего запрос</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="OwnerType" type="iasocr:ReferenceType">
+						<xs:annotation>
+							<xs:documentation>Тип собственника</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="InfoOwnerReq" type="iasocr:InfoOwnerReqType">
+						<xs:annotation>
+							<xs:documentation>Сведения об объекте запроса</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009406E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы.</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="InfoOwnerReqType">
+		<xs:annotation>
+			<xs:documentation>Сведения об объекте запроса</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="PhysicalPersonReq" type="iasocr:PhysicalPersonReqType">
+				<xs:annotation>
+					<xs:documentation>Сведения о ФЛ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LegalPersonReq" type="iasocr:LegalPersonReqType">
+				<xs:annotation>
+					<xs:documentation>Сведения о ЮЛ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="LegalPersonReqType">
+		<xs:annotation>
+			<xs:documentation>Сведения о ЮЛ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="INN" type="clt_ru:INNIDType">
+				<xs:annotation>
+					<xs:documentation>ИНН ЮЛ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="KPP" type="clt_ru:KPPCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>КПП</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="OGRN" type="clt_ru:OGRNIDType">
+					<xs:annotation>
+						<xs:documentation>ОГРН (Для российского ЮЛ)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="NZA" type="iasocr:TextMax16Type">
+					<xs:annotation>
+						<xs:documentation>Номер записи об аккредитации (Для иностранного ЮЛ)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PassportType">
+		<xs:annotation>
+			<xs:documentation>Сведения о паспорте</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Series" type="clt_ru:CodeVariable10Type">
+				<xs:annotation>
+					<xs:documentation>Серия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Number" type="clt_ru:CodeVariable10Type">
+				<xs:annotation>
+					<xs:documentation>Номер</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PhysicalPersonReqType">
+		<xs:annotation>
+			<xs:documentation>Сведения о ФЛ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="INN" type="clt_ru:INNIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ИНН ФЛ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SNILS" type="clt_ru:CodeVariable11Type">
+				<xs:annotation>
+					<xs:documentation>СНИЛС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Passport" type="iasocr:PassportType">
+				<xs:annotation>
+					<xs:documentation>Сведения о паспорте</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReferenceType">
+		<xs:annotation>
+			<xs:documentation>Тип собственника</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Code" type="iasocr:TextMax16Type">
+				<xs:annotation>
+					<xs:documentation>Код</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Title" type="iasocr:TextMax255Type">
+				<xs:annotation>
+					<xs:documentation>Наименование</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="IdType">
+		<xs:annotation>
+			<xs:documentation>Произвольный текст длиной до 36 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:TextCategoriesCust">
+			<xs:maxLength value="36"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Text100">
+		<xs:annotation>
+			<xs:documentation>Произвольный текст длиной до 100 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:TextCategoriesCust">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TextMax16Type">
+		<xs:annotation>
+			<xs:documentation>Произвольный текст длиной до 16 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:TextCategoriesCust">
+			<xs:maxLength value="16"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TextMax2048Type">
+		<xs:annotation>
+			<xs:documentation>Произвольный текст длиной до 2048 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:TextCategoriesCust">
+			<xs:maxLength value="2048"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TextMax255Type">
+		<xs:annotation>
+			<xs:documentation>Произвольный текст длиной до 255 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:TextCategoriesCust">
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

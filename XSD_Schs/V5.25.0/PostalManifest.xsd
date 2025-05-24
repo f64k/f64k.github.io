@@ -1,0 +1,395 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="urn:customs.ru:Information:TransportDocuments:PostalManifest:5.24.0" version="5.24.0.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:cltTrans_ru="urn:customs.ru:Information:TransportDocuments:TransportCommonLeafTypesCust:5.14.3" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:pomf="urn:customs.ru:Information:TransportDocuments:PostalManifest:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:TransportDocuments:TransportCommonLeafTypesCust:5.14.3" schemaLocation="TransportCommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Почтовый манифест</xs:documentation>
+  </xs:annotation>
+  <xs:element name="PostalManifest" type="pomf:PostalManifestType" />
+  <xs:complexType name="PostalManifestType">
+    <xs:annotation>
+      <xs:documentation>Почтовый манифест</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="ManifestDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="SerialNumber" type="clt_ru:Text10Type">
+            <xs:annotation>
+              <xs:documentation>Номер серии</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PrioritySign" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Признак наличия приоритета</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="OperatorContainerOwner" type="clt_ru:NameType">
+            <xs:annotation>
+              <xs:documentation>Назначенный оператор, которому принадлежат емкости</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="FormSign" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Признак формы накладной: 1 - CN37; 2 - CN38; 3 - CN41; 4 - CN46; 5 - CN47</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="DesignatedOperator" type="cat_ru:OrganizationType">
+            <xs:annotation>
+              <xs:documentation>Назначенный оператор страны подачи</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="DestinationAgency" type="cat_ru:OrganizationType">
+            <xs:annotation>
+              <xs:documentation>Учреждение обмена назначения накладной</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Carrier" type="cat_ru:OrganizationType">
+            <xs:annotation>
+              <xs:documentation>Перевозчик</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="FeedBillAgency" type="cat_ru:OrganizationType">
+            <xs:annotation>
+              <xs:documentation>Учреждение обмена подачи накладной</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:element name="AirTransport" type="pomf:AirTransportType">
+              <xs:annotation>
+                <xs:documentation>Авиатранспорт</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="SeaTransport" type="pomf:SeaTransportType">
+              <xs:annotation>
+                <xs:documentation>Почтовое судно</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="RW_Transport" type="pomf:RW_TransportType">
+              <xs:annotation>
+                <xs:documentation>Железнодорожный транспорт</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="AutoTransport" type="pomf:RW_TransportType">
+              <xs:annotation>
+                <xs:documentation>Автотранспорт</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Container" type="pomf:ContainerType">
+            <xs:annotation>
+              <xs:documentation>Сведения об используемых контейнерах</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" name="DespatchInfo" type="pomf:DespatchInfoType">
+            <xs:annotation>
+              <xs:documentation>Сведения о почтовом отправлении</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ReplacementBillInfo" type="pomf:ReplacementBillInfoType">
+            <xs:annotation>
+              <xs:documentation>Сведения о заменяющей накладной</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TotalEmptyContainers" type="pomf:DespatchMeasuresType">
+            <xs:annotation>
+              <xs:documentation>Сведения об общих количественных показателях порожних емкостей</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="TotalWrittenCorr" type="pomf:DespatchMeasuresType">
+            <xs:annotation>
+              <xs:documentation>Сведения об общих количественных показателях письменной корреспонденции</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="TotalUncapacityParcels" type="pomf:DespatchMeasuresType">
+            <xs:annotation>
+              <xs:documentation>Сведения об общих количественных показателях СР</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ReturnedContainersKind" type="pomf:ReturnedContainersKindType">
+            <xs:annotation>
+              <xs:documentation>Сведения о типе возвращаемых емкостей</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="ReloadInfo" type="pomf:ReloadInfoType">
+            <xs:annotation>
+              <xs:documentation>Сведения о планируемой перегрузке или грузовых операциях в пути</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute fixed="1003006E" name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AirTransportType">
+    <xs:annotation>
+      <xs:documentation>Авиатранспорт</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SendDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата отправления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SendTime" type="clt_ru:TimeCustType">
+        <xs:annotation>
+          <xs:documentation>Время отправления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FlightNumber" type="cltTrans_ru:FlightNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер рейса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DirectOverloadAirport" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Аэропорт прямой перегрузки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="UnloadAirport" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Аэропорт выгрузки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ContainerType">
+    <xs:annotation>
+      <xs:documentation>Сведения об используемых контейнерах</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ContainerNumber" type="clt_ru:Text10Type">
+        <xs:annotation>
+          <xs:documentation>Номер контейнера</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="StampNumber" type="clt_ru:Text10Type">
+        <xs:annotation>
+          <xs:documentation>Номер печати</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DespatchInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о почтовом отправлении</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DespatchNumber" type="clt_ru:Count4Type">
+        <xs:annotation>
+          <xs:documentation>Номер депеши</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FilingAgency" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Учреждение подачи</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DestinationAgency" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Учреждение назначения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="Comments" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Примечания</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="EmptyContainers" type="pomf:DespatchMeasuresType">
+        <xs:annotation>
+          <xs:documentation>Сведения о количественных показателях порожних мешков и других возвращаемых порожних емкостей</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="WrittenCorrespondence" type="pomf:DespatchMeasuresType">
+        <xs:annotation>
+          <xs:documentation>Сведения о количественных показателях письменной корреспонденции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UncapacityParcels" type="pomf:DespatchMeasuresType">
+        <xs:annotation>
+          <xs:documentation>Сведения о количественных показателях СР </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="EMS" type="pomf:DespatchMeasuresType">
+        <xs:annotation>
+          <xs:documentation>Сведения о количественных показателях EMS</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DespatchMeasuresType">
+    <xs:annotation>
+      <xs:documentation>Данные о количественных характеристиках почтового отправления</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Quantity" type="clt_ru:Count5Type">
+        <xs:annotation>
+          <xs:documentation>Количество </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Weight" type="clt_ru:WeighQuantityType">
+        <xs:annotation>
+          <xs:documentation>Вес</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="FactWeight" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Фактический вес</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RW_TransportType">
+    <xs:annotation>
+      <xs:documentation>Железнодорожный транспорт/Автотранспорт</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="SendDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата отправления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SendTime" type="clt_ru:TimeCustType">
+        <xs:annotation>
+          <xs:documentation>Время отправления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransportNumber" type="clt_ru:TransportMeansIDType">
+        <xs:annotation>
+          <xs:documentation>Номер поезда/автомобиля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Direction" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Направление</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SealID" type="cltTrans_ru:SealIDType">
+        <xs:annotation>
+          <xs:documentation>Номер печати</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReloadInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о планируемой перегрузке или грузовых операциях в пути</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="OperationDescription" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Описание операции с грузом</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ReloadPlace" type="pomf:ReloadPlaceType">
+        <xs:annotation>
+          <xs:documentation>Место проведения грузовых и иных операций</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReloadPlaceType">
+    <xs:annotation>
+      <xs:documentation>Место проведения грузовых и иных операций</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:CustomsType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ReloadPlaceDescription" type="clt_ru:FreeText250Type">
+            <xs:annotation>
+              <xs:documentation>Место проведения грузовых и иных операций</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ReplacementBillInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о заменяющей накладной</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FormingAircompany" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Авиакомпания, составляющая заменяющую накладную</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SubmitAirport" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Аэропорт подачи заменяющей накладной</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="Remarks" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Замечания, касающиеся найденных депеш</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="OperatorSupplyCountry" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Назначенный оператор страны подачи депеш</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReturnedContainersKindType">
+    <xs:annotation>
+      <xs:documentation>Сведения о типе возвращаемых емкостей</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="PriorityAviaKind" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак приоритетных/авиа возвращаемых емкостей</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UnpriorityLandKind" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак неприоритетных/наземных возвращаемых емкостей</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ParcelKind" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак возвращаемых емкостей, относящихся к посылкам</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="EMSKind" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак возвращаемых емкостей, относящихся к EMS</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SeaTransportType">
+    <xs:annotation>
+      <xs:documentation>Почтовое судно</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ShipName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Название судна</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="UnloadingPort" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Порт выгрузки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Company" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Компания</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

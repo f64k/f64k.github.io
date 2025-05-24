@@ -1,0 +1,839 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:rpwktmi="urn:customs.ru:Information:SQDocuments:RosPatentWellKnownTradeMarkInfo:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:RosPatentWellKnownTradeMarkInfo:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сведения из Государственного реестра общеизвестных товарных знаков</xs:documentation>
+  </xs:annotation>
+  <xs:element name="RosPatentWellKnownTradeMarkInfo" type="rpwktmi:RosPatentWellKnownTradeMarkInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения из Государственного реестра общеизвестных товарных знаков</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RosPatentWellKnownTradeMarkInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения из Государственного реестра общеизвестных товарных знаков</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Record" type="rpwktmi:RecordType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Запись Государственного реестр общеизвестных товарных знаков</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AttachedFile" type="rpwktmi:AttachedFileType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Приложенные файлы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009217E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="MarkType">
+    <xs:annotation>
+      <xs:documentation>Тип товарного знака (возможные значения: Графический ТЗ; Звуковой ТЗ; Световой ТЗ; Обонятельный ТЗ; Голографический ТЗ; Движущийся ТЗ; Объемный ТЗ)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:enumeration value="Графический ТЗ" />
+      <xs:enumeration value="Звуковой ТЗ" />
+      <xs:enumeration value="Световой ТЗ" />
+      <xs:enumeration value="Обонятельный ТЗ" />
+      <xs:enumeration value="Голографический ТЗ" />
+      <xs:enumeration value="Движущийся ТЗ" />
+      <xs:enumeration value="Объемный ТЗ" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="AttachedFileType">
+    <xs:annotation>
+      <xs:documentation>Приложенный файл</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FileName" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование файла</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FileContent" type="clt_ru:Text3MB" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Содержимое файла в формате Base64</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CollectiveMarkType">
+    <xs:annotation>
+      <xs:documentation>Характеристики коллективного товарного знака</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CollectiveMarkUsers" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о лицах, имеющих право использования коллективного товарного знака</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CollectiveMarkDescription" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Выписка из устава коллективного знака о единых характеристиках качества или иных общих характеристиках товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CorrectionRecordType">
+    <xs:annotation>
+      <xs:documentation>Исправление очевидных и технических ошибок в записях Перечня общеизвестных товарных знаков</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="rpwktmi:RecordBasicInfoType">
+        <xs:sequence>
+          <xs:element name="RecordErrIdentifier" type="clt_ru:Text50Type">
+            <xs:annotation>
+              <xs:documentation>Идентификатор записи, содержащей очевидную или техническую ошибку</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CorrectionInfo" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения об исправлении записи</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegistrationActualState" type="rpwktmi:RegistrationActualStateType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Актуальное состояние после внесения записи</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CorrespondenceAddressChangeRecordType">
+    <xs:annotation>
+      <xs:documentation>Изменение адреса для переписки</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="rpwktmi:RecordBasicInfoType">
+        <xs:sequence>
+          <xs:element name="CorrespondenceAddress" type="rpwktmi:CorrespondenceAddressType">
+            <xs:annotation>
+              <xs:documentation>Адрес для переписки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegistrationActualState" type="rpwktmi:RegistrationActualStateType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Актуальное состояние после внесения записи</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CorrespondenceAddressType">
+    <xs:annotation>
+      <xs:documentation>Адрес для переписки</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:RUAddressType">
+        <xs:sequence>
+          <xs:element name="ReceiverName" type="clt_ru:FreeText500Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Наименование или ФИО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GoodsServicesItemType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товаре или услуге, в отношении которых товарный знак признан общеизвестным</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ItemCount" type="clt_ru:CodeVariable3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер товара/услуги</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Description" type="clt_ru:FreeText500Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание товара/услуги</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GoodsServicesListLimitationRecordType">
+    <xs:annotation>
+      <xs:documentation>Сокращение перечня товаров и/или услуг, для индивидуализации которых зарегистрирован товарный общеизвестный знак</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="rpwktmi:RecordBasicInfoType">
+        <xs:sequence>
+          <xs:element name="LimitationComment" type="clt_ru:FreeText500Type">
+            <xs:annotation>
+              <xs:documentation>Указание об изменении</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegistrationActualState" type="rpwktmi:RegistrationActualStateType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Актуальное состояние после внесения записи</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GoodsServicesType">
+    <xs:annotation>
+      <xs:documentation>Перечень товаров и услуг, в отношении которых товарный знак признан общеизвестным</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsServicesItem" type="rpwktmi:GoodsServicesItemType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о товаре или услуге, в отношении которых зарегистрирован товарный знак</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OrganizationWithOPFType">
+    <xs:annotation>
+      <xs:documentation>Сведения об организации или физическом лице</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:RUOrganizationType">
+        <xs:sequence>
+          <xs:element name="OPF" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Организационно-правовая форма</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="OwnerDetailsChangeRecordType">
+    <xs:annotation>
+      <xs:documentation>Изменение наименования, фамилии, имени, отчества правообладателя и/или места нахождения или места жительства</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="rpwktmi:RecordBasicInfoType">
+        <xs:sequence>
+          <xs:element name="OwnerDetails" type="rpwktmi:OrganizationWithOPFType">
+            <xs:annotation>
+              <xs:documentation>Сведения о правообладателе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegistrationActualState" type="rpwktmi:RegistrationActualStateType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Актуальное состояние после внесения записи</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PledgeAgreementRecordType">
+    <xs:annotation>
+      <xs:documentation>Государственная регистрация договора залога (последующего залога)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="rpwktmi:RecordBasicInfoType">
+        <xs:sequence>
+          <xs:element name="Claimant" type="rpwktmi:OrganizationWithOPFType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Залогодатель</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Licensee" type="rpwktmi:OrganizationWithOPFType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Залогодержатель (последующий залогодержатель)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Comment" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Указание условий договора</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegistrationActualState" type="rpwktmi:RegistrationActualStateType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Актуальное состояние после внесения записи</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ReceivingDuplicateRecordType">
+    <xs:annotation>
+      <xs:documentation>Выдача дубликата свидетельства на общеизвестный товарный знак</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="rpwktmi:RecordBasicInfoType">
+        <xs:sequence>
+          <xs:element name="RegistrationActualState" type="rpwktmi:RegistrationActualStateType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Актуальное состояние после внесения записи</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RecordBasicInfoType">
+    <xs:annotation>
+      <xs:documentation>Базовые сведения о записи в Реестре</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RecordIdentifier" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Идентификатор записи</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер общеизвестного товарного знака</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Base" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Основание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RecordFillingDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата внесения записи в Реестр</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PublicationDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата публикации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PublicationIdentifier" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер бюллетеня</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RecordType">
+    <xs:annotation>
+      <xs:documentation>Запись Государственного реестра общеизвестных товарных знаков</xs:documentation>
+    </xs:annotation>
+    <xs:choice>
+      <xs:element name="WKTradeMarkRightProtectionRecord" type="rpwktmi:WKTradeMarkRightProtectionRecordType">
+        <xs:annotation>
+          <xs:documentation>Предоставление правовой охраны общеизвестному товарному знаку</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OwnerDetailsChangeRecord" type="rpwktmi:OwnerDetailsChangeRecordType">
+        <xs:annotation>
+          <xs:documentation>Изменение наименования, фамилии, имени, отчества правообладателя и/или места нахождения или места жительства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CorrespondenceAddressChangeRecord" type="rpwktmi:CorrespondenceAddressChangeRecordType">
+        <xs:annotation>
+          <xs:documentation>Изменение адреса для переписки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsServicesListLimitationRecord" type="rpwktmi:GoodsServicesListLimitationRecordType">
+        <xs:annotation>
+          <xs:documentation>Сокращение перечня товаров и/или услуг, для индивидуализации которых зарегистрирован общеизвестный товарный знак</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WKTradeMarkElementsChangeRecord" type="rpwktmi:WKTradeMarkElementsChangeRecordType">
+        <xs:annotation>
+          <xs:documentation>Изменение отдельных элементов общеизвестного товарного знака, не меняющее его существа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WKTradeMarkRightProtectionTerminationRecord" type="rpwktmi:WKTradeMarkRightProtectionTerminationRecordType">
+        <xs:annotation>
+          <xs:documentation>Прекращение правовой охраны общеизвестного товарного знака полностью или частично</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WKTradeMarkRightProtectionInvalidationRecord" type="rpwktmi:WKTradeMarkRightProtectionInvalidationRecordType">
+        <xs:annotation>
+          <xs:documentation>Признание предоставления правовой охраны общеизвестному товарному знаку недействительным полностью или частично</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WKTradeMarkOtherChangesRecord" type="rpwktmi:WKTradeMarkOtherChangesRecordType">
+        <xs:annotation>
+          <xs:documentation>Другие изменения, относящиеся к общеизвестному товарному знаку</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CorrectionRecord" type="rpwktmi:CorrectionRecordType">
+        <xs:annotation>
+          <xs:documentation>Исправление очевидных и технических ошибок в записях Перечня общеизвестных товарных знаков</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WKTradeMarkExclusiveRightTransferWithoutAgreementRecord" type="rpwktmi:WKTradeMarkExclusiveRightTransferWithoutAgreementRecordType">
+        <xs:annotation>
+          <xs:documentation>Государственная регистрация перехода исключительного права на общеизвестный товарный знак без договора</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WKTradeMarkCertificateIssueRecord" type="rpwktmi:WKTradeMarkCertificateIssueRecordType">
+        <xs:annotation>
+          <xs:documentation>Выдача свидетельства на общеизвестный товарный знак</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReceivingDuplicateRecord" type="rpwktmi:ReceivingDuplicateRecordType">
+        <xs:annotation>
+          <xs:documentation>Выдача дубликата свидетельства на общеизвестный товарный знак</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WKTradeMarkExclusiveRigthFullTransferRecord" type="rpwktmi:WKTradeMarkExclusiveRigthFullTransferRecordType">
+        <xs:annotation>
+          <xs:documentation>Государственная регистрация договора об отчуждении исключительного права на общеизвестный товарный знак в отношении всех товаров и/или услуг</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WKTradeMarkExclusiveRigthPartialTransferRecord" type="rpwktmi:WKTradeMarkExclusiveRigthPartialTransferRecordType">
+        <xs:annotation>
+          <xs:documentation>Государственная регистрация договора об отчуждении исключительного права на общеизвестный товарный знак в отношении части товаров и/или услуг</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="UsingRightAgreementRecord" type="rpwktmi:UsingRightAgreementRecordType">
+        <xs:annotation>
+          <xs:documentation>Государственная регистрация договора о предоставлении права использования</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PledgeAgreementRecord" type="rpwktmi:PledgeAgreementRecordType">
+        <xs:annotation>
+          <xs:documentation>Государственная регистрация договора залога (последующего залога)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistratedAgreementChangeRecord" type="rpwktmi:RegistratedAgreementChangeRecordType">
+        <xs:annotation>
+          <xs:documentation>Государственная регистрация изменений, внесенных в зарегистрированный договор</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistratedAgreementInvalidationRecord" type="rpwktmi:RegistratedAgreementInvalidationRecordType">
+        <xs:annotation>
+          <xs:documentation>Государственная регистрация расторжения зарегистрированного договора</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="RegistratedAgreementChangeRecordType">
+    <xs:annotation>
+      <xs:documentation>Государственная регистрация изменений, внесенных в зарегистрированный договор</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="rpwktmi:RecordBasicInfoType">
+        <xs:sequence>
+          <xs:element name="Claimant" type="rpwktmi:OrganizationWithOPFType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Лицо, предоставляющее право использования/Лицо, передающее исключительное право/Залогодатель</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Licensee" type="rpwktmi:OrganizationWithOPFType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Лицо, которому предоставлены права по договору/Приобретатель исключительного права/Залогодержатель (последующий залогодержатель)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Agreement" type="cat_ru:DocumentBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата и номер государственной регистрации, вид договора, в который вносятся изменения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Comment" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Указание об изменениях</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegistrationActualState" type="rpwktmi:RegistrationActualStateType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Актуальное состояние после внесения записи</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RegistratedAgreementInvalidationRecordType">
+    <xs:annotation>
+      <xs:documentation>Государственная регистрация расторжения зарегистрированного договора</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="rpwktmi:RecordBasicInfoType">
+        <xs:sequence>
+          <xs:element name="Claimant" type="rpwktmi:OrganizationWithOPFType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Лицо, предоставляющее право использования/Лицо, передающее исключительное право/Залогодатель</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Licensee" type="rpwktmi:OrganizationWithOPFType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Лицо, которому предоставлены права по договору/Приобретатель исключительного права/Залогодержатель (последующий залогодержатель)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Agreement" type="cat_ru:DocumentBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата и номер государственной регистрации, вид расторгаемого договора</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Comment" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Указание о расторжении</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegistrationActualState" type="rpwktmi:RegistrationActualStateType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Актуальное состояние после внесения записи</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RegistrationActualStateType">
+    <xs:annotation>
+      <xs:documentation>Актуальное состояние гос.регистрации после внесения записи</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RecordIdentifier" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Идентификатор записи</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер общеизвестного товарного знака</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EffectiveDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата вступления в силу решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата, с которой товарный знак признан общеизвестным</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Owner" type="rpwktmi:OrganizationWithOPFType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о правообладателе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CorrespondenceAddress" type="rpwktmi:CorrespondenceAddressType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Адрес для переписки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TradeMarkDetails" type="rpwktmi:TradeMarkDetailsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о характеристиках общеизвестного товарного знака</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsServices" type="rpwktmi:GoodsServicesType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Перечень товаров и услуг, в отношении которых товарный знак признан общеизвестным</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StateRegistration" type="cat_ru:DocumentBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата и номер государственной регистрации договора, на основании которого выдано свидетельство</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MarkProtect" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Статус правовой охраны товарного знака</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TradeMarkDetailsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о характеристиках общеизвестного товарного знака</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="MarkType" type="rpwktmi:MarkType">
+        <xs:annotation>
+          <xs:documentation>Тип товарного знака</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MarkFile" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Наименование и расширение файла для воспроизведения товарного знака</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MarkVerbalElements" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Словесные элементы товарного знака</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MarkDescription" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание характеристик товарного знака</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MarkDisclaimer" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Неохраняемые элементы товарного знака</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CollectiveMark" type="rpwktmi:CollectiveMarkType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак того, что товарный знак является коллективным, характеристики коллективного товарного знака</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="UsingRightAgreementRecordType">
+    <xs:annotation>
+      <xs:documentation>Государственная регистрация договора о предоставлении права использования</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="rpwktmi:RecordBasicInfoType">
+        <xs:sequence>
+          <xs:element name="Claimant" type="rpwktmi:OrganizationWithOPFType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Лицо, предоставляющее право использования</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Licensee" type="rpwktmi:OrganizationWithOPFType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Лицо, которому предоставлены права по договору</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Comment" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Указание условий договора</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegistrationActualState" type="rpwktmi:RegistrationActualStateType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Актуальное состояние после внесения записи</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="WKTradeMarkCertificateIssueRecordType">
+    <xs:annotation>
+      <xs:documentation>Выдача свидетельства на общеизвестный товарный знак</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="rpwktmi:RecordBasicInfoType">
+        <xs:sequence>
+          <xs:element name="CertificateIssueDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата выдачи свидетельства</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegistrationActualState" type="rpwktmi:RegistrationActualStateType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Актуальное состояние после внесения записи</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="WKTradeMarkElementsChangeRecordType">
+    <xs:annotation>
+      <xs:documentation>Изменение отдельных общеизвестного элементов товарного знака, не меняющее его существа</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="rpwktmi:RecordBasicInfoType">
+        <xs:sequence>
+          <xs:element name="TradeMarkElementsChanges" type="rpwktmi:TradeMarkDetailsType">
+            <xs:annotation>
+              <xs:documentation>Изменение отдельных элементов товарного знака, не меняющее его существа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegistrationActualState" type="rpwktmi:RegistrationActualStateType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Актуальное состояние после внесения записи</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="WKTradeMarkExclusiveRightTransferWithoutAgreementRecordType">
+    <xs:annotation>
+      <xs:documentation>Государственная регистрация перехода исключительного права на общеизвестный товарный знак без договора</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="rpwktmi:RecordBasicInfoType">
+        <xs:sequence>
+          <xs:element name="Owner" type="rpwktmi:OrganizationWithOPFType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о правообладателе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CorrespondenceAddress" type="rpwktmi:CorrespondenceAddressType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Адрес для переписки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegistrationActualState" type="rpwktmi:RegistrationActualStateType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Актуальное состояние после внесения записи</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="WKTradeMarkExclusiveRigthFullTransferRecordType">
+    <xs:annotation>
+      <xs:documentation>Государственная регистрация договора об отчуждении исключительного права на общеизвестный товарный знак в отношении всех товаров и/или услуг</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="rpwktmi:RecordBasicInfoType">
+        <xs:sequence>
+          <xs:element name="PreviousHolder" type="rpwktmi:OrganizationWithOPFType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Лицо, передающее исключительное право</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NewHolder" type="rpwktmi:OrganizationWithOPFType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Приобретатель исключительного права</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CorrespondenceAddress" type="rpwktmi:CorrespondenceAddressType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Адрес для переписки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegistrationActualState" type="rpwktmi:RegistrationActualStateType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Актуальное состояние после внесения записи</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="WKTradeMarkExclusiveRigthPartialTransferRecordType">
+    <xs:annotation>
+      <xs:documentation>Государственная регистрация договора об отчуждении исключительного права на общеизвестный товарный знак в отношении части товаров и/или услуг</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="rpwktmi:RecordBasicInfoType">
+        <xs:sequence>
+          <xs:element name="Claimant" type="rpwktmi:OrganizationWithOPFType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Лицо, передающее исключительное право</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Licensee" type="rpwktmi:OrganizationWithOPFType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Приобретатель исключительного права</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Comment" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Указание об отчуждении</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ApplicationNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер свидетельства на товарный знак, выданного приобретателю исключительного права</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegistrationActualState" type="rpwktmi:RegistrationActualStateType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Актуальное состояние после внесения записи</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="WKTradeMarkOtherChangesRecordType">
+    <xs:annotation>
+      <xs:documentation>Другие изменения, относящиеся к общеизвестному товарному знаку</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="rpwktmi:RecordBasicInfoType">
+        <xs:sequence>
+          <xs:element name="Comment" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Указание об изменении или выписка из решения суда</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegistrationActualState" type="rpwktmi:RegistrationActualStateType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Актуальное состояние после внесения записи</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="WKTradeMarkRightProtectionInvalidationRecordType">
+    <xs:annotation>
+      <xs:documentation>Признание предоставления правовой охраны общеизвестному товарному знаку недействительным полностью или частично</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="rpwktmi:RecordBasicInfoType">
+        <xs:sequence>
+          <xs:element name="DecisionText" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Выписка из решения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegistrationActualState" type="rpwktmi:RegistrationActualStateType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Актуальное состояние после внесения записи</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="WKTradeMarkRightProtectionRecordType">
+    <xs:annotation>
+      <xs:documentation>Предоставление правовой охраны общеизвестному товарному знаку</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="rpwktmi:RecordBasicInfoType">
+        <xs:sequence>
+          <xs:element name="RegistrationDetails" type="rpwktmi:RegistrationActualStateType">
+            <xs:annotation>
+              <xs:documentation>Сведения о регистрации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="WKTradeMarkRightProtectionTerminationRecordType">
+    <xs:annotation>
+      <xs:documentation>Прекращение правовой охраны общеизвестного товарного знака полностью или частично</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="rpwktmi:RecordBasicInfoType">
+        <xs:sequence>
+          <xs:element name="ExpiryDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата прекращения правовой охраны</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DecisionText" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Выписка из решения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegistrationActualState" type="rpwktmi:RegistrationActualStateType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Актуальное состояние после внесения записи</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

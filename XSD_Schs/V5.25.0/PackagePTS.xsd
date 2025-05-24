@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ppts="urn:customs.ru:Information:CustomsDocuments:PackagePTS:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:PackagePTS:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Пакет с информацией об оформлении бланков ПТС и ПШТС.</xs:documentation>
+  </xs:annotation>
+  <xs:element name="PackagePTS" type="ppts:PackagePTSType" />
+  <xs:complexType name="PackagePTSType">
+    <xs:annotation>
+      <xs:documentation>Пакет с информацией об оформлении бланков ПТС и ПШТС.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="SystemId" type="clt_ru:Count5Type">
+            <xs:annotation>
+              <xs:documentation>Идентификатор системы таможенного оформления и таможенного контроля</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Version" type="clt_ru:Count3Type">
+            <xs:annotation>
+              <xs:documentation>Номер версии пакета (всегда 2) </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Form" type="ppts:FormType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Бланк ПТС (210) или ПШТС-Т(220)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006098E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="FormType">
+    <xs:annotation>
+      <xs:documentation>Бланк ПТС и ПШТС-Т</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FormType" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Тип оформленного бланка: 210- ПТС; 220- ПШТС. </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LNPCustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа на оттиске ЛНП инспектора</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FormNumber" type="clt_ru:Code10Type">
+        <xs:annotation>
+          <xs:documentation>Код региона, серия и номер бланка (99АА999999). Заглавные буквы русскаго алфавита и цифры</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateState" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата и время оформления бланка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ModificationDate" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата и время изменения состояния бланка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="UnloadDate" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата и время выгрузки записи</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GUID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор бланка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OldFormNumber" type="clt_ru:Code10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код региона, серия и номер бланка, взамен которого выдается дубликат</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OldFormState" type="clt_ru:Numeric1Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Новое состояние бланка, взамен которого выдается дубликат:: 2- аннулирован; 4- утрачен после оформления. </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:choice minOccurs="0">
+        <xs:element name="TPONumber" type="ppts:TPOIDType">
+          <xs:annotation>
+            <xs:documentation>Номер ТПО </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="GTDID" type="cat_ru:GTDIDType">
+          <xs:annotation>
+            <xs:documentation>Регистрационный номер ДТ</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+      <xs:element name="CustomsPerson" type="cat_ru:CustomsPersonType">
+        <xs:annotation>
+          <xs:documentation>Инспектор, осуществивший оформление</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Customs" type="cat_ru:CustomsType">
+        <xs:annotation>
+          <xs:documentation>Таможенный орган, в котором бланк был оформлен</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TPOIDType">
+    <xs:annotation>
+      <xs:documentation>ТПО</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, зарегистрировавшего документ.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации документа.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TPONumber" type="clt_ru:Code10Type">
+        <xs:annotation>
+          <xs:documentation>Номер ТПО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

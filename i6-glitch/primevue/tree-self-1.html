@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Обновленные CDN ссылки -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/primevue@3.37.1/core/core.min.js"></script>
+    <script src="https://unpkg.com/primevue@3.37.1/tree/tree.min.js"></script>
+    
+    <!-- Стили -->
+    <link href="https://unpkg.com/primevue@3.37.1/resources/themes/saga-blue/theme.css" rel="stylesheet">
+    <link href="https://unpkg.com/primevue@3.37.1/resources/primevue.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <h3>Self Object Structure</h3>
+        <Tree :value="treeNodes"/>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+        
+        const app = createApp({
+            data() {
+                return {
+                    treeNodes: [
+                        {
+                            key: 'self',
+                            label: 'Self Object',
+                            children: [
+                                {
+                                    key: 'properties',
+                                    label: 'Properties',
+                                    children: [
+                                        { key: 'prop1', label: 'Property 1' },
+                                        { key: 'prop2', label: 'Property 2' }
+                                    ]
+                                },
+                                {
+                                    key: 'methods',
+                                    label: 'Methods',
+                                    children: [
+                                        { key: 'method1', label: 'doSomething()' },
+                                        { key: 'method2', label: 'init()' }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        });
+
+        // Регистрация компонентов через глобальную переменную PrimeVue
+        app.component('Tree', PrimeVue.Tree);
+        
+        app.mount('#app');
+    </script>
+</body>
+</html>

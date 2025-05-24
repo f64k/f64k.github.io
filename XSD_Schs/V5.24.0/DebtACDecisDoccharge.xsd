@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Информационное взаимодействие между АПС "Задолженность" и АС "Авто-Транспорт" в части передачи сведений задолженности, возникшей в следствие принятия решений по контролю в отношении ТСЛП -->
+<xs:schema xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:ddc="urn:customs.ru:Information:DebtACDecisDoccharge:5.24.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:DebtACDecisDoccharge:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сведения о документе начислений, сформированном на основании решения в отношении ТСЛП</xs:documentation>
+  </xs:annotation>
+  <xs:element name="DebtACDecisDoccharge" type="ddc:DebtACDecisDocchargeType">
+    <xs:annotation>
+      <xs:documentation>Сведения о документе начислений, сформированном на основании решения в отношении ТСЛП</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DebtACDecisDocchargeType">
+    <xs:annotation>
+      <xs:documentation>Сведения о документе начислений, сформированном на основании решения в отношении ТСЛП</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DecisionInfo" type="cat_ru:DocumentBaseType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер решения, на основании которого сформирован документ начислений</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocchargeInfo" type="ddc:CustomDocumetType">
+            <xs:annotation>
+              <xs:documentation>Реквизиты документа начислений</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PaymentInfo" type="ddc:PaymentInfoType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Суммы таможенных платежей и пени</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1051027E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="PersonType">
+    <xs:annotation>
+      <xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:PersonSignatureType">
+        <xs:sequence>
+          <xs:element name="DepartmentCode" type="cat_ru:CustomsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Структурное подразделение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CustomDocumetType">
+    <xs:annotation>
+      <xs:documentation>Документ, сформированный таможенным органом</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="CustomCode" type="cat_ru:CustomsType">
+            <xs:annotation>
+              <xs:documentation>Таможенный орган, в котором сформирован документ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustPaysExec" type="ddc:PersonType">
+            <xs:annotation>
+              <xs:documentation>Исполнитель - должностное лицо ОТП, сформировавшее документ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PaymentInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения об операциях</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OperDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата операции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FinOperType" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Тип операции: 1 - начислено; 2 - уплачено; 3 - исключено</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Amount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма операции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SignFines" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Признак пени: 1 - Да; 2 - Нет</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentModeCode" type="clt_ru:Code4Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код вида платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="Text20Type">
+    <xs:annotation>
+      <xs:documentation>Текстовое описание. До 20 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="20" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

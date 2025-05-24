@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 overflow-hidden flex flex-col min-h-screen">
+  <header class="fixed top-0 w-full bg-gradient-to-b from-gray-50 to-gray-400 shadow-md z-50 h-14">
+    <!--<header class="fixed top-0 w-full bg-white shadow-md z-50 h-16"> -->
+    <div class="flex items-center justify-between p-4 h-full">
+      <div class="flex items-center space-x-4">
+        <button id="toggleLeftPanel"
+          class="p-3 bg-gray-200 rounded-full shadow-sm hover:bg-gray-100 hover:shadow-md hover:font-bold transition-all duration-100 flex items-center justify-center w-12 h-12">
+          ☰
+        </button>
+        <h1 class="text-xl font-bold">Logo</h1>
+      </div>
+      <div class="flex gap-4">
+        <nav class="flex items-center gap-4">
+          <a href="#"
+            class="p-1 rounded-md bg-gray-200 shadow-sm hover:bg-gray-100 hover:shadow-md hover:text-blue-600">Меню
+            1</a>
+          <a href="#" class="p-1 rounded-md bg-gradient-to-b from-gray-300 to-gray-100 hover:underline">Меню 2</a>
+        </nav>
+        <button id="toggleRightPanel"
+          class="p-3 bg-gray-200 rounded-full shadow-sm hover:bg-gray-100 hover:shadow-md transition-all duration-100 flex items-center justify-center w-12 h-12">
+          ⚙️
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1 flex pt-16 pb-16">
+    <!-- Левая панель -->
+    <aside id="leftPanel" class="w-64 bg-white border-r transition-all overflow-y-auto h-[calc(100vh-8rem)]">
+      <div id="accordionsContainer" class="p-4"></div>
+    </aside>
+
+    <!-- Основной контент -->
+    <div class="flex-1 p-4 shadow-inner overflow-y-auto h-[calc(100vh-8rem)]" id="mainContent"></div>
+
+    <!-- Правая панель -->
+    <aside id="rightPanel" class="w-64 bg-white border-l transition-all overflow-y-auto h-[calc(100vh-8rem)]">
+      <div class="max-w-2xl mx-auto p-4 space-y-4 bg-gray-50">
+        <!-- Сообщение слева -->
+        <div class="flex animate-slide-in-left">
+          <div class="mr-2 mt-4">
+            <div class="w-8 h-8 rounded-full bg-gray-300"></div>
+          </div>
+          <div class="group relative max-w-[80%]">
+            <div class="
+        bg-gradient-to-br from-gray-100 to-gray-200
+        rounded-2xl p-4 shadow-sm
+        border border-gray-200
+        relative hover:shadow-md transition-shadow
+      ">
+              <p class="text-gray-800">Давайте встретимся в 18:00</p>
+              <span class="text-xs text-gray-500 block mt-2">10:24 AM</span>
+            </div>
+            <div class="
+        absolute -left-2 top-3
+        w-4 h-4
+        bg-gray-100
+        border-l border-b border-gray-200
+        rotate-45
+        -z-10
+      "></div>
+          </div>
+        </div>
+
+        <!-- Сообщение справа -->
+        <div class="flex flex-row-reverse animate-slide-in-right">
+          <div class="ml-2 mt-4">
+            <div class="w-8 h-8 rounded-full bg-blue-300"></div>
+          </div>
+          <div class="group relative max-w-[80%]">
+            <div class="
+        bg-gradient-to-br from-blue-100 to-blue-200
+        rounded-2xl p-4 shadow-sm
+        border border-blue-200
+        relative hover:shadow-md transition-shadow
+      ">
+              <p class="text-gray-800">Хорошо, я буду вовремя 👍</p>
+              <span class="text-xs text-blue-500 text-right block mt-2">✓✓ 10:25 AM</span>
+            </div>
+            <div class="
+        absolute -right-2 top-3
+        w-4 h-4
+        bg-blue-100
+        border-r border-b border-blue-200
+        -rotate-45
+        -z-10
+      "></div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 space-y-2">
+        <p class="font-semibold">System Info:</p>
+        <p id="performanceInfo" class="text-sm"></p>
+        <p id="memoryInfo" class="text-sm"></p>
+        <p id="coresInfo" class="text-sm"></p>
+      </div>
+      <div class="p-8 space-y-8">
+        <div class="shadow-sm">Маленькая тень</div>
+        <div class="shadow">Обычная (по умолчанию)</div>
+        <div class="shadow-md">Средняя</div>
+        <div class="shadow-lg">Большая</div>
+        <div class="shadow-xl">Очень большая</div>
+        <div class="shadow-2xl">Максимальная</div>
+        <div class="shadow-inner">Внутренняя тень</div>
+        <div class="shadow-none">Без тени</div>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="fixed bottom-0 w-full bg-gradient-to-b from-gray-800 to-gray-500 text-white p-3 h-12">
+    <div class="flex justify-between text-sm h-full items-center">
+      <div class="space-x-4">
+        <span id="footerPerformance"></span>
+        <span id="footerMemory"></span>
+        <span id="footerCores"></span>
+      </div>
+      <div>© 2024</div>
+    </div>
+  </footer>
+
+  <script>
+    // Генерация аккордеонов
+    function createAccordions() {
+      const container = document.getElementById("accordionsContainer");
+      for (let i = 1; i <= 30; i++) {
+        const details = document.createElement("details");
+        details.className = "mb-2";
+
+        const summary = document.createElement("summary");
+        summary.className = "font-semibold cursor-pointer";
+        summary.textContent = `Аккордеон ${i}`;
+
+        const content = document.createElement("div");
+        content.className = "mt-2 ml-2";
+
+        const itemsCount = Math.floor(Math.random() * 7) + 3; // 3-9 пунктов
+        for (let j = 1; j <= itemsCount; j++) {
+          const p = document.createElement("p");
+          p.className = "p-1 hover:bg-gray-100";
+          p.textContent = `Пункт ${i}-${j}`;
+          content.appendChild(p);
+        }
+
+        details.appendChild(summary);
+        details.appendChild(content);
+        container.appendChild(details);
+      }
+    }
+
+    // Генерация длинного текста
+    function generateLongText() {
+      const content = document.getElementById("mainContent");
+      const lorem =
+        `Lorem ipsum dolor sit amet, consectetur adipiscing elit. `
+          .repeat(50)
+          .split(". ");
+      for (let i = 0; i < 150; i++) {
+        // 150 абзацев
+        const p = document.createElement("p");
+        p.className = "text-gray-700 mb-3";
+        p.textContent = `${i + 1}. ${lorem[i % lorem.length]}...`;
+        content.appendChild(p);
+      }
+    }
+
+    // Остальной JavaScript из предыдущего примера
+    let panelsState = { left: true, right: true };
+    const leftPanel = document.getElementById("leftPanel");
+    const rightPanel = document.getElementById("rightPanel");
+    const toggleLeftBtn = document.getElementById("toggleLeftPanel");
+    const toggleRightBtn = document.getElementById("toggleRightPanel");
+
+    function togglePanel(panel, state) {
+      panel.classList.toggle("hidden", !state);
+      panel.classList.toggle("w-64", state);
+    }
+
+    function saveState() {
+      localStorage.setItem("panelsState", JSON.stringify(panelsState));
+    }
+
+    function loadState() {
+      const saved = localStorage.getItem("panelsState");
+      if (saved) {
+        panelsState = JSON.parse(saved);
+        togglePanel(leftPanel, panelsState.left);
+        togglePanel(rightPanel, panelsState.right);
+      }
+    }
+
+    function updateSystemInfo() {
+      try {
+        const perf = window.performance.timing;
+        const loadTime = perf.loadEventEnd - perf.navigationStart;
+        document.getElementById(
+          "performanceInfo"
+        ).textContent = `Load time: ${loadTime}ms`;
+        document.getElementById(
+          "footerPerformance"
+        ).textContent = `Perf: ${loadTime}ms`;
+        document.getElementById("memoryInfo").textContent = `RAM: ${navigator.deviceMemory || "N/A"
+          } GB`;
+        document.getElementById("footerMemory").textContent = `RAM: ${navigator.deviceMemory || "N/A"
+          } GB`;
+        document.getElementById("coresInfo").textContent = `Cores: ${navigator.hardwareConcurrency || "N/A"
+          }`;
+        document.getElementById("footerCores").textContent = `Cores: ${navigator.hardwareConcurrency || "N/A"
+          }`;
+      } catch (e) {
+        console.error("System info error:", e);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      loadState();
+      updateSystemInfo();
+      createAccordions();
+      generateLongText();
+
+      toggleLeftBtn.addEventListener("click", () => {
+        panelsState.left = !panelsState.left;
+        togglePanel(leftPanel, panelsState.left);
+        saveState();
+      });
+
+      toggleRightBtn.addEventListener("click", () => {
+        panelsState.right = !panelsState.right;
+        togglePanel(rightPanel, panelsState.right);
+        saveState();
+      });
+    });
+  </script>
+</body>
+
+</html>

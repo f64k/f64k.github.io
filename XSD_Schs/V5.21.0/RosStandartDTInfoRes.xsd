@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:catESAD_cu="urn:customs.ru:CUESADCommonAggregateTypesCust:5.21.0" xmlns:DTInfo_req="urn:customs.ru:Information:SQDocuments:RosStandartDTInfoRes:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:RosStandartDTInfoRes:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonAggregateTypesCust:5.21.0" schemaLocation="CUESADCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Ответ на запрос сведений из декларации на товары и таможенного приходного ордера</xs:documentation>
+  </xs:annotation>
+  <xs:element name="RosStandartDTInfoRes" type="DTInfo_req:RosStandartDTInfoResType" />
+  <xs:complexType name="RosStandartDTInfoResType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос сведений из декларации на товары и таможенного приходного ордера</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Response" type="DTInfo_req:ResponseType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Ответ на запрос</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ResponseDescription" type="DTInfo_req:ResponseDescriptionType">
+            <xs:annotation>
+              <xs:documentation>Ответ на запрос - общее описание</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009169E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="GoodsInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товаре из ДТ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsNumeric" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер декларируемого товара / номер товара по списку. Гр.32</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="4">
+        <xs:annotation>
+          <xs:documentation>Наименование (торговое, коммерческое или иное традиционное наименование) товаров Гр.31 первый подраздел</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ESADout_CUPresentedDocument" type="catESAD_cu:CUPresentedDocumentsType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Представленные документы. Гр. 44</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GrossWeightQuantity" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вес товара, брутто (кг). Гр. 35</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NetWeightQuantity" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вес товара, нетто (кг). Гр.38</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SupplementaryGoodsQuantity" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество товара в дополнительной единице измерения. Гр.41</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SupplementaryGoodsQuantity1" type="cat_ru:SupplementaryQuantityType" minOccurs="0" maxOccurs="3">
+        <xs:annotation>
+          <xs:documentation>Количество товара в единице измерения, отличной от основной и дополнительной (Гр.31)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsAutomobile" type="catESAD_cu:AutomobileType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения об автомобилях. (Гр. 31)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsGroupDescription" type="catESAD_cu:GoodsGroupDescriptionType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание и характеристика товаров / Описание группы товаров одного наименования с отличающимися от других групп характеристиками</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OrganizationType">
+    <xs:annotation>
+      <xs:documentation>Сведения об организации</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:SubjectDetailsType">
+        <xs:sequence>
+          <xs:element name="BranchDescription" type="cat_ru:CUBranchDescriptionType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения об обособленном подразделении</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="JuridicalAddress" type="cat_ru:AddressType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Юридический адрес</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ResponseDescriptionType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос - общая информация</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OrgSender" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Наименование органа (организации), направляющей ответ на запрос о предоставлении документов и (или) информации - "ФТС России"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrgReceiver" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Наименование органа (организации), в адрес которой направляется ответ на запрос о предоставлении документов и (или) информации - "Росстандарт"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NameRequestInfo" type="clt_ru:Text150Type">
+        <xs:annotation>
+          <xs:documentation>Наименование запрашиваемого документа и (или) информации - "Сведения из декларации на товары и таможенного приходного ордера"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WaysIdentify" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Способы удостоверения лица, направившего ответ на запрос, и неизменности ответа (ЭЦП, логин-пароль в системе СМЭВ, собственноручная подпись на бумажном документе) - "ЭП"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransmittingCode" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Способ направления ответа на запрос - 1 (1 - по каналам СМЭВ;
+2 - по каналам РСМЭВ;
+3 - по иным электронным каналам;
+4 - по почте; 5 - по факсу; 6 - курьером;
+7 - другое или сочетание способов)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReponsePeriod" type="clt_ru:Text40Type">
+        <xs:annotation>
+          <xs:documentation>Срок направления ответа на запрос - "5 рабочих дней"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ResponseType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="NumberDT" type="cat_ru:GTDIDType">
+        <xs:annotation>
+          <xs:documentation>Реквизиты ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NumberTPO" type="DTInfo_req:TPOIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Реквизиты ТПО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Consignor" type="DTInfo_req:OrganizationType">
+        <xs:annotation>
+          <xs:documentation>Отправитель/Экспортер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Consignee" type="DTInfo_req:OrganizationType">
+        <xs:annotation>
+          <xs:documentation>Получатель/Импортер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Manufacturer" type="DTInfo_req:OrganizationType">
+        <xs:annotation>
+          <xs:documentation>Сведения о производителе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsInfo" type="DTInfo_req:GoodsInfoType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о товаре/продукции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TPOIDType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер ТПО</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, зарегистрировавшего документ.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации документа.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TPONumber" type="clt_ru:Code10Type">
+        <xs:annotation>
+          <xs:documentation>Номер ТПО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

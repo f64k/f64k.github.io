@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--  Решение КТС от 18.06.2010 №287  -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:pcdm_in="urn:customs.ru:Information:CustomsDocuments:PassengerCDMarkIn:5.24.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:PassengerCDMarkIn:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Пассажирская таможенная декларация. Внутренний формат с решением по пассажирской таможенной декларации</xs:documentation>
+  </xs:annotation>
+  <xs:element name="PassengerCDMarkIn" type="pcdm_in:PassengerCDMarkInType">
+    <xs:annotation>
+      <xs:documentation>Пассажирская таможенная декларация. Внутренний формат с решением по пассажирской таможенной декларации</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="PassengerCDMarkInType">
+    <xs:annotation>
+      <xs:documentation>Пассажирская таможенная декларация. Внутренний формат с решением по пассажирской таможенной декларации</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="PassengerCDBasicDocumentID" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Уникальный идентификатор ПТД</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PassengerCDBasicDocumentNumber" type="cat_ru:GTDIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер ПТД </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CurDecision" type="pcdm_in:InfoDecisionType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Текущее принятое решение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="HistoryDecision" type="pcdm_in:InfoDecisionType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>История принятых решений</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsMark" type="pcdm_in:CustomsMarkType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Служебные отметки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006289E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CustomsMarkType">
+    <xs:annotation>
+      <xs:documentation>Служебные отметки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="StageMarkIdentifier" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор проставленной технологической отметки - 1 (номер этапа)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NoteMarkIdentifier" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Идентификатор проставленной технологической отметки  -  2 (тип примечания)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StageDescription" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание отметки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MarkDescription" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Служебная запись </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TPORegNumber" type="pcdm_in:TPORegNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер ТПО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentInfo" type="cat_ru:DocumentBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация о документе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Deadline" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Срок временного ввоза/вывоза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReturnDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата обратного вывоза/вывоза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsPerson" type="RUScat_ru:CustomsPersonDetails" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateTimeInf" type="clt_ru:DateTimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата и время проставления отметки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TPORegNumberType">
+    <xs:annotation>
+      <xs:documentation>Справочный номер ТПО</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, зарегистрировавшего документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocNumber" type="clt_ru:Code10Type">
+        <xs:annotation>
+          <xs:documentation>Номер документа по журналу регистрации/типографский номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NumPP" type="clt_ru:Code2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер вносимых изменений</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InfoDecisionType">
+    <xs:annotation>
+      <xs:documentation>Сведения о принятом решении</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DecisionDate" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата и время решения </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Decision" type="clt_ru:CodeVariable2Type">
+        <xs:annotation>
+          <xs:documentation>Решение: 10 - выпуск без уплаты, 31 - требуется уплата, 32 - выпуск с уплатой, 33 - выпуск разрешен, ожидание решения по временному ввозу, 40 – таможенная декларация отозвана до выпуска,
+«50» - выпуск товаров аннулирован при отзыве ПТД. 90 - отказано в выпуске товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DecisionDescription" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание принятого решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReasonCode" type="clt_ru:CodeVariable3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код причины принятого решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReasonDescription" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание причины принятого решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RecomDescription" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание рекомендации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Comments" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Комментарии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsPerson" type="RUScat_ru:CustomsPersonDetails" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XML Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f0f0f0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .upload-zone {
+            flex-grow: 1;
+            border: 2px dashed #ccc;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .upload-zone:hover {
+            border-color: #666;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            font-family: monospace;
+        }
+
+        th {
+            background: #f8f9fa;
+            position: sticky;
+            top: 0;
+            box-shadow: 0 2px 2px -1px rgba(0,0,0,0.1);
+        }
+
+        .toggle {
+            cursor: pointer;
+            padding-right: 15px;
+            /*user-select: none;*/
+        }
+
+        .collapsed .children {
+            display: none;
+        }
+
+        .level-1 td:first-child { padding-left: 25px; }
+        .level-2 td:first-child { padding-left: 50px; }
+        .level-3 td:first-child { padding-left: 75px; }
+        .level-4 td:first-child { padding-left: 100px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>XML Viewer</h2>
+            <div class="upload-zone" id="dropZone">
+                Click to select XML file or drag here
+                <input type="file" id="fileInput" hidden accept=".xml">
+            </div>
+        </div>
+        <table id="xmlTable">
+            <thead>
+                <tr>
+                    <th>Tag</th>
+                    <th>Value</th>
+                    <th>Prefix</th>
+                    <th>Attributes</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const dropZone = document.getElementById('dropZone');
+        const tableBody = document.getElementById('tableBody');
+
+        // Drag and drop handlers
+        dropZone.addEventListener('click', () => fileInput.click());
+        dropZone.addEventListener('dragover', (e) => e.preventDefault());
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const file = e.dataTransfer.files[0];
+            if (file) handleFile(file);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) handleFile(file);
+        });
+
+        function handleFile(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => renderXML(e.target.result);
+            reader.readAsText(file);
+        }
+
+        function renderXML(xmlText) {
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+            tableBody.innerHTML = '';
+            processNode(xmlDoc.documentElement, 0);
+        }
+
+        function processNode(node, level) {
+            const children = Array.from(node.children);
+            const hasChildren = children.length > 0;
+            const prefix = node.prefix || '';
+            const attributes = Array.from(node.attributes)
+                .map(attr => `${attr.name}="${attr.value}"`)
+                .join(' ');
+
+            // Create main row
+            const row = document.createElement('tr');
+            row.className = `level-${level}`;
+
+            row.innerHTML = `
+                <td>
+                    ${hasChildren ? `<span class="toggle">▶</span>` : ''}
+                    ${node.localName}
+                </td>
+                <td>${hasChildren ? '' : node.textContent?.trim() || '-'}</td>
+                <td>${prefix || '-'}</td>
+                <td>${attributes || '-'}</td>
+            `;
+
+            if (hasChildren) {
+                row.classList.add('collapsed');
+                const childContainer = document.createElement('tr');
+                childContainer.className = 'children';
+                const childTd = document.createElement('td');
+                childTd.colSpan = 4;
+
+                const childTable = document.createElement('table');
+                children.forEach(child => {
+                    processNode(child, level + 1).forEach(row =>
+                        childTable.appendChild(row)
+                    );
+                });
+
+                childTd.appendChild(childTable);
+                childContainer.appendChild(childTd);
+
+                tableBody.appendChild(row);
+                tableBody.appendChild(childContainer);
+            } else {
+                tableBody.appendChild(row);
+            }
+
+            return [row];
+        }
+
+        // Toggle children visibility
+        tableBody.addEventListener('click', (e) => {
+            if (e.target.classList.contains('toggle')) {
+                const row = e.target.closest('tr');
+                const children = row.nextElementSibling;
+
+                if (row.classList.contains('collapsed')) {
+                    row.classList.remove('collapsed');
+                    e.target.textContent = '▼';
+                    children.style.display = '';
+                } else {
+                    row.classList.add('collapsed');
+                    e.target.textContent = '▶';
+                    children.style.display = 'none';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

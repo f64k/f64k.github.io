@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ag3 | NO Tree | XML Viewer</title>
+    <!-- AG-Grid CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community@31.3.2/styles/ag-grid.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community@31.3.2/styles/ag-theme-alpine.css">
+    <style>
+        body { margin: 20px; }
+        #myGrid { height: 90vh; }
+    </style>
+</head>
+<body>
+    <input type="file" id="fileInput" accept=".xml">
+    <div id="myGrid" class="ag-theme-alpine"></div>
+
+<!--<script src="https://cdn.jsdelivr.net/npm/ag-grid-community@31.3.2/dist/ag-grid-community.min.js"></script>-->
+  <script src="https://cdn.jsdelivr.net/npm/ag-grid-enterprise@31.3.2/dist/ag-grid-enterprise.min.js"></script>
+<script>
+document.getElementById('fileInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    
+    reader.onload = function(e) {
+        const xmlData = parseXMLToTree(e.target.result);
+        initGrid(xmlData);
+    };
+    
+    reader.readAsText(file);
+});
+
+function parseXMLToTree(xmlText) {
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+    let idCounter = 0;
+
+    function processNode(node, parentId = null) {
+        const id = idCounter++;
+        const result = {
+            id,
+            parentId,
+            tag: node.localName,
+            value: node.children.length ? null : node.textContent?.trim(),
+            prefix: node.prefix || '',
+            attributes: Array.from(node.attributes).map(attr => 
+                `${attr.name}="${attr.value}"`
+            ).join(' ')
+        };
+
+        result.children = Array.from(node.children).map(child => 
+            processNode(child, id)
+        );
+
+        return result;
+    }
+
+    const rootNode = processNode(xmlDoc.documentElement);
+    return flattenTree(rootNode);
+}
+
+function flattenTree(node) {
+    const result = [];
+    function traverse(n) {
+        result.push(n);
+        if(n.children) {
+            n.children.forEach(traverse);
+            delete n.children;
+        }
+    }
+    traverse(node);
+    return result;
+}
+
+function initGrid(rowData) {
+    const gridOptions = {
+        columnDefs: [
+            { 
+                field: 'tag',
+                cellRenderer: 'agGroupCellRenderer',
+                minWidth: 300
+            },
+            { field: 'value' },
+            { field: 'prefix', headerName: 'Namespace' },
+            { field: 'attributes', headerName: 'Attributes' }
+        ],
+        defaultColDef: {
+            flex: 1,
+            resizable: true,
+            filter: true
+        },
+        treeData: true,
+        animateRows: true,
+        groupDefaultExpanded: -1,
+        getDataPath: data => [data.id.toString()],
+        autoGroupColumnDef: {
+            headerName: 'Tag',
+            cellRendererParams: {
+                suppressCount: true
+            }
+        }
+    };
+
+    const gridDiv = document.querySelector('#myGrid');
+    new agGrid.Grid(gridDiv, gridOptions);
+    gridOptions.api.setRowData(rowData);
+}
+</script>
+</body>
+</html>

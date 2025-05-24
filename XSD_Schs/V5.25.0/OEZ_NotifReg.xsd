@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:oeznr="urn:customs.ru:Information:CustomsDocuments:OEZ_NotifReg:5.25.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:OEZ_NotifReg:5.25.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.25.0.0">
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Регистрационный номер уведомления о ввозе/вывозе товаров/ Заявления на уничтожение товаров/ Акта об уничтожении товаров/ Описи документов, представленных в целях вывоза товаров ЕАЭС</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OEZ_NotifReg" type="oeznr:OEZ_NotifRegType">
+		<xs:annotation>
+			<xs:documentation>Регистрационный номер уведомления о ввозе/вывозе товаров/ Заявления на уничтожение товаров/ Акта об уничтожении товаров/ Описи документов, представленных в целях вывоза товаров ЕАЭС</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="OEZ_NotifRegType">
+		<xs:annotation>
+			<xs:documentation>Регистрационный номер уведомления о ввозе/вывозе товаров/ Заявления на уничтожение товаров/ Акта об уничтожении товаров/ Описи документов, представленных в целях вывоза товаров ЕАЭС</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="DocKind" type="clt_ru:Numeric1Type">
+						<xs:annotation>
+							<xs:documentation>Вид документа: 1 - Уведомление о ввозе товаров; 2 - Уведомление о вывозе товаров; 3 - Заявление на уничтожение товаров; 4 - Акт об уничтожении товаров; 5 - Опись документов, представленных в целях вывоза товаров ЕАЭС</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ZoneKind" type="clt_ru:Numeric1Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Код вида зоны: 1 - ОЭЗ; 2 - ПОЭЗ ; 3 - ТОР; 4 - СЭЗ</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Customs" type="cat_ru:CustomsType">
+						<xs:annotation>
+							<xs:documentation>Код и наименование таможенного органа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RegistrationNumber" type="oeznr:RegistrationNumberType">
+						<xs:annotation>
+							<xs:documentation>Регистрационный номер документа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomsPerson" type="cat_ru:CustomsPersonType">
+						<xs:annotation>
+							<xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006145E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="RegistrationNumberType">
+		<xs:annotation>
+			<xs:documentation>Регистрационный номер документа</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AddNumber" type="clt_ru:CodeVariable4Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Первая часть регистрационного номера документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CustomsCode" type="clt_ru:CustomsCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код таможенного органа, зарегистрировавшего документ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegistrationDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата регистрации документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Number" type="clt_ru:CodeVariable10Type">
+				<xs:annotation>
+					<xs:documentation>Порядковый номер документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocKind" type="clt_ru:CodeVariable5Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Четвертая часть регистрационного номера документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

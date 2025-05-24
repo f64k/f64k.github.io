@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:voio="urn:customs.ru:Information:CustomsDocuments:VoiOrder:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:VoiOrder:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Предписание на осмотр с ИДК</xs:documentation>
+	</xs:annotation>
+	<xs:element name="VoiOrder" type="voio:VoiOrderType"/>
+	<xs:complexType name="VoiOrderType">
+		<xs:annotation>
+			<xs:documentation>Предписание на осмотр с ИДК</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="voio:BaseDocType">
+				<xs:sequence>
+					<xs:element name="AssInspectionDateTime" type="clt_ru:DateTimeCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Назначенные дата и время осмотра</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="AutoRoute" type="clt_ru:IndicatorType">
+						<xs:annotation>
+							<xs:documentation>Признак автоматически созданного предписания на осмотр</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="IDK_id" type="clt_ru:CodeVariable8Type">
+						<xs:annotation>
+							<xs:documentation>Уникальный идентификатор ИДК, которому назначается осмотр</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomsProcedureType" type="clt_ru:CUCustomsProcedureType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Направление перемещения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TypeScan" type="clt_ru:Numeric1Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Тип сканирования: 1- сканирование объекта контроля, 2 радиационный контроль, 3- повторное сканирование</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ResultScan" type="clt_ru:Numeric1Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Результат сканирования 0 - успех, 1 - сбой</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="NumberCustomsZone" type="clt_ru:DocumentNumberType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Номер зоны таможенного контроля</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomsZoneName" type="clt_ru:DocumentNameType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Наименование зоны таможенного контроля</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="InstrInfo" type="voio:InstrInfoType">
+						<xs:annotation>
+							<xs:documentation>Сведения о Предписании на осмотр</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="BeginInspectionDateTime" type="clt_ru:DateTimeCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дата и время начала осмотра</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ReplaceDateTime" type="clt_ru:DateTimeCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дата и время выставления объекта для проведения осмотра с ИДК</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="EndInspectionDateTime" type="clt_ru:DateTimeCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дата и время окончания осмотра</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="VoiOfficer" type="voio:CustomsPersonDetails" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Должностное лицо оператор ИДК</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="InstrNumber" type="voio:GTDIDType">
+						<xs:annotation>
+							<xs:documentation>Регистрационный номер Направления на осмотр</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="InspTransportMeans" type="voio:InspTransportMeansType">
+						<xs:annotation>
+							<xs:documentation>Объект осмотра</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ScanID" type="clt_ru:DocumentIDType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Идентификатор сканирования</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Comments" type="clt_ru:FreeText500Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Комментарии оператора</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006241E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы.</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="BaseDocType">
+		<xs:annotation>
+			<xs:documentation>Базовый тип для электронного документа</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DocumentID" type="clt_ru:DocumentIDType">
+				<xs:annotation>
+					<xs:documentation>Уникальный идентификатор документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RefDocumentID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Уникальный идентификатор исходного документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContainerNumberType">
+		<xs:annotation>
+			<xs:documentation>Номер контейнера</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ContainerIdentificaror" type="clt_ru:ContainerIdentityType">
+				<xs:annotation>
+					<xs:documentation>Номер (идентификатор) контейнера</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FullIndicator" type="clt_ru:LetterIndicatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Признак заполнения контейнера. 1 - товар занимает весь контейнер, 2- товар занимает часть контейнера</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CustomsPersonDetails">
+		<xs:annotation>
+			<xs:documentation>Сведения о должностном лице таможенного органа</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PersonSurname" type="clt_ru:NameType">
+				<xs:annotation>
+					<xs:documentation>Фамилия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PersonName" type="clt_ru:NameType">
+				<xs:annotation>
+					<xs:documentation>Имя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PersonMiddleName" type="clt_ru:NameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Отчество</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PersonPost" type="clt_ru:PostType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Должность</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LNP" type="clt_ru:LNPIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ЛНП должностного лица таможенного органа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CustomsCode" type="clt_ru:CustomsCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код таможенного органа, указанный на оттиске ЛНП</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CustomsType">
+		<xs:annotation>
+			<xs:documentation>Код и наименование таможенного органа</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Code" type="clt_ru:CustomsCodeType">
+				<xs:annotation>
+					<xs:documentation>Код таможенного органа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OfficeName" type="clt_ru:CustomsOfficeNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование таможенного органа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GTDIDType">
+		<xs:annotation>
+			<xs:documentation>Регистрационный номер таможенного документа. Применяется для всех документов, имеющих структуру номера, совпадающую со структурой номера ДТ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+				<xs:annotation>
+					<xs:documentation>Код таможенного органа, зарегистрировавшего документ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegistrationDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата регистрации документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GTDNumber" type="clt_ru:GTDIDType">
+				<xs:annotation>
+					<xs:documentation>Порядковый номер документа по журналу регистрации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InstrInfoType">
+		<xs:annotation>
+			<xs:documentation>Сведения о документе</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="InstrDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата создания документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InstrTime" type="clt_ru:TimeCustType">
+				<xs:annotation>
+					<xs:documentation>Время создания документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Customs" type="voio:CustomsType">
+				<xs:annotation>
+					<xs:documentation>Таможенный орган</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CustomsOfficer" type="voio:CustomsPersonDetails" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InspTransportMeansType">
+		<xs:annotation>
+			<xs:documentation>Транспортные средства/контейнеры</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NumObject" type="clt_ru:Count2Type">
+				<xs:annotation>
+					<xs:documentation>Порядковый номер объекта в Направлении</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TypeObject" type="clt_ru:CodeVariable2Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Тип ТС: 01 - Грузовой; 02 - Контейнерный; 03 - Легковой; 04 - Пассажирский; 05 - Порожний; 06 -  Насыпь; 07 - Биг-бэги; 08 - Паллеты; 99 - Иной</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="TransportMeans" type="voio:TransportMeansType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Сведения о транспортном средстве</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="InspContainer" type="voio:ContainerNumberType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Сведения о контейнере</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="BigBag" type="clt_ru:DocumentNumberType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Идентификатор иного типа объекта</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="ActNumber" type="voio:GTDIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Зарезервированный номер акта осмотра с ИДК</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransportMeansType">
+		<xs:annotation>
+			<xs:documentation>Сведения о транспортном средстве</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TransportModeCode" type="clt_ru:TransportModeCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код вида транспортного средства по классификатору видов транспорта и транспортировки товаров</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransportIdentifier" type="clt_ru:TransportMeansIDType">
+				<xs:annotation>
+					<xs:documentation>Номер транспортного средства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TrailerIdentifier" type="clt_ru:TransportMeansIDType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Регистрационный номер прицепа/полуприцепа </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

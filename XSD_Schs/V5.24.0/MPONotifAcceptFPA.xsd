@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:maf="urn:customs.ru:Information:RegistrationDocuments:MPONotifAcceptFPA:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:RegistrationDocuments:MPONotifAcceptFPA:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Уведомление о принятии МПО иностранной почтовой администрацией</xs:documentation>
+  </xs:annotation>
+  <xs:element name="MPONotifAcceptFPA" type="maf:MPONotifAcceptFPAType">
+    <xs:annotation>
+      <xs:documentation>Уведомление о принятии МПО иностранной почтовой администрацией</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="MPONotifAcceptFPAType">
+    <xs:annotation>
+      <xs:documentation>Уведомление о принятии МПО иностранной почтовой администрацией</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="CustomsProcedure" type="clt_ru:CUCustomsProcedureType">
+            <xs:annotation>
+              <xs:documentation>Исходное направление перемещения: ИМ - ввоз МПО, ЭК - вывоз МПО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DispatchNum" type="clt_ru:DocumentNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер депеши</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DepartDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата убытия</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AccepDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата принятия МПО иностранной почтовой администрацией</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DestinationCountry" type="RUScat_ru:CountryDetailsType">
+            <xs:annotation>
+              <xs:documentation>Страна назначения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MPOReg" type="maf:MPORegType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер ЭД МПО / реестра МПО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MPOList" type="maf:MPOListType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Перечень МПО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006368E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="MPORegType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер ЭД МПО </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, зарегистрировавшего документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MPO_Number" type="clt_ru:CodeVariable14Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер по сквозной нумерации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MPOListType">
+    <xs:annotation>
+      <xs:documentation>Перечень МПО</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Number" type="clt_ru:Count8Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MPORegNum" type="clt_ru:Code13Type">
+        <xs:annotation>
+          <xs:documentation>Номер МПО / исходного МПО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Decision" type="clt_ru:CodeVariable2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Решение по МПО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

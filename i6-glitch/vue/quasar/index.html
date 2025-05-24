@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<!--
+    WARNING! Make sure that you match all Quasar related
+    tags to the same version! (Below it's "@2.11.4")
+  -->
+
+<head>
+    <link
+        href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons|Material+Icons+Outlined|Material+Icons+Round|Material+Icons+Sharp"
+        rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/animate.css@^4.0.0/animate.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/quasar@2.11.4/dist/quasar.rtl.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <!-- example of injection point where you write your app template -->
+    <div id="q-app">
+        <q-layout view="hHh lpR fFf">
+            <q-header elevated class="bg-primary text-white" height-hint="98">
+                <q-toolbar>
+                    <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
+
+                    <q-toolbar-title>
+                        <q-avatar>
+                            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
+                        </q-avatar>
+                        Title
+                    </q-toolbar-title>
+
+                    <q-btn dense flat round icon="menu" @click="toggleRightDrawer" />
+                </q-toolbar>
+
+                <q-tabs align="left">
+                    <q-route-tab to="/page1" label="Page One" />
+                    <!--<q-route-tab to="/page2" label="Page Two" />-->
+                    <!--<q-route-tab to="/page3" label="Page Three" />-->
+                </q-tabs>
+            </q-header>
+
+            <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered>
+                LEFT drawer content
+            </q-drawer>
+
+            <q-drawer show-if-above v-model="rightDrawerOpen" side="right" bordered>
+                RIGHT drawer content
+            </q-drawer>
+
+            <q-page-container>
+                <!--<router-view />-->
+                q-page-container
+            </q-page-container>
+
+            <q-footer elevated class="bg-grey-8 text-white">
+                <q-toolbar>
+                    <q-toolbar-title>
+                        <div>подвал</div>
+                    </q-toolbar-title>
+                    <div>
+                        <a href="https://quasar.dev/layout/page">Quasar</a>
+                    </div>
+                </q-toolbar>
+            </q-footer>
+        </q-layout>
+    </div>
+
+    <!-- Add the following at the end of your body tag -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quasar@2.11.4/dist/quasar.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quasar@2.11.4/dist/lang/ru.umd.prod.js"></script>
+
+    <!--
+    <script type="importmap">
+      {
+        "imports": {
+          "vue": "https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"
+        }
+      }
+    </script>
+    -->
+
+    <script type="module">
+        //import { ref } from "vue";
+
+        const app = Vue.createApp({
+            setup() {
+                var leftDrawerOpen = false;
+                var rightDrawerOpen = false;
+
+                return {
+                    leftDrawerOpen,
+                    toggleLeftDrawer() {
+                        leftDrawerOpen = !leftDrawerOpen;
+                    },
+
+                    rightDrawerOpen,
+                    toggleRightDrawer() {
+                        rightDrawerOpen.value = !rightDrawerOpen.value;
+                    },
+                };
+            },
+        });
+
+        app.use(Quasar);
+        Quasar.lang.set(Quasar.lang.ru);
+        app.mount("#q-app");
+    </script>
+</body>
+
+</html>

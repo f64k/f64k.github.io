@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:mpco="urn:customs.ru:Information:CustomsDocuments:MPOCommon:5.21.0" xmlns:mpf="urn:customs.ru:Information:CustomsDocuments:MPOFact:5.21.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:MPOFact:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:CustomsDocuments:MPOCommon:5.21.0" schemaLocation="MPOCommon.xsd" />
+  <xs:annotation>
+    <xs:documentation>Декларирование фактического прибытия МПО</xs:documentation>
+  </xs:annotation>
+  <xs:element name="MPOFact" type="mpf:MPOFactType">
+    <xs:annotation>
+      <xs:documentation>Декларирование фактического прибытия МПО</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="MPOFactType">
+    <xs:annotation>
+      <xs:documentation>Декларирование фактического прибытия МПО</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Reestr_ID" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Уникальный номер реестра</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MPOReestr" type="mpco:MPO_RegistrationType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер реестра МПО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocDate" type="clt_ru:DateTimeCustType">
+            <xs:annotation>
+              <xs:documentation>Дата и время формирования документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MPO_ID" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Уникальный номер записи в реестре</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocKind" type="clt_ru:LetterIndicatorType">
+            <xs:annotation>
+              <xs:documentation>Тип документа: 0 - Сведения о фактическом прибытии МПО, идентичные предварительной информации; 1 - Заявленные сведения при предварительном информировании кардинально отличаются от сведений, полученных при фактическом прибытии</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RecNum" type="clt_ru:Count4Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер по порядку в списке</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MPODecl" type="mpco:MPODeclType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Информация по МПО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006256E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+</xs:schema>

@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Спецификация обмена АИС "Ордер" и КПС "Марка-Т" -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:ctif="urn:customs.ru:Information:SQDocuments:CreateTPOInfo:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:CreateTPOInfo:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сведения об оформленном ТПО</xs:documentation>
+  </xs:annotation>
+  <xs:element name="CreateTPOInfo" type="ctif:CreateTPOInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения об оформленном ТПО</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="CreateTPOInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения об оформленном ТПО</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="TPOID" type="ctif:TPOIDType">
+            <xs:annotation>
+              <xs:documentation>Идентифицирующие параметры документа ТПО/ТР</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PayDocInfo" type="ctif:PayDocInfoType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Информация о платежном документе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1040029E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="PayDocInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о платежном документе</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="PaymentAmount" type="clt_ru:AmountType">
+            <xs:annotation>
+              <xs:documentation>Сумма платежа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PaymentCurrencyCode" type="clt_ru:CurrencyN3CodeType">
+            <xs:annotation>
+              <xs:documentation>Цифровой код валюты суммы платежа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TPOIDType">
+    <xs:annotation>
+      <xs:documentation>Идентифицирующие параметры документа ТПО/ТР</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TPOIndicator" type="clt_ru:DigitalIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Индикатор типа документа ТПО/ТР (0 - ТПО, 1 - ТР)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, зарегистрировавшего документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrderNumber" type="clt_ru:Code10Type">
+        <xs:annotation>
+          <xs:documentation>Типографский номер бланка ТПО/ТР</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

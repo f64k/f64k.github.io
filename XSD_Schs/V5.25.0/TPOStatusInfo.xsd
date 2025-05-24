@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Спецификация обмена АИС "АИСТ-М" и КПС "Марка" -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:els_agr="urn:customs.ru:Information:ELSDocuments:ELSAggregateTypes:5.25.0" xmlns:els_leaf="urn:customs.ru:Information:ELSDocuments:ELSLeafTypes:5.21.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:tposi="urn:customs.ru:Information:ELSDocuments:TPOStatusInfo:5.25.0" targetNamespace="urn:customs.ru:Information:ELSDocuments:TPOStatusInfo:5.25.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.25.0.0">
+  <xs:import namespace="urn:customs.ru:Information:ELSDocuments:ELSAggregateTypes:5.25.0" schemaLocation="ELSAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:ELSDocuments:ELSLeafTypes:5.21.0" schemaLocation="ELSLeafTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сведения о статусе ТПО</xs:documentation>
+  </xs:annotation>
+  <xs:element name="TPOStatusInfo" type="tposi:TPOStatusInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о статусе ТПО</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="TPOStatusInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о статусе ТПО</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="RegistrationNumber" type="els_agr:RegistrationNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер ТПО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocumentStatus" type="els_leaf:DocChargeStatusType">
+            <xs:annotation>
+              <xs:documentation>Состояние ТПО (0-Не оплачен,1-Оплачен, 2-Аннулирован)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ApplicationDocument" type="tposi:ApplicationDocumentType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Представленные документы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TPOAmount" type="clt_ru:AmountType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сумма уплаченного акциза </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TPOAmountText" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сумма уплаченного акциза прописью</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsPerson" type="RUScat_ru:CustomsPersonDetails" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о должностном лице, оформившем таможенный приходный ордер </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Comment" type="clt_ru:FreeText500Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дополнительная информация</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1040042E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ApplicationDocumentType">
+    <xs:annotation>
+      <xs:documentation>Документ-основание</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="CustomsDocumentCode" type="clt_ru:CustomsDocumentCodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

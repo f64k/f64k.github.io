@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:fdareq="urn:customs.ru:Information:SQDocuments:FtsDeclarationsAmountReq:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:FtsDeclarationsAmountReq:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос сведений о количестве таможенных деклараций</xs:documentation>
+  </xs:annotation>
+  <xs:element name="FtsDeclarationsAmountReq" type="fdareq:FtsDeclarationsAmountReqType" />
+  <xs:complexType name="FtsDeclarationsAmountReqType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений о количестве таможенных деклараций</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="OrganizationINN" type="clt_ru:INNIDType">
+            <xs:annotation>
+              <xs:documentation>ИНН организации-импортера</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:element name="DTRegistration" type="fdareq:DTRegistrationType">
+              <xs:annotation>
+                <xs:documentation>Начальная и конечная дата регистрации ДТ</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="GoodRelease" type="fdareq:GoodReleaseType">
+              <xs:annotation>
+                <xs:documentation>Начальная и конечная дата выпуска товара</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009152E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор электронного документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DTRegistrationType">
+    <xs:annotation>
+      <xs:documentation>Начальная и конечная дата регистрации ДТ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="StartDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Начальная дата регистрации ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EndDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Конечная дата регистрации ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GoodReleaseType">
+    <xs:annotation>
+      <xs:documentation>Начальная и конечная дата выпуска товара</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="StartDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Начальная дата выпуска товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EndDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Конечная дата выпуска товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

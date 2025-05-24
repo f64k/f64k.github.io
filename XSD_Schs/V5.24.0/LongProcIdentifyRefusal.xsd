@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:lpid_ref="urn:customs.ru:Information:CustomsDocuments:LongProcIdentifyRefusal:5.24.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:LongProcIdentifyRefusal:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Уведомление об отказе в регистрации Заявления о проведении идентификации товаров</xs:documentation>
+  </xs:annotation>
+  <xs:element name="LongProcIdentifyRefusal" type="lpid_ref:LongProcIdentifyRefusalType">
+    <xs:annotation>
+      <xs:documentation>Уведомление об отказе в регистрации Заявления о проведении идентификации товаров</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="LongProcIdentifyRefusalType">
+    <xs:annotation>
+      <xs:documentation>Уведомление об отказе в регистрации Заявления о проведении идентификации товаров</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="RefusalDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата отказа в регистрации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RefusalTime" type="clt_ru:TimeCustType">
+            <xs:annotation>
+              <xs:documentation>Время отказа в регистрации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Customs" type="cat_ru:CustomsType">
+            <xs:annotation>
+              <xs:documentation>Таможенный орган</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ExtensionAppNumber" type="cat_ru:GTDIDType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер Отказа в регистрации заявления о проведении идентификации товаров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RefusalReason" type="lpid_ref:RefusalReasonType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Описание причины отказа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsPerson" type="lpid_ref:CustomsPersonType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Подпись должностного лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006339E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CustomsPersonType">
+    <xs:annotation>
+      <xs:documentation>Должностное лицо таможенного органа, принявшее Решение</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:PersonBaseType">
+        <xs:sequence>
+          <xs:element name="LNP" type="clt_ru:LNPIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>ЛНП должностного лица таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IssueDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата подписания</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RefusalReasonType">
+    <xs:annotation>
+      <xs:documentation>Описание причины отказа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ReasonDescription" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Описание причины отказа заявления в соответствии с Порядком проведения идентификации товаров, помещаемых под таможенные процедуры</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Note" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Примечание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

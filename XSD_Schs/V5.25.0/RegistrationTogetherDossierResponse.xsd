@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:rtd_res="urn:customs.ru:Information:SQDocuments:RegistrationTogetherDossierResponse:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:RegistrationTogetherDossierResponse:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Запрос на получение регистрационного досье (ответ)</xs:documentation>
+	</xs:annotation>
+	<xs:element name="RegistrationTogetherDossierResponse" type="rtd_res:RegistrationTogetherDossierResponseType">
+		<xs:annotation>
+			<xs:documentation>Запрос на получение регистрационного досье (ответ)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="RegistrationTogetherDossierResponseType">
+		<xs:annotation>
+			<xs:documentation>Запрос на получение регистрационного досье (ответ)</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="Person" type="rtd_res:PersonInfoType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Данные о физическом лице</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009411E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Данные о регистрации</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="PersonInfoType">
+		<xs:annotation>
+			<xs:documentation>Данные о физическом лице</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CitizenLastname" type="clt_ru:NameType">
+				<xs:annotation>
+					<xs:documentation>Фамилия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CitizenFirstname" type="clt_ru:NameType">
+				<xs:annotation>
+					<xs:documentation>Имя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CitizenGivenname" type="clt_ru:NameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Отчество</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CitizenBirthday" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата рождения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Registration" type="rtd_res:RegistrationType">
+				<xs:annotation>
+					<xs:documentation>Данные о регистрации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RegistrationType">
+		<xs:annotation>
+			<xs:documentation>Досье: Список объектов типа «Регистрация»</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RegType" type="rtd_res:RegistrationResponseType">
+				<xs:annotation>
+					<xs:documentation>Тип регистрации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegistrationDateFrom" type="clt_ru:DateCustType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Дата начала срока регистрации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegistrationDateTo" type="clt_ru:DateCustType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Дата окончания срока регистрации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные простые прикладные типы</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="RegistrationResponseType">
+		<xs:annotation>
+			<xs:documentation>Словарь "Тип регистрации: Запрос"</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:CodeCategoriesCust">
+			<xs:length value="2"/>
+			<xs:enumeration value="01">
+				<xs:annotation>
+					<xs:documentation>Регистрация по месту жительства</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="02">
+				<xs:annotation>
+					<xs:documentation>Регистрация по месту пребывания</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Text60Type">
+		<xs:annotation>
+			<xs:documentation>Текстовое описание. До 60 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:TextCategoriesCust">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="60"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

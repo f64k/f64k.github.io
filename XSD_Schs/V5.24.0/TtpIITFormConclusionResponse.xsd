@@ -1,0 +1,334 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:ttpRes="urn:customs.ru:Information:CustomsDocuments:TtpIITFormConclusionResponse:5.24.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:TtpIITFormConclusionResponse:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Ответ на запрос на получение сведений из заключений формы идентификации иностранных товаров</xs:documentation>
+  </xs:annotation>
+  <xs:element name="TtpIITFormConclusionResponse" type="ttpRes:TtpIITFormConclusionResponseType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос на получение сведений из заключений формы идентификации иностранных товаров</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="TtpIITFormConclusionResponseType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос на получение сведений из заключений формы идентификации иностранных товаров</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="referenceNo" type="clt_ru:Text50Type">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер заключения формы ИИТ, как он получен из запроса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="issued" type="clt_ru:DateTimeCustType">
+            <xs:annotation>
+              <xs:documentation>Дата выдачи заключения формы ИИТ, как она получен из запроса&gt;</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="certificate" type="ttpRes:smevCertificateDTO" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Данные заключения формы ИИТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006337E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="PersonType">
+    <xs:annotation>
+      <xs:documentation>Сведения о физическом лице. ФИО</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="lastName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Фамилия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="firstName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Имя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="secondName" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="smevCertificateDTO">
+    <xs:annotation>
+      <xs:documentation>Данные заключения формы ИИТ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="senderType" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Тип заявител (два символа): юридическое лицо (ЮЛ) или индивидуальный предприниматель (ИП)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:choice>
+        <xs:element name="senderTitle" type="clt_ru:NameType">
+          <xs:annotation>
+            <xs:documentation>Наименование заявителя</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Person" type="ttpRes:PersonType">
+          <xs:annotation>
+            <xs:documentation>ФИО заявителя</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+      <xs:element name="senderAddress" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Адрес заявителя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="senderOgrn" type="clt_ru:OGRNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ОГРН заявителя (для ЮЛ)/ ОГРНИП (для ИП)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="senderInn" type="clt_ru:INNIDType">
+        <xs:annotation>
+          <xs:documentation>ИНН заявителя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="senderKpp" type="clt_ru:KPPCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>КПП заявителя (для ЮЛ)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="passportDetails" type="RUScat_ru:RUIdentityCardType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Паспорт заявителя (для ИП)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="referenceNo" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер Заключения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="supportInfo" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения, указанные в графе 3 Заключения (служебные отметки)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="annexSheetCount" type="clt_ru:CodeVariable3Type">
+        <xs:annotation>
+          <xs:documentation>Количество листов приложения к Заключению</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="declaratorName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Фамилия и инициалы уполномоченного лица заявителя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="issuerName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Фамилия и инициалы лица, уполномоченного удостоверять Заключение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="issued" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата удостоверения Заключения&gt;</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="itemList" type="ttpRes:smevCertificateItemDTO" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Список товаров заключения формы ИИТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="internalRawMaterialsList" type="ttpRes:smevCertificateInternalRawMaterialDTO" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Полностью произведенные товары</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="unionRawMaterialsList" type="ttpRes:smevCertificateUnionRawMaterialDTO" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Товары ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="foreignRawMaterialsList" type="ttpRes:smevCertificateForeignRawMaterialDTO" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Иностранные товары</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="smevCertificateForeignRawMaterialDTO">
+    <xs:annotation>
+      <xs:documentation>Одна позиция из данных о сырье из раздела "Иностранные товары" приложения к заключению</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="tnved" type="clt_ru:CUGoodsNomenclatuerCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="customsItemOrder" type="clt_ru:CodeVariable3Type">
+        <xs:annotation>
+          <xs:documentation>Номер товара в декларации на товары</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="customsNumber" type="cat_ru:GTDIDType">
+        <xs:annotation>
+          <xs:documentation>Номер декларации на товары</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="title" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Наименование сырья, комплектующих и упаковочных материалов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="itemCount" type="cat_ru:SupplementaryQuantityType">
+        <xs:annotation>
+          <xs:documentation>Количество сырья в основных единицах измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="extraItemCount" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество сырья в дополнительных единицах измерения, для учета на пердприятии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="documents" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о документах, подтверждающих приобретение (владение) сырья</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="itemIdx" type="clt_ru:CodeVariable5Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер готовой продукции из графы "Примечание"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="smevCertificateInternalRawMaterialDTO">
+    <xs:annotation>
+      <xs:documentation>Одна позиция из данных о сырье из раздела "Полностью произведенные товары" приложения к заключению</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="title" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Наименование сырья, комплектующих и упаковочных материалов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="itemCount" type="cat_ru:SupplementaryQuantityType">
+        <xs:annotation>
+          <xs:documentation>Количество сырья в основных единицах измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="extraItemCount" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество сырья в дополнительных единицах измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="documents" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о документах, подтверждающих приобретение (владение) сырья</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="itemIdx" type="clt_ru:CodeVariable5Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер готовой продукции из графы "Примечание"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="smevCertificateItemDTO">
+    <xs:annotation>
+      <xs:documentation>Одна товарная позиция списка товаров заключения формы ИИТ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="itemOrder" type="clt_ru:CodeVariable5Type">
+        <xs:annotation>
+          <xs:documentation>Номер товарной позиции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="description" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Описание товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="tnved" type="clt_ru:CUGoodsNomenclatuerCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код товара по ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="weightNetto" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Количество товара (вес нетто)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="weightBrutto" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Количество товара (вес брутто)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="extraCount" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество товара в дополнительных единицах измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="invoice" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения, указанные в графе 8 Заключения (номер и дата счета-фактуры)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="smevCertificateUnionRawMaterialDTO">
+    <xs:annotation>
+      <xs:documentation>Одна позиция из данных о сырье из раздела "Товары ЕАЭС" приложения к заключению</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0">
+        <xs:element name="transitDecl" type="cat_ru:GTDIDType">
+          <xs:annotation>
+            <xs:documentation>Номер транзитной декларации</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="transitDoc" type="clt_ru:FreeText250Type">
+          <xs:annotation>
+            <xs:documentation>Сведения о транспортных и/или коммерческих документах</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+      <xs:element name="title" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Наименование сырья, комплектующих и упаковочных материалов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="itemCount" type="cat_ru:SupplementaryQuantityType">
+        <xs:annotation>
+          <xs:documentation>Количество сырья в основных единицах измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="extraItemCount" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество сырья в дополнительных единицах измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="documents" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о документах, подтверждающих приобретение (владение) сырья</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="itemIdx" type="clt_ru:CodeVariable5Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер готовой продукции из графы "Примечание"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

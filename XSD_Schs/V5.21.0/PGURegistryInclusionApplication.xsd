@@ -1,0 +1,633 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" xmlns:pgur="urn:customs.ru:Information:SQDocuments:PGURegistryInclusionApplication:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:PGURegistryInclusionApplication:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Государственная услуга по ведению реестра банков, обладающих правом выдачи банковских гарантий</xs:documentation>
+  </xs:annotation>
+  <xs:element name="PGURegistryInclusionApplication" type="pgur:PGURegistryInclusionApplicationType">
+    <xs:annotation>
+      <xs:documentation>Государственная услуга по ведению реестра банков, обладающих правом выдачи банковских гарантий</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="PGURegistryInclusionApplicationType">
+    <xs:annotation>
+      <xs:documentation>Государственная услуга по ведению реестра банков, обладающих правом выдачи банковских гарантий</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="EPGU_Details" type="pgur:EPGU_DetailsType">
+            <xs:annotation>
+              <xs:documentation>Системные данные из ЕПГУ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Service" type="pgur:ServiceType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Услуга</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Files" type="pgur:FileType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Вложения, прилагаемые к услуге</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Additionally" type="pgur:AdditionallyType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дополнительная информация</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009280E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="OriginalFileMimeType" final="restriction">
+    <xs:annotation>
+      <xs:documentation>Оригинальное расширение файла в формате RFC-2046</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:pattern value="(text|image|audio|video|application)/[a-zA-Z0-9\-+.]*" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UserKindType" final="restriction">
+    <xs:annotation>
+      <xs:documentation>Тип заявителя</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:enumeration value="02">
+        <xs:annotation>
+          <xs:documentation>ЮЛ</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="AdditionallyType">
+    <xs:annotation>
+      <xs:documentation>Дополнительная информация</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FIO" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>ФИО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Infomation" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AddressType">
+    <xs:annotation>
+      <xs:documentation>Блок полей адреса организации / физического лица согласно КЛАДР/ФИАС либо свободная строка адреса </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FullAddress" type="RUSclt_ru:FreeText1000Type">
+        <xs:annotation>
+          <xs:documentation>Адрес</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Index" type="clt_ru:PostalCodeType">
+        <xs:annotation>
+          <xs:documentation>Почтовый индекс</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Region" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Область (регион, штат, провинция и т.п.)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Area" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Район</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="City" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Город</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CityArea" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Внутригородской район</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Place" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Населенный пункт</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Street" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Улица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AdditionalArea" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Доп. территория</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AdditionalStreet" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Улица на доп. территории</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="House" type="clt_ru:Text10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дом</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Building1" type="clt_ru:Text10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Корпус</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Building2" type="clt_ru:Text10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Строение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Apartment" type="clt_ru:Text10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер квартиры, офиса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ApplicantType">
+    <xs:annotation>
+      <xs:documentation>Данные о заявитиеле</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="UserKind" type="pgur:UserKindType">
+        <xs:annotation>
+          <xs:documentation>Тип заявителя ("02" для ЮЛ)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrganizationName" type="RUSclt_ru:FreeText4000Type">
+        <xs:annotation>
+          <xs:documentation>Наименование организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ShortName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Краткое наименование организации.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element name="OKPO" type="clt_ru:OKPOIDType">
+            <xs:annotation>
+              <xs:documentation>Код организации по ОКПО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OrganizationKPP" type="clt_ru:KPPCodeType">
+            <xs:annotation>
+              <xs:documentation>КПП - Код причины постановки на учет</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OrganizationINN" type="clt_ru:INNIDType">
+            <xs:annotation>
+              <xs:documentation>ИНН - Индивидуальный номер налогоплательщика</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OGRN" type="clt_ru:OGRNIDType">
+            <xs:annotation>
+              <xs:documentation>ОГРН/ОГРНИП. Основной государственный регистрационный номер
+                            </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="LocationAddress" type="pgur:AddressType">
+            <xs:annotation>
+              <xs:documentation>Адрес организации / физического лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PostalAddress" type="pgur:AddressType">
+            <xs:annotation>
+              <xs:documentation>Почтовый адрес организации / физического лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Chief" type="pgur:PersonInfoType">
+            <xs:annotation>
+              <xs:documentation>Сведения о руководителе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ContactInformation" type="pgur:ContactInformationType">
+            <xs:annotation>
+              <xs:documentation>Контактная информация</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BankLicence" type="pgur:BankLicenceType">
+            <xs:annotation>
+              <xs:documentation>Лицензия на осуществление банковских операций</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OtherInfo" type="pgur:OtherInfoType">
+            <xs:annotation>
+              <xs:documentation>Дополнительная информация</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element name="OrganizationINN" type="clt_ru:INNIDType">
+            <xs:annotation>
+              <xs:documentation>ИНН - Индивидуальный номер налогоплательщика</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OGRN" type="clt_ru:OGRNIDType">
+            <xs:annotation>
+              <xs:documentation>ОГРН/ОГРНИП. Основной государственный регистрационный номер
+                            </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:element name="Chief" type="pgur:PersonInfoType">
+              <xs:annotation>
+                <xs:documentation>Сведения о руководителе</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:sequence>
+              <xs:element name="SNILS" type="clt_ru:CodeVariable11Type">
+                <xs:annotation>
+                  <xs:documentation>СНИЛС</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="EsiaID" type="clt_ru:CodeVariable20Type">
+                <xs:annotation>
+                  <xs:documentation>Внутренний идентификатор в ЕСИА</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:choice>
+        </xs:sequence>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AttachmentRequestType">
+    <xs:annotation>
+      <xs:documentation>Описание приложенных документов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CodeDocument" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Код документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FileName" type="clt_ru:Text150Type">
+        <xs:annotation>
+          <xs:documentation>Имя файла внутри архива</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OriginalFileName" type="clt_ru:Text150Type">
+        <xs:annotation>
+          <xs:documentation>Оригинальное имя файла</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OriginalFileMime" type="pgur:OriginalFileMimeType">
+        <xs:annotation>
+          <xs:documentation>Оригинальное расширение файла в формате RFC-2046</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="BankLicenceType">
+    <xs:annotation>
+      <xs:documentation>Лицензия на осуществление банковских операций</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="LicenceNumber" type="clt_ru:Count4Type">
+        <xs:annotation>
+          <xs:documentation>Номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LicenceDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата лицензии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="BankReestrChangedType">
+    <xs:annotation>
+      <xs:documentation>Данные о внесении в реестр банков-гарантов изменений</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Base" type="RUSclt_ru:FreeText1000Type" minOccurs="0" maxOccurs="2">
+        <xs:annotation>
+          <xs:documentation>Примечание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ChangeInfo" type="pgur:ChangeInfoType">
+        <xs:annotation>
+          <xs:documentation>Сведения, подлежащие изменению</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OtherDocuments" type="pgur:OtherDocumentType" minOccurs="0" maxOccurs="20">
+        <xs:annotation>
+          <xs:documentation>Дополнительные документы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="BankReestrExclusionType">
+    <xs:annotation>
+      <xs:documentation>Данные об исключении банка из реестра банков-гарантов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Note" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Примечание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OtherDocuments" type="pgur:OtherDocumentType" minOccurs="0" maxOccurs="20">
+        <xs:annotation>
+          <xs:documentation>Дополнительные документы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="BankReestrInclusionType">
+    <xs:annotation>
+      <xs:documentation>Данные о включении банка в реестр банков-гарантов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="IncludePrimary" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Включить банк в реестр банков, обладающих правом выдачи банковских гарантий (0 - нет, 1 - да)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OtherDocuments" type="pgur:OtherDocumentType" minOccurs="0" maxOccurs="20">
+        <xs:annotation>
+          <xs:documentation>Дополнительные документы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ChangeInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения, подлежащие изменению</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ShortName" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Краткое наименование организации.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OKPO" type="clt_ru:OKPOIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код организации по ОКПО.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrganizationINN" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН - Индивидуальный номер налогоплательщика.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ContactInformationType">
+    <xs:annotation>
+      <xs:documentation>Контактная информация</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Phone" type="clt_ru:PhoneNumberType">
+        <xs:annotation>
+          <xs:documentation>Телефон(ы)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Fax" type="clt_ru:PhoneNumberType">
+        <xs:annotation>
+          <xs:documentation>Факс(ы)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Email" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Адрес электронной почты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CustomsType">
+    <xs:annotation>
+      <xs:documentation>Код и наименование таможенного органа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OfficeName" type="clt_ru:CustomsOfficeNameType">
+        <xs:annotation>
+          <xs:documentation>Наименование таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Code" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EPGU_DetailsType">
+    <xs:annotation>
+      <xs:documentation>Системные данные из ЕПГУ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TransactionCode" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Код транзакции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ServiceCode" type="clt_ru:CodeVariable20Type">
+        <xs:annotation>
+          <xs:documentation>Код цели услуги</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ApplicationSourceSystemID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор заявления на ЕПГУ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Department" type="pgur:CustomsType">
+        <xs:annotation>
+          <xs:documentation>Подразделение, в которое предоставляется заявка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ApplicationID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Номер заявления на АПС "Электронные Госуслуги"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CreationDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата поступления запроса в АПС "Электронные Госуслуги"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FileType">
+    <xs:annotation>
+      <xs:documentation>Вложение</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="pgur:AttachmentRequestType">
+        <xs:sequence>
+          <xs:choice>
+            <xs:element name="Content" type="clt_ru:Text3MB">
+              <xs:annotation>
+                <xs:documentation>Содержимое файла в формате base64</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="Link" type="clt_ru:FreeText500Type">
+              <xs:annotation>
+                <xs:documentation>Ссылка на файл</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+          <xs:element name="Description" type="clt_ru:FreeText500Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Комментарий</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="OtherDocumentType">
+    <xs:annotation>
+      <xs:documentation>Дополнительные документы</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CodeDocument" type="clt_ru:CodeVariable20Type">
+        <xs:annotation>
+          <xs:documentation>Код документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NameDocument" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Имя файла</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Title" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OtherInfoType">
+    <xs:annotation>
+      <xs:documentation>Дополнительная информация</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TermImplementation" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Срок осуществления банковской деятельности (лет)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CharterCapitalSum" type="clt_ru:Count10Type">
+        <xs:annotation>
+          <xs:documentation>Зарегистрированный уставный капитал (руб.)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RequirementBank" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Банком соблюдены требования, установенные частью 3 статьи 64 Федерального закона от 03.08.2018 № 289-ФЗ (1 - не соблюдены, 2 - соблюдены)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PersonInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о должностном лице</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonPost" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Должность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonSurname" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Фамилия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonName" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Имя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonMiddleName" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Отчество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SNILS" type="clt_ru:CodeVariable11Type">
+        <xs:annotation>
+          <xs:documentation>СНИЛС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EsiaID" type="clt_ru:CodeVariable20Type">
+        <xs:annotation>
+          <xs:documentation>Внутренний идентификатор в ЕСИА</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ServiceType">
+    <xs:annotation>
+      <xs:documentation>Услуга</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ServiceCode" type="clt_ru:CodeVariable20Type">
+        <xs:annotation>
+          <xs:documentation>Код услуги</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CaseNumber" type="clt_ru:CodeVariable20Type">
+        <xs:annotation>
+          <xs:documentation>Номер заявки в информационной системе отправителе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Department" type="pgur:CustomsType">
+        <xs:annotation>
+          <xs:documentation>Код подразделения, в которое предоставляется заявка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Applicant" type="pgur:ApplicantType">
+        <xs:annotation>
+          <xs:documentation>Данные о заявитиеле</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:choice>
+        <xs:element name="BankReestrInclusion" type="pgur:BankReestrInclusionType">
+          <xs:annotation>
+            <xs:documentation>Данные о включении банка в реестр банков-гарантов</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="BankReestrExclusion" type="pgur:BankReestrExclusionType">
+          <xs:annotation>
+            <xs:documentation>Данные об исключении банка из реестра банков-гарантов</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="BankReestrChanged" type="pgur:BankReestrChangedType">
+          <xs:annotation>
+            <xs:documentation>Данные о внесении в реестр банков-гарантов изменений</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+      <xs:element name="Attachment" type="pgur:AttachmentRequestType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание приложенных документов к заявлению</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

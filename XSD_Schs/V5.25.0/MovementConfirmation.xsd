@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Приказ Минфина России № 71н от 29 мая 2024 года "Об утверждении Порядка и технологии совершения таможенных операций в отношении товаров (в том числе транспортных средств), ввозимых на участки территорий опережающего развития, Арктической зоны Российской Федерации, ввозимых или ввезенных на участки территории свободного порта Владивосток, на которых применяется таможенная процедура свободной таможенной зоны, в том числе связанных с осуществлением идентификации товаров, ввозимых (ввезенных) на такие участки, и вывозимых с таких участков"
+И НЕ ТОЛЬКО этот приказ-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:mvcf="urn:customs.ru:Information:CustomsDocuments:MovementConfirmation:5.25.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:MovementConfirmation:5.25.0" elementFormDefault="qualified" version="5.25.0.0">
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Уведомление о фактическом ввозе/вывозе товара/ Сообщение о прибытии (убытии) транспортного средства в контрольно-пропускной пункт</xs:documentation>
+	</xs:annotation>
+	<xs:element name="MovementConfirmation" type="mvcf:MovementConfirmationType">
+		<xs:annotation>
+			<xs:documentation>Уведомление о фактическом ввозе/вывозе товара/ Сообщение о прибытии (убытии) транспортного средства в контрольно-пропускной пункт</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="MovementConfirmationType">
+		<xs:annotation>
+			<xs:documentation>Уведомление о фактическом ввозе/вывозе товара/ Сообщение о прибытии (убытии) транспортного средства в контрольно-пропускной пункт</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="DocSign" type="clt_ru:Numeric1Type">
+						<xs:annotation>
+							<xs:documentation>Признак уведомления: 0 - о ввозе; 1 - об убытии товаров; 2 - уведомление о завершении действия пропуска</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Customs" type="cat_ru:CustomsType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Код и наименование таможенного органа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="MovementDate" type="clt_ru:DateCustType">
+						<xs:annotation>
+							<xs:documentation>Дата фактического ввоза/вывоза товаров (дата завершения действия пропуска)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Comments" type="clt_ru:FreeText250Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Примечание</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RegistrationNumber" type="mvcf:RegistrationNumberType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Регистрационный номер уведомления о ввозе/вывозе</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DocumentNumber" type="cat_ru:DocumentBaseType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Номер транспортного (перевозочного) или коммерческого документа (при ввозе)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ImExRegistrationNumber" type="mvcf:ImExRegistrationNumberType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Регистрационный номер разрешения на ввоз/вывоз</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="MPO_Number" type="clt_ru:Code13Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Уникальный номер МПО</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PTDNum" type="cat_ru:GTDIDType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Номер предварительной таможенной декларации</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TransportWeight" type="clt_ru:WeighQuantityType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Вес транспортного средства по результатам взвешивания на КПП, кг</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TransportIdentifier" type="clt_ru:TransportMeansIDType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Регистрационный номер транспортного средства</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PersonSignature" type="cat_ru:PersonSignatureType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Подпись уполномоченного представителя Заявителя </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006194E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="ImExRegistrationNumberType">
+		<xs:annotation>
+			<xs:documentation>Регистрационный номер разрешения</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+				<xs:annotation>
+					<xs:documentation>Код таможенного органа, зарегистрировавшего документ.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegistrationDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата регистрации документа.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Number" type="clt_ru:CodeVariable10Type">
+				<xs:annotation>
+					<xs:documentation>Порядковый номер документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AddNumber" type="clt_ru:CodeVariable5Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>4-ая часть номера</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RegistrationNumberType">
+		<xs:annotation>
+			<xs:documentation>Регистрационный номер уведомления о ввозе/вывозе</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AddNumber" type="clt_ru:CodeVariable4Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Первая часть регистрационного номера документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CustomsCode" type="clt_ru:CustomsCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код таможенного органа, зарегистрировавшего документ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegistrationDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата регистрации документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Number" type="clt_ru:CodeVariable10Type">
+				<xs:annotation>
+					<xs:documentation>Порядковый номер документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocKind" type="clt_ru:CodeVariable5Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Четвертая часть регистрационного номера документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

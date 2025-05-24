@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:at_stat="urn:customs.ru:Information:SQDocuments:AlcoholTurnoverStatRes:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:AlcoholTurnoverStatRes:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Представление сведений о ввозе этилового спирта, алкогольной и спиртосодержащей продукции из государств-членов ЕАЭС</xs:documentation>
+  </xs:annotation>
+  <xs:element name="AlcoholTurnoverStatRes" type="at_stat:AlcoholTurnoverStatResType">
+    <xs:annotation>
+      <xs:documentation>Представление сведений о ввозе этилового спирта, алкогольной и спиртосодержащей продукции из государств-членов ЕАЭС</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="AlcoholTurnoverStatResType">
+    <xs:annotation>
+      <xs:documentation>Представление сведений о ввозе этилового спирта, алкогольной и спиртосодержащей продукции из государств-членов ЕАЭС</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="StatFormInfo" type="at_stat:StatFormInfoType" minOccurs="1" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения cтатистической формы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009359E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор электронного документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CountryType">
+    <xs:annotation>
+      <xs:documentation>Сведения о стране</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CountryCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код страны</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryName" type="clt_ru:CountryNameType">
+        <xs:annotation>
+          <xs:documentation>Наименование страны</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GoodsInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о товаре</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsNumber" type="clt_ru:Count3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер товара в статформе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsTNVEDCode" type="clt_ru:CUGoodsNomenclatuerCodeType">
+        <xs:annotation>
+          <xs:documentation>Код товара по ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="4">
+        <xs:annotation>
+          <xs:documentation>Описание товара в ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsNetWeight" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Вес нетто товара, кг</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProductCount" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество товара (в дополнительной единице измерения)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OtherMeasureUnitInfo" type="cat_ru:SupplementaryQuantityType" minOccurs="0" maxOccurs="2">
+        <xs:annotation>
+          <xs:documentation>Сведения о единицах измерения отличной от основной и дополнительной</xs:documentation>
+        </xs:annotation>
+        <!--если не пришли от ЕАИС - передавать "-"-->
+      </xs:element>
+      <xs:element name="CustomsCost" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Статистическая стоимость товара (RUB)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StatisticalCost" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Статистическая стоимость товара (USD)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OrganizationType">
+    <xs:annotation>
+      <xs:documentation>Сведения об организации</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OrganizationName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrganizationINN" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="StatFormInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения из декларации</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Direction" type="clt_ru:CUCustomsProcedureType">
+        <xs:annotation>
+          <xs:documentation>Направление перемещения (ИМ/ЭК)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Seller" type="at_stat:OrganizationType">
+        <xs:annotation>
+          <xs:documentation>Продавец</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Bayer" type="at_stat:OrganizationType">
+        <xs:annotation>
+          <xs:documentation>Покупатель</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FinancialAdjusting" type="at_stat:OrganizationType">
+        <xs:annotation>
+          <xs:documentation>Лицо, ответственное за финанасовое урегулирование</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TradeCountry" type="at_stat:CountryType">
+        <xs:annotation>
+          <xs:documentation>Торгующая страна</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DestinationCountry" type="at_stat:CountryType">
+        <xs:annotation>
+          <xs:documentation>Страна назначения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DispatchCountry" type="at_stat:CountryType">
+        <xs:annotation>
+          <xs:documentation>Страна отправления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StatFormNumber" type="cat_ru:GTDIDType">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер статистической формы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsInfo" type="at_stat:GoodsInfoType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Информация о товаре</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

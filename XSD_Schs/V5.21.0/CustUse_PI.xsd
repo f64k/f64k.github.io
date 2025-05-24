@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:catpi_ru="urn:customs.ru:Information:PriorInformation:PriorCommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cupi="urn:customs.ru:Information:PriorInformation:CustUse_PI:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:PriorInformation:CustUse_PI:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:PriorInformation:PriorCommonAggregateTypes:5.21.0" schemaLocation="PriorCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Уведомление об использовании предварительной информации</xs:documentation>
+  </xs:annotation>
+  <xs:element name="CustUse_PI" type="cupi:CustUse_PIType" />
+  <xs:complexType name="CustUse_PIType">
+    <xs:annotation>
+      <xs:documentation>Уведомление об использовании предварительной информации</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="UseDocumentNumber" type="clt_ru:DocumentNumberType">
+            <xs:annotation>
+              <xs:documentation>Номер документа в котором использована предварительная информация</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="UseDocumentDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата документа в котором использована предварительная информация</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="UseDocDscrepancy" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Признак наличия расхождений в ПИ и оформленном документе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="UseDocumentKind" type="clt_ru:CodeVariable3Type">
+            <xs:annotation>
+              <xs:documentation>Тип документа в котором использована предварительная информация - ТД / ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:element name="TIR_ID" type="catpi_ru:TIR_IDType">
+              <xs:annotation>
+                <xs:documentation>Номер книжки МДП</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="PI_RegID" type="clt_ru:DocumentIDType">
+              <xs:annotation>
+                <xs:documentation>Идентификатор запрашиваемой предварительной информации.</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006804E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

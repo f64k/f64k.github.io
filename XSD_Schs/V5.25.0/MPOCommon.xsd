@@ -1,0 +1,751 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:mpco="urn:customs.ru:Information:CustomsDocuments:MPOCommon:5.24.0" xmlns:cltESAD_cu="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:MPOCommon:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd"/>
+	<xs:import namespace="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" schemaLocation="CUESADCommonLeafTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Общие типы для документов МПО</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="MPODeclType">
+		<xs:annotation>
+			<xs:documentation>Общая информация о МПО</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="MPO_Number" type="clt_ru:Code13Type">
+				<xs:annotation>
+					<xs:documentation>Номер МПО</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CustomsCode" type="clt_ru:CustomsCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код таможенного органа, в регионе деятельности которого расположена зона таможенного контроля ММПО</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ConsignmentCategory" type="mpco:MPOCategoryType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Категория отправления </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MPOKind" type="mpco:MPOKindType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Вид отправления</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PostalFees" type="RUScat_ru:AmountType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Сумма почтовых сборов/расходов</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TotalCostRUS" type="clt_ru:AmountType">
+				<xs:annotation>
+					<xs:documentation>Общая стоимость товара в рублях</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TotalCostEURO" type="clt_ru:AmountType">
+				<xs:annotation>
+					<xs:documentation>Общая стоимость товара в Евро</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DepartureCountry" type="clt_ru:CountryA2CodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Страна отправления </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DestinationCountry" type="clt_ru:CountryA2CodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Страна назначения </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TotalGrossWeight" type="clt_ru:QuantityBasisType">
+				<xs:annotation>
+					<xs:documentation>Заявленный общий вес товара, брутто (кг)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MPOFactWeight" type="clt_ru:QuantityBasisType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Фактический вес МПО (кг)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Comment" type="clt_ru:FreeText250Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Примечания</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DispatchNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер депеши</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MMPOName" type="clt_ru:NameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование ММПО</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Consignee" type="mpco:ConsigneeType">
+				<xs:annotation>
+					<xs:documentation>Получатель</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Importer" type="mpco:ImporterType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Импортер</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Consignor" type="mpco:ConsignorType">
+				<xs:annotation>
+					<xs:documentation>Отправитель </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocumentInfo" type="mpco:DocumentInfoType" minOccurs="0" maxOccurs="9">
+				<xs:annotation>
+					<xs:documentation>Сведения о документах, подтверждающих соблюдение запретов и ограничений </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocumentCust" type="mpco:DocumentInfoType" minOccurs="0" maxOccurs="9">
+				<xs:annotation>
+					<xs:documentation>Сведения о документах, предусмотренного пунктом 2 статьи 371 Кодекса Союза </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Goods" type="mpco:GoodsType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Сведения о товарах</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Information" type="mpco:InformationType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дополнительная информация</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MPO_Registration" type="mpco:MPO_RegistrationType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Регистрационный номер исходного МПО (для возвращаемых МПО)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReasonReturn" type="clt_ru:Text150Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Причина возврата товаров отправителю</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="URLShop" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Адрес сайта интернет-магазина </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ShopName" type="clt_ru:FreeText250Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование продавца</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OrderNumber" type="clt_ru:Text150Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер заказа в интернет- магазине</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OrderDate" type="clt_ru:DateCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата заказа в интернет-магазине</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReceiptNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер квитанции плательщика</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReceiptDate" type="clt_ru:DateCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата квитанции плательщика</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StatMonth" type="mpco:StatMonthType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Статистика по товарам, ранее поступивших получателю</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CustomsDuties" type="RUScat_ru:AmountType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Cумма таможенных пошлин, налогов, подлежащая уплате</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FeedBillDate" type="clt_ru:DateCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата подачи</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MPOAddInfo">
+		<xs:annotation>
+			<xs:documentation>Дополнительные сведения о МПО</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DocSign" type="clt_ru:DigitalIndicatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Тип информации: 0 - основная, 1-предварительная, 3 - возвращаемое МПО</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FeedBillAgency" type="clt_ru:NameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Учреждение  подачи</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CustomsProcedure" type="clt_ru:CUCustomsProcedureType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Направление перемещения: ИМ - ввоз МПО, ЭК - вывоз МПО</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="individual_flag" type="clt_ru:LetterIndicatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Признак получателя/отправителя как физического лица (0-юридическое лицо, 1-физическое лицо, 2 - не установлено)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ConsignorRUS" type="mpco:ConsignorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Отправитель (на русском языке)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConsigneeType">
+		<xs:annotation>
+			<xs:documentation>Получатель</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="RUScat_ru:SubjectDetailsType">
+				<xs:sequence>
+					<xs:element name="ExPostalCode" type="clt_ru:CodeVariable18Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Почтовый индекс до 18 знаков</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CardNumber" type="clt_ru:DocumentIDType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Номер универсальной электронной карты</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="NominativeName" type="clt_ru:NameType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Фамилия получателя в именительном падеже</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SNILS" type="clt_ru:Text40Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Номер СНИЛС</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Birthday" type="clt_ru:DateCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дата рождения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AuthorizedOperatorType">
+		<xs:annotation>
+			<xs:documentation>Уполномоченный оператор</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="RUScat_ru:SubjectDetailsType">
+				<xs:sequence>
+					<xs:element name="OKPO" type="clt_ru:OKPOIDType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>ОКПО</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ConsignorType">
+		<xs:annotation>
+			<xs:documentation>Сведения об отправителе</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="RUScat_ru:SubjectDetailsType">
+				<xs:sequence>
+					<xs:element name="ExPostalCode" type="clt_ru:CodeVariable18Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Почтовый индекс до 18 знаков</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="IssueDate" type="clt_ru:DateCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дата подписания</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Person" type="clt_ru:NameType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>ФИО представителя компании отправителя</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DocumentInfoType">
+		<xs:annotation>
+			<xs:documentation>Сведения о документе</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:DocumentBaseType">
+				<xs:sequence>
+					<xs:element name="PrecedingDocumentModeCode" type="clt_ru:CodeVariable5Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Код вида документа </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GoodsType">
+		<xs:annotation>
+			<xs:documentation>Сведения о товарах</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ListNumeric" type="clt_ru:Count3Type">
+				<xs:annotation>
+					<xs:documentation>Номер товара по порядку</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodDescription" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="4">
+				<xs:annotation>
+					<xs:documentation>Наименование товара (на русском языке)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodDescriptionForeign" type="clt_ru:FreeText250Type" maxOccurs="4">
+				<xs:annotation>
+					<xs:documentation>Наименование товара (на иностранном языке)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TradeMark" type="clt_ru:FreeText250Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование объекта интеллектуальной собственности</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsMark" type="cltESAD_cu:GoodsArticulType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование марки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsModel" type="cltESAD_cu:GoodsArticulType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование модели продукта (товара)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NetWeight" type="clt_ru:QuantityBasisType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Вес товара, нетто (кг)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GrossWeight" type="clt_ru:QuantityBasisType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Вес товара, брутто (кг)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TNVEDCode" type="clt_ru:CUGoodsNomenclatuerCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код товара по ТН ВЭД ЕАЭС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CostRUS" type="clt_ru:AmountType">
+				<xs:annotation>
+					<xs:documentation>Стоимость товара в рублях</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CostEURO" type="clt_ru:AmountType">
+				<xs:annotation>
+					<xs:documentation>Стоимость товара в Евро</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OriginCountryCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код страны происхождения по классификатору стран мира</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsQuantity" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Количество товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="URLGood" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Ссылка на товар в интернет магазине</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ImporterType">
+		<xs:annotation>
+			<xs:documentation>Импортер</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:OrganizationType">
+				<xs:sequence>
+					<xs:element name="ImporterIndex" type="clt_ru:Text50Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Индекс импортера</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="VAT_Number" type="clt_ru:CodeVariable18Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Номер НДС</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PackingStateType">
+		<xs:annotation>
+			<xs:documentation>Сведения о целостности упаковки</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Value" type="clt_ru:IndicatorType">
+				<xs:annotation>
+					<xs:documentation>Значение: 0 или false - нарушена, 1 или true - целостна</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Remark" type="clt_ru:FreeText250Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Пояснение</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InformationType">
+		<xs:annotation>
+			<xs:documentation>Дополнительная информация</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PackingState" type="mpco:PackingStateType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Сведения о целостности упаковки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MPOCategoryType">
+		<xs:annotation>
+			<xs:documentation>Категория МПО</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CategoryCode" type="clt_ru:CodeVariable3Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код категории МПО</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CategoryDescription" type="clt_ru:Text40Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Описание категории МПО</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MPORegInfoType">
+		<xs:annotation>
+			<xs:documentation>Решение по МПО</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DecisionDate" type="clt_ru:DateTimeCustType">
+				<xs:annotation>
+					<xs:documentation>Дата и время решения </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DecisionCode" type="clt_ru:CodeVariable2Type">
+				<xs:annotation>
+					<xs:documentation>Решение: 10 - регистрация МПО; 11 - предварительное решение "выпуск разрешен"; 12 - отказ в выпуске товаров, требуется предъявление МПО таможенному органу; 13 - отказ в регистрации МПО; 20 - выпуск товаров без уплаты таможенных платежей; 21 - выпуск разрешен, выдача при условии уплаты таможенных платежей; 22 - отказ в выпуске товаров, требуется уплата таможенных платежей; 23 - отказ в выпуске, товары не предъявлены; 24- отказ в автоматическом выпуске (см код причины); 25 - выпуск разрешен, платежи уплачены; 26 - выпуск товаров приостановлен; 27 - cрок выпуска товаров продлен; 29 - отказ в выпуске по решению должностного лица; 30 - выпуск с уплатой разрешен, выдача МПО разрешена; 40 - возврат разрешен; 41 - отказ в выпуске возвращаемых товаров ; 50 - МПО безвозвратно утеряна; 51 - Отказано в признании МПО безвозвратно утерянной</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DecisionDescription" type="clt_ru:FreeText250Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Описание принятого решения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReasonCode" type="clt_ru:CodeVariable3Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код причины принятого решения: 001 -  МПО оформляется по  иному реестру МПО; 002 - не соблюдены условия регистрации, неполные сведения; 201 - не найдена предварительная информация по МПО; 202 - требуется предъявление МПО в ТО, отсутствуют результаты осмотра; 203 - отказ в выпуске МПО, неверный расчет таможенных платежей; 204 - истек срок уплаты таможенных платежей; 205 - истек срок предоставления уведомления о прибытии ; 206 - уведомление о фактическом прибытии подано повторно; 300 - рекомендуется подача таможенной декларации с последующей фиксацией результатов ММР</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReasonDescription" type="clt_ru:FreeText250Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Описание причины принятого решения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RecommendationCode" type="clt_ru:CodeVariable2Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код рекомендации </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RecomDescription" type="clt_ru:FreeText250Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Описание рекомендации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Comments" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="4">
+				<xs:annotation>
+					<xs:documentation>Комментарии</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InspectionSign" type="clt_ru:IndicatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Признак необходимости предоставления с уведомлением о прибытии результатов таможенного осмотра</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TotalAmount" type="clt_ru:AmountType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Верно расчитанная сумма таможенных платежей в рублях</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PrevMPOReestr" type="mpco:MPO_RegistrationType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Регистрационный номер иного реестра МПО, с тем же номером МПО</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MPO_Registration" type="mpco:MPO_RegistrationType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Сведения о регистрационном номере МПО</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CustomsPerson" type="cat_ru:PersonBaseType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MPOKindType">
+		<xs:annotation>
+			<xs:documentation>Вид МПО</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="KindCode" type="clt_ru:CodeVariable2Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код вида МПО</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="KindDescription" type="clt_ru:Text40Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Описание вида МПО</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MPO_RegistrationType">
+		<xs:annotation>
+			<xs:documentation>Сведения о регистрационном номере МПО / Реестра МПО</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+				<xs:annotation>
+					<xs:documentation>Код таможенного органа, зарегистрировавшего документ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegistrationDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата регистрации документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MPO_Number" type="clt_ru:Code13Type">
+				<xs:annotation>
+					<xs:documentation>Уникальный номер МПО</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PrevGoodsType">
+		<xs:annotation>
+			<xs:documentation>Сведения о товарах, ранее поступивших получателю</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GoodsNumeric" type="clt_ru:Count3Type">
+				<xs:annotation>
+					<xs:documentation>Порядковый номер товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="4">
+				<xs:annotation>
+					<xs:documentation>Наименование товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GrossWeight" type="clt_ru:QuantityBasisType">
+				<xs:annotation>
+					<xs:documentation>Вес товара, брутто, кг</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsCostEuro" type="clt_ru:AmountType">
+				<xs:annotation>
+					<xs:documentation>Стоимость товара в евро</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата поставки товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StatMonthType">
+		<xs:annotation>
+			<xs:documentation>Статистика по товарам, ранее поступивших получателю</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OverWeightSign" type="clt_ru:IndicatorType">
+				<xs:annotation>
+					<xs:documentation>Признак наличия превышения по весу </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OverCostSign" type="clt_ru:IndicatorType">
+				<xs:annotation>
+					<xs:documentation>Признак наличия превышения по стоимости</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PreviousGoodsCost" type="clt_ru:AmountType">
+				<xs:annotation>
+					<xs:documentation>Стоимость товаров за календарный месяц, ранее поступивших в адрес получателя, евро</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PreviousGoodsGrossWeight" type="clt_ru:QuantityBasisType">
+				<xs:annotation>
+					<xs:documentation>Вес товаров, брутто, за календарный месяц, ранее поступивших в адрес получателя, кг</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsFrequency" type="clt_ru:Quantity5Type">
+				<xs:annotation>
+					<xs:documentation>Частота перемещения товаров в адрес получателя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Consignee" type="RUScat_ru:SubjectDetailsType">
+				<xs:annotation>
+					<xs:documentation>Получатель</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Goods" type="mpco:PrevGoodsType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Перечень ранее поставленных получателю товаров</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MPO_Registration" type="mpco:MPO_RegistrationType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Регистрационные номера МПО</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CalculationType">
+		<xs:annotation>
+			<xs:documentation>Сведения об исчислении таможенного платежа</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PaymentModeCode" type="clt_ru:CUCustomsPaymentCodeType">
+				<xs:annotation>
+					<xs:documentation>Код вида платежа  по классификатору видов налогов, сборов и иных платежей, взимание которых возложено на таможенные органы.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TaxBase" type="clt_ru:QuantityBasisType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Основа начисления</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TaxBaseCurrencyCode" type="clt_ru:CurrencyN3CodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Цифровой код валюты основы начисления (адвалорная ставка)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TaxBaseQualifierCode" type="clt_ru:CodeVariable20Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Кодовое обозначение единицы измерения основы начисления (специфическая ставка)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RateTypeCode" type="clt_ru:LetterIndicatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Вид ставки (адвалорная -"%", специфическая - "*")</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Rate" type="cltESAD_cu:RateType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Ставка.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RateTNVEDQualifierCode" type="clt_ru:MeasureUnitQualifierCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код единицы измерения ставки (специфическая ставка)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RateCurrencyCode" type="clt_ru:CurrencyN3CodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Цифровой код валюты ставки (специфическая ставка)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="WeightingFactor" type="cltESAD_cu:WeightingFactorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Весовой коэффициент единицы измерения (специфическая ставка)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RateUseDate" type="clt_ru:DateCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата применения ставки таможенного платежа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PaymentCode" type="clt_ru:Code2Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код в соответствии с классификатором особенностей уплаты таможенных и иных платежей, взимание которых возложено на таможенные органы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PaymentAmount" type="clt_ru:AmountType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Сумма платежа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PaymentCurrencyCode" type="clt_ru:CurrencyN3CodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Цифровой код валюты суммы платежа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TaxBaseType">
+		<xs:annotation>
+			<xs:documentation>Основа начисления платежей</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="LimitEuro" type="clt_ru:AmountType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Норма ввоза товаров по стоимости</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RateEuro" type="cltESAD_cu:RateType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Ставка платежа по стоимости</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TaxBaseEuro" type="clt_ru:AmountType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Основа начисления платежей по стоимости в евро </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LimitWeight" type="clt_ru:QuantityBasisType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Норма ввоза товаров по весу</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RateWeight" type="cltESAD_cu:RateType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Ставка платежа по весу</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TaxBaseWeight" type="clt_ru:QuantityBasisType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Основа начисления платежей по весу</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TaxBaseKind" type="clt_ru:DigitalIndicatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Тип использованной основы начисления (0 - по стоимости, 1-по весу)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

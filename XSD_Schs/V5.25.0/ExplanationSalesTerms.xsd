@@ -1,0 +1,1309 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="urn:customs.ru:Information:CustomsDocuments:ExplanationSalesTerms:5.24.0" version="5.24.0.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:est="urn:customs.ru:Information:CustomsDocuments:ExplanationSalesTerms:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Пояснения по условиям продажи, которые могли повлиять на цену сделки</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ExplanationSalesTerms" type="est:ExplanationSalesTermsType" />
+  <xs:complexType name="ExplanationSalesTermsType">
+    <xs:annotation>
+      <xs:documentation>Пояснения по условиям продажи, которые могли повлиять на цену сделки.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Comments" type="clt_ru:FreeText250Type">
+            <xs:annotation>
+              <xs:documentation>Дополнительные данные</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="HistoryCooperation" type="est:HistoryCooperationType">
+            <xs:annotation>
+              <xs:documentation>История сотрудничества Продавца и Покупателя</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ChoiceOrderGoods" type="est:ChoiceOrderGoodsType">
+            <xs:annotation>
+              <xs:documentation>Выбор и заказ товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PricingTransactions" type="est:PricingTransactionsType">
+            <xs:annotation>
+              <xs:documentation>Формирование цены сделки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="InfoContractDeliveryTerms" type="est:InfoContractDeliveryTermsType">
+            <xs:annotation>
+              <xs:documentation>Сведения о договоре и условиях поставки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SaleGoodsDomesticMarket" type="est:SaleGoodsDomesticMarketType">
+            <xs:annotation>
+              <xs:documentation>Реализация товаров на внутреннем рынке</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PersonSignature" type="cat_ru:PersonSignatureType">
+            <xs:annotation>
+              <xs:documentation>Подпись</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute fixed="1006038E" name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AccountType">
+    <xs:annotation>
+      <xs:documentation>Какой по счету является партия товара,ввозимого по рассматриваемому контракту</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Type" type="clt_ru:DigitalIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Тип партии товаров. "0" - единственная, "1" - первая, "2" - последняя, "3" - иное</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Other" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Номер партии при выборе значения "Иное"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AlignmentPricesType">
+    <xs:annotation>
+      <xs:documentation>Согласование цены сделки.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Negotiations" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак согласования цены сделки путем личных переговоров представителей продавца и покупателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Correspondence" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак согласования цены сделки по переписке</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NegotiationsCorrespondence" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак согласования цены сделки путем личных переговоров представителей продавца и покупателя и по переписке</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="NegotiationsComments" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Путем личных переговоров представителей продавца и покупателя (укажите где и кто участвовал)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="BuyerGoodsType">
+    <xs:annotation>
+      <xs:documentation>Покупатель товаров</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OwnRetailNetwork" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что покупатель товаров реализует товары на внутреннем рынке Российской Федерации через собственную розничную сеть</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SellOne_ThreePersons" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что покупатель товаров продает (планирует продать) товары одному - трем лицам</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SellDifferentPersons" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что покупатель товаров продает (планирует продать) товары разным лицам</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OwnUse" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что покупатель товаров использует товары для собственного потребления или в собственной производственной деятельности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="BuyerSellerType">
+    <xs:annotation>
+      <xs:documentation>Покупатель/продавец</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Buyer" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что условия поставки были предложены покупателем</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Seller" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что условия поставки были предложены продавцом</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ChoiceGoodsType">
+    <xs:annotation>
+      <xs:documentation>Выбор товара</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Sample" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак выбора товара по образцу</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Description" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак выбора товара по описанию</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Standard" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак выбора товара в соответствии с действующими стандартами</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CommentsStandard" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>В соответствии с действующими стандартами (указать стандарт, кем принят, регламентирующие его соблюдение документы)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Otherwise" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Иным образом</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="OtherwiseComments" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Иным образом (указать способ)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ChoiceOrderGoodsType">
+    <xs:annotation>
+      <xs:documentation>Выбор и заказ товара</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DepartmentAnalysis" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что у покупателя имеется подразделение, занимающееся изучением конъюнктуры рынка и (или) оценкой эффективности сделок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Analysis" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что подразделение анализировало предложения других продавцов, занимающихся поставками товаров того же класса или вида</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Study" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак возможности предоставить материалы исследований</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DeliveryGoodsUnderContract" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что в рамках контракта поставляются товары одного класса или вида</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ChoiceGood" type="est:ChoiceGoodsType">
+        <xs:annotation>
+          <xs:documentation>Выбор товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrderGoods" type="est:OrderGoodsType">
+        <xs:annotation>
+          <xs:documentation>Заказ товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DeliveryGoods" type="est:DeliveryGoodsType">
+        <xs:annotation>
+          <xs:documentation>Поставляемый товар</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ChoiceSellerType">
+    <xs:annotation>
+      <xs:documentation>Был выбран именно этот продавец, поскольку</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Producer" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что продавец является производителем товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OfficialRepresentativeProducer" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что продавец является официальным представителем производителя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Guarantee" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что продавец предоставляет гарантийное обслуживание товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProfitableTerm" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что были предложены более выгодные условия покупки товаров, сравнительно с другими участниками рынка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CommentsProfitableTerm" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Были предложены более выгодные условия покупки товаров, сравнительно с другими участниками рынка.(указать подробности)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Otherwise" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак выбора продавца по иным причинам</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="OtherwiseComments" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Иные причины (указать)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CostDeliveryType">
+    <xs:annotation>
+      <xs:documentation>Известна ли Покупателю стоимость доставки.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ExactAmount" type="est:DescriptionCostDeliveryType">
+        <xs:annotation>
+          <xs:documentation>Известна точная стоимость доставки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NotKnown" type="est:DescriptionCostDeliveryType">
+        <xs:annotation>
+          <xs:documentation>Не известна стоимость доставки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ApproximateCost" type="est:DescriptionCostDeliveryType">
+        <xs:annotation>
+          <xs:documentation>Известна примерная стоимость доставки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeliveryGoodsType">
+    <xs:annotation>
+      <xs:documentation>Поставляемый товар</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Retail" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что поставляемый товар подготовлен для розничной продажи</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PackingSorting" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что поставляемый товар требует упаковки, сортировки перед розничной продажей</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProductionRawMaterial" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что поставляемый товар предназначен для использования в производстве в качестве сырья или сопутствующих товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeansProduction" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что поставляемый товар будет использован в качестве средства производства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OwnConsumption" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что поставляемый товар предназначен для собственного потребления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DescriptionCostDeliveryType">
+    <xs:annotation>
+      <xs:documentation>Описание стоимость доставки.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Value" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Если значение поля: true или 1 - да; false или 0 - нет</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Quantity" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Стоимость доставки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Currency" type="clt_ru:CurrencyA3CodeType">
+        <xs:annotation>
+          <xs:documentation>Валюта </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DescriptionKindContractType">
+    <xs:annotation>
+      <xs:documentation>Описание вида договора</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DateSettlement" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата заключения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ExpiryDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата окончания действия (если определено договором)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ApplicableLaw" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Применяемое право</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PlaceDetention" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Место заключения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DescriptionKindCooperationType">
+    <xs:annotation>
+      <xs:documentation>Описание вида сотрудничества.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="PeriodTime" type="clt_ru:Text40Type">
+        <xs:annotation>
+          <xs:documentation>Период времени</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Value" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Если значение поля: true или 1 - да; false или 0 - нет</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DescriptionTermsContractType">
+    <xs:annotation>
+      <xs:documentation>Описание условий договора.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Vaule" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Если значение поля: true или 1 - да; false или 0 - нет</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="AnswerYES" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>В случае ответа ДА  указать подробности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DiscountType">
+    <xs:annotation>
+      <xs:documentation>Отличие вызвано скидкой</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="QuantityGoods" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак наличия скидки на количество товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RepaymentTerms" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак наличия скидки на условия оплаты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Seasonal" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак наличия сезонной скидки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Other" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак наличия иной скидки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Comments" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Иные (указать вид)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ExcessCustomsCostType">
+    <xs:annotation>
+      <xs:documentation>Цена товара на внутреннем рынке Российской Федерации превышает заявленную таможенную стоимость, увеличенную на размер таможенных платежей</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Less30percent" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что цена товара на внутреннем рынке РФ превышает заявленную таможенную стоимость, увеличенную на размер таможенных платежей, менее чем на 30%</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="About30_50percent" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что цена товара на внутреннем рынке РФ превышает заявленную таможенную стоимость, увеличенную на размер таможенных платежей, примерно на 30% - 50%</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="About50_100percent" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что цена товара на внутреннем рынке РФ превышает заявленную таможенную стоимость, увеличенную на размер таможенных платежей, примерно на 50% - 100%</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="About3Times" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что цена товара на внутреннем рынке РФ превышает заявленную таможенную стоимость, увеличенную на размер таможенных платежей, примерно в 3 раза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="About5Times" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что цена товара на внутреннем рынке РФ превышает заявленную таможенную стоимость, увеличенную на размер таможенных платежей, примерно в 5 раз</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="About10Times" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что цена товара на внутреннем рынке РФ превышает заявленную таможенную стоимость, увеличенную на размер таможенных платежей, примерно в 10 раз</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Times10_100" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что цена товара на внутреннем рынке РФ превышает заявленную таможенную стоимость, увеличенную на размер таможенных платежей, в 10 - 100 раз</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="More100Times" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что цена товара на внутреннем рынке РФ превышает заявленную таможенную стоимость, увеличенную на размер таможенных платежей, более чем в 100 раз</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ExpressPubliclyOfferType">
+    <xs:annotation>
+      <xs:documentation>Каким образом была выражена публичная оферта Продавца.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PriceList" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак выражения публичной оферты в прайс-листе в офисе продавца</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="PriceListAddressOffice" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>В прайс-листе в офисе продавца (указать фактический адрес)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PublicSourcePrinting" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак выражения публичной оферты в открытом источнике печати</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="PublicSourcePrintingComments" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>В открытом источнике печати (указать каком, где и когда издан)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Media" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак выражения публичной оферты в других средствах массовой информации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="MediaComments" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>В других средствах массовой информации (указать, в каких и когда)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Site" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак выражения публичной оферты на открытом сайте продавца в интернете</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SiteAddress" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>На открытом сайте Продавца в Интернете (указать адрес)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Otherwise" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак выражения публичной оферты иным образом</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="OtherwiseComments" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Иные образом (указать подробности)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HistoryCooperationType">
+    <xs:annotation>
+      <xs:documentation>История сотрудничества Продавца и Покупателя</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AdditionalContract" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак наличия у покупателя (см. графу 1 ДТС-1) перед продавцом (см. графу 2 ДТС-1) дополнительных (отличных от получения товара и установленной цены сделки) обязательств</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CooperationEarly" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак осуществления ранее сотрудничества между продавцом и покупателем</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ConstantPartner" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что покупатель и продавец являются постоянными партнерами</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PutInformationCost" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак согласия продавца предоставить данные о затратах на производство (приобретение) товаров и (или) затратах на их продажу на экспорт в Российскую Федерацию</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CommentsPutInformationCos" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Данные о затратах на производство (приобретение) товаров и (или) затратах на их продажу на экспорт в Российскую Федерацию</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="KindCooperation" type="est:KindCooperationType">
+        <xs:annotation>
+          <xs:documentation>Вид сотрудничества</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SearchSeller" type="est:SearchSellerType">
+        <xs:annotation>
+          <xs:documentation>Поиск продавца для покупки данного товара или ранее до начала сотрудничества осуществлялся</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ChoiceSeller" type="est:ChoiceSellerType">
+        <xs:annotation>
+          <xs:documentation>Был выбран именно этот продавец, поскольку</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InfoContractDeliveryTermsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о договоре и условиях поставки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CostDeliveryIncludedPriceTransactions" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что стоимость доставки до места назначения включена в цену сделки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CostDeliverySpecified" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что стоимость доставки оговаривалась при согласовании цены сделки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Delivery" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что покупатель изучал конъюнктуру рынка услуг по доставке товара из страны отправления до места назначения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ConformityCostDeliveryNormaPriceLevel" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что стоимость доставки оцениваемых товаров соответствует обычному уровню цен, сложившихся на рынке транспортных услуг в отношении товаров того же класса или вида</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Account" type="est:AccountType">
+        <xs:annotation>
+          <xs:documentation>Какой по счету является партия товара,ввозимого по рассматриваемому контракту</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KindContract" type="est:KindContractType">
+        <xs:annotation>
+          <xs:documentation>Вид договора</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TermsContract" type="est:TermsContractType">
+        <xs:annotation>
+          <xs:documentation>Условия контракта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TermsDelivery" type="est:BuyerSellerType">
+        <xs:annotation>
+          <xs:documentation>Кем были предложены предусмотренные контрактом условия поставки.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransportRouteDelivery" type="est:BuyerSellerType">
+        <xs:annotation>
+          <xs:documentation>Кто осуществлял выбор вида транспорта и маршрута доставки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransportInsurance" type="est:TransportInsuranceType">
+        <xs:annotation>
+          <xs:documentation>Заключается ли договор транспортного страхования в отношении товаров, поставляемых по контракту</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CostDelivery" type="est:CostDeliveryType">
+        <xs:annotation>
+          <xs:documentation>Известна ли Покупателю стоимость доставки.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PercentageDelivery" type="est:PercentageDeliveryType">
+        <xs:annotation>
+          <xs:documentation>Какую часть цены сделки составляет стоимость доставки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RiskLossDamage" type="est:RiskLossDamageType">
+        <xs:annotation>
+          <xs:documentation>Когда осуществляется переход риска утраты/порчи товара на покупателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Property" type="est:PropertyType">
+        <xs:annotation>
+          <xs:documentation>Переход права собственности от Продавца к Покупателю</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="KindContractType">
+    <xs:annotation>
+      <xs:documentation>Вид договора</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="PurchaseSale" type="est:DescriptionKindContractType">
+          <xs:annotation>
+            <xs:documentation>Купля-продажа.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Other" type="est:OtherKindContractType">
+          <xs:annotation>
+            <xs:documentation>Иное</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="LeasingAgreement" type="est:DescriptionKindContractType">
+          <xs:annotation>
+            <xs:documentation>Лизинговое соглашение.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Exchange" type="est:DescriptionKindContractType">
+          <xs:annotation>
+            <xs:documentation>Бартер</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="KindCooperationType">
+    <xs:annotation>
+      <xs:documentation>Вид сотрудничества</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="IdenticalGoods" type="est:DescriptionKindCooperationType">
+        <xs:annotation>
+          <xs:documentation>Поставки от Продавца Покупателю идентичных товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdemSort" type="est:DescriptionKindCooperationType">
+        <xs:annotation>
+          <xs:documentation>Товаров того же класса или вида.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OtherSort" type="est:DescriptionKindCooperationType">
+        <xs:annotation>
+          <xs:documentation>Товаров другого класса или вида.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DifferentCooperation" type="est:DescriptionKindCooperationType">
+        <xs:annotation>
+          <xs:documentation>Иное сотрудничество.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DeliveryGoodsBuyerSeller" type="est:DescriptionKindCooperationType">
+        <xs:annotation>
+          <xs:documentation>Поставки товаров от Покупателя Продавцу.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RenderingService" type="est:DescriptionKindCooperationType">
+        <xs:annotation>
+          <xs:documentation>Оказание услуг.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MarketPriceType">
+    <xs:annotation>
+      <xs:documentation>Известна ли Покупателю рыночная цена в Российской Федерации товаров того же класса или вида при продаже их конечному потребителю.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Value" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Если значение поля: true или 1 - да; false или 0 - нет</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ValueMarketPrice" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Рыночная цена в Российской Федерации товаров того же класса или вида при продаже их конечному потребителю(величина)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CurrencyMarketPrice" type="clt_ru:CurrencyA3CodeType">
+        <xs:annotation>
+          <xs:documentation>Валюта рыночной цены в Российской Федерации товаров того же класса или вида при продаже их конечному потребителю.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="NonStandardSituationMarketType">
+    <xs:annotation>
+      <xs:documentation>Отличие вызвано нестандартной ситуацией на рынке</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DopRate" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак факта резкого падения курса национальной валюты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IncreaseRate" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак факта резкого повышения курса национальной валюты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GlutMarket" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак факта затоваривания рынка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DeficitMarket" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак факта дефицита на рынке</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Other" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что отличие вызвано иной нестандартной ситуацией на рынке</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryType" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Информация относится к стране: 1 -  отправления, 0 - происхождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Comments" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Иные (указать подробности)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OrderGoodsType">
+    <xs:annotation>
+      <xs:documentation>Заказ товара</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Specially" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что товар произведен специально для покупателя и не является серийным</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Serially" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что товар серийного производства произведен по предварительному заказу покупателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SupplyStore" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что товар поставляется по отдельным заказам со склада</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SupplyStoreComments" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Товар поставляется по отдельным заказам со склада, указать собственника склада либо, соответственно, лицо, заключавшее договор на хранение на складе (например, производитель, продавец, отправитель)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Time-table" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что товар поставляется по предварительно согласованному графику</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Exhibition" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что товар поставляется с выставки, витрины, после испытаний</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Second-hand" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что товар, бывший в употреблении, поставляется от бывшего владельца</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OtherKindContractType">
+    <xs:annotation>
+      <xs:documentation>Вид договора: иной</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="est:DescriptionKindContractType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="OtherComments" type="clt_ru:FreeText250Type">
+            <xs:annotation>
+              <xs:documentation>Иной (указать вид)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PercentageDeliveryType">
+    <xs:annotation>
+      <xs:documentation>Какую часть цены сделки составляет стоимость доставки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Less3percent" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что стоимость доставки составляет менее 3% цены сделки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="About3_5percent" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что стоимость доставки составляет примерно от 3% до 5%</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="About5_10percent" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что стоимость доставки составляет примерно от 5% до 10%</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="About10_20percent" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что стоимость доставки составляет примерно от 10% до 20%</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="About20_30percent" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что стоимость доставки составляет примерно от 20% до 30%</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="About30_50percent" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что стоимость доставки составляет примерно от 30% до 50%</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="About50_70percent" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что стоимость доставки составляет примерно от 50% до 70%</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="About70_90percent" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что стоимость доставки составляет примерно от 70% до 90%</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="More90percent" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что стоимость доставки составляет более 90%</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PositionSellerType">
+    <xs:annotation>
+      <xs:documentation>Отличие вызвано положением Продавца</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FundsAvailable" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак необходимости наличных средств</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GlutWarehouse" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак затоваривания складов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Bankruptcy" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак банкротства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Other" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Отличие вызвано иным положением продавца</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Comments" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Иные (указать подробности)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PricingTransactionsType">
+    <xs:annotation>
+      <xs:documentation>Формирование цены сделки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PriceLeve" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак наличия у покупателя информации об уровне рыночных цен на такого вида товары</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InitialOfferPriceAppropriateLevel" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что первоначальная цена  предложения корреспондирует такому уровню цен</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="PercentageDeviation" type="clt_ru:CodeVariable3Type">
+        <xs:annotation>
+          <xs:documentation>Процент отклонения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SalePriceInitialOfferPrice" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что цена сделки совпадает с первоначальной ценой предложения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="PercentageDifferences" type="clt_ru:CodeVariable3Type">
+        <xs:annotation>
+          <xs:documentation>Процент отличия от первоначальной цены.Если значение поля: "true" - да; "false" - нет.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="OtherReasonsDifferences" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Другие причины отличия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CommentsOtherReasonsDifferences" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Другие причины отличия (указать подробности)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="KeepCorrespondence" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что у покупателя сохранилась переписка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="GrantCorrespondence" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак возможности представления переписки  таможенным органам</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="ReasonGrantCorrespondence" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Причина, по которой не может быть представлена переписка таможенным органам.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PubliclyOffer" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что первоначальная цена предложения является публичной офертой (в терминах ст. 494 Гражданского кодекса Российской Федерации)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Discount" type="est:DiscountType">
+        <xs:annotation>
+          <xs:documentation>Отличие вызвано скидкой</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="NonStandardSituationMarket" type="est:NonStandardSituationMarketType">
+        <xs:annotation>
+          <xs:documentation>Отличие вызвано нестандартной ситуацией на рынке</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="PositionSeller" type="est:PositionSellerType">
+        <xs:annotation>
+          <xs:documentation>Отличие вызвано положением Продавца</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SpecialRelationship" type="est:SpecialRelationshipType">
+        <xs:annotation>
+          <xs:documentation>Отличие вызвано особыми отношениями Продавца и покупателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="AlignmentPrices" type="est:AlignmentPricesType">
+        <xs:annotation>
+          <xs:documentation>Согласование цены сделки.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ExpressPubliclyOffer" type="est:ExpressPubliclyOfferType">
+        <xs:annotation>
+          <xs:documentation>Каким образом была выражена публичная оферта Продавца.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ValueFormingPrice" type="est:ValueFormingPriceType">
+        <xs:annotation>
+          <xs:documentation>Известно ли покупателю, исходя из какой величины формировалась цена первоначального предложения.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PropertyType">
+    <xs:annotation>
+      <xs:documentation>Когда осуществляется переход права собственности от Продавца к Покупателю</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DayShipping" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак перехода права собственности от продавца к покупателю на день отгрузки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DayPayment" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак перехода права собственности от продавца к покупателю на день оплаты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OtherDay" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак перехода права собственности от продавца к покупателю в иной день</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CommentsOtherDay" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Иной день(подробности)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RiskLossDamageType">
+    <xs:annotation>
+      <xs:documentation>Когда осуществляется переход риска утраты/порчи товара на покупателя</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Warehouse" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак перехода риска утраты/порчи товара на покупателя на складе отправителя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Disposition" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак перехода риска утраты/порчи товара на покупателя после передачи лицу, осуществляющему</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProcessDelivery" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак перехода риска утраты/порчи товара на покупателя в процессе доставки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CommentsProcessDelivery" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>В процессе доставки (подробности)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PlaceDelivery" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак перехода риска утраты/порчи товара на покупателя в месте доставки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OtherPlace" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак перехода риска утраты/порчи товара на покупателя в ином месте</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="Address" type="cat_ru:AddressType">
+        <xs:annotation>
+          <xs:documentation>Адрес </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SaleGoodsDomesticMarketType">
+    <xs:annotation>
+      <xs:documentation>Реализация товаров на внутреннем рынке</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FinalSellingPrice" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что цена реализации товара известна конечному потребителю на внутреннем рынке</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UnitSellingPriceGoods" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Укажите цену реализации единицы товара на внутреннем рынке (в т.ч. планируемую)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Cost" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Укажите общий размер расходов Покупателя при реализации товаров на внутреннем рынке,которые должны быть включены в цену реализации для их покрытия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Profitability" type="clt_ru:CodeVariable3Type">
+        <xs:annotation>
+          <xs:documentation>Укажите процент планируемой рентабельности сделки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BuyerGoods" type="est:BuyerGoodsType">
+        <xs:annotation>
+          <xs:documentation>Покупатель товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExcessCustomsCost" type="est:ExcessCustomsCostType">
+        <xs:annotation>
+          <xs:documentation>Цена товара на внутреннем рынке Российской Федерации превышает заявленную таможенную стоимость, увеличенную на размер таможенных платежей</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MarketPrice" type="est:MarketPriceType">
+        <xs:annotation>
+          <xs:documentation>Известна ли Покупателю рыночная цена в Российской Федерации товаров того же класса или вида при продаже их конечному потребителю.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SearchSellerType">
+    <xs:annotation>
+      <xs:documentation>Поиск продавца для покупки данного товара или ранее до начала сотрудничества осуществлялся</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Middleman" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак участия посредника</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Commercial" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак использования рекламных объявлений</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Exchange" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак поиска продавца на бирже</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Otherwise" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак поиска продавца иным образом</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CommentsOtherwise" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Иным образом (указать способ)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SpecialRelationshipType">
+    <xs:annotation>
+      <xs:documentation>Отличие вызвано особыми отношениями Продавца и покупателя</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Cooperation" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак наличия длительной истории сотрудничества</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Prepayment" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что покупатель предоставляет продавцу предоплату</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExtraDuty" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Покупатель принимает дополнительные обязательства по объему продажи товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Other" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Отличие вызвано иными особыми отношениями продавца и покупателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Comments" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Иные (указать подробности)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TermsContractType">
+    <xs:annotation>
+      <xs:documentation>Условия контракта</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ProvidedDependPurchase" type="est:DescriptionTermsContractType">
+        <xs:annotation>
+          <xs:documentation>Условие, при котором продажа одного наименования товара зависит от покупки товара другого наименования</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DeliveryGoodsBuyer" type="est:DescriptionTermsContractType">
+        <xs:annotation>
+          <xs:documentation>Поставку товаров со стороны Покупателя в пользу Продавца бесплатно или по сниженной цене</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CounterDelivery" type="est:DescriptionTermsContractType">
+        <xs:annotation>
+          <xs:documentation>Встречную поставку товаров покупателем продавцу.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TransportInsuranceType">
+    <xs:annotation>
+      <xs:documentation>Заключается ли договор транспортного страхования в отношении товаров, поставляемых по контракту</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Not" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что договор транспортного страхования в отношении товаров, поставляемых по контракту, не заключается</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Risk" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что заключался договор транспортного страхования в отношении товаров, поставляемых по контракту, с ответственностью за все риски</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SimpleAverage" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что заключался договор транспортного страхования в отношении товаров, поставляемых по контракту, с ответственностью за частную аварию</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Damage" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что заключался договор транспортного страхования в отношении товаров, поставляемых по контракту, без ответственности за повреждения, кроме случаев крушения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OtherTerms" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что заключался договор транспортного страхования в отношении товаров, поставляемых по контракту, на иных условиях</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DescriptionOtherTerms" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Указание подробности других условий.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ValueFormingPriceType">
+    <xs:annotation>
+      <xs:documentation>Известно ли покупателю, исходя из какой величины формировалась цена первоначального предложения.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ExchangePrice" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак формирования цены первоначального предложения, исходя из биржевой цены</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PriceOtherProposals" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак формирования цены первоначального предложения, исходя из цены на товары того же класса или вида других предложений при продаже товаров на экспорт из страны производства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PriceOtherVendors" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак формирования цены первоначального предложения, исходя из цен на товары того же класса или вида у других продавцов при продаже товаров на экспорт из страны отправления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CostPrice" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак формирования цены первоначального предложения, исходя из себестоимости производства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SalesDomesticMarket" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак формирования цены первоначального предложения, исходя из цены возможной реализации на внутреннем рынке Российской Федерации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NotKnown" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак того, что способ формирования цены первоначального предложения неизвестен</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

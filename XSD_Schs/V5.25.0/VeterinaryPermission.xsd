@@ -1,0 +1,1062 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:verp="urn:customs.ru:Information:SertifDocuments:VeterinaryPermission:5.25.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:SertifDocuments:VeterinaryPermission:5.25.0" elementFormDefault="qualified" version="5.25.0.0">
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Ответ на запрос ветеринарного разрешения</xs:documentation>
+	</xs:annotation>
+	<xs:element name="VeterinaryPermission" type="verp:VeterinaryPermissionType">
+		<xs:annotation>
+			<xs:documentation>Ответ на запрос ветеринарного разрешения</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="VeterinaryPermissionType">
+		<xs:annotation>
+			<xs:documentation>Ответ на запрос ветеринарного разрешения</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="UUID" type="clt_ru:DocumentIDType">
+						<xs:annotation>
+							<xs:documentation>Идентификатор цепочки обмена сообщениями</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="responseCode" type="clt_ru:Text40Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Код ответа сервера</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="veterinaryPermitCount" type="clt_ru:Text40Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Количество ветеринарных разрешений</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="VeterinaryPermit" type="verp:VeterinaryPermitType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Ветеринарное разрешение</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009415E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="VeterinaryPermitType">
+		<xs:annotation>
+			<xs:documentation>Ветеринарное разрешение</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PermitUUID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Идентификатор документа в системе РСХН</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Series" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Серия документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Number" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Date" type="clt_ru:DateCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Name" type="clt_ru:FreeText250Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Название документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="YearPermit" type="clt_ru:DateYearCustType">
+				<xs:annotation>
+					<xs:documentation>Год, на который выдано разрешение</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Decision" type="clt_ru:Text10Type">
+				<xs:annotation>
+					<xs:documentation>Решение (разрешение или запрет)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CentralDepartment" type="verp:DepartmentType">
+				<xs:annotation>
+					<xs:documentation>ГУВ страны ТС, оформившее разрешения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="vetDepartment" type="verp:DepartmentType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Ветеринарное управления субъекта страны ТС, в который следует груз</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SignedBy" type="verp:SignedByType">
+				<xs:annotation>
+					<xs:documentation>Должностное лицо, ответственное за выдачу разрешения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isGeneral" type="clt_ru:IndicatorType">
+				<xs:annotation>
+					<xs:documentation>Является ли решение генеральным (общим)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransferType" type="clt_ru:Numeric1Type">
+				<xs:annotation>
+					<xs:documentation>Тип операции: 1 - Ввоз (импорт на территорию ТС); 2 - Вывоз (экспорт из ТС в третьи страны); 3 - Транзит через территорию ТС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="WhichProductType" type="clt_ru:Numeric1Type">
+				<xs:annotation>
+					<xs:documentation>Тип продукции: 1 - Мясо и мясопродукты; 2 - Корма и кормовые добавки; 3 - Живые животные; 4 - Лекарственные средства; 5 - Пищевые продукты; 6 - Непищевые продукты и другое; 7 - Рыба и морепродукты; 8 - Продукция, не требующая разрешения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransferPurpose" type="verp:TransferPurposeType">
+				<xs:annotation>
+					<xs:documentation>Цель ввоза/вывоза</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BusinessEntity" type="verp:BusinessEntityType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Заявитель</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OriginCountry" type="verp:CountryType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Страна происхождения груза</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ImportCountry" type="verp:CountryType">
+				<xs:annotation>
+					<xs:documentation>Страна-импортер</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ExportCountry" type="verp:CountryType">
+				<xs:annotation>
+					<xs:documentation>Страна-экспортер</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Supplier" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Предприятие-поставщий животных</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Recipient" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Получатель</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Mediator" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Посредник доставки груза</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CustomsClearanceRegion" type="verp:RegionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Регион полного таможенного оформления</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StoragePoint" type="verp:StoragePointType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Место хранения груза</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ShipmentPoint" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Место доставки груза</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BipListRestricted" type="clt_ru:IndicatorType">
+				<xs:annotation>
+					<xs:documentation>TRUE --  список допустимых пункты пропуска ограничен.
+                        Перечень приводится в элементе borderInspectionPointList.
+                        FALSE -- список допустимых пунктов пропуска не ограничен.
+                        Допускается транспорт груза через любой пункт пропуска ТС.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BorderInspectonPointList" type="verp:BorderInspectonPointListType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Список допустимых пунктов пропуска</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransportTypeList" type="verp:TransportTypeListType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Список допустимых типов транспорта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CargoList" type="verp:CargoListType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Список грузов</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransferConditioinList" type="verp:TransferConditioinListType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Список условий транспортировки груза</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AddtonalInfo" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дополнительная информация</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransferConditioinListType">
+		<xs:annotation>
+			<xs:documentation>Список условий транспортировки груза</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Conditon" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Условия транспортировки груза</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CargoListType">
+		<xs:annotation>
+			<xs:documentation>Список грузов</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CodeWithnPermit" type="clt_ru:Text4Type">
+				<xs:annotation>
+					<xs:documentation>Шифр груза в разрешении</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Product" type="verp:ProductType">
+				<xs:annotation>
+					<xs:documentation>Продукция</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SubProduct" type="verp:SubProductType">
+				<xs:annotation>
+					<xs:documentation>Вид продукции</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CargoAmount" type="clt_ru:Text10Type">
+				<xs:annotation>
+					<xs:documentation>Объем груза</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CargoUnit" type="verp:CargoUnitType">
+				<xs:annotation>
+					<xs:documentation>Единица измерения объема груза</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OriginCountry" type="verp:CountryType">
+				<xs:annotation>
+					<xs:documentation>Страна происхождения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OriginRegion" type="verp:RegionType">
+				<xs:annotation>
+					<xs:documentation>Регион страны происхождения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OriginDistrict" type="verp:DistrictType">
+				<xs:annotation>
+					<xs:documentation>Регион страны происхождения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OriginLocality" type="verp:LocalityType">
+				<xs:annotation>
+					<xs:documentation>Населенный пункт происхождения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EnterpriseList" type="verp:EnterpriseListType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Список предприятий</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Producer" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Предприятие-производитель текстом</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CargoDetails" type="verp:CargoDetailsType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дополнительная информация о грузе</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CargoDetailsType">
+		<xs:annotation>
+			<xs:documentation>Дополнительная информация о грузе</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ProductName" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование продукции</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TNVEDCode" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код ТНВЭД</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ProductPurpose" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Назначение продукции</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FormOfIssue" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Форма выпуска</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ComponentComposition" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Компонентный состав</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GMO" type="clt_ru:IndicatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наличие ГМО</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GMOName" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование ГМО</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PlantComponent" type="clt_ru:IndicatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наличие компонентов растительного происхождения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AnimalComponent" type="clt_ru:IndicatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наличие компонентов животного происхождения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Additionalnfo" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дополнительная информация</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FishCatchDistrict" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Район вылова водных биоресурсов</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Packing" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Упаковка, фасовка</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegistrationRequired" type="clt_ru:IndicatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Требуется ли наличие обязательной регистрации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegistrationCertifcateSeries" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер учетной серии свидетельства о регистрации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegistrationCertifcateNumber" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Регистрационный номер свидетельства о регистрации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegistrationCertifcateBeginDate" type="clt_ru:DateCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата начала действия свидетельства о регистрации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegistrationCertifcateEndDate" type="clt_ru:DateCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата окончания действия свидетельства о регистрации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegistrationCertifcateUnlimited" type="clt_ru:IndicatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Cвидетельство о регистрации выдано бессрочно</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegistrationCertifcateOwner" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Кому выдано свидетельство о регистрации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CoveredByCites" type="clt_ru:IndicatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Груз попадает под действие СИТЕС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CitesDocumentUUID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Идентификатор документа CИТЕС в системе РСХН</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CitesDocumentSeries" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Серия документа CИТЕС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CitesDocumentNumber" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер документа CИТЕС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CitesDocumentDate" type="clt_ru:DateCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата документа CИТЕС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CitesDocumentName" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Название документа CИТЕС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CargoUnitType">
+		<xs:annotation>
+			<xs:documentation>Единица измерения объема груза</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="UUID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Идентификатор сущности</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GUID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Глобальный идентификатор для версионируемых сущностей</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Name" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование единицы измерения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Code" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код единицы измерения в соответствии с Общероссийским классификатором</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EnterpriseListType">
+		<xs:annotation>
+			<xs:documentation>Список предприятий</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="UUID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Идентификатор сущности</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GUID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Глобальный идентификатор для версионируемых сущностей</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Number" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Номер предприятия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Name" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Название предприятия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EngName" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Название предприятия на английском языке</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Activity" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Деятельность, осуществляемая предприятием</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EngActivity" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Деятельность, осуществляемая предприятием, на английском языке</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Country" type="verp:CountryType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Страна расположения предприятия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Region" type="verp:RegionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Регион расположения предприятия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="District" type="verp:DistrictType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Регион расположения предприятия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Locality" type="verp:LocalityType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Населенный пункт расположения предприятия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Address" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Адрес предприятия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SubProductType">
+		<xs:annotation>
+			<xs:documentation>Вид продукции</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="UUID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Идентификатор сущности</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GUID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Глобальный идентификатор для версионируемых сущностей</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Name" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Название</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Code" type="clt_ru:Text10Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код ТНВЭД</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Product" type="verp:ProductType">
+				<xs:annotation>
+					<xs:documentation>Продукция, к которой относится данный вид продукции</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProductType">
+		<xs:annotation>
+			<xs:documentation>Продукция</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="UUID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Идентификатор сущности</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GUID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Глобальный идентификатор для версионируемых сущностей</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Name" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Название</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Code" type="clt_ru:Text10Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код ТНВЭД</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ProductType" type="clt_ru:CodeVariable10Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Тип продукции: 1 - Мясо и мясопродукты; 2 - Корма и кормовые добавки; 3 - Живые животные; 4 - Лекарственные средства; 5 - Пищевые продукты; 6 - Непищевые продукты и другое; 7 - Рыба и морепродукты; 8 - Продукция, не требующая разрешения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransportTypeListType">
+		<xs:annotation>
+			<xs:documentation>Список допустимых типов транспорта</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TransportType" type="clt_ru:CodeVariable10Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Список допустимых типов транспорта: 0 - Не определено; 1 - Автомобильный; 2 - Железнодорожный; 3 - Авиатранспортьный; 4 - Морской/речной</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BorderInspectonPointListType">
+		<xs:annotation>
+			<xs:documentation>Список допустимых пунктов пропуска</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="UUID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Идентификатор сущности</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GUID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Глобальный идентификатор для версионируемых сущностей</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NameOne" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Название допустимого пункта пропуска 1</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CountryOne" type="verp:CountryType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Страна допустимого пункта пропуска 1</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegionOne" type="verp:RegionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Регион допустимого пункта пропуска 1</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AddessOne" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Адрес допустимого пункта пропуска 1</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NameTwo" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Название допустимого пункта пропуска 2</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CountryTwo" type="verp:CountryType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Страна допустимого пункта пропуска 2</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegionTwo" type="verp:RegionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Регион допустимого пункта пропуска 2</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AddessTwo" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Адрес допустимого пункта пропуска 2</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransportType" type="verp:TransportTypeListType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Тип транспорта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StoragePointType">
+		<xs:annotation>
+			<xs:documentation>Место хранения груза</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="UUID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Идентификатор сущности</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GUID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Глобальный идентификатор для версионируемых сущностей</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Name" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Название предприятия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Country" type="verp:CountryType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Страна расположения предприятия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Region" type="verp:RegionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Регион распроложения предприятия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="District" type="verp:DistrictType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Район распроложения предприятия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Locality" type="verp:LocalityType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Населенный пункт расположение предприятия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Address" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Адрес предприятия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StoragePurpose" type="clt_ru:CodeVariable10Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Назначение меса хранения: 1 - Временная передержка; 2 - Выращивание; 3 - Инкубирование; 4 - Карантинирование; 5 - Размещение; 6 - Убой</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LocalityType">
+		<xs:annotation>
+			<xs:documentation>Населенный пункт расположение предприятия</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="UUID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Идентификатор сущности</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GUID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Глобальный идентификатор для версионируемых сущностей</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Name" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Название населенного пункта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Country" type="verp:CountryType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Страна</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Region" type="verp:RegionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Регион страны</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="District" type="verp:DistrictType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Район страны</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="City" type="verp:CityType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Выестоящий населенный пункт</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CityType">
+		<xs:annotation>
+			<xs:documentation>Район</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="UUID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Идентификатор сущности</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GUID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Глобальный идентификатор для версионируемых сущностей</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DistrictType">
+		<xs:annotation>
+			<xs:documentation>Район</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="UUID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Идентификатор сущности</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Name" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Название района страны</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Country" type="verp:CountryType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Страна</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Region" type="verp:RegionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Регион страны</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BusinessEntityType">
+		<xs:annotation>
+			<xs:documentation>Цель ввоза/вывоза</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="UUID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Идентификатор сущности</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GUID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Глобальный идентификатор для версионируемых сущностей</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FirmName" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Полное наименование хозяйствующего объекта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FIO" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ФИО хозяйствующего объекта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SingleName" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование хозяйствующего субъекта без ОПФ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IncorpoprationForm" type="verp:IncorpoprationFormType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Организационно-правовая форма</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Passport" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Паспортные данные</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="INN" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Идентификационный номер ХС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="KPP" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>КПП субъекта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OGRN" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ОГРН(ИП) субъекта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Country" type="verp:CountryType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Страна регистрации ХС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Region" type="verp:RegionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Регион регистрации ХС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Address" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Юридический адрес или адрес регистрации ХС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Type" type="clt_ru:CodeVariable10Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Тип ХС: 1 - Юридическое лицо; 2 - Физическое лицо</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IncorpoprationFormType">
+		<xs:annotation>
+			<xs:documentation>Организационно-правовая форма</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="UUID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Идентификатор сущности</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GUID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Глобальный идентификатор для версионируемых сущностей</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Name" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование организационно-правовой формы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ShortName" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Короткое организационно-правовой наименование формы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Code" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код организационно-правовой формы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransferPurposeType">
+		<xs:annotation>
+			<xs:documentation>Цель ввоза/вывоза</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="UUID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Идентификатор сущности</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GUID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Глобальный идентификатор для версионируемых сущностей</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Name" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование цели</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Code" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код цели</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SignedByType">
+		<xs:annotation>
+			<xs:documentation>Должностное лицо, ответственное за выдачу разрешения</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="FIO" type="clt_ru:FreeText500Type">
+				<xs:annotation>
+					<xs:documentation>ФИО</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="JobPosition" type="clt_ru:FreeText500Type">
+				<xs:annotation>
+					<xs:documentation>Должность</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Organization" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Название организации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Phone" type="clt_ru:PhoneNumberType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Контактный телефон</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Email" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Адрес электронной почты</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DepartmentType">
+		<xs:annotation>
+			<xs:documentation>ГУВ страны ТС, оформившее разрешения</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="UUID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Идентификатор сущности</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GUID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Глобальный идентификатор для версионируемых сущностей</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Name" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование организации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Country" type="verp:CountryType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Информация о стране</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Region" type="verp:RegionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Информация о регионе</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Address" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Юридический адрес</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RegionType">
+		<xs:annotation>
+			<xs:documentation>Информация о регионе</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="UUID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Идентификатор сущности</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GUID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Глобальный идентификатор для версионируемых сущностей</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Name" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование региона страны</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegionISOCode" type="clt_ru:Text10Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код региона страны в соответствии с ISO 3166-2</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegionRUSCode" type="clt_ru:RegionCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код региона страны в соответствии с Общероссийским классификатором</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Country" type="verp:CountryType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Информация о стране</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CountryType">
+		<xs:annotation>
+			<xs:documentation>Информация о стране</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="UUID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Идентификатор сущности</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GUID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Глобальный идентификатор для версионируемых сущностей</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Name" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Название региона страны</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Code" type="clt_ru:CountryA2CodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Двухбуквенный код страны</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

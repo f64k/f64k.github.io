@@ -1,0 +1,386 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Приказ ФТС России от 21.11.2018 г. № 1876 "Об утверждении форм документов, применяемых таможенными органами в целях обеспечения взыскания таможенных платежей,
+специальных, антидемпинговых, компенсационных пошлин, процентов и пеней за счет имущества и обращения взыскания на товары":
+Приложение 1 (DocumentType =0, OrderType = 0) - Решение таможенного органа о наложении ареста на имущество
+Приложение 2 (DocumentType =0, OrderType = 1) - Решение таможенного органа на пользование и распоряжение имуществом, на которое наложен арест
+Приложение 7 (DocumentType =2, OrderType = 0) - Решение таможенного органа об отмене ареста имущества
+Приложение 8 (DocumentType =0, OrderType = 2) - Решение таможенного органа о наложении ареста на товары
+Приложение 9 (DocumentType =0, OrderType = 3) - Решение таможенного органа об обращении взыскания на товары
+Приложение 11 (DocumentType =2, OrderType = 2) - Решение таможенного органа об отмене ареста товаров
+-->
+<xs:schema xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:imar="urn:customs.ru:Information:CustomsAuditDocuments:ImpositionArrest:5.24.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsAuditDocuments:ImpositionArrest:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Решение таможенного органа о наложении ареста на имущество/разрешение таможенного органа на пользование и распоряжение имуществом, на которое наложен арест/решение таможенного органа о наложении ареста на товары/решение таможенного органа об отмене ареста товаров/решение таможенного органа об отмене ареста имущества/решение таможенного органа об обращении взыскания на товары</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ImpositionArrest" type="imar:ImpositionArrestType">
+    <xs:annotation>
+      <xs:documentation>Решение таможенного органа о наложении ареста на имущество/разрешение таможенного органа на пользование и распоряжение имуществом, на которое наложен арест/решение таможенного органа о наложении ареста на товары/решение таможенного органа об отмене ареста товаров/решение таможенного органа об отмене ареста имущества/решение таможенного органа об обращении взыскания на товары</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ImpositionArrestType">
+    <xs:annotation>
+      <xs:documentation>Решение таможенного органа о наложении ареста на имущество/разрешение таможенного органа на пользование и распоряжение имуществом, на которое наложен арест/решение таможенного органа о наложении ареста на товары</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="InfoDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата формирования сведений</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="InfoTime" type="clt_ru:TimeCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Время формирования сведений</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocumentInfo" type="imar:DocumentInfoType">
+            <xs:annotation>
+              <xs:documentation>Сведения о документе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006936E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AdvancedBaseType">
+    <xs:annotation>
+      <xs:documentation>Основания разрешения пользования и распоряжение имуществом</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Indocrn" type="cat_ru:DocumentBaseType">
+        <xs:annotation>
+          <xs:documentation>Реквизиты входного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Statement" type="cat_ru:DocumentBaseType">
+        <xs:annotation>
+          <xs:documentation>Реквизиты заявления на владение, пользование и распоряжение имуществом</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Organization" type="imar:OrganizationMeasType">
+        <xs:annotation>
+          <xs:documentation>Сведения о лице, которому передано на хранение имущество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ActionsProp" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Действия по пользованию и распоряжению имуществом, разрешенные таможенным органом</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StartDateAct" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата начала действий по пользованию и распоряжению имуществом, разрешенные таможенным органом</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EndDateAct" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата окончания действий по пользованию и распоряжению имуществом, разрешенные таможенным органом</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AdvancedCustomsType">
+    <xs:annotation>
+      <xs:documentation>Таможенный орган</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:CustomsType">
+        <xs:sequence>
+          <xs:element name="City" type="clt_ru:CityNameType">
+            <xs:annotation>
+              <xs:documentation>Населенный пункт</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AmountType">
+    <xs:annotation>
+      <xs:documentation>Сумма</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PaymentAmount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма, подлежащая уплате цифрами</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FinePaymentAmount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма пени, подлежащая уплате цифрами</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FeesPaymentAmount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма таможенных платежей, специальных, антидемпинговых, компенсационных пошлин, подлежащая уплате цифрами</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PercentPaymentAmount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма процентов, подлежащая уплате цифрами</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="BaseDocumentType">
+    <xs:annotation>
+      <xs:documentation>Документ основание</xs:documentation>
+    </xs:annotation>
+    <xs:choice>
+      <xs:element name="ForeclosureGoods" type="cat_ru:DocumentBaseType">
+        <xs:annotation>
+          <xs:documentation>Реквизиты решения об обращении взыскания на товары/Решения о наложении ареста на имущество/Решения о наложении ареста на товары</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AdvancedBaseDocument" type="imar:AdvancedBaseType">
+        <xs:annotation>
+          <xs:documentation>Основания разрешения пользования и распоряжение имуществом</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="DocumentInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о документе</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsOffice" type="imar:AdvancedCustomsType">
+        <xs:annotation>
+          <xs:documentation>Код и наименование таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentType" type="xs:integer">
+        <xs:annotation>
+          <xs:documentation>Тип сведений: 0 - документ, 1 - документ об отзыве</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrderType" type="xs:integer">
+        <xs:annotation>
+          <xs:documentation>Вид документа: 0 - наложение ареста на имущество, 1 - разрешение  на пользование и распоряжение имуществом, 2 - наложение ареста на товары, 3 -  обращение взыскания на товары</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RequisitesDocument" type="cat_ru:DocumentBaseType">
+        <xs:annotation>
+          <xs:documentation>Реквизиты документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Organization" type="imar:OrganizationMeasType">
+        <xs:annotation>
+          <xs:documentation>Сведения об участнике ВЭД (из меры)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CalcDebtDoc" type="imar:NotificationDocumentType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Реквизиты документа/ов, на основании которого/ых выставлена задолженность (ДТ/КДТ/РТП/ТПО)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GroundsArrests" type="imar:GroundsArrestsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Основания арестов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BaseDocument" type="imar:BaseDocumentType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Документ-основание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ListArrest" type="imar:ListArrestType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Перечень имущества (товаров), на которое накладывается (наложен) арест</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LocationInformation" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о местанохождении имущества/товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BaseCancellation" type="clt_ru:CodeVariable2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер пункта части 41 статьи 78 Федерального закона от 03.08.2018 №289-ФЗ (для решений об отмене ареста имущесва/товаров)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentSignature" type="imar:DocumentSignatureType">
+        <xs:annotation>
+          <xs:documentation>Подпись документов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProsecutorPerson" type="imar:ProsecutorPersonType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о прокуроре</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocumentSignatureType">
+    <xs:annotation>
+      <xs:documentation>Типы подписи документов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustChiefSignature" type="cat_ru:PersonSignatureType">
+        <xs:annotation>
+          <xs:documentation>Подпись Ф.И.О. начальника таможенного органа. Заполняется в АПС Задолженность.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExecutiveSignature" type="cat_ru:PersonSignatureType">
+        <xs:annotation>
+          <xs:documentation>Подпись исполнителя. Заполняется в АПС Задолженность.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GroundsArrestsType">
+    <xs:annotation>
+      <xs:documentation>Основания арестов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="NotificationOrCorrDeclDocument" type="imar:NotificationDocumentType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Реквизиты уведомления (уточнения к уведомлению) о не уплаченных в установленный срок суммах таможенных  платежей, специальных, антидемпинговых, компенсационных пошлин, процентов и пени</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Amount" type="imar:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ListArrestType">
+    <xs:annotation>
+      <xs:documentation>Сведения об имуществе (товаре), на которое накладывается (наложен) арест</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SerialNumber" type="clt_ru:Code5Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NameProperty" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование имущества(товаров)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Quantitypoint" type="clt_ru:Quantity18point3Type">
+        <xs:annotation>
+          <xs:documentation>Количество в единице измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeasureUnitOperationCode" type="clt_ru:MeasureUnitQualifierCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код единицы измерения веса/количества</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeasureUnitOperation" type="clt_ru:MeasureUnitQualifierNameType">
+        <xs:annotation>
+          <xs:documentation>Наименование единицы измерения веса/количества</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Characteristics" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Характеристики имущества (товара)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="NotificationDocumentType">
+    <xs:annotation>
+      <xs:documentation>Реквизиты уведомления (уточнения к уведомлению)/Реквизиты документов, на основании которых выставлена задолженность</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SerialNumber" type="clt_ru:Count5Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PrDocumentNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PrDocumentDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocDatePeriodExecution" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Срок исполнения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OrganizationMeasType">
+    <xs:annotation>
+      <xs:documentation>Сведения об участнике ВЭД</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:OrganizationBaseType">
+        <xs:sequence>
+          <xs:element name="OKPOID" type="clt_ru:OKPOIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код организации по ОКПО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OKATOCode" type="clt_ru:OKATOCodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код ОКАТО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Address" type="RUScat_ru:RUAddressType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Адрес </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Contact" type="cat_ru:ContactType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Контактная информация</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ITN" type="clt_ru:ITNType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>ИТН</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AddressText" type="clt_ru:FreeText500Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведение об адресе Участника ВЭД, текстом</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ProsecutorPersonType">
+    <xs:annotation>
+      <xs:documentation>Сведения о прокуроре</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:PersonSignatureType">
+        <xs:sequence>
+          <xs:element name="ClassRank" type="clt_ru:PostType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Классный чин</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ProsecutorOffice" type="clt_ru:NameType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Наименование органа прокуратуры</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

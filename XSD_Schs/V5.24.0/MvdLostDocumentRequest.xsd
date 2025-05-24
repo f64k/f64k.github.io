@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:ld_req="urn:customs.ru:Information:SQDocuments:MvdLostDocumentRequest:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:MvdLostDocumentRequest:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос сведений об утраченном документе</xs:documentation>
+  </xs:annotation>
+  <xs:element name="MvdLostDocumentRequest" type="ld_req:MvdLostDocumentRequestType" />
+  <xs:complexType name="MvdLostDocumentRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений об утраченном документе</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocumentType" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Вид документа: 1 - Сведения о паспорте; 2 - Сведения о разрешении на работу; 3 - Сведения об удостоверении ветерана труда</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Reason" type="clt_ru:FreeText250Type" maxOccurs="4">
+            <xs:annotation>
+              <xs:documentation>Правовые основания для предоставления услуги</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Operator" type="cat_ru:PersonBaseType">
+            <xs:annotation>
+              <xs:documentation>ФИО оператора, осуществляющего проверку</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Region" type="clt_ru:Code3Type">
+            <xs:annotation>
+              <xs:documentation>Код региона</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RequestPerson" type="cat_ru:PersonBaseType">
+            <xs:annotation>
+              <xs:documentation>ФИО проверяемого лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BirthDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата рождения проверяемого лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SNILS" type="clt_ru:CodeVariable11Type">
+            <xs:annotation>
+              <xs:documentation>СНИЛС проверяемого лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PlaceOfBirth" type="clt_ru:FreeText250Type">
+            <xs:annotation>
+              <xs:documentation>Место рождения - Наименование региона</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PlaceOfBirthCode" type="clt_ru:Code3Type">
+            <xs:annotation>
+              <xs:documentation>Место рождения - Код региона</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AddressCode" type="clt_ru:Code3Type">
+            <xs:annotation>
+              <xs:documentation>Код региона проживания</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TypeRegistration" type="ld_req:RegistrationType">
+            <xs:annotation>
+              <xs:documentation>Тип регистрации : МП, МЖ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegistrationPlace" type="clt_ru:NameType">
+            <xs:annotation>
+              <xs:documentation>Место регистрации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocumentRequisites" type="ld_req:DocumentRequisitesType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Реквизиты запрашиваемого документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PlaceOfLost" type="clt_ru:FreeText250Type">
+            <xs:annotation>
+              <xs:documentation>Место потери документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CodeOfLost" type="clt_ru:Code3Type">
+            <xs:annotation>
+              <xs:documentation>Код места потери документа (код региона)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DateOfLost" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата потери документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009185E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DocumentRequisitesType">
+    <xs:annotation>
+      <xs:documentation>Реквизиты запрашиваемого документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Series" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Серия документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Number" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IssOrganization" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование органа, выдавшего документ/ принявшего решение о присвоении звании ветерана</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IssDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата выдачи документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="RegistrationType">
+    <xs:annotation>
+      <xs:documentation>Строка, тип регистрации: МП, МЖ</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="МП" />
+      <xs:enumeration value="МЖ" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

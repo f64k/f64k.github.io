@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:rapcrs="urn:customs.ru:Information:SQDocuments:ResultAPCasesResponse:5.21.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" targetNamespace="urn:customs.ru:Information:SQDocuments:ResultAPCasesResponse:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Подтверждение получения результата рассмотрения дела об АП</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ResultAPCasesResponse" type="rapcrs:ResultAPCasesResponseType">
+    <xs:annotation>
+      <xs:documentation>Подтверждение получения результата рассмотрения дела об АП</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ResultAPCasesResponseType">
+    <xs:annotation>
+      <xs:documentation>Подтверждение получения результата рассмотрения дела об АП</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="ResponseID" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Уникальный идентификатор ответа                        </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RequestID" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Уникальный идентификатор запроса, на который сформирован ответ         </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SenderID" type="rapcrs:String15Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код отправителя </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SenderDepartmentCode" type="clt_ru:CodeVariable10Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код подразделения отправителя</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReceiverID" type="rapcrs:String15Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код получателя</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReceiverDepartmentCode" type="clt_ru:CodeVariable10Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код подразделения получателя</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:sequence>
+              <xs:element name="Result" type="rapcrs:DResultType">
+                <xs:annotation>
+                  <xs:documentation>Результат приема</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="MessageText" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>Cообщение о результатах приема</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+            <xs:element name="ConfirmResultAPCases" type="rapcrs:ConfirmResultAPCasesType" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>Квитанция об обработке полученных результатов рассмотрения дел об АП
+                                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009353E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ConfirmResultAPCasesType">
+    <xs:annotation>
+      <xs:documentation>Квитанция об обработке полученных результатов рассмотрения дел об АП</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ElementId" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор квитанции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DecisionDateCourt" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата квитанции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocNumber" type="rapcrs:String60Type">
+        <xs:annotation>
+          <xs:documentation>Номер исходящего документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CaseJudicialNumber" type="RUSclt_ru:Id25Type">
+        <xs:annotation>
+          <xs:documentation>Номер дела об АП в суде</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CaseJudicialUid" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>УИД дела в суде</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProcessResult" type="rapcrs:DProcessResultType">
+        <xs:annotation>
+          <xs:documentation>Результат обработки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MessageText" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Cообщение о результатах обработки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные простые прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="DProcessResultType">
+    <xs:annotation>
+      <xs:documentation>Результат обработки</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:maxLength value="1" />
+      <xs:enumeration value="1">
+        <xs:annotation>
+          <xs:documentation>Успешно принято</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="2">
+        <xs:annotation>
+          <xs:documentation>Ошибка формато-логического контроля</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="3">
+        <xs:annotation>
+          <xs:documentation>Не получено дело с указанным номером</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="4">
+        <xs:annotation>
+          <xs:documentation>Дубликат</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DResultType">
+    <xs:annotation>
+      <xs:documentation>Результат приема</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:maxLength value="1" />
+      <xs:enumeration value="1">
+        <xs:annotation>
+          <xs:documentation>Успешно принято</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="2">
+        <xs:annotation>
+          <xs:documentation>Ошибка</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="String15Type">
+    <xs:annotation>
+      <xs:documentation>Строка длиной до 15 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="15" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="String60Type">
+    <xs:annotation>
+      <xs:documentation>Строка длиной до 60 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="60" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

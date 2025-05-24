@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AG-GRID иерархия строк</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/ag-grid-community@31.3.2/styles/ag-grid.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/ag-grid-community@31.3.2/styles/ag-theme-alpine.css"
+    />
+  </head>
+  <body>
+    <div
+      id="myGrid"
+      style="height: 200px; width: 600px"
+      class="ag-theme-balham"
+    ></div>
+    <script src="https://cdn.jsdelivr.net/npm/ag-grid-community@31.3.2/dist/ag-grid-community.min.js"></script>
+    <script>
+      const gridOptions = {
+        columnDefs: [{ field: "name" }],
+        defaultColDef: {
+          flex: 1,
+        },
+        rowData: [
+          {
+            name: "Предок 1",
+            children: [{ name: "Потомок 1-1" }, { name: "Потомок 1-2" }],
+          },
+          {
+            name: "Предок 2",
+            children: [{ name: "Потомок 2-1" }, { name: "Потомок 2-2" }],
+          },
+        ],
+        masterDetail: true,
+        detailCellRendererParams: {
+          detailGridOptions: {
+            columnDefs: [{ field: "name" }],
+            defaultColDef: {
+              flex: 1,
+            },
+          },
+          getDetailRowData: function (params) {
+            params.successCallback(params.data.children);
+          },
+        },
+      };
+
+      const eGridDiv = document.querySelector("#myGrid");
+      new agGrid.Grid(eGridDiv, gridOptions);
+    </script>
+  </body>
+</html>

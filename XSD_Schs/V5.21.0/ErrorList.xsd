@@ -1,0 +1,293 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:cltExch_ru="urn:customs.ru:Information:ExchangeDocuments:ExchangeCommonLeafTypes:5.0.8" xmlns:err="urn:customs.ru:Information:ExchangeDocuments:ErrorList:5.21.0" targetNamespace="urn:customs.ru:Information:ExchangeDocuments:ErrorList:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:ExchangeDocuments:ExchangeCommonLeafTypes:5.0.8" schemaLocation="ExchangeCommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Перечень ошибок, выявленных в процессе проведения форматно-логического контроля сведений, заявленных в электронной форме документа.</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ErrorList" type="err:ErrorListType" />
+  <xs:complexType name="ErrorListType">
+    <xs:annotation>
+      <xs:documentation>Перечень ошибок, выявленных в процессе проведения форматно-логического контроля сведений, заявленных в электронной форме документа</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="SendDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата направления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Customs" type="cat_ru:CustomsType">
+            <xs:annotation>
+              <xs:documentation>Таможенный орган</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CheckVersion" type="clt_ru:Text40Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Версия алгоритма контроля</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BadDocument" type="err:BadDocumentType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Документ с ошибками</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1004030E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="FLKErrCodeType">
+    <xs:annotation>
+      <xs:documentation>Код ошибки при проведении контроля  ДТ. Текстовый.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="250" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="BadDocumentType">
+    <xs:annotation>
+      <xs:documentation>Документ с ошибками</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор документа с ошибками.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocName" type="clt_ru:DocumentNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Название документа с ошибками</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocModeID" type="clt_ru:DocumentModeIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код вида ошибочного документа  (значение атрибута DocumentModeID).</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Error" type="err:ErrorType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание ошибки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CRC" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Контрольная сумма</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TechnicID" type="clt_ru:DocumentIDType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Технические идентификаторы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CheckNormativeDocumentType">
+    <xs:annotation>
+      <xs:documentation>Нормативный документ, в соответствии с которым выполняется контроль</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="err:NormativeDocumentType">
+        <xs:sequence>
+          <xs:element name="BeginDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата начала действия документа для данного контроля</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="EndDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата окончания действия документа для данного контроля</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="NormativeDocumentType">
+    <xs:annotation>
+      <xs:documentation>Нормативный документ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CodeOrder" type="clt_ru:CodeVariable20Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код нормативного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentType" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Тип нормативного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrganizationName" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Орган, принявший нормативный документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата принятия нормативного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер нормативного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocsContentType">
+    <xs:annotation>
+      <xs:documentation>Сверяемые значения документов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Document" type="cat_ru:DocumentBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о документе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ModeID" type="clt_ru:DocumentModeIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код документа в альбоме форматов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocCode" type="clt_ru:Code5Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код вида документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="XPath" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>XPath к сравниваемому элементу в документах</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocContent" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Значение из документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ErrorType">
+    <xs:annotation>
+      <xs:documentation>Описание ошибки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="NumPP" type="clt_ru:Count5Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер в списке</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateInf" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата обнаружения ошибки.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TimeInf" type="clt_ru:TimeCustType">
+        <xs:annotation>
+          <xs:documentation>Время обнаружения ошибки.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ErrCode" type="err:FLKErrCodeType">
+        <xs:annotation>
+          <xs:documentation>Код ошибки.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ErrCodeShort" type="clt_ru:CodeVariable20Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Альтернативный код ошибки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ErrorName" type="cltExch_ru:ErrorNameType">
+        <xs:annotation>
+          <xs:documentation>Наименование ошибки.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ErrDescription" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Подробное описание ошибки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GTDGoodsNumber" type="clt_ru:Count5Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер товара по ДТ/списку</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ErrElement" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Имя ошибочного узла/элемента/атрибута </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ErrField" type="clt_ru:Text10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер графы ДТ/ДТС/КДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SuccessContent" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Верное значение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocValue" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Значение из главного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocsContent" type="err:DocsContentType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Значение из док-тов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CompareResult" type="clt_ru:Numeric1Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат сравнения документов: 0 - полное совпадние, 1 - не совпадение , 2 - частичное совпадение, 3- не совпадение допустимо</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ErrLevel" type="clt_ru:DigitalIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Уровень ошибки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CheckNormativeDocument" type="err:CheckNormativeDocumentType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Нормативный документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ErrElementDesc" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание поля в котором найдена ошибка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CriterionGroup" type="clt_ru:CodeVariable4Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Группа критериев</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CriterionNum" type="clt_ru:CodeVariable4Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код критерия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Stage" type="clt_ru:CodeVariable20Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Этапы контроля, к которым относится ошибка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TechID" type="clt_ru:CodeVariable20Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Технические идентификаторы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

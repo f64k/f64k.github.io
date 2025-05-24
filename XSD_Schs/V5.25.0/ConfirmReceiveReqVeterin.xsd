@@ -1,0 +1,555 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:crreqv="urn:customs.ru:Information:SQDocuments:ConfirmReceiveReqVeterin:5.24.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:ConfirmReceiveReqVeterin:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос подтверждения получения Акта о возврате груза, Декларации о возврате груза, Акта о нарушении</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ConfirmReceiveReqVeterin" type="crreqv:ConfirmReceiveReqVeterinType">
+    <xs:annotation>
+      <xs:documentation>Запрос подтверждения получения Акта о возврате груза, Декларации о возврате груза, Акта о нарушении</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ConfirmReceiveReqVeterinType">
+    <xs:annotation>
+      <xs:documentation>Запрос подтверждения получения Акта о возврате груза, Декларации о возврате груза, Акта о нарушении</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="GUID" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Идентификатор цепочки обмена сообщениями</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ActCargoReturn" type="crreqv:ActCargoReturnType">
+            <xs:annotation>
+              <xs:documentation>Сведения об Акте о возврате груза</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DeclarationReturn" type="crreqv:DeclarationReturnType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о Декларации о возврате груза</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ViolationAct" type="crreqv:ViolationActType">
+            <xs:annotation>
+              <xs:documentation>Сведения об Акте о нарушении</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009310E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ActCargoReturnType">
+    <xs:annotation>
+      <xs:documentation>Сведения об Акте о возврате груза</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Act" type="crreqv:DocType">
+        <xs:annotation>
+          <xs:documentation>Акт о возврате груза </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsPerson" type="crreqv:CustomsPersonType">
+        <xs:annotation>
+          <xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OwnerRepresentative" type="crreqv:PersonType">
+        <xs:annotation>
+          <xs:documentation>Сведения о представителе владельца груза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsName" type="RUSclt_ru:FreeText1000Type">
+        <xs:annotation>
+          <xs:documentation>Наименование товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PackageQuantity" type="clt_ru:PakageNumberType">
+        <xs:annotation>
+          <xs:documentation>Количество грузовых мест</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GrossWeightQuantity" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Вес товара, брутто (кг)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NetWeightQuantity" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вес товара, нетто (кг)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryDispatchCode" type="clt_ru:CountryA2CodeType">
+        <xs:annotation>
+          <xs:documentation>Код страны отправления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Consignee" type="crreqv:OrganizationType">
+        <xs:annotation>
+          <xs:documentation>Сведения о получателе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransportInfo" type="crreqv:TransportInfoType">
+        <xs:annotation>
+          <xs:documentation>Сведения о транспортном средстве</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="VetCertificate" type="crreqv:PermitDocType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведени я сопроводительном документа (ветеринарном сертификате)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="VetPermit" type="crreqv:PermitDocType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о ветеринарном разрешении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ConsignorName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Наименование отправителя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReturnReason" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Список причин возврата</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsRepresentative" type="cat_ru:PersonBaseType">
+        <xs:annotation>
+          <xs:documentation>Представитель подразделения таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OfficialsPresent" type="crreqv:CustomsPersonType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Присутствующие должностные лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AutoTransportType">
+    <xs:annotation>
+      <xs:documentation>Сведения об автомобильном транспортном средстве</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TransportIdentifier" type="clt_ru:TransportMeansIDType">
+        <xs:annotation>
+          <xs:documentation>Номер транспортного средства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TrailerID" type="clt_ru:TransportMeansIDType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Идентификатор прицепа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CargoOwnerRepresentativeType">
+    <xs:annotation>
+      <xs:documentation>Сведения о представителе владельца груза и доверенности</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonSurname" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Фамилия </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Имя </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonMiddleName" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonPost" type="clt_ru:PostType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Должность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AttorneyNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер доверенности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AttorneyDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата доверенности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CustomsPersonType">
+    <xs:annotation>
+      <xs:documentation>Сведения о должностном лице</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonSurname" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Фамилия </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Имя </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonMiddleName" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonPost" type="clt_ru:PostType">
+        <xs:annotation>
+          <xs:documentation>Должность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeclarationReturnType">
+    <xs:annotation>
+      <xs:documentation>Сведения о декларации о возврате груза</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsName" type="RUSclt_ru:FreeText1000Type">
+        <xs:annotation>
+          <xs:documentation>Наименование товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OriginCountryCode" type="clt_ru:CountryA2CodeType">
+        <xs:annotation>
+          <xs:documentation>Код страны происхождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransportInfo" type="crreqv:TransportInfoType">
+        <xs:annotation>
+          <xs:documentation>Сведения о транспортном средстве</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ArrivalSealNumber" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Номер пломбы прибытия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PackageQuantity" type="clt_ru:PakageNumberType">
+        <xs:annotation>
+          <xs:documentation>Количество грузовых мест</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GrossWeightQuantity" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Вес товара, брутто (кг)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Marking" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Маркировка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="VetCertificate" type="crreqv:VetPermitDocType">
+        <xs:annotation>
+          <xs:documentation>Сведения о ветеринарном сертификате</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryDispatchCode" type="clt_ru:CountryA2CodeType">
+        <xs:annotation>
+          <xs:documentation>Код страны отправления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ConformityCargoSign" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Соответствие груза представленным документам</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransportationSign" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Соответствие ТС и режима транспортировки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryDestinationCode" type="clt_ru:CountryA2CodeType">
+        <xs:annotation>
+          <xs:documentation>Код страны назначения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReturnReason" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Список причин возврата</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DepartureSealNumber" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Номер пломбы убытия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsPerson" type="crreqv:CustomsPersonType">
+        <xs:annotation>
+          <xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DeclarationDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата составления декларации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocType">
+    <xs:annotation>
+      <xs:documentation>Сведения о документе</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OrganizationType">
+    <xs:annotation>
+      <xs:documentation>Сведения об организации</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OrganizationName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Наименование организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INN" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Address" type="RUSclt_ru:AddressTextType">
+        <xs:annotation>
+          <xs:documentation>Адрес </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PermitDocType">
+    <xs:annotation>
+      <xs:documentation>Сведения о разрешительном документе</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PersonType">
+    <xs:annotation>
+      <xs:documentation>Сведения о Ф.И.О. лица</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonSurname" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Фамилия </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Имя </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonMiddleName" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonPost" type="clt_ru:PostType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Должность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RWTransportType">
+    <xs:annotation>
+      <xs:documentation>Сведения о железнодорожном транспортном средстве</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TrainNumber" type="clt_ru:TransportMeansIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер поезда</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CarriageNumber" type="clt_ru:TransportMeansIDType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Номер вагона</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TransportInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о транспортном средстве</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TransportModeCode" type="clt_ru:TransportModeCodeType">
+        <xs:annotation>
+          <xs:documentation>Код вида транспортного средства </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:choice>
+        <xs:element name="TransportIdentifier" type="clt_ru:TransportMeansIDType">
+          <xs:annotation>
+            <xs:documentation>Наименование судна / номер авиарейса</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="RWTransport" type="crreqv:RWTransportType">
+          <xs:annotation>
+            <xs:documentation>Сведения о железнодорожном транспортном стредстве</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="AutoTransport" type="crreqv:AutoTransportType">
+          <xs:annotation>
+            <xs:documentation>Сведения об автомобильном транспортном средстве</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="VetPermitDocType">
+    <xs:annotation>
+      <xs:documentation>Сведения о ветеринарном разрешительном документе</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IssueCountryCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Буквенный код страны, выдавшей сертификат</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ViolationActType">
+    <xs:annotation>
+      <xs:documentation>Сведения об Акте о нарушении</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Act" type="crreqv:DocType">
+        <xs:annotation>
+          <xs:documentation>Акт о нарушении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsPerson" type="crreqv:CustomsPersonType">
+        <xs:annotation>
+          <xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CargoOwnerRepresentative" type="crreqv:CargoOwnerRepresentativeType">
+        <xs:annotation>
+          <xs:documentation>Сведения о представителе владельца груза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsArrivalDate" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата и время прибытия товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransportDoc" type="crreqv:DocType">
+        <xs:annotation>
+          <xs:documentation>Сведения о товарно-транспортном документе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsName" type="RUSclt_ru:FreeText1000Type">
+        <xs:annotation>
+          <xs:documentation>Наименование товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PackageQuantity" type="clt_ru:PakageNumberType">
+        <xs:annotation>
+          <xs:documentation>Количество грузовых мест</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GrossWeightQuantity" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Вес товара, брутто (кг)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="VetCertificate" type="crreqv:VetPermitDocType">
+        <xs:annotation>
+          <xs:documentation>Сведения о ветеринарном сопроводительном документе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryDispatchCode" type="clt_ru:CountryA2CodeType">
+        <xs:annotation>
+          <xs:documentation>Код страны отправления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Consignee" type="crreqv:OrganizationType">
+        <xs:annotation>
+          <xs:documentation>Сведения о получателе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Consignor" type="crreqv:OrganizationType">
+        <xs:annotation>
+          <xs:documentation>Сведения об отправителе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ViolationsList" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Список нарушений</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InspectorDecision" type="clt_ru:CodeVariable2Type">
+        <xs:annotation>
+          <xs:documentation>Решение инспектора:                    1 - Недостаточно сведений
+2 - Предъявить ветнадзору / подлежит ветнадзору (результат документарного контроля)
+3 - Провести досмотр таможенным органом в пункте пропуска (результат документарного контроля)
+4 - Ввоз разрешен (окончательное решение)
+5 - Ввоз запрещен (окончательное решение)
+6 - Ввоз разрешен. Подлежит досмотру в месте назаначения (доставки) (окончательное решение)
+7 - Ввоз разрешен. Подлежит досмотру в специально оборудованных и оснащенных местах (окончательное решение)
+8 - Ввоз разрешен. Предъявить ветнадзору (окончательное решение)
+9 - Ввоз разрешен/Выпуск разрешен (Решение после контроля в СВХ)
+10 - Выпуск разрешен (Решение после контроля в СВХ)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OfficialsPresent" type="cat_ru:PersonBaseType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Присутствующие должностные лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

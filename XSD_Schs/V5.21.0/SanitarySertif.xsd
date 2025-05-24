@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:catSert_ru="urn:customs.ru:Information:SertifDocuments:SertifCommonAggregateTypesCust:5.21.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:sas="urn:customs.ru:Information:SertifDocuments:SanitarySertif:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:SertifDocuments:SanitarySertif:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:SertifDocuments:SertifCommonAggregateTypesCust:5.21.0" schemaLocation="SertifCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Санитарно-эпидемиологическое заключение (гигиенический сертификат) </xs:documentation>
+  </xs:annotation>
+  <xs:element name="SanitarySertif" type="sas:SanitarySertifType" />
+  <xs:complexType name="SanitarySertifType">
+    <xs:annotation>
+      <xs:documentation>Санитарно-эпидемиологическое заключение (гигиенический сертификат)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="SertifNumber" type="clt_ru:DocumentNumberType">
+            <xs:annotation>
+              <xs:documentation>Номер сертификата</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BeginDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата начала действия сертификата (совпадает с датой регистрации документа)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="EndDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата окончания действия сертификата (необязателен при сертификации партии)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="FormNumber" type="clt_ru:Count10Type">
+            <xs:annotation>
+              <xs:documentation>Номер бланка сертификата</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TypeOfSetif" type="clt_ru:LetterIndicatorType">
+            <xs:annotation>
+              <xs:documentation>Признак вида заключения: 1 - санитарно-эпидемиологическое заключение, иначе - гигиеническое</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SertifOrganization" type="sas:SertifOrganizationType">
+            <xs:annotation>
+              <xs:documentation>Сведения об органе сертификации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NormDocsOrganization" type="catSert_ru:SertifOrgBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Информация об организации - разработчике нормативной документации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ManufacturerInf" type="catSert_ru:SertifOrgBaseType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Информация об изготовителе/индивидуальном предпринимателе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SertifRecipient" type="catSert_ru:SertifOrgBaseType">
+            <xs:annotation>
+              <xs:documentation>Информация о лице, которому выдан сертификат </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Goods" type="sas:GoodsType">
+            <xs:annotation>
+              <xs:documentation>Сведения о продукции</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocumentSignature" type="cat_ru:PersonSignatureType">
+            <xs:annotation>
+              <xs:documentation>Подпись руководителя</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Contract" type="cat_ru:DocumentBaseType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Номер и дата контракта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SertifSupplement" type="sas:SertifSupplementType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Приложение к санитарно-эпидемиологическому заключению / кроме описания заводов изготовителей</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009002E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="GoodsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о сертифицируемой продукции</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Общее описание продукции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RuUseInf" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация об использовании на территории РФ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NormTechDocs" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Нормативная и технологическая документация в соответствии с которой произведена продукция (ГОСТы, ТУ и прочее)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InvestigProtocols" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Протоколы исследований</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsEntry" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Реквизиты импортной продукции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SanitaryCharachter" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Гигиеническая характеристика продукции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FieldOfUse" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Область применения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReqConditions" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Необходимые условия использования, хранения, транспортировки и меры безопасности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LabelInf" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация, наносимая на этикетку</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SanitaryRegulations" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание санитарных  правил, которым соответствует продукция</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SertifOrganizationType">
+    <xs:annotation>
+      <xs:documentation>Сведения об органе сертификации</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OrganizationName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Наименование органа сертификации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PostalAddress" type="cat_ru:AddressType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Почтовый адрес</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SertifSupplementType">
+    <xs:annotation>
+      <xs:documentation>Приложение к санитарно-эпидемиологическому заключению</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SupplementText" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Текст приложения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

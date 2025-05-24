@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Пример иерархического Ag-Grid</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/styles/ag-grid.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/styles/ag-theme-alpine.css">
+
+    <!-- Версия Community -->
+    <script src="https://cdn.jsdelivr.net/npm/ag-grid-community@31.0.1/dist/ag-grid-community.min.noStyle.js"></script>
+
+    <!-- Версия Enterprise (демо) -->
+  <!-- https://www.ag-grid.com/javascript-data-grid/tree-data/ --> 
+  <!--
+    <script src="https://cdn.jsdelivr.net/npm/ag-grid-enterprise@31.0.1/dist/ag-grid-enterprise.min.js"></script>
+-->
+    <style>
+        #myGrid1, #myGrid2 {
+            height: 300px;
+            width: 60%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body class="ag-theme-alpine">
+<h2>Ag-Grid Community Version:</h2>
+<div id="myGrid1"></div>
+
+<h2>Ag-Grid Enterprise Version (Demo):</h2>
+<div id="myGrid2"></div>
+
+<script type="text/javascript">
+    // Начальные данные с иерархией
+    var employees = [
+        { employeeId: 1, name: 'Иван Иванов', jobTitle: 'Генеральный директор', level: 0 },
+        { employeeId: 2, name: 'Алексей Петров', jobTitle: 'Заместитель директора', parentEmployeeId: 1, level: 1 },
+        { employeeId: 3, name: 'Ольга Сидорова', jobTitle: 'Начальник отдела кадров', parentEmployeeId: 1, level: 1 },
+        { employeeId: 4, name: 'Сергей Кузнецов', jobTitle: 'Руководитель IT-отдела', parentEmployeeId: 1, level: 1 },
+        { employeeId: 5, name: 'Евгений Андреев', jobTitle: 'Старший программист', parentEmployeeId: 4, level: 2 },
+        { employeeId: 6, name: 'Марина Васильева', jobTitle: 'Специалист по кадрам', parentEmployeeId: 3, level: 2 },
+        { employeeId: 7, name: 'Максим Федоров', jobTitle: 'Разработчик', parentEmployeeId: 4, level: 2 },
+    ];
+
+    function createTreeData(rowData) {
+        return rowData.map((item) => ({
+            employeeId: item.employeeId,
+            name: item.name,
+            jobTitle: item.jobTitle,
+            parentEmployeeId: item.parentEmployeeId || null,
+            level: item.level
+        }));
+    }
+
+    // Общие настройки колонок
+    const columnDefs = [
+        { field: 'employeeId', hide: true },
+        { field: 'name', headerName: 'ФИО сотрудника' },
+        { field: 'jobTitle', headerName: 'Должность' },
+    ];
+
+    // Общая конфигурация
+    const commonConfig = {
+        columnDefs: columnDefs,
+        animateRows: true,
+        rowSelection: 'single',
+        treeData: true,
+        groupDefaultExpanded: -1,
+        autoGroupColumnDef: {
+            headerName: 'Организация',
+            cellRendererParams: {
+                suppressCount: true,
+            },
+        },
+        dataPath: ['parentEmployeeId'],
+    };
+
+    // Конфигурация для Community-версии
+    const communityGridOptions = Object.assign({}, commonConfig, {
+        domLayout: 'normal',
+        getRowNodeId: function(item) {
+            return item.employeeId.toString();
+        },
+        rowData: createTreeData(employees),
+    });
+
+    // Конфигурация для Enterprise-версии
+    const enterpriseGridOptions = Object.assign({}, commonConfig, {
+        domLayout: 'normal',
+        getRowNodeId: function(item) {
+            return item.employeeId.toString();
+        },
+        rowData: createTreeData(employees),
+    });
+
+    // Отображение таблиц
+    const eGridDiv1 = document.querySelector('#myGrid1');
+    new agGrid.Grid(eGridDiv1, communityGridOptions);
+
+    const eGridDiv2 = document.querySelector('#myGrid2');
+    new agGrid.Grid(eGridDiv2, enterpriseGridOptions);
+</script>
+</body>
+</html>

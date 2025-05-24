@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:coorr="urn:customs.ru:Information:CustomsDocuments:CoordinationRequests:5.24.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:CoordinationRequests:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Направление на согласование</xs:documentation>
+  </xs:annotation>
+  <xs:element name="CoordinationRequests" type="coorr:CoordinationRequestsType" />
+  <xs:complexType name="CoordinationRequestsType">
+    <xs:annotation>
+      <xs:documentation>Направление на согласование</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="CoordReqDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата создания Направления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CoordReqTime" type="clt_ru:TimeCustType">
+            <xs:annotation>
+              <xs:documentation>Время создания Направления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Doc_ID" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Уникальный идентификатор (DocumentID) того состояния ДТ, по которому было создано Направление (после создания 1 направления декларантом может быть прислана измененная ДТ,  для Направления по ней ИД ДТ будет уже другим)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CoordReqNumber" type="clt_ru:Count5Type">
+            <xs:annotation>
+              <xs:documentation>Порядковый номер Направления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="FarINN" type="clt_ru:INNIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>ИНН лица, ответственного за финансовое урегулирование, используется в таможне для печати журнала направление на согласование</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="FarKPP" type="clt_ru:KPPCodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>КПП лица, ответственного за финансовое урегулирование, используется в таможне для печати журнала направление на согласование</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CreateUserNameFIO" type="cat_ru:PersonBaseType">
+            <xs:annotation>
+              <xs:documentation>ФИО пользователя, создавшего Направление</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GTDID" type="cat_ru:GTDIDType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MeasureList" type="coorr:MeasureListType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Меры на основании которых было сформировано направление в функциональные отделы таможен для принятия решений</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsInfo" type="coorr:GoodsInfoType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Информация по товарам, по которым требуется принять решение. Если меры указаны на всю товарную партию в целом, то не подлежит заполнению</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006134E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="GoodsInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация по товарам, по которым требуется принять решение. Если меры указаны на всю товарную партию в целом, то не подлежит заполнению</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsNumber" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер товара в ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsTNVEDCode" type="clt_ru:GoodsNomenclatureCodeType">
+        <xs:annotation>
+          <xs:documentation>Код товара по ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GoodsPRInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о товаре и сработавшем на нем профиле риска, содержащем данную меру по минимизации риска</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsNumber" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер товара, для которого необходимо применить меру по конкретному ПР. Для партии товаров - 0.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PRRegKind" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Тип профиля риска (часть рег. номера)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PRRegCustomCode" type="clt_ru:Code5Type">
+        <xs:annotation>
+          <xs:documentation>Код ТО, в котором зарегистрирован ПР (часть рег. номера)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PRRegDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации ПР (часть рег. номера)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PRRegNumber" type="RUSclt_ru:RiskProfileNumType">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер ПР (часть рег. номера)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PRVersion" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Номер версии ПР (часть рег. номера)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PRPointCode" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Момент выявления ПР. Допустимые значения: 00 – при регистрации ДТ; 10 – выпуск товаров (первоначально принимаемое решение, за исключением выпуска под обеспечение уплаты таможенных платежей); 11 – выпуск под обеспечение уплаты таможенных платежей (хотя бы по одному из товаров первоначальное решение 11); 20 – окончательный выпуск товаров (смена первоначально принятого решения о выпуске под обеспечение на окончательный выпуск). 99 – в процессе проведения таможенного оформления и таможенного контроля (самостоятельно выявленный ПР)'</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MeasureListType">
+    <xs:annotation>
+      <xs:documentation>Меры на основании которых было сформировано направление в функциональные отделы таможен для принятия решений</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="MeasureCode" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Код меры по минимизации риска</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsPRInfo" type="coorr:GoodsPRInfoType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Информация о товаре и сработавшем на нем профиле риска, содержащем данную меру по минимизации риска</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

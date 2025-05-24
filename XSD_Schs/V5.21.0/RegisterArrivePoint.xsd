@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Аналог EEC_R_CA_CC_04_ArrivePointList_v1.0.0.xsd альбома ЕЭК (R.CA.CC.04.001: Общий реестр мест прибытия (убытия) товаров (Общий реестр мест прибытия (убытия) товаров))-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:aclt_ru="urn:customs.ru:ArriveCommonLeafTypes:5.19.0" xmlns:acat_ru="urn:customs.ru:ArriveCommonAggregateTypes:5.21.0" xmlns:regap="urn:customs.ru:Information:SQDocuments:RegisterArrivePoint:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:RegisterArrivePoint:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:ArriveCommonLeafTypes:5.19.0" schemaLocation="ArriveCommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:ArriveCommonAggregateTypes:5.21.0" schemaLocation="ArriveCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Общий реестр мест прибытия (убытия) товаров</xs:documentation>
+  </xs:annotation>
+  <xs:element name="RegisterArrivePoint" type="regap:RegisterArrivePointType">
+    <xs:annotation>
+      <xs:documentation>Общий реестр мест прибытия (убытия) товаров</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RegisterArrivePointType">
+    <xs:annotation>
+      <xs:documentation>Общий реестр мест прибытия (убытия) товаров</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="EECEDocHeaderAddInfo" type="RUScat_ru:EECEDocHeaderAddInfoType">
+            <xs:annotation>
+              <xs:documentation>Дополнительные технологические реквизиты электронного документа (сведений)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegisterArrivePointDetails" type="regap:RegisterArrivePointDetailsType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения об объекте реестра мест прибытия (убытия) товаров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009132E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ArriveCustomsDetailsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о таможенном органе, совершающем таможенные операции, в месте прибытия (убытия) товаров</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsOfficeCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа (третий элемент кодового обозначения места прибытия (убытия) товаров)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsOfficeName" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Краткое наименование таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransportModeCode" type="clt_ru:TransportModeCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код вида транспортного средства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransportModeName" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование вида транспортного средства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ArrivePointLocationDetails" type="regap:ArrivePointLocationDetailsType">
+        <xs:annotation>
+          <xs:documentation>Сведения о местах совершения таможенных операций в месте прибытия (убытия) товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrivePointLocationDetailsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о местах совершения таможенных операций в месте прибытия (убытия) товаров</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsOperationText" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения об ограничениях по совершению таможенных операций в месте прибытия (убытия) товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ArrivePointSequenceCode" type="aclt_ru:Number2CodeType">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер места прибытия (убытия) товаров в пределах одного таможенного органа (четвертый элемент кодового обозначения места прибытия (убытия) товаров)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ArrivalDepartureAddressDetails" type="acat_ru:ArrivalDepartureAddressDetailsType">
+        <xs:annotation>
+          <xs:documentation>Сведения об адресе места совершения таможенных операций в месте прибытия (убытия) товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ArrivePointLocationWorkDetails" type="acat_ru:ArrivePointLocationWorkDetailsType">
+        <xs:annotation>
+          <xs:documentation>Режим работы подразделения таможенного органа, совершающего таможенные операции в месте прибытия (убытия) товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ResourceItemStatusDetails" type="RUScat_ru:ResourceItemStatusDetailsType">
+        <xs:annotation>
+          <xs:documentation>Совокупность технологических сведений о записи общего ресурса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StartActivityDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата начала осуществления деятельности (1-й день действия, в том числе после временного прекращения (приостановления))</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EndActivityDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата окончания осуществления деятельности (последний день действия, в том числе по причине временного прекращения)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegisterArrivePointDetailsType">
+    <xs:annotation>
+      <xs:documentation>Сведения об объекте учета реестра мест прибытия (убытия) товаров</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ArrivePointPADCode" type="aclt_ru:ArrivePointPADCodeType">
+        <xs:annotation>
+          <xs:documentation>PAD – первый элемент кодового обозначения места прибытия (убытия) товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegisterCountryCode" type="clt_ru:CountryA2CodeType">
+        <xs:annotation>
+          <xs:documentation>Кодовое обозначение страны, представившей информацию (второй элемент кодового обозначения места прибытия (убытия) товаров)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ArrivePointName" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование места прибытия (убытия) товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BorderCheckPointCode" type="aclt_ru:BorderCheckPointCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Кодовое обозначение пункта пропуска</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BorderCheckPointName" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование сопредельного пункта пропуска</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ArriveCustomsDetails" type="regap:ArriveCustomsDetailsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о таможенном органе, совершающем таможенные операции, в месте прибытия (убытия) товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:icds="urn:customs.ru:ELSDocuments:InfCustomsDutyResponse:5.21.0" targetNamespace="urn:customs.ru:ELSDocuments:InfCustomsDutyResponse:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Ответ на запрос предоставления сведений о суммах ввозных таможенных пошлин, подлежащих к зачислению в Федеральный Бюджет</xs:documentation>
+  </xs:annotation>
+  <xs:element name="InfCustomsDutyResponse" type="icds:InfCustomsDutyResponseType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос предоставления сведений о суммах ввозных таможенных пошлин, подлежащих к зачислению в Федеральный Бюджет</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="InfCustomsDutyResponseType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос предоставления сведений о суммах ввозных таможенных пошлин, подлежащих к зачислению в Федеральный Бюджет</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="OrganizationName" type="clt_ru:FreeText250Type">
+            <xs:annotation>
+              <xs:documentation>Наименование резидента индустриального парка/технопарка</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="INN" type="clt_ru:INNIDType">
+            <xs:annotation>
+              <xs:documentation>ИНН резидента индустриального парка/технопарка</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="KPP" type="clt_ru:KPPCodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>КПП резидента индустриального парка/технопарка</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DeclarationInfo" type="icds:DeclarationInfoType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Документ начислений</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentIDType" use="required" fixed="1040054E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор электронного документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DeclarationInfoType">
+    <xs:annotation>
+      <xs:documentation>Документ начислений</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocumentInfo" type="cat_ru:GTDIDType">
+        <xs:annotation>
+          <xs:documentation>Номер документа начислений</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaidCustDuty" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма уплаченной ввозной таможенной пошлины (руб)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SharedCustDuty" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма ввозной таможенной пошлины после распределения (руб)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustDutyNorm" type="clt_ru:Quantity18point3Type">
+        <xs:annotation>
+          <xs:documentation>Норматив распределения сумм ввозных таможенных пошлин</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RequestReceiptDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата поступления запроса из Минпромторга России</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ResponseDirectionDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата направления сведений в Минпромторг России</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

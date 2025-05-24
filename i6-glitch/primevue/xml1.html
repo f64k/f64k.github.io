@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>XML TreeTable</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/primevue/umd/primevue.min.js"></script>
+    <script src="https://unpkg.com/@primevue/themes/umd/aura.min.js"></script>
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <style>
+        html { font-family: 'Inter var'; padding: 20px; }
+        .p-treetable { font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <p-treetable :value="nodes">
+            <p-column field="label" header="Tag Name" expander></p-column>
+            <p-column field="prefix" header="Prefix"></p-column>
+            <p-column field="value" header="Value"></p-column>
+            <p-column field="attributes" header="Attributes"></p-column>
+        </p-treetable>
+    </div>
+
+<script>
+const { createApp } = Vue;
+
+// Пример XML данных
+const xmlString = `
+<bookstore>
+    <book category="cooking">
+        <title lang="en">Everyday Italian</title>
+        <author>Giada De Laurentiis</author>
+        <year>2005</year>
+        <price>30.00</price>
+    </book>
+    <book category="children">
+        <title lang="en">Harry Potter</title>
+        <author>J.K. Rowling</author>
+        <year>2005</year>
+        <price>29.99</price>
+        <editions>
+            <edition year="2001">First</edition>
+            <edition year="2005">Special</edition>
+        </editions>
+    </book>
+</bookstore>
+`;
+
+// XML парсер
+function parseXmlToTree(xmlString) {
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlString, "text/xml");
+    
+    function processNode(node, parentKey = 'root', level = 0) {
+        const key = parentKey + '-' + node.nodeName + '-' + Math.random().toString(36).substr(2, 9);
+        const nodeObject = {
+            key: key,
+            label: node.nodeName,
+            prefix: node.prefix || '',
+            value: node.childNodes[0]?.nodeValue?.trim() || '',
+            attributes: Array.from(node.attributes || []).map(attr => 
+                `${attr.name}="${attr.value}"`
+            ).join(', '),
+            children: []
+        };
+
+        Array.from(node.childNodes).forEach(child => {
+            if(child.nodeType === Node.ELEMENT_NODE) {
+                nodeObject.children.push(processNode(child, key, level + 1));
+            }
+        });
+
+        return nodeObject;
+    }
+    
+    return [processNode(xmlDoc.documentElement)];
+}
+
+const app = createApp({
+    data() {
+        return {
+            nodes: parseXmlToTree(xmlString)
+        }
+    }
+});
+
+// Конфигурация PrimeVue
+app.use(PrimeVue.Config, {
+    theme: { preset: PrimeVue.Themes.Aura }
+});
+
+// Регистрация компонентов
+app.component('p-treetable', PrimeVue.TreeTable);
+app.component('p-column', PrimeVue.Column);
+
+app.mount('#app');
+</script>
+</body>
+</html>

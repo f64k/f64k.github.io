@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>ExtJS 6.2 Application</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/extjs/6.2.0/classic/theme-classic/resources/theme-classic-all.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/extjs/6.2.0/ext-all.js"></script>
+    <script>
+        // сделай там реальный чат с помощью gun.js. а также показывай сколько человек вообще открыло эту страницу в данный момент и когда каждый зашёл, при закрытии писать что пользлователь вышел. показываьб и логины и системный id в gun.js
+
+        // Класс для управления чатом
+        Ext.define('ChatManager', {
+            singleton: true,
+
+            messages: [],
+            currentUser: 'Пользователь',
+
+            init: function(chatPanel) {
+                this.chatPanel = chatPanel;
+                this.messageStore = Ext.create('Ext.data.Store', {
+                    fields: ['user', 'message', 'time'],
+                    data: this.messages
+                });
+
+                this.createChatComponents();
+            },
+
+            createChatComponents: function() {
+                this.chatPanel.removeAll();
+
+                this.chatPanel.add([{
+                    xtype: 'form',
+                    bodyPadding: 10,
+                    items: [{
+                        xtype: 'textfield',
+                        fieldLabel: 'Поиск',
+                        emptyText: 'Введите текст...'
+                    }, {
+                        xtype: 'button',
+                        text: 'Найти',
+                        iconCls: 'x-fa fa-search',
+                        margin: '10 0 0 0'
+                    }, {
+                        xtype: 'container',
+                        html: '<hr style="margin: 15px 0;">',
+                        margin: '15px 0'
+                    }, {
+                        xtype: 'displayfield',
+                        value: 'Чат',
+                        fieldStyle: 'font-weight: bold; font-size: 16px;'
+                    }, {
+                        xtype: 'grid',
+                        height: 200,
+                        margin: '10 0',
+                        store: this.messageStore,
+                        columns: [{
+                            text: 'Пользователь',
+                            dataIndex: 'user',
+                            width: 80
+                        }, {
+                            text: 'Сообщение',
+                            dataIndex: 'message',
+                            flex: 1
+                        }]
+                    }, {
+                        xtype: 'textfield',
+                        fieldLabel: 'Сообщение',
+                        emptyText: 'Введите сообщение...',
+                        itemId: 'messageField',
+                        enableKeyEvents: true,
+                        listeners: {
+                            specialkey: function(field, e) {
+                                if (e.getKey() === e.ENTER) {
+                                    ChatManager.sendMessage();
+                                }
+                            }
+                        }
+                    }, {
+                        xtype: 'button',
+                        text: 'Отправить',
+                        iconCls: 'x-fa fa-paper-plane',
+                        margin: '10 0 0 0',
+                        handler: function() {
+                            ChatManager.sendMessage();
+                        }
+                    }]
+                }]);
+            },
+
+            sendMessage: function() {
+                var messageField = this.chatPanel.down('textfield[itemId=messageField]');
+                var message = messageField.getValue();
+
+                if (message) {
+                    this.addMessage(this.currentUser, message);
+                    messageField.setValue('');
+
+                    // Имитация ответа
+                    setTimeout(function() {
+                        ChatManager.addMessage('Система', 'Ваше сообщение получено: "' + message + '"');
+                    }, 1000);
+                }
+            },
+
+            addMessage: function(user, message) {
+                this.messages.push({
+                    user: user,
+                    message: message,
+                    time: new Date()
+                });
+
+                this.messageStore.loadData(this.messages);
+
+                // Автоскролл к последнему сообщению
+                var grid = this.chatPanel.down('grid');
+                if (grid) {
+                    var view = grid.getView();
+                    view.el.scrollTo('bottom', 100, true);
+                }
+            },
+
+            clearChat: function() {
+                this.messages = [];
+                this.messageStore.loadData(this.messages);
+            }
+        });
+
+        Ext.onReady(function() {
+            Ext.create('Ext.Viewport', {
+                layout: 'border',
+                items: [{
+                    region: 'north',
+                    xtype: 'toolbar',
+                    height: 50,
+                    items: [{
+                        xtype: 'button',
+                        text: 'Меню',
+                        menu: [{
+                            text: 'Главная',
+                            iconCls: 'x-fa fa-home',
+                            handler: function() {
+                                Ext.getCmp('mainContent').update('Главная страница');
+                            }
+                        }, {
+                            text: 'Настройки',
+                            iconCls: 'x-fa fa-cog',
+                            handler: function() {
+                                Ext.getCmp('mainContent').update('Страница настроек');
+                            }
+                        }, '-', {
+                            text: 'Выход',
+                            iconCls: 'x-fa fa-sign-out',
+                            handler: function() {
+                                Ext.Msg.alert('Выход', 'Вы действительно хотите выйти?');
+                            }
+                        }]
+                    }, '->', {
+                        xtype: 'tbtext',
+                        text: 'Мое приложение',
+                        style: {
+                            'font-size': '18px',
+                            'font-weight': 'bold'
+                        }
+                    }, '->', {
+                        xtype: 'button',
+                        text: 'Левая панель',
+                        handler: function() {
+                            Ext.getCmp('leftPanel').toggle();
+                        }
+                    }, {
+                        xtype: 'button',
+                        text: 'Правая панель',
+                        handler: function() {
+                            Ext.getCmp('rightPanel').toggle();
+                        }
+                    }]
+                }, {
+                    region: 'west',
+                    xtype: 'panel',
+                    id: 'leftPanel',
+                    title: 'Левая панель',
+                    width: 200,
+                    collapsible: true,
+                    split: true,
+                    floatable: false,
+                    items: [{
+                        xtype: 'treepanel',
+                        rootVisible: false,
+                        lines: false,
+                        store: {
+                            root: {
+                                expanded: true,
+                                children: [{
+                                    text: 'Раздел 1',
+                                    iconCls: 'x-fa fa-folder',
+                                    expanded: true,
+                                    children: [{
+                                        text: 'Подраздел 1.1',
+                                        leaf: true,
+                                        iconCls: 'x-fa fa-file'
+                                    }, {
+                                        text: 'Подраздел 1.2',
+                                        leaf: true,
+                                        iconCls: 'x-fa fa-file'
+                                    }]
+                                }, {
+                                    text: 'Раздел 2',
+                                    iconCls: 'x-fa fa-folder',
+                                    children: [{
+                                        text: 'Подраздел 2.1',
+                                        leaf: true,
+                                        iconCls: 'x-fa fa-file'
+                                    }]
+                                }]
+                            }
+                        }
+                    }]
+                }, {
+                    region: 'center',
+                    xtype: 'panel',
+                    id: 'mainContent',
+                    html: '<h1>Добро пожаловать!</h1><p>Выберите пункт меню для продолжения.</p>',
+                    bodyPadding: 20
+                }, {
+                    region: 'east',
+                    xtype: 'panel',
+                    id: 'rightPanel',
+                    title: 'Правая панель',
+                    width: 250,
+                    collapsible: true,
+                    split: true,
+                    floatable: false,
+                    listeners: {
+                        afterrender: function(panel) {
+                            ChatManager.init(panel);
+                        }
+                    }
+                }, {
+                    region: 'south',
+                    xtype: 'panel',
+                    height: 30,
+                    html: '<div style="text-align: center; padding: 5px;">© 2023 Мое приложение. Все права защищены.</div>'
+                }]
+            });
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

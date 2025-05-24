@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:rdm="urn:customs.ru:Information:CustomsDocuments:RecyclingDetailsMark:5.24.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:RecyclingDetailsMark:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Служебные отметки к расчету утилизационного сбора</xs:documentation>
+  </xs:annotation>
+  <xs:element name="RecyclingDetailsMark" type="rdm:RecyclingDetailsMarkType">
+    <xs:annotation>
+      <xs:documentation>Служебные отметки к расчету утилизационного сбора</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RecyclingDetailsMarkType">
+    <xs:annotation>
+      <xs:documentation>Служебные отметки к расчету утилизационного сбора</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocSign" type="clt_ru:Numeric1Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Признак документа: 0 - действует, 1 - аннулирован</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegNum" type="RUScat_ru:DocNumberType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер РУС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DTNum" type="cat_ru:GTDIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер таможенной декларации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="UtilCollDetails" type="rdm:UtilCollDetailsType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о ТС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Customs" type="cat_ru:CustomsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Таможенный орган</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsPerson" type="cat_ru:CustomsPersonType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" fixed="1002059E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TPORegNumberType">
+    <xs:annotation>
+      <xs:documentation>Справочный номер ТПО</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, зарегистрировавшего документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocNumber" type="clt_ru:Code10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер документа по журналу регистрации/типографский номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NumPP" type="clt_ru:Code2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер вносимых изменений</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="UtilCollDetailsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о ТС</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsRecNumber" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Номер товара в Расчете </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsDTNumber" type="clt_ru:Count3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер товара в декларации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RecNumber" type="clt_ru:Count3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер ТС в гр 31 товара ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NoPayIndicator" type="clt_ru:Numeric1Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак освобождения от уплаты (1 - освобождается от уплаты, 0 - нет оснований для освобождения от уплаты, 2 - не уплачивается по характеристикам ТС)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CodeReasonFreePayment" type="clt_ru:CodeVariable2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код освобождения от уплаты от утилизационных сборов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NoPayReasons" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Основание для освобождения от уплаты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TPORegNumber" type="rdm:TPORegNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер ТПО / Документа расчета</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PayResult" type="clt_ru:LetterIndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат оформления ТПО : “Ф” - УС оплачен по ТПО;
+“Л”- оформлен документа освобождения от уплаты УС;
+“З” -  задолженность  по УС, "О" - ошибка оплаты ТПО
+</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BorderCrossingDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата пересечения границы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ImportRBSign" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак ввоза ТС из Республики Беларусь: 0 - нет, 1 - да</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TruckEuro6Sign" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак седельного тягача экологического класса Евро-6, используемые для осуществления международных перевозок: 0 - нет, 1 - да</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="VehicleWasNotPersonalSign" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак приобретения ТС у лица, использовавшего его не для личного пользования: 0 - нет, 1 - да</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SecondOrMoreVehicleSign" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак второго или каждого последующего транспортного средства, ввезенного лицом на территорию РФ: 0 - нет, 1 - да</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Comment" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Служебные отметки
+</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

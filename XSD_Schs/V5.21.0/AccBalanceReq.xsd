@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="urn:customs.ru:Information:ExchangeDocuments:AccBalanceReq:5.21.0" version="5.21.0.0" xmlns:accbr="urn:customs.ru:Information:ExchangeDocuments:AccBalanceReq:5.21.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос остатков на платежных поручениях участника ВЭД</xs:documentation>
+  </xs:annotation>
+  <xs:element name="AccBalanceReq" type="accbr:AccBalanceReqType" />
+  <xs:complexType name="AccBalanceReqType">
+    <xs:annotation>
+      <xs:documentation>Запрос остатков на платежных поручениях участника ВЭД</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CurrencyCode" type="clt_ru:CurrencyA3CodeType">
+            <xs:annotation>
+              <xs:documentation>Код валюты</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+            <xs:annotation>
+              <xs:documentation>Код таможенного органа, осуществляющего запрос.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="INN" type="clt_ru:INNIDType">
+            <xs:annotation>
+              <xs:documentation>Индивидуальный номер налогоплательщика </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="KPP" type="clt_ru:KPPCodeType">
+            <xs:annotation>
+              <xs:documentation>КПП плательщика</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsPerson" type="cat_ru:CustomsPersonType">
+            <xs:annotation>
+              <xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="PaymentInfo" type="accbr:PaymentInfoType">
+            <xs:annotation>
+              <xs:documentation>Сведения о платежном документе (если запрашивается остаток на конкретной ПП)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute fixed="1004005E" name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="PaymentInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о платежном документе (если запрашивается остаток на конкретной ПП)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ID" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер платежного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IssueDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата платежного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Amount" type="clt_ru:Quantity18point3Type">
+        <xs:annotation>
+          <xs:documentation>Общая сумма платежного документа.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

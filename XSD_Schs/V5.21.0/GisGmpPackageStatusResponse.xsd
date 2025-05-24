@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Схемы ГИС ГМП -  аналог документа - Статус обработки пакета ответ (SQ.05041).xsd -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:ps_resp="urn:customs.ru:Information:SQDocuments:GisGmpPackageStatusResponse:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:GisGmpPackageStatusResponse:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Статус обработки пакета (ответ)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="GisGmpPackageStatusResponse" type="ps_resp:GisGmpPackageStatusResponseType" />
+  <xs:complexType name="GisGmpPackageStatusResponseType">
+    <xs:annotation>
+      <xs:documentation>Статус обработки пакета ( ответ)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:choice>
+            <xs:element name="PackageProcessResult" type="ps_resp:PackageProcessResultType">
+              <xs:annotation>
+                <xs:documentation>Результат обработки пакета запросов</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="RequestProcessResult" type="ps_resp:ResultInfoType">
+              <xs:annotation>
+                <xs:documentation>Результат обработки запроса</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009176E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="ResultCodeType">
+    <xs:annotation>
+      <xs:documentation>Код результата обработки</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:IdentifierCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="25" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="EntityProcessResultType">
+    <xs:annotation>
+      <xs:documentation>Результат обработки элемента пакета</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ps_resp:ResultInfoType">
+        <xs:sequence>
+          <xs:element name="entityId" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Идентификатор импортированного начисления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PackageProcessResultType">
+    <xs:annotation>
+      <xs:documentation>Результат обработки пакета запросов
+                        </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="EntityProcessResult" type="ps_resp:EntityProcessResultType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Результат обработки элемента пакета</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ResultInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о результате обработки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ResultCode" type="ps_resp:ResultCodeType">
+        <xs:annotation>
+          <xs:documentation>Код результата обработки: 0 — если запрос успешно принят или код ошибки в случае отказа в приеме к обработке документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ResultDescription" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание результата обработки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ResultData" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Данные результата обработки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:tda="urn:customs.ru:Information:CustomsDocuments:TraceabilityDeclArrive:5.21.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:TraceabilityDeclArrive:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Информация об оформлении таможенного документа</xs:documentation>
+  </xs:annotation>
+  <xs:element name="TraceabilityDeclArrive" type="tda:TraceabilityDeclArriveType">
+    <xs:annotation>
+      <xs:documentation>Информация об оформлении таможенного документа</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="TraceabilityDeclArriveType">
+    <xs:annotation>
+      <xs:documentation>Информация об оформлении таможенного документа</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DTNumber" type="cat_ru:GTDIDType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер таможенного документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DTKind" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Тип декларации: 0 - транзитная декларация, 1 - декларация на товары, 2 - ДО СВХ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Document" type="tda:DocumentType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Транспортые и коммерческие документы общие для всего таможенного документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DecisionCode" type="clt_ru:Code2Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код решения в соответствии с классификатором решений,  принимаемых таможенными органами (**) - различно по товарам </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DateInf" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата решения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TimeInf" type="clt_ru:TimeCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Время решения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Goods" type="tda:GoodsType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Товары таможенного документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1004139E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DocumentType">
+    <xs:annotation>
+      <xs:documentation>Сведения о документе прослеживаемости</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="DocKindCode" type="clt_ru:CustomsDocumentCodeType">
+            <xs:annotation>
+              <xs:documentation>Код вида документа в соответствии с классификатором видов документов и сведений, используемых при таможенном декларировании</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GoodsType">
+    <xs:annotation>
+      <xs:documentation>Товары таможенного документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsNumeric" type="clt_ru:Count5Type">
+        <xs:annotation>
+          <xs:documentation>Номер товара </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Document" type="tda:DocumentType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Транспортые и коммерческие документы для товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DecisionCode" type="clt_ru:Code2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код решения в соответствии с классификатором решений</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateInf" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TimeInf" type="clt_ru:TimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Время решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

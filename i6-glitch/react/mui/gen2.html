@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>MUI Dashboard</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@mui/material@5.14.2/umd/material-ui.production.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+        .dashboard-layout {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+        .main-content {
+            flex: 1;
+            margin-top: 64px;
+            padding: 24px;
+            transition: margin 225ms cubic-bezier(0.4, 0, 0.6, 1);
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script>
+        const { createElement, useState, useEffect } = React;
+        const {
+            Box,
+            AppBar,
+            Toolbar,
+            IconButton,
+            Typography,
+            Drawer,
+            List,
+            ListItem,
+            ListItemIcon,
+            ListItemText,
+            CssBaseline,
+            useTheme,
+            useMediaQuery
+        } = MaterialUI;
+
+        const defaultConfig = {
+            leftOpen: true,
+            rightOpen: true,
+            drawerWidth: 240
+        };
+
+        function Dashboard() {
+            const [config, setConfig] = useState(() => {
+                const saved = localStorage.getItem('dashboard-config');
+                return saved ? JSON.parse(saved) : defaultConfig;
+            });
+
+            const theme = MaterialUI.useTheme();
+            const isMobile = MaterialUI.useMediaQuery(theme.breakpoints.down('sm'));
+
+            useEffect(() => {
+                localStorage.setItem('dashboard-config', JSON.stringify(config));
+            }, [config]);
+
+            const handleDrawerToggle = (side) => () => {
+                setConfig(prev => ({
+                    ...prev,
+                    [side]: !prev[side]
+                }));
+            };
+
+            const drawer = (anchor) => createElement(Drawer, {
+                variant: isMobile ? 'temporary' : 'persistent',
+                anchor: anchor,
+                open: config[`${anchor}Open`],
+                onClose: handleDrawerToggle(`${anchor}Open`),
+                sx: {
+                    width: config.drawerWidth,
+                    flexShrink: 0,
+                    '& .MuiDrawer-paper': {
+                        width: config.drawerWidth,
+                        boxSizing: 'border-box'
+                    }
+                }
+            },
+                createElement(Box, { sx: { overflow: 'auto' } },
+                    createElement(List, {},
+                        ['Inbox', 'Starred', 'Send email', 'Drafts'].map((text) => (
+                            createElement(ListItem, { button: true, key: text },
+                                createElement(ListItemIcon, {}, '📁'),
+                                createElement(ListItemText, { primary: text })
+                            )
+                        ))
+                    )
+                )
+            );
+
+            return createElement(Box, { className: 'dashboard-layout' },
+                createElement(CssBaseline),
+                
+                // Header
+                createElement(AppBar, { 
+                    position: 'fixed',
+                    sx: { zIndex: theme.zIndex.drawer + 1 }
+                },
+                    createElement(Toolbar, {},
+                        createElement(IconButton, {
+                            color: 'inherit',
+                            edge: 'start',
+                            onClick: handleDrawerToggle('leftOpen'),
+                            sx: { mr: 2 }
+                        }, '☰'),
+                        createElement(Typography, 
+                            { variant: 'h6', noWrap: true, component: 'div' },
+                            'Dashboard'
+                        ),
+                        createElement(Box, { sx: { flexGrow: 1 } }),
+                        createElement(IconButton, {
+                            color: 'inherit',
+                            onClick: handleDrawerToggle('rightOpen')
+                        }, '⚙️')
+                    )
+                ),
+
+                // Left Drawer
+                drawer('left'),
+
+                // Right Drawer
+                drawer('right'),
+
+                // Main Content
+                createElement(Box, {
+                    component: 'main',
+                    className: 'main-content',
+                    sx: {
+                        marginLeft: !isMobile && config.leftOpen ? `${config.drawerWidth}px` : 0,
+                        marginRight: !isMobile && config.rightOpen ? `${config.drawerWidth}px` : 0
+                    }
+                },
+                    createElement(Typography, { paragraph: true },
+                        'Main content area. Resize window to see responsive behavior.'
+                    )
+                ),
+
+                // Footer
+                createElement(Box, {
+                    component: 'footer',
+                    sx: {
+                        bgcolor: theme.palette.background.paper,
+                        p: 2,
+                        textAlign: 'center'
+                    }
+                }, '© 2023 Your Company')
+            );
+        }
+
+        ReactDOM.createRoot(document.getElementById('root'))
+            .render(createElement(Dashboard));
+    </script>
+</body>
+</html>

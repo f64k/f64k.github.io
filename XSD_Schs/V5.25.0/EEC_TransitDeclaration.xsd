@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           targetNamespace="urn:EEC:R:048:TransitDeclaration:v1.0.0"
+           xmlns:td="urn:EEC:R:048:TransitDeclaration:v1.0.0"
+           xmlns:cacdo="urn:EEC:M:CA:ComplexDataObjects:v1.8.1"
+           xmlns:casdo="urn:EEC:M:CA:SimpleDataObjects:v1.8.1"
+           xmlns:ccdo="urn:EEC:M:ComplexDataObjects:v0.4.14"
+           xmlns:csdo="urn:EEC:M:SimpleDataObjects:v0.4.14"
+           version="1.0.0">
+
+    <xs:import namespace="urn:EEC:M:CA:ComplexDataObjects:v1.8.1" schemaLocation="EEC_M_CA_ComplexDataObjects_v1.8.1.xsd"/>
+    <xs:import namespace="urn:EEC:M:CA:SimpleDataObjects:v1.8.1" schemaLocation="EEC_M_CA_SimpleDataObjects_v1.8.1.xsd"/>
+    <xs:import namespace="urn:EEC:M:ComplexDataObjects:v0.4.14" schemaLocation="EEC_M_ComplexDataObjects_v0.4.14.xsd"/>
+    <xs:import namespace="urn:EEC:M:SimpleDataObjects:v0.4.14" schemaLocation="EEC_M_SimpleDataObjects_v0.4.14.xsd"/>
+    <!-- Декларация на товары и транзитная декларация -->
+
+    <!-- R.048: Транзитная декларация (Транзитная декларация) -->
+    <xs:element name="TransitDeclaration" type="td:TransitDeclarationType">
+        <xs:annotation>
+            <xs:documentation>Транзитная декларация</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <!-- R.048.CDT: Транзитная декларация (Транзитная декларация_ Детали. Тип) -->
+    <xs:complexType name="TransitDeclarationType">
+        <xs:annotation>
+            <xs:documentation>Транзитная декларация</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element ref="csdo:EDocCode"/>
+            <xs:element ref="csdo:EDocId"/>
+            <xs:element ref="csdo:EDocRefId" minOccurs="0"/>
+            <xs:element ref="csdo:EDocDateTime"/>
+            <xs:element ref="casdo:DeclarationKindCode">
+                <xs:annotation>
+                    <xs:documentation>Тип декларации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element ref="casdo:DeclarationFeatureCode" minOccurs="0"/>
+            <xs:element ref="casdo:TransitProcedureCode"/>
+            <xs:element ref="casdo:TransitFeatureCode" minOccurs="0"/>
+            <xs:element ref="casdo:EDocIndicatorCode"/>
+            <xs:element ref="casdo:DocUsageCode" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Кодовое обозначение использования транспортных (перевозочных), коммерческих и (или) иных документов в качестве транзитной декларации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element ref="csdo:PageQuantity" minOccurs="0"/>
+            <xs:element ref="casdo:GoodsQuantity" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Общее количество (число) товаров</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element ref="casdo:CargoQuantity" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Общее количество грузовых мест</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element ref="casdo:TotalGrossMassMeasure" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Общий вес товаров брутто</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element ref="casdo:TotalAmount" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Общая стоимость товаров</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element ref="cacdo:TIRCarnetIdDetails" minOccurs="0"/>
+            <xs:element ref="casdo:ContainerIndicator"/>
+            <xs:element ref="cacdo:TransportMeansItemDetails" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>сведения о транспортном средстве, с использованием которого начинается перевозка (транспортировка) товаров</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element ref="cacdo:TranshipmentDetails" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>сведения о грузовой операции с товарами и (или) замене транспортного средства</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element ref="cacdo:DeclarantDetails"/>
+            <xs:element ref="cacdo:TDGoodsShipmentDetails" maxOccurs="unbounded"/>
+            <xs:element ref="cacdo:CustomsIdentificationDetails" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="cacdo:CarrierDetails" maxOccurs="unbounded"/>
+            <xs:element ref="cacdo:TransitGuaranteeDetails">
+                <xs:annotation>
+                    <xs:documentation>сведения об обеспечании исполнения обязанности по уплате таможенных пошлин, налогов</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element ref="cacdo:SignatoryRepresentativeDetails" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Сведения о таможенном представителе</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element ref="csdo:EventDate" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Дата заполнения транзитной декларации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element ref="cacdo:SignatoryPersonV2Details" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Сведения о сотруднике, заполнившем транзитную декларацию</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

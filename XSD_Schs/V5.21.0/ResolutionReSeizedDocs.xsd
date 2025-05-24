@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--Приказ ФТС России  от 14.02.2019 г. № 258 "Об утверждении форм документов, составляемых таможенными органами при проведении таможенных проверок, 
+порядков их заполнения и порядка внесения изменений в решение о проведении выездной таможенной проверки" 
+Приложение № 14 - Постановление о возврате изъятых документов-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:adt_cat="urn:customs.ru:Information:CustomsAuditDocuments:AuditCommonAggregateTypesCust:5.21.0" xmlns:rrsd="urn:customs.ru:Information:CustomsAuditDocuments:ResolutionReSeizedDocs:5.21.0" targetNamespace="urn:customs.ru:Information:CustomsAuditDocuments:ResolutionReSeizedDocs:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:CustomsAuditDocuments:AuditCommonAggregateTypesCust:5.21.0" schemaLocation="AuditCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Постановление о возврате изъятых документов</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ResolutionReSeizedDocs" type="rrsd:ResolutionReSeizedDocsType">
+    <xs:annotation>
+      <xs:documentation>Постановление о возврате изъятых документов</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ResolutionReSeizedDocsType">
+    <xs:annotation>
+      <xs:documentation>Постановление о возврате изъятых документов</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="CustomResolution" type="adt_cat:CustomsIssuedType">
+            <xs:annotation>
+              <xs:documentation>Таможенный орган, вынесший постановление о возврате изъятых документов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ResolutionPlace" type="clt_ru:NameType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Место составления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ResolutionDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата составления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocsInfo" type="rrsd:DocsType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Возвращаемые документы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ResolutionInfo" type="adt_cat:ResolutionInfoType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Реквизиты Постановления об изъятии</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DecisionPerformAudit" type="adt_cat:NumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Решение о проведении выездной таможенной проверки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AuditOrganization" type="adt_cat:AuditOrganizationType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения об юридическом/физическом лице, в отношении которого производилась проверка</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="StatementNumber" type="adt_cat:NumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Реквизиты Заявления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SecondExempReceived" type="adt_cat:SecondExempReceivedType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Второй экземпляр постановления получил</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RefusalMark" type="adt_cat:RefusalMarkType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Отметка об отказе в получении второго экземпляра Постановления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006917E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DocsType">
+    <xs:annotation>
+      <xs:documentation>Возвращаемые документы</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="DocsDescription" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Описание, индивидуальные признаки документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocsQuantity" type="clt_ru:Count3Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Количество документов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

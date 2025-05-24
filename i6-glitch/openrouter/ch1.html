@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ru" class="bg-gray-50 font-sans antialiased">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>SPA Chat с OpenRouter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Подключение Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!--<script src="https://unpkg.com/markdown-it"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it@14.1.0/dist/markdown-it.min.js"></script>
+</head>
+
+<body class="flex flex-col h-screen">
+    <!-- Заголовок -->
+    <header class="bg-slate-600 px-4 py-0 flex items-center justify-between">
+        <div class="relative">
+            <!-- Скрытый чекбокс -->
+            <input type="checkbox" id="menu-toggle-left" class="hidden peer">
+            <!-- Кнопка-активатор -->
+            <label for="menu-toggle-left"
+                class="cursor-pointer font-bold px-2 py-1 bg-zinc-500 text-white rounded-lg hover:bg-zinc-600 transition">
+                ☰
+            </label>
+            <!-- Выпадающее меню -->
+            <div class="absolute top-full left-0 mt-2 bg-white rounded-lg shadow-xl border border-slate-500
+            opacity-0 invisible peer-checked:opacity-100 peer-checked:visible transition-all duration-200
+            transform -translate-y-2 peer-checked:translate-y-0 z-50 ">
+                <div class="p-2">
+                    <input id="key-input" type="text" placeholder="Введите ваш API_KEY 🔑 ..."
+                        class="w-[640px] px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    <hr class="my-2" />
+                    <div class="px-3 py-2 hover:bg-gray-100 rounded">Выйти</div>
+                </div>
+                <!-- Хвостик меню -->
+                <div class=" absolute -top-2 left-3 w-4 h-4 bg-white border-t border-l border-slate-500 rotate-45 ">
+                </div>
+            </div>
+        </div>
+
+        <span class="text-white p-1 text-xl font-bold"> Чат с OpenRouter</span>
+        <hr class="flex-1 mx-3 border-slate-700" />
+        <span>🤖</span>
+        <!-- https://openrouter.ai/settings/keys -->
+    </header>
+
+    <!-- Основное окно чата -->
+    <main id="chat-box" class="flex-1 overflow-auto p-4 space-y-4 bg-gray-100">
+        <!-- Сообщения будут загружаться сюда -->
+    </main>
+
+    <!-- Форма ввода 🛑🔺 -->
+    <form id="chat-form" class="p-4 bg-white border-t border-gray-300">
+        <div class="flex items-center space-x-2">
+            <input id="chat-input" type="text" placeholder="Введите ваше сообщение..."
+                class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
+                required />
+            <button type="submit" id="idSubmitButton" class="bg-red-800 w-8 h-10 rounded hover:bg-red-400 transition">
+                <div class="icon-stand">🔺</div>
+                <div class="icon-spin hidden animate-spin">🌀</div>
+            </button>
+        </div>
+    </form>
+
+    <!-- Логика JavaScript -->
+    <script>
+        const MD = window.markdownit();
+
+        const inputKey = document.getElementById("key-input");
+        if (!inputKey || !inputKey.value) {
+            inputKey.value = localStorage.getItem("k_openrouter");
+        }
+        //if (!inputKey || !inputKey.value) { inputKey.value = "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"; } // ключ из видео
+
+        const chatForm = document.getElementById("chat-form");
+        const chatInput = document.getElementById("chat-input");
+        const chatBox = document.getElementById("chat-box");
+
+        const submitButton = document.getElementById("idSubmitButton");
+
+
+        // Добавление сообщения на страницу
+        function appendMessage(role, text) {
+            const messageDiv = document.createElement("div");
+            messageDiv.className = `flex ${role === "user" ? "justify-end" : "justify-start"}`;
+
+            const bubble = document.createElement("div");
+            bubble.className = `max-w-xs md:max-w-md lg:max-w-lg p-3 rounded-lg ${role === "user"
+                ? "bg-blue-500 text-white"
+                : "bg-white text-gray-800 border border-gray-300"
+                }`;
+
+            bubble.textContent = text;
+            messageDiv.appendChild(bubble);
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        chatForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            let userInput = chatInput.value;
+            chatInput.value = "";
+
+            let API_KEY = inputKey.value;
+            if (!API_KEY && userInput.startsWith("sk-or-v1-")) {
+                API_KEY = userInput;
+                userInput = "";
+            }
+            // meta-llama/llama-3-8b-instruct:nitro
+            const arrModels = [
+                { name: "mistralai/mixtral-8x7b-instruct:free", label: "такой нет, или ошибка или и не было", dateOfLastAnswer: "" },
+                { name: "mistralai/devstral-small:free", label: "mistralai/devstral-small:free", dateOfLastAnswer: "" },
+                { name: "tngtech/deepseek-r1t-chimera:free", label: "tngtech/deepseek-r1t-chimera:free" },
+                { name: "deepseek/deepseek-r1:free", label: "deepseek/deepseek-r1:free" },
+            ];
+            const MODEL_NUM = 3;
+
+            // Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day user_2xRJbZGkaQF4thZ1yODkLOm3PSn
+
+            if (userInput == " ") {
+                userInput = "полезный совет";
+            }
+
+            const questionElement = document.createElement("div");
+            questionElement.classList.add("bg-white", "p-4", "rounded-lg", "text-gray-600", "bg-gray-50");
+            questionElement.textContent = userInput;
+            chatBox.appendChild(questionElement);
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            let responseMessage;
+            if (API_KEY) {
+                submitButton.querySelector(".icon-stand").classList.add("hidden");
+                submitButton.querySelector(".icon-spin").classList.remove("hidden");
+                try {
+                    const response2 = await fetch('https://openrouter.ai/api/v1/auth/key', {
+                        method: 'GET',
+                        headers: { Authorization: `Bearer ${API_KEY}` },
+                    });
+                    const data2 = await response2.json();
+                    console.log(data2);
+                    debugger;
+
+                    const apiURL = "https://openrouter.ai/api/v1/chat/completions"
+                    const objBody = {
+                        model: arrModels[MODEL_NUM].name,
+                        messages: [{ role: "user", content: userInput }]
+                    };
+                    const objQuery = {
+                        method: "POST",
+                        headers: { "Authorization": `Bearer ${API_KEY}`, "Content-Type": "application/json" },
+                        body: JSON.stringify(objBody)
+                    };
+                    // Запрос к OpenRouter
+                    chatBox.classList.add("bg-rose-300");
+                    const response = await fetch(apiURL, objQuery);
+                    chatBox.classList.remove("bg-rose-300");
+                    chatBox.classList.add("bg-pink-300");
+                    const data = await response.json();
+                    chatBox.classList.remove("bg-pink-300");
+                    debugger;
+                    if (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) {
+                        responseMessage = data.choices[0].message.content;
+                        if (localStorage.getItem("k_openrouter") !== API_KEY) {
+                            debugger;
+                            localStorage.setItem("k_openrouter", API_KEY);
+                        }
+                    } else if (data.error) {
+                        //responseMessage = `Ответ OpenRouter: ${data.error.message} ${data.user_id}`;
+                        responseMessage = JSON.stringify(data, null, 2);
+                    } else {
+                        responseMessage = JSON.stringify(data, null, 2);
+                    }
+                } catch (error) {
+                    responseMessage = "CATCH error.message = " + error.message;
+                }
+                submitButton.querySelector(".icon-stand").classList.remove("hidden");
+                submitButton.querySelector(".icon-spin").classList.add("hidden");
+            }
+            else {
+                responseMessage = "API_KEY не задан";
+            }
+
+            const messageElement = document.createElement("div");
+            messageElement.classList.add("whitespace-pre-wrap", "p-4", "rounded-lg", "border", "border-gray-300", "bg-gray-50");
+            messageElement.innerHTML = MD.render(responseMessage);
+            chatBox.appendChild(messageElement);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        });
+    </script>
+</body>
+
+</html>

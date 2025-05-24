@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:rcd="urn:customs.ru:Information:CommercialFinanceDocuments:RecallCustomsDirective:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CommercialFinanceDocuments:RecallCustomsDirective:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Уведомление об отзыве поручения/ решения таможенного органа</xs:documentation>
+  </xs:annotation>
+  <xs:element name="RecallCustomsDirective" type="rcd:RecallCustomsDirectiveType" />
+  <xs:complexType name="RecallCustomsDirectiveType">
+    <xs:annotation>
+      <xs:documentation>Уведомление об отзыве поручения/ решения таможенного органа</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocumentType" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Тип сведений: 0 - документ, 1 - отметка об ознакомлении участника ВЭД с документом</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OrderType" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Тип отзываемого документа: 0 - уведомление о неуплате таможенных платежей, 1 - поручение таможенного органа на продажу иностранной валюты, 2 - поручение таможенного органа на перечисление денежных средств с депозитного счета на расчетный счет, 3 - требование об уплате денежных средств по банковской гарантии или договору поручительства, 4 - требование об уплате денежных средств гарантирующим объединением, 5 - решение таможенного органа о наложении ареста на товары, 6 - решение таможенного органа о наложении ареста на имущество, 7 - разрешение таможенного органа на пользование и распоряжение имуществом, на которое наложен арест, 8 - поручение на продажу драгоценных металлов и перечисление денежных средств от продажи драгоценных металлов на расчетный (текущий) счет плательщика (лица, несущего солидарную обязанность)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocumentReference" type="rcd:DRP_DocumentReferenceType">
+            <xs:annotation>
+              <xs:documentation>Реквизиты отзываемого документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SendDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата направления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SendTime" type="clt_ru:TimeCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Время направления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Organization" type="rcd:OrganizationMeasType">
+            <xs:annotation>
+              <xs:documentation>Сведения об участнике ВЭД</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Comments" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Комментарии</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Customs" type="cat_ru:CustomsType">
+            <xs:annotation>
+              <xs:documentation>Таможенный орган</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsPerson" type="cat_ru:CustomsPersonType">
+            <xs:annotation>
+              <xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RecievingSignature" type="cat_ru:PersonSignatureType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Отметка о вручении - подпись представителя организации. Заполняется в Личном Кабинете участника ВЭД</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1002050E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DRP_DocumentReferenceType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер решения об отзыве инкассового поручения/ поручения на перевод денежных средств/ приостановлении операций по счетам/ отмене приостановления операций по счетам </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, сформировавшего решение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationYear" type="clt_ru:DateYearCustType">
+        <xs:annotation>
+          <xs:documentation>Год принятия решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocNumber" type="cat_ru:DocumentBaseType">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OrganizationMeasType">
+    <xs:annotation>
+      <xs:documentation>Сведения об участнике ВЭД</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:OrganizationType">
+        <xs:sequence>
+          <xs:element name="ITN" type="clt_ru:ITNType">
+            <xs:annotation>
+              <xs:documentation>ИТН</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

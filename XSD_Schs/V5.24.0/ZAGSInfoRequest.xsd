@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:zags="urn:customs.ru:Information:SQDocuments:ZAGSInfoRequest:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:ZAGSInfoRequest:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Предоставление из ЕГР ЗАГС сведений об актах гражданского состояния (запрос)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ZAGSInfoRequest" type="zags:ZAGSInfoRequestType">
+    <xs:annotation>
+      <xs:documentation>Предоставление из ЕГР ЗАГС сведений об актах гражданского состояния (запрос)</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ZAGSInfoRequestType">
+    <xs:annotation>
+      <xs:documentation>Предоставление из ЕГР ЗАГС сведений об актах гражданского состояния (запрос)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="SvedAGS" type="zags:SvedAGSType">
+            <xs:annotation>
+              <xs:documentation>Сведения о государственной регистрации АГС, в отношении которого сформирован запрос</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SvedFL" type="zags:SvedFLType">
+            <xs:annotation>
+              <xs:documentation>Сведения о физическом лице, в отношении которого сформирован запрос</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009270E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="SvedAGSType">
+    <xs:annotation>
+      <xs:documentation>Сведения о государственной регистрации АГС, в отношении которого сформирован запрос</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RecordNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер записи акта гражданского состояния</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RecordDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата составления записи акта гражданского состояния</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ZAGSName" type="clt_ru:FreeText500Type" maxOccurs="2">
+        <xs:annotation>
+          <xs:documentation>Полное наименование органа ЗАГС, которым произведена государственная регистрация акта гражданского состояния</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ZAGSCode" type="clt_ru:Code8Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код органа ЗАГС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SvedFLType">
+    <xs:annotation>
+      <xs:documentation>Сведения о физическом лице, в отношении которого сформирован запрос</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonName" type="cat_ru:PersonBaseType">
+        <xs:annotation>
+          <xs:documentation>ФИО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonBirthDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата рождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SNILS" type="zags:SNILSType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>СИНЛС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INNFL" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН физического лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdentityCard" type="RUScat_ru:RUIdentityCardType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о документе, удостоверяющем личность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="SNILSType">
+    <xs:annotation>
+      <xs:documentation>СИНЛС</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="14" />
+      <xs:pattern value="\d{3}-\d{3}-\d{3}-\d{2}" />
+      <xs:pattern value="\d{3}-\d{3}-\d{3} \d{2}" />
+      <xs:pattern value="\d{3} \d{3} \d{3} \d{2}" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

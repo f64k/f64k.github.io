@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:presv="urn:customs.ru:Information:SQDocuments:PreliminaryResVeterin:5.24.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:PreliminaryResVeterin:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Предварительное Россельхознадзора по предварительной информации о товаре</xs:documentation>
+  </xs:annotation>
+  <xs:element name="PreliminaryResVeterin" type="presv:PreliminaryResVeterinType">
+    <xs:annotation>
+      <xs:documentation>Предварительное Решение  Россельхознадзора по предварительной информации о товаре</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="PreliminaryResVeterinType">
+    <xs:annotation>
+      <xs:documentation>Предварительное Россельхознадзора по предварительной информации о товаре</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Decision" type="presv:DecisionType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Предварительное решение по товарам</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009305E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DecisionType">
+    <xs:annotation>
+      <xs:documentation>Информация о товарах</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PreliminaryDecision" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Предварительное решение:           1 - Недостаточно сведений;            2 - Предъявить ветнадзору / подлежит ветнадзору;                 3 - Провести досмотр таможенным органом в пункте пропуска;          4 - Ввоз разрешен;                         5 - Ввоз запрещен;                         6 - Ввоз разрешен. Подлежит досмотру в месте назначения (доставки);                                   7 - Ввоз разрешен. Подлежит досмотру в специально оборудованных и оснащенных местах;                                        8 - Ввоз разрешен. Предъявить ветнадзору</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GUID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор цепочки обмена сообщениями</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="VetCertificateNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер ветеринарного сертификата </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="VetCertificateDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата ветеринарного сертификата </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProductName" type="RUSclt_ru:FreeText1000Type">
+        <xs:annotation>
+          <xs:documentation>Наименование продукции (из импортного ветеринарного сертификата)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ManufacturerDetails" type="presv:ManufacturerDetailsType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о производителе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsQuantity" type="RUScat_ru:UnifiedPhysicalMeasureType">
+        <xs:annotation>
+          <xs:documentation>Количество продукции </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransportDoc" type="presv:TransportDocType">
+        <xs:annotation>
+          <xs:documentation>Сведения о транспортном (перевозочном) документе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ManufacturerDetailsType">
+    <xs:annotation>
+      <xs:documentation>Сведения об организации-производителе</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OrganizationIdentifier" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Идентификатор производителя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrganizationName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Наименование производителя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrganizationType" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Тип предприятия:                    1 - бойня;                                2 - разделочное предприятие;   3 - холодильник;                       4 - неопределенный</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TransportDocType">
+    <xs:annotation>
+      <xs:documentation>Сведения о транспортном (перевозочном) документе</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocumentType" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Тип документа:                     1 - Товарно-транспортная накладная;                            2 - Конасамент;
+3 - CMR;
+4 - Авианакладная</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:ba_req="urn:customs.ru:Information:SQDocuments:FnsBankAccountsInfoRequest:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:FnsBankAccountsInfoRequest:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос сведений о банковских счетах (вкладах)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="FnsBankAccountsInfoRequest" type="ba_req:FnsBankAccountsInfoRequestType" />
+  <xs:complexType name="FnsBankAccountsInfoRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений о банковских счетах (вкладах)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:choice>
+            <xs:element name="PhysicalPersonInfo" type="ba_req:ReqPhysicalPersonInfoType">
+              <xs:annotation>
+                <xs:documentation>Сведения о физическом лице</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="JuridicalPersonInfo" type="ba_req:ReqJuridicalPersonInfoType">
+              <xs:annotation>
+                <xs:documentation>Сведения о юридическом лице</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+          <xs:element name="AccountStartDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата открытия счета - начало диапазона</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AccountEndDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата открытия счета - конец диапазона</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AccountStateCode" type="clt_ru:IndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код состояния счета (0 или 1)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009081E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ReqPhysicalPersonInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о физическом лице</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SoleTraderSign" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Индивидуальный предприниматель: true или 1 - Да; false или 0 - Нет</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonFIO" type="cat_ru:PersonBaseType">
+        <xs:annotation>
+          <xs:documentation>ФИО лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BirthDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата рождения физического лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdentityCard" type="RUScat_ru:RUIdentityCardType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Документ, удостоверяющий личность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INN" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН - Индивидуальный номер налогоплательщика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OGRNIP" type="clt_ru:OGRNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ОГРНИП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReqJuridicalPersonInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о юридическом лице</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ResidentRFSign" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Резидент РФ: true или 1 - Да; false или 0 - Нет</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INN" type="clt_ru:INNIDType">
+        <xs:annotation>
+          <xs:documentation>ИНН - Индивидуальный номер налогоплательщика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KPP" type="clt_ru:KPPCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>КПП - Код причины постановки на учет</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OGRN" type="clt_ru:OGRNIDType">
+        <xs:annotation>
+          <xs:documentation>ОГРН организации - резидента</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KIO" type="clt_ru:Code5Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код иностранной организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

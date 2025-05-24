@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:vrigreq="urn:customs.ru:Information:SQDocuments:VerificationOfRegistrationIGRequest:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:VerificationOfRegistrationIGRequest:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос на проверку регистрации ИГ по месту жительства / пребывания </xs:documentation>
+  </xs:annotation>
+  <xs:element name="VerificationOfRegistrationIGRequest" type="vrigreq:VerificationOfRegistrationIGRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос на проверку регистрации ИГ по месту жительства / пребывания</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="VerificationOfRegistrationIGRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос на проверку регистрации ИГ по месту жительства / пребывания</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="RequestPerson" type="vrigreq:PersonType">
+            <xs:annotation>
+              <xs:documentation>Лицо, запрашивающее сведения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ForPerson" type="vrigreq:ForPersonType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Данные по проверяемому лицу</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ForDocument" type="vrigreq:ForDocumentType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Данные по документу, удостоверяющему личность</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentIDType" use="required" fixed="1009346E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор электронного документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DocumentIDType">
+    <xs:annotation>
+      <xs:documentation>Идентификатор документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Series" type="clt_ru:CodeVariable11Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Серия документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Number" type="clt_ru:CodeVariable11Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ForDocumentType">
+    <xs:annotation>
+      <xs:documentation>Данные по документу, удостоверяющему личность</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Document" type="vrigreq:DocumentType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вид документа ИГ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentID" type="vrigreq:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentIssuedate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата выдачи документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentCountry" type="clt_ru:CountryA3CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Государство, выдавшее документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ForPersonType">
+    <xs:annotation>
+      <xs:documentation>Данные по проверяемому лицу</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonSurname" type="vrigreq:Text60Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Фамилия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonName" type="vrigreq:Text60Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Имя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonMiddleName" type="vrigreq:Text60Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PersonType">
+    <xs:annotation>
+      <xs:documentation>Пользователь запрашивающей организации</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonSurname" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Фамилия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Имя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonMiddleName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Отчество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные простые прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="DocumentType">
+    <xs:annotation>
+      <xs:documentation>Вид документа ИГ</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="clt_ru:CodeVariable2Type">
+      <xs:enumeration value="10">
+        <xs:annotation>
+          <xs:documentation>Словарь «Вид документа ИГ»</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="11">
+        <xs:annotation>
+          <xs:documentation>Свидетельство о регистрации ходатайства о признании иммигранта беженцем</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="12">
+        <xs:annotation>
+          <xs:documentation>Вид на жительство</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="13">
+        <xs:annotation>
+          <xs:documentation>Удостоверение беженца в Российской Федерации</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="19">
+        <xs:annotation>
+          <xs:documentation>Вид на жительство ИГ</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="20">
+        <xs:annotation>
+          <xs:documentation>Вид на жительство ЛБГ</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="61">
+        <xs:annotation>
+          <xs:documentation>Национальный заграничный паспорт</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="62">
+        <xs:annotation>
+          <xs:documentation>Дипломатический паспорт</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="63">
+        <xs:annotation>
+          <xs:documentation>Служебный паспорт</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="73">
+        <xs:annotation>
+          <xs:documentation>Паспорт негражданина</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="76">
+        <xs:annotation>
+          <xs:documentation>Удостоверение лица без гражданства</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text60Type">
+    <xs:annotation>
+      <xs:documentation>Текстовое описание. До 60 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="60" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

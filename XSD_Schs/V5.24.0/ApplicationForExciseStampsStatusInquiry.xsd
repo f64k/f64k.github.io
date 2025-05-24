@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Спецификация обмена АПС "Личный кабинет" и КПС "Марка-К" -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:aesr="urn:customs.ru:Information:ELSDocuments:ApplicationForExciseStampsStatusInquiry:5.24.0" targetNamespace="urn:customs.ru:Information:ELSDocuments:ApplicationForExciseStampsStatusInquiry:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос об аннулированиии Заявления/Отчета</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ApplicationForExciseStampsStatusInquiry" type="aesr:ApplicationForExciseStampsStatusInquiryType">
+    <xs:annotation>
+      <xs:documentation>Запрос об аннулировании Заявления/Отчета</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ApplicationForExciseStampsStatusInquiryType">
+    <xs:annotation>
+      <xs:documentation>Запрос о статусе Заявления/Отчета</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="RegistrationNumber" type="cat_ru:DocumentBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер Заявления/Отчета</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CancelReason" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Причина аннулирования</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <!--<xs:element name="DocumentStatus" type="els_leaf:DocChargeStatusType">
+            <xs:annotation>
+              <xs:documentation>Состояние Заявления (0-Поступило,1-Зарегистрировано,2-Оплачено,3-Отклонено,4-Аннулировано,5-Готово к выдаче,6-Выдано,7-Исполнено)</xs:documentation>
+            </xs:annotation>
+          </xs:element>-->
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1040036E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

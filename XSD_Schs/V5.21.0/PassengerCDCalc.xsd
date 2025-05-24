@@ -1,0 +1,289 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--  Распоряжение ФТС России от 08.07.2016 №192-р Приложение №1 Временный порядок  Раздел V -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:catESAD_cu="urn:customs.ru:CUESADCommonAggregateTypesCust:5.21.0" xmlns:pcdc="urn:customs.ru:Information:CustomsDocuments:PassengerCDCalc:5.21.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:PassengerCDCalc:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonAggregateTypesCust:5.21.0" schemaLocation="CUESADCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Пассажирская таможенная декларация. Расчет платежей</xs:documentation>
+  </xs:annotation>
+  <xs:element name="PassengerCDCalc" type="pcdc:PassengerCDCalcType" />
+  <xs:complexType name="PassengerCDCalcType">
+    <xs:annotation>
+      <xs:documentation>Пассажирская таможенная декларация. Расчет платежей</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="PassengerCDBasicDocumentNumber" type="cat_ru:GTDIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер ПДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="EnterOrExitCustomsTerritory" type="clt_ru:LetterIndicatorType">
+            <xs:annotation>
+              <xs:documentation>Тип декларации. 1 - Въезд на территорию таможенного союза, 2 - Выезд с территории таможенного союза</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TotalWeight" type="clt_ru:QuantityBasisType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Общий вес всех перемещаемых товаров, кг</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TotalCost" type="clt_ru:AmountType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Общая стоимость в валюте платежа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PaymentCurrency" type="pcdc:PaymentCurrencyType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Валюта платежа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Amount" type="clt_ru:AmountType">
+            <xs:annotation>
+              <xs:documentation>Общая сумма подлежащих уплате платежей</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsPayments" type="pcdc:GoodsPaymentsType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Данные по товару для расчета платежей</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PaymentsDetails" type="pcdc:PaymentDetailsType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Подробности фактически уплаченных сумм по видам платежей</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006234E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="GoodsPaymentsType">
+    <xs:annotation>
+      <xs:documentation>Данные по товару для расчета платежей</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsTNVEDCode" type="clt_ru:CUGoodsNomenclatuerCodeType">
+        <xs:annotation>
+          <xs:documentation>Код товара по ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Cost" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Стоимость в валюте платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DollarCost" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Стоимость в долларах США</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EuroCost" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Стоимость в евро</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OriginCountryCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код страны происхождения по классификатору стран мира</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsWeight" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Вес товара, кг</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SupplementaryQuantity" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество в дополнительной единице измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentInfo" type="pcdc:PaymentInfoType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о платеже</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AutomobileInfo" type="pcdc:AutomobileInfoType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Данные об автомобиле</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentsSum" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Итоговая сумма исчисленных платежей в валюте РФ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaymentInfoType">
+    <xs:annotation>
+      <xs:documentation>Платеж по товару</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="catESAD_cu:CUCustomsPaymentCalculationType">
+        <xs:sequence>
+          <xs:element name="PaymentModeName" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Наименование вида платежа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NormImport" type="pcdc:NormImportType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Нормы ввоза по единой ставки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NormExcess" type="pcdc:NormExcessType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Превышение норм ввоза по единой ставке</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AutomobileInfoType">
+    <xs:annotation>
+      <xs:documentation>Данные для расчета платежей по автомобилю</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="EngineVolumeQuanity" type="clt_ru:EngineVolumeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Объем двигателя, куб. см</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EnginePower" type="clt_ru:EnginePowerQuanityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Мощность двигателя в лошадиных силах</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EnginePowerKVt" type="clt_ru:EnginePowerQuanityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Мощность двигателя в КВт</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaymentCurrencyType">
+    <xs:annotation>
+      <xs:documentation>Валюта платежа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CurrencyCode" type="clt_ru:CurrencyA3CodeType">
+        <xs:annotation>
+          <xs:documentation>Код валюты платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CurrencyDollarRate" type="clt_ru:CurrencyRateType">
+        <xs:annotation>
+          <xs:documentation>Курс доллара США к валюте государства - члена ТС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CurrencyEuroRate" type="clt_ru:CurrencyRateType">
+        <xs:annotation>
+          <xs:documentation>Курс евро к валюте государства - члена ТС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CurrencyRate" type="clt_ru:CurrencyRateType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Курс валюты платежа к валюте государства - члена ТС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="NormImportType">
+    <xs:annotation>
+      <xs:documentation>Норма ввоза по единой ставке</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CostNorm" type="pcdc:CostNormType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Стоимостная норма</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WeightNorm" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Весовая норма</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="QuantityNorm" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количественная норма</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CostNormType">
+    <xs:annotation>
+      <xs:documentation>Стоимостная норма в валюте для единой ставки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CurrencyAmount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма в валюте</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CurrencyCode" type="clt_ru:CurrencyA3CodeType">
+        <xs:annotation>
+          <xs:documentation>Трехзначный буквенный код валюты по позиции, в соответствии с классификатором валют</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CurrencyRate" type="clt_ru:CurrencyRateType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Курс валюты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="NormExcessType">
+    <xs:annotation>
+      <xs:documentation>Превышение норм для единой ставки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CostExcess" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Превышение по стоимости</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WeightExcess" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Превышение по весу</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="QuantityExcess" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Превышение по количеству</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaymentDetailsType">
+    <xs:annotation>
+      <xs:documentation>Подробности уплаты по виду платежа</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="catESAD_cu:ESADout_CUCustomsPaymentType">
+        <xs:sequence>
+          <xs:element name="PaymentWayCode" type="clt_ru:Code2Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Способ уплаты в соответствии с классификатором способов уплаты таможенных и иных платежей, взимание которых возложено на таможенные органы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PaymentDocument" type="cat_ru:DocumentBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Платежный документ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

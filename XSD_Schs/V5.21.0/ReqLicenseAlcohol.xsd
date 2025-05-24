@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:rla="urn:customs.ru:Information:ReqLicenseAlcohol:5.21.0" targetNamespace="urn:customs.ru:Information:ReqLicenseAlcohol:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Запрос на получение сведений о лицензии на производство и оборот этилового спирта, алкогольной и спиртосодержащей продукции, выданной Росалкогольрегулированием</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ReqLicenseAlcohol" type="rla:ReqLicenseAlcoholType">
+		<xs:annotation>
+			<xs:documentation>Запрос на получение сведений о лицензии на производство и оборот этилового спирта, алкогольной и спиртосодержащей продукции, выданной Росалкогольрегулированием </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ReqLicenseAlcoholType">
+		<xs:annotation>
+			<xs:documentation>Тип информации о запросе информации о лицензии</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="OrganizationName" type="clt_ru:NameType">
+						<xs:annotation>
+							<xs:documentation>Наименование организации</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ShortName" type="clt_ru:ShortNameType">
+						<xs:annotation>
+							<xs:documentation>Краткое наименование организации</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="INN" type="clt_ru:INNIDType">
+						<xs:annotation>
+							<xs:documentation>ИНН - индивидуальный номер налогоплательщика</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="KPP" type="clt_ru:KPPCodeType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>КПП - код причины постановки на учёт</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RegNumber" type="rla:LicenseNumberType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Регистрационный номер лицензии</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1004122E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="LicenseNumberType">
+		<xs:annotation>
+			<xs:documentation>Информация о лицензии</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DocumentNumber" type="clt_ru:DocumentNumberType">
+				<xs:annotation>
+					<xs:documentation>Регистрационный номер лицении</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocumentDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата выдачи лицензии</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

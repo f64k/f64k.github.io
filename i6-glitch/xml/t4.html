@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>XML Tree Viewer</title>
+    <style>
+      .toggle {
+        cursor: pointer;
+        padding-right: 10px;
+        user-select: none;
+      }
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="file" id="fileInput" accept=".xml" />
+    <br /><br />
+    <table border="1" id="xmlTable">
+      <thead>
+        <tr>
+          <th>Tag</th>
+          <th>Value</th>
+          <th>Prefix</th>
+          <th>Attributes</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+
+    <script>
+      document
+        .getElementById("fileInput")
+        .addEventListener("change", function (e) {
+          const file = e.target.files[0];
+          const reader = new FileReader();
+
+          reader.onload = function (e) {
+            renderXML(e.target.result);
+          };
+
+          reader.readAsText(file);
+        });
+
+      function renderXML(xmlText) {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+        const tbody = document.getElementById("tableBody");
+        tbody.innerHTML = "";
+
+        function createRow(node, level, parentId = null) {
+          const hasChildren = node.children.length > 0;
+          const row = document.createElement("tr");
+          const id = Date.now() + Math.random();
+
+          row.innerHTML = `
+            <td style="padding-left: ${level * 20}px">
+                ${hasChildren ? `<span class="toggle">▼</span>` : ""}
+                ${node.localName}
+            </td>
+            <td>${hasChildren ? "" : node.textContent?.trim() || ""}</td>
+            <td>${node.prefix || ""}</td>
+            <td>${Array.from(node.attributes)
+              .map((attr) => `${attr.name}="${attr.value}"`)
+              .join(" ")}</td>
+        `;
+
+          if (hasChildren) {
+            row.querySelector(".toggle").addEventListener("click", function () {
+              const isCollapsed = this.textContent === "▶";
+              this.textContent = isCollapsed ? "▼" : "▶";
+              toggleChildren(id, isCollapsed);
+            });
+          }
+
+          tbody.appendChild(row);
+
+          if (hasChildren) {
+            Array.from(node.children).forEach((child) => {
+              createRow(child, level + 1, id);
+            });
+          }
+
+          return { id, element: row, parentId, hasChildren };
+        }
+
+        function toggleChildren(parentId, show) {
+          const allRows = Array.from(tbody.querySelectorAll("tr"));
+          const parentIndex = allRows.findIndex(
+            (row) => row.dataset.id === parentId
+          );
+
+          if (parentIndex === -1) return;
+
+          for (let i = parentIndex + 1; i < allRows.length; i++) {
+            const row = allRows[i];
+            if (
+              parseInt(row.dataset.level) <=
+              parseInt(allRows[parentIndex].dataset.level)
+            )
+              break;
+            if (row.dataset.parentId === parentId) {
+              row.style.display = show ? "" : "none";
+              if (!show && row.querySelector(".toggle")) {
+                row.querySelector(".toggle").textContent = "▶";
+              }
+            }
+          }
+        }
+
+        // Создаем корневой элемент
+        const rootRow = createRow(xmlDoc.documentElement, 0);
+        rootRow.element.dataset.id = rootRow.id;
+        rootRow.element.dataset.level = 0;
+
+        // Проходим по всем элементам и устанавливаем dataset
+        let level = 0;
+        let currentParent = rootRow.id;
+        Array.from(xmlDoc.documentElement.children).forEach((child, index) => {
+          const childRow = createRow(child, 1, currentParent);
+          childRow.element.dataset.id = childRow.id;
+          childRow.element.dataset.parentId = currentParent;
+          childRow.element.dataset.level = 1;
+        });
+      }
+    </script>
+  </body>
+</html>

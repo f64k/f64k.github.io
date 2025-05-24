@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:pfm_req="urn:customs.ru:Information:SQDocuments:PermitForMovementOfLargeVehiclesRequest:5.21.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" targetNamespace="urn:customs.ru:Information:SQDocuments:PermitForMovementOfLargeVehiclesRequest:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос на проверку наличия специального разрешения на движение крупногабаритных и (или) тяжеловесных транспортных средств</xs:documentation>
+  </xs:annotation>
+  <xs:element name="PermitForMovementOfLargeVehiclesRequest" type="pfm_req:PermitForMovementOfLargeVehiclesRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос на проверку наличия специального разрешения на движение крупногабаритных и (или) тяжеловесных транспортных средств</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="PermitForMovementOfLargeVehiclesRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос на проверку наличия специального разрешения на движение крупногабаритных и (или) тяжеловесных транспортных средств</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:choice>
+          <xs:element name="CheckResolutionRequest" type="pfm_req:CheckResolutionRequestType">
+            <xs:annotation>
+              <xs:documentation>Данные запроса для проверки выданного разрешения на соответствие заданным параметрам</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ResolutionNotificationRequest" type="pfm_req:ResolutionNotificationRequestType">
+            <xs:annotation>
+              <xs:documentation>Уведомление о решении, принятом на основании сведений о наличии разрешения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:choice>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009275E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CheckResolutionRequestType">
+    <xs:annotation>
+      <xs:documentation>Данные запроса для проверки выданного разрешения на соответствие заданным параметрам</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RequestId" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор запроса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PostNumber" type="pfm_req:Text200Type">
+        <xs:annotation>
+          <xs:documentation>Идентификатор описания органа власти</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Country" type="clt_ru:CodeVariable3Type">
+        <xs:annotation>
+          <xs:documentation>Код страны</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ResolutionNumber" type="pfm_req:ResolutionNumber" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер специального разрешения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LicensePlateNumber" type="pfm_req:Text200Type">
+        <xs:annotation>
+          <xs:documentation>Номер гос. регистрации тягача</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Transporter" type="RUSclt_ru:FreeText1000Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование перевозчика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TotalWeight" type="pfm_req:DecimalTonType">
+        <xs:annotation>
+          <xs:documentation>Общий вес автопоезда с грузом (в тоннах)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Length" type="pfm_req:DecimalMeterType">
+        <xs:annotation>
+          <xs:documentation>Длина автопоезда (в метрах)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Width" type="pfm_req:DecimalMeterType">
+        <xs:annotation>
+          <xs:documentation>Ширина автопоезда (в метрах)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Height" type="pfm_req:DecimalMeterType">
+        <xs:annotation>
+          <xs:documentation>Высота автопоезда (в метрах)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AxisLoads" type="pfm_req:DecimalTonType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Список нагрузок на оси (в тоннах)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AxisInvervals" type="pfm_req:DecimalMeterType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Список интервалов между осями (в метрах)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ResolutionNotificationRequestType">
+    <xs:annotation>
+      <xs:documentation>Уведомление о решении, принятом на основании сведений о наличии разрешения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RequestId" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор запроса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Action" type="pfm_req:ResolutionNumber">
+        <xs:annotation>
+          <xs:documentation>Решение ответственного должностного лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные простые прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="ActionType">
+    <xs:annotation>
+      <xs:documentation>Вид объекта по классификатору</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:enumeration value="Passed">
+        <xs:annotation>
+          <xs:documentation>Пропущено</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PassedWithNotificationBLR">
+        <xs:annotation>
+          <xs:documentation>Пропущено с уведомлением на внешней границе Таможенного союза (Беларусь)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PassedWithNotificationKAZ">
+        <xs:annotation>
+          <xs:documentation>Пропущено с уведомлением на внешней границе Таможенного союза (Казахстан)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Detained">
+        <xs:annotation>
+          <xs:documentation>Задержано</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DecimalTonType">
+    <xs:annotation>
+      <xs:documentation>Количчество (тонны)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:NumericCategoriesCust">
+      <xs:minExclusive value="0.001" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DecimalMeterType">
+    <xs:annotation>
+      <xs:documentation>Количество (метры)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:NumericCategoriesCust">
+      <xs:minExclusive value="0.01" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text200Type">
+    <xs:annotation>
+      <xs:documentation>Строка длиной от 1 до 200 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="200" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ResolutionNumber">
+    <xs:annotation>
+      <xs:documentation>Номер специального разрешения </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="9" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

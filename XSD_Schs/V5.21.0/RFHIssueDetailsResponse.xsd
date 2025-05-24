@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:rfhidr="urn:customs.ru:Information:SQDocuments:RFHIssueDetailsResponse:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:RFHIssueDetailsResponse:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос о заключениях СИТЕС (осетровые)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="RFHIssueDetailsResponse" type="rfhidr:RFHIssueDetailsResponseType" />
+  <xs:complexType name="RFHIssueDetailsResponseType">
+    <xs:annotation>
+      <xs:documentation>Запрос о заключениях СИТЕС (осетровые)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="BDRDID" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Идентификатор документа по БД РД</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Sign" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Признак: 1- ЭК, 2 - ИМ, 3 - Реэкспорт, 4 - Интродукция, 5 - другое</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SignOther" type="clt_ru:Text150Type">
+            <xs:annotation>
+              <xs:documentation>Описание признака, если выбрано 5 - другое</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SpecialTerms" type="clt_ru:FreeText500Type">
+            <xs:annotation>
+              <xs:documentation>Особые условия</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ExportQuota" type="clt_ru:FreeText250Type">
+            <xs:annotation>
+              <xs:documentation>Экспортная квота</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ApplicationNumber" type="clt_ru:DocumentNumberType">
+            <xs:annotation>
+              <xs:documentation>Номер приложения СИТЕС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PersonSignedDocument" type="clt_ru:FreeText250Type" maxOccurs="2">
+            <xs:annotation>
+              <xs:documentation>Уполномоченное должностное лицо, подписавшее заключение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Permission" type="rfhidr:PermissionType">
+            <xs:annotation>
+              <xs:documentation>Разрешение (сертификат)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Exporter" type="RUScat_ru:SubjectDetailsType">
+            <xs:annotation>
+              <xs:documentation>Экспортер</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Importer" type="RUScat_ru:SubjectDetailsType">
+            <xs:annotation>
+              <xs:documentation>Импортер</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsDescription" type="rfhidr:GoodsDescriptionType">
+            <xs:annotation>
+              <xs:documentation>Описание товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009051E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="GoodsDescriptionType">
+    <xs:annotation>
+      <xs:documentation>Описание товара</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FishName" type="clt_ru:FreeText250Type" maxOccurs="4">
+        <xs:annotation>
+          <xs:documentation>Русское и латинское название осетровых видов рыб</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Samples" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Описание образцов, включая метки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryOrigin" type="clt_ru:CountryA3CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Страна происхождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryOriginName" type="clt_ru:CountryNameType">
+        <xs:annotation>
+          <xs:documentation>Полное наименование страны происхождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Quantity" type="cat_ru:SupplementaryQuantityType">
+        <xs:annotation>
+          <xs:documentation>Количество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AddQuantity" type="cat_ru:SupplementaryQuantityType">
+        <xs:annotation>
+          <xs:documentation>Количество в дополнительной единице измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PermissionType">
+    <xs:annotation>
+      <xs:documentation>Разрешение</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="EndDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Действительно до</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

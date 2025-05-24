@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="urn:customs.ru:Information:TreatmentDocuments:ReqInoTreatmentDocs:5.21.0" version="5.21.0.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:rin="urn:customs.ru:Information:TreatmentDocuments:ReqInoTreatmentDocs:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Требование на предоставление электронного документа, указанного в описи, прилагаемой к заявлению на переработку товаров вне таможенной территории.</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ReqInoTreatmentDocs" type="rin:ReqInoTreatmentDocsType" />
+  <xs:complexType name="ReqInoTreatmentDocsType">
+    <xs:annotation>
+      <xs:documentation>Требование на предоставление электронного документа, указанного в описи, прилагаемой к заявлению на переработку товаров вне таможенной территории</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="SendDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата направления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RequestDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата формирования запроса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DateLimit" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Срок предоставления документов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Customs" type="cat_ru:CustomsType">
+            <xs:annotation>
+              <xs:documentation>Таможенный орган</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsPerson" type="cat_ru:CustomsPersonType">
+            <xs:annotation>
+              <xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" name="RequestedDoc" type="rin:RequestedDocType">
+            <xs:annotation>
+              <xs:documentation>Запрашиваемый документ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" name="Communication" type="rin:CommunicationType">
+            <xs:annotation>
+              <xs:documentation>Средство связи</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute fixed="1007010E" name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CommunicationType">
+    <xs:annotation>
+      <xs:documentation>Средство связи</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CommCode" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Код средства связи: "1"-телефон, "2"-факс, "3"-телекс, "4"-телеграф, "5"-e-mail, "6"-почта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CommNumberAddress" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Номер средства связи / адрес</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RequestedDocType">
+    <xs:annotation>
+      <xs:documentation>Запрашиваемый документ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Position" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер записи в запросе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DocCode" type="clt_ru:CustomsDocumentCodeType">
+        <xs:annotation>
+          <xs:documentation>Код вида запрашиваемого документа (заполняется в соответствии с классификатором видов документов, используемых при заявлении сведений в графе 44)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DocName" type="clt_ru:DocumentNameType">
+        <xs:annotation>
+          <xs:documentation>Вид документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ReqPurpose" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Цель, для которой запрашивается документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Note" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Примечание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RequestorName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>ФИО должностного лица, запрашивающего дополнительные документы и сведения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

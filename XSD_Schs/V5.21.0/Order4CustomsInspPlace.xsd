@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--Приказ ФТС от 07.12.2018 № 1998 "Об утверждении формы предписания на проведение таможенного осмотра помещений и территорий" -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:adt_cat="urn:customs.ru:Information:CustomsAuditDocuments:AuditCommonAggregateTypesCust:5.21.0" xmlns:ocip="urn:customs.ru:Information:CustomsAuditDocuments:Order4CustomsInspPlace:5.21.0" targetNamespace="urn:customs.ru:Information:CustomsAuditDocuments:Order4CustomsInspPlace:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:CustomsAuditDocuments:AuditCommonAggregateTypesCust:5.21.0" schemaLocation="AuditCommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Предписание на проведение таможенного осмотра помещений и территорий</xs:documentation>
+  </xs:annotation>
+  <xs:element name="Order4CustomsInspPlace" type="ocip:Order4CustomsInspPlaceType">
+    <xs:annotation>
+      <xs:documentation>Предписание на проведение таможенного осмотра помещений и территорий</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="Order4CustomsInspPlaceType">
+    <xs:annotation>
+      <xs:documentation>Предписание на проведение таможенного осмотра помещений и территорий</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="OrderNumber" type="ocip:OrderNumberType">
+            <xs:annotation>
+              <xs:documentation>Реквизиты Предписания</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsPerson" type="ocip:CustomPersonType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Должностные лица таможенного органа, которым поручено провести осмотр</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AuditPlace" type="RUScat_ru:RUAddressType">
+            <xs:annotation>
+              <xs:documentation>Адрес осматриваемого помещения (территории)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="StartDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата начала осмотра</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsIssued" type="ocip:CustomsIssuedType">
+            <xs:annotation>
+              <xs:documentation>Таможенный орган, выпустивший Предписание, подпись должностного или уполномоченного лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006930E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CustomPersonType">
+    <xs:annotation>
+      <xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:PersonBaseType">
+        <xs:sequence>
+          <xs:element name="CustomsDept" type="cat_ru:CustomsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Таможенный орган</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Department" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Подразделение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PersonCustomsID" type="clt_ru:DocumentNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер служебного удостоверения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Rank" type="clt_ru:Text150Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Звание</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="LNP" type="clt_ru:LNPIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>ЛНП должностного лица таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Note" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Примечание</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CustomsIssuedType">
+    <xs:annotation>
+      <xs:documentation>Таможенный орган, подпись должностного или уполномоченного лица</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="adt_cat:CustomsIssuedType">
+        <xs:sequence>
+          <xs:element name="PersonCustomsID" type="clt_ru:DocumentNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер служебного удостоверения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Rank" type="clt_ru:Text150Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Звание</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="LNP" type="clt_ru:LNPIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>ЛНП должностного лица таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Note" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Примечание</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="OrderNumberType">
+    <xs:annotation>
+      <xs:documentation>Реквизиты Предписания</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="adt_cat:NumberType">
+        <xs:sequence>
+          <xs:element name="Place" type="clt_ru:FreeText500Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Место составления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

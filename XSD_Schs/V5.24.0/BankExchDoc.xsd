@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:bed="urn:customs.ru:Information:GuaranteeDocuments:BankExchDoc:5.24.0" targetNamespace="urn:customs.ru:Information:GuaranteeDocuments:BankExchDoc:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Электронный документ в рамках документооборота между банком-гарантом и ФТС России</xs:documentation>
+  </xs:annotation>
+  <xs:element name="BankExchDoc" type="bed:BankExchDocType">
+    <xs:annotation>
+      <xs:documentation>Электронный документ в рамках документооборота между банком-гарантом и ФТС России</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="BankExchDocType">
+    <xs:annotation>
+      <xs:documentation>Электронный документ в рамках документооборота между банком-гарантом и ФТС России</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="BankInfo" type="RUScat_ru:SubjectDetailsType">
+            <xs:annotation>
+              <xs:documentation>Сведения о банке</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CBRLicense" type="cat_ru:DocumentBaseType">
+            <xs:annotation>
+              <xs:documentation>Лицензия ЦБ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="FileDetails" type="bed:FileDetailsType">
+            <xs:annotation>
+              <xs:documentation>Файл в кодировке BASE64</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1050041E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="FileDetailsType">
+    <xs:annotation>
+      <xs:documentation>Произвольный файл в кодировке BASE64</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FileName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Имя файла</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FileContent" type="clt_ru:Text3MB">
+        <xs:annotation>
+          <xs:documentation>Содержимое файла</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Comments" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Комментарии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

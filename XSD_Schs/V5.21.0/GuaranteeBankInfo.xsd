@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:grn_cat="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeCommonAggregateTypesCust:5.21.0" xmlns:grn_bnki="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeBankInfo:5.21.0" targetNamespace="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeBankInfo:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeCommonAggregateTypesCust:5.21.0" schemaLocation="GuaranteeCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сведения о принятых банковских гарантиях</xs:documentation>
+  </xs:annotation>
+  <xs:element name="GuaranteeBankInfo" type="grn_bnki:GuaranteeBankInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о принятых банковских гарантиях</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GuaranteeBankInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о принятых банковских гарантиях</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="BankINN" type="clt_ru:INNIDType">
+            <xs:annotation>
+              <xs:documentation>ИНН банка</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PeriodAcceptedGuarantee" type="grn_bnki:PeriodAcceptedGuaranteeType">
+            <xs:annotation>
+              <xs:documentation>Период, в который приняты гарантии</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GuaranteeInformation" type="grn_bnki:GuaranteeInformationType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о банковских гарантиях, принятых за указанный в запросе период</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1050012E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="GuaranteeInformationType">
+    <xs:annotation>
+      <xs:documentation>Сведения о банковских гарантиях, принятых за указанный в запросе период</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="grn_cat:GuaranteeInformationType">
+        <xs:sequence>
+          <xs:element name="StatusObligation" type="clt_ru:IndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Информация об исполнении (прекращении) обязательств : 1 - исполнено, 0 - действует</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OrgShortName" type="clt_ru:ShortNameType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Краткое наименование гаранта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PeriodAcceptedGuaranteeType">
+    <xs:annotation>
+      <xs:documentation>Период, в который приняты гарантии</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="BeginDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата начала периода</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EndDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата окончания периода</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

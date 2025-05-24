@@ -1,0 +1,373 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="urn:customs.ru:Information:CustomsDocuments:DTSin:5.24.0" version="5.24.0.0" xmlns:DTSin="urn:customs.ru:Information:CustomsDocuments:DTSin:5.24.0" xmlns:cat_EDTS_cu="urn:customs.ru:CUESADDTSCommonAggregateTypes:5.24.0" xmlns:cat_EDTS_ru="urn:customs.ru:RUESADDTSCommonAggregateTypes:5.24.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:cltESAD_cu="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="urn:customs.ru:RUESADDTSCommonAggregateTypes:5.24.0" schemaLocation="RUESADDTSCommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" schemaLocation="CUESADCommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADDTSCommonAggregateTypes:5.24.0" schemaLocation="CUESADDTSCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Декларация таможенной стоимости. Внутренний формат.</xs:documentation>
+  </xs:annotation>
+  <xs:element name="DTSin" type="DTSin:DTSinType" />
+  <xs:complexType name="DTSinType">
+    <xs:annotation>
+      <xs:documentation>Декларация таможенной стоимости. Внутренний формат.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="CustomsCostMethodCode" type="cltESAD_cu:CustomsCostAppraiseMethodType">
+            <xs:annotation>
+              <xs:documentation>Номер метода (заполняется в соответствии с классификатором методов определения таможенной стоимости товаров, помещаемых под таможенные процедуры, применяемые к ввозимым и вывозимым товарам. В случае применения разных методов, указывается "*"-разные)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="BaseMethodCode" type="clt_ru:LetterIndicatorType">
+            <xs:annotation>
+              <xs:documentation>Номер базового метода  (заполняется при определении таможенной стоимости по методам 6)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AdditionalSheetNumber" type="clt_ru:SheetNumberType">
+            <xs:annotation>
+              <xs:documentation>Количество дополнительных листов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="GTDDocumentID" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Уникальный идентификатор ДТ.  Используется для привязки к ДТ при представлении ДТС отдельно от ДТ.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DTSSequenceNumber" type="clt_ru:Count2Type">
+            <xs:annotation>
+              <xs:documentation>Номер ДТС по порядку. 1 - для первой ДТС, поданной декларантом, 2,3... - для последующих, в случае принятия решения "ТС подлежит корректировке" </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CurrencyDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата применения курса валюты.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CurrencyCode" type="clt_ru:CurrencyA3CodeType">
+            <xs:annotation>
+              <xs:documentation>Буквенный код валюты графы "Заявленная таможенная стоимость"</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CurrencyRate" type="clt_ru:CurrencyRateType">
+            <xs:annotation>
+              <xs:documentation>Курс валюты графы "Заявленная таможенная стоимость (б)"</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="FormDTS" type="clt_ru:DigitalIndicatorType">
+            <xs:annotation>
+              <xs:documentation>Форма ДТС: 1 - ДТС-1; 2 - ДТС-2; 3 - ДТС-3; 4 - ДТС-4.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DTSinBuyer" type="cat_EDTS_ru:DTSOrganizationType">
+            <xs:annotation>
+              <xs:documentation>Внутренняя ДТС. Сведения о покупателе.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DTSinSeller" type="cat_EDTS_ru:DTSOrganizationType">
+            <xs:annotation>
+              <xs:documentation>Внутренняя ДТС. Сведения о продавце.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DTSinDeclarant" type="cat_EDTS_ru:DTSOrganizationType">
+            <xs:annotation>
+              <xs:documentation>Внутренний формат ДТС. Сведения о декларанте.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DTSinFilledPerson" type="DTSin:DTSinFilledPersonType">
+            <xs:annotation>
+              <xs:documentation>Внутренний формат ДТС. Дата заполнения и лицо, заполнившее ДТС.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="DTSInvoiceDocuments" type="cat_EDTS_cu:DTSPresentedDocumentsType">
+            <xs:annotation>
+              <xs:documentation>Сведения о документах. ДТС- 1 гр. 4,5,6; ДТС-2 гр. 4,5,8; ДТС-3  гр. 4,5,6; ДТС-4 гр. 4,5</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="DTSSellingLimitation" type="cat_EDTS_cu:DTSSellingLimitationType">
+            <xs:annotation>
+              <xs:documentation>Ограничения на пользование товарами  и обязательства при продаже товаров. ДТС-1, ДТС-3 гр.8. </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="DTSBuyerSellerDependence" type="cat_EDTS_cu:DTSBuyerSellerDependenceType">
+            <xs:annotation>
+              <xs:documentation>Взаимосвязь между покупателем и продавцом. ДТС-1, ДТС-3 гр.7.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="DTSAdditionalPayments" type="cat_EDTS_cu:DTSAdditionalPaymentsType">
+            <xs:annotation>
+              <xs:documentation>Платежи за использование интеллектуальной собственности и условия передачи части дохода продавцу. ДТС-1, ДТС-3 гр.9.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ReasonApplyMethod" type="cat_EDTS_cu:ReasonApplyMethodType">
+            <xs:annotation>
+              <xs:documentation>Причина, по которой предшествующие методы определения стоимости не применимы. ДТС-2, ДТС-4 гр. 7.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" name="DTSinGoodsCustomsCost" type="DTSin:DTSinGoodsCustomsCostType">
+            <xs:annotation>
+              <xs:documentation>Внутренний формат ДТС. Расчет таможенной стоимости по товару.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="IntermediateCustomsCostDecision" type="DTSin:IntermediateCustomsCostDecisionType">
+            <xs:annotation>
+              <xs:documentation>Принятие промежуточного решения по ТС.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="FinalCustomsCostDecision" type="cat_EDTS_ru:CustomsCostDecisionType">
+            <xs:annotation>
+              <xs:documentation>Принятие окончательного решения по ТС.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="CancelingDecision" type="cat_EDTS_ru:CustomsCostDecisionType">
+            <xs:annotation>
+              <xs:documentation>Решение об аннулировании или отзыве ДТС.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="DTSinOfficialMark" type="DTSin:DTSinOfficialMarksType">
+            <xs:annotation>
+              <xs:documentation>Внутренний формат  ДТС. Служебные отметки.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="DTSinTechMarks" type="DTSin:DTSinTechMarksType">
+            <xs:annotation>
+              <xs:documentation>Технологические отметки.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="CostConfirmationDocument" type="cat_EDTS_cu:CostConfirmationDocumentType">
+            <xs:annotation>
+              <xs:documentation>Документы, подтверждающие заявленные сведения. ДТС-4 гр.8.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="DeliveryTerms" type="cat_ru:DeliveryTermsRUType">
+            <xs:annotation>
+              <xs:documentation>Условие поставки товаров.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="GTDNumber" type="cat_ru:GTDIDType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер ДТ.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute fixed="1006092E" name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CustomsCostCalculationType">
+    <xs:annotation>
+      <xs:documentation>Расчет таможенной стоимости</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="DTS3Method1" type="cat_EDTS_ru:DTS3Method1Type">
+          <xs:annotation>
+            <xs:documentation>ДТС-3   Подробности расчета таможенной стоимости по методу 1</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="DTSMethod56" type="cat_EDTS_cu:DTSMethod56Type">
+          <xs:annotation>
+            <xs:documentation>Резервный метод на основе метода таможенной стоимости. (5,6)</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="DTS4Method236" type="cat_EDTS_ru:DTS4Method236Type">
+          <xs:annotation>
+            <xs:documentation>ДТС 4 Подробности расчета таможенной стоимости по методу 2,3,6</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="DTSMethod236" type="cat_EDTS_cu:DTSMethod236Type">
+          <xs:annotation>
+            <xs:documentation>Подробности расчета таможенной стоимости по методу  стоимости сделки с идентичными товарами и резервного на их основе.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="DTSMethod46" type="cat_EDTS_cu:DTSMethod46Type">
+          <xs:annotation>
+            <xs:documentation>Резервный метод на основе метода вычитания. (4,6)</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="DTS4Method56" type="cat_EDTS_ru:DTS4Method56Type">
+          <xs:annotation>
+            <xs:documentation>Подробности расчета таможенной стоимости по методу 5,6</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="DTSMethod1" type="cat_EDTS_cu:DTSMethod1Type">
+          <xs:annotation>
+            <xs:documentation>Подробности расчета таможенной стоимости по ДТС-1 методу 1; ДТ-2 метод 6 на основе метода 1</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DTSinFilledPersonType">
+    <xs:annotation>
+      <xs:documentation>ДТС. внутренний формат. Сведения о лице, заполнившем ДТС.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_EDTS_cu:DTSFilledPersonType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="LNP" type="clt_ru:LNPIDType">
+            <xs:annotation>
+              <xs:documentation>Личная номерная печать должностного лица таможенного органа.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DTSinGoodsCustomsCostType">
+    <xs:annotation>
+      <xs:documentation>Внутренний формат ДТС. Расчет таможенной стоимости по товару.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SheetNumber" type="clt_ru:SheetNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер листа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SheetGoodsSerialNumber" type="clt_ru:DigitalIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер товара на листе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="MethodNumberCode" type="cltESAD_cu:CustomsCostAppraiseMethodType">
+        <xs:annotation>
+          <xs:documentation>Номер метода. (Заполняется в соответствии с классификатором методов определения таможенной стоимости товаров, помещаемых под таможенные режимы, применимые к ввозимым товарам.)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="BaseMethodNumberCode" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Номер базового метода</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="GTDGoodsNumber" type="clt_ru:Count5Type">
+        <xs:annotation>
+          <xs:documentation>Номер товара по ДТ/списку </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="GoodsTNVEDCode" type="clt_ru:GoodsNomenclatureCodeType">
+        <xs:annotation>
+          <xs:documentation>Код товара по ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="NationalDeclaredCustomsCost" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Заявленная таможенная стоимость в национальной валюте</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DollarDeclaredCustomsCost" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Заявленная таможенная стоимость в долларах США</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="GoodsAddTNVEDCode" type="clt_ru:CodeVariable4Type">
+        <xs:annotation>
+          <xs:documentation>Код товара по классификатору дополнительной таможенной информации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="GoodsCancelingDecision" type="cat_EDTS_ru:CustomsCostDecisionType">
+        <xs:annotation>
+          <xs:documentation>Решение об аннулировании или отзыве ДТС по товару.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="IntermediateCustomsCostDecision" type="DTSin:IntermediateCustomsCostDecisionType">
+        <xs:annotation>
+          <xs:documentation>Принятие промежуточного решения по ТС.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="FinalCustomsCostDecision" type="cat_EDTS_ru:CustomsCostDecisionType">
+        <xs:annotation>
+          <xs:documentation>Принятие окончательного решения по ТС.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CustomsCostCalculation" type="DTSin:CustomsCostCalculationType">
+        <xs:annotation>
+          <xs:documentation>Расчет таможенной стоимости</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="DTSinCurrencyPayment" type="cat_EDTS_cu:DTSCurrencyPaymentType">
+        <xs:annotation>
+          <xs:documentation>Информация  по сумме оплаты в валюте.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="AdditionalData" type="cat_EDTS_cu:AdditionalDataType">
+        <xs:annotation>
+          <xs:documentation>Дополнительная информация, для которой не предусмотрено специальных элементов.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DTSinOfficialMarksType">
+    <xs:annotation>
+      <xs:documentation>Внутренний формат  ДТС. Служебные отметки.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_EDTS_ru:DTSOfficialMarkType">
+        <xs:sequence>
+          <xs:element name="RecordSerialNumber" type="clt_ru:Count3Type">
+            <xs:annotation>
+              <xs:documentation>Порядковый номер записи</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DTSinTechMarksType">
+    <xs:annotation>
+      <xs:documentation>ДТС. Внутренний формат.Технологические отметки.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ModificationDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата последнего внесения изменений в документ.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ModificationTime" type="clt_ru:TimeCustType">
+        <xs:annotation>
+          <xs:documentation>Время последнего внесения изменений в ДТС.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="IntermediateCustomsCostDecisionType">
+    <xs:annotation>
+      <xs:documentation>Принятие промежуточного решения по ТС.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DecisionCode" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Код решения о таможенной стоимости</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Term" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Срок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LNP" type="clt_ru:LNPIDType">
+        <xs:annotation>
+          <xs:documentation>ЛНП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateInf" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DecisionDescription" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Описание принятого решения.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

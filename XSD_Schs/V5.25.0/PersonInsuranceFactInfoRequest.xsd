@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:pif="urn:customs.ru:Information:SQDocuments:PersonInsuranceFactInfoRequest:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:PersonInsuranceFactInfoRequest:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос сведений о факте страхования по обязательному медицинскому страхованию гражданина Российской Федерации</xs:documentation>
+  </xs:annotation>
+  <xs:element name="PersonInsuranceFactInfoRequest" type="pif:PersonInsuranceFactInfoRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений о факте страхования по обязательному медицинскому страхованию гражданина Российской Федерации</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="PersonInsuranceFactInfoRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений о факте страхования по обязательному медицинскому страхованию гражданина Российской Федерации</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="FamilyName" type="pif:rus-40">
+            <xs:annotation>
+              <xs:documentation>Фамилия</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="FirstName" type="pif:rus-40">
+            <xs:annotation>
+              <xs:documentation>Имя</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Patronymic" type="pif:rus-40" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Отчество</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BirthDate" type="CategoryCust:DateCategoriesCust">
+            <xs:annotation>
+              <xs:documentation>Дата рождения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IdentityDocument" type="pif:IdentityDocumentType">
+            <xs:annotation>
+              <xs:documentation>Документ, удостоверяющий личность</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SNILS" type="pif:SNILSType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>СНИЛС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009266E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="IdentityDocumentType">
+    <xs:annotation>
+      <xs:documentation>Документ, удостоверяющий личность</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocType" type="pif:DocTypeType">
+        <xs:annotation>
+          <xs:documentation>Код типа документа удостоверяющего личность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocSer" type="pif:DocSerType">
+        <xs:annotation>
+          <xs:documentation>Серия документа удостоверяющего личность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocNum" type="pif:DocNumType">
+        <xs:annotation>
+          <xs:documentation>Номер документа удостоверяющего личность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="rus-40">
+    <xs:annotation>
+      <xs:documentation>Буквы русского алфавита, длиной до 40 символов, цифры не допускаются.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="40" />
+      <xs:pattern value="[а-яА-ЯёЁ\-\s,.]{1,40}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SNILSType">
+    <xs:annotation>
+      <xs:documentation>СНИЛС</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:length value="11" />
+      <xs:pattern value="\d{11}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DocTypeType">
+    <xs:annotation>
+      <xs:documentation>Код типа документа удостоверяющего личность</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="2" />
+      <xs:pattern value="\d{1,2}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DocSerType">
+    <xs:annotation>
+      <xs:documentation>Серия документа удостоверяющего личность</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:normalizedString">
+      <xs:minLength value="1" />
+      <xs:maxLength value="10" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DocNumType">
+    <xs:annotation>
+      <xs:documentation>Номер документа удостоверяющего личность</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="20" />
+      <xs:pattern value="\d{1,20}" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

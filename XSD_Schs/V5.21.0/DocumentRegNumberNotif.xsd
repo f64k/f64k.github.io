@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:drnn="urn:customs.ru:Information:ExchangeDocuments:DocumentRegNumberNotif:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:ExchangeDocuments:DocumentRegNumberNotif:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Уведомление о регистрации документа (пакета документов)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="DocumentRegNumberNotif" type="drnn:DocumentRegNumberNotifType" />
+  <xs:complexType name="DocumentRegNumberNotifType">
+    <xs:annotation>
+      <xs:documentation>Уведомление о регистрации документа (пакета документов)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocumentRegNumber" type="clt_ru:DocumentNumberType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Уникальный номер документа (пакета документов)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TDTSOpenVVRegNumber" type="drnn:TDTSOpenVVRegNumberType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер документа открытия временного ввоза</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1004111E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="TDTSOpenVVRegNumberType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер документа открытия временного ввоза</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:GTDIDType">
+        <xs:sequence>
+          <xs:element name="TransportIdentifier" type="clt_ru:TransportMeansIDType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Идентификационный номер ТСМП (VIN (номера кузова) ТС, бортового номера воздушного судна, идентификационного номера ЖД ТСМП и т.п.)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

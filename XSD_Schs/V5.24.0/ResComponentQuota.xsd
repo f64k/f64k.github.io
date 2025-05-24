@@ -1,0 +1,422 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:cltESAD_cu="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" xmlns:catESAD_cu="urn:customs.ru:CUESADCommonAggregateTypesCust:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:recqu="urn:customs.ru:Information:CustomsDocuments:ResComponentQuota:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:ResComponentQuota:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonAggregateTypesCust:5.24.0" schemaLocation="CUESADCommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" schemaLocation="CUESADCommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Результат резервирования/списания/аннулирования квоты по компонентам товаров в несобранном виде</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ResComponentQuota" type="recqu:ResComponentQuotaType">
+    <xs:annotation>
+      <xs:documentation>Результат резервирования/списания/аннулирования квоты или остаток по компонентам товаров в несобранном виде</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ResComponentQuotaType">
+    <xs:annotation>
+      <xs:documentation>Результат резервирования/списания/аннулирования квоты по компонентам товаров в несобранном виде</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocType" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Тип документа: 0 - результат резевирования квоты, 1 - результат списания квоты, 2 - результат аннулирования списания квоты, 4 - результат отказа инспектора в списании  компонентов </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ResDateTime" type="clt_ru:DateTimeCustType">
+            <xs:annotation>
+              <xs:documentation>Дата и время результата</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GTDID" type="cat_ru:GTDIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ResultCode" type="clt_ru:CodeVariable8Type">
+            <xs:annotation>
+              <xs:documentation>Результат действия:
+0 - успешно
+1 - ошибка выполнения
+2 - решение не найдено
+3 - решение не действует
+4 - несоответствие товара решению	
+5 - критичные несоответствия в компонентах
+6 - квота отсутствует
+7 - требуется решение инспектора (товар или компонент)
+8 - при подаче ДТ с ЗПК, ППК есть остатки
+9 - при подаче ОКТ, ПКТ остатки исчерпаны
+</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ResultDescription" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Текстовое описание ошибки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ClassificationDecision" type="recqu:ClassificationDecisionType">
+            <xs:annotation>
+              <xs:documentation>Решения о классификации товара в несобранном или разобранном виде </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1051011E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ClassificationDecisionType">
+    <xs:annotation>
+      <xs:documentation>Решение о классификации</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsNumber" type="clt_ru:Count3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер товара в ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ClassDecNum" type="cat_ru:DocumentBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FoundDecNum" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак нахождения решения в БД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CompareDirection" type="recqu:CompareDirectionType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат сверки направления перемещения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CompareMode" type="recqu:CompareModeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат сверки таможенной процедуры</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CompareKind" type="recqu:CompareKindType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат Код особенности декларирования товаров </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CompareTNVED" type="recqu:CompareTNVEDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат сверки кода ТНВЭД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CompareContract" type="recqu:CompareContractType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат сверки контракта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CompareDescription" type="recqu:CompareDescriptionType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат сверки описания товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CompareCustoms" type="recqu:CompareCustomsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат сверки кода контролирующего ТО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CompareINN" type="recqu:CompareINNType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат сверки ИНН заявителя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CompareResult" type="recqu:CompareResultType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Результаты контроля товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Components" type="recqu:ComponentsType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о компонентах</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ComponentsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товарах</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Number" type="clt_ru:Count5Type">
+        <xs:annotation>
+          <xs:documentation>Номер по порядку</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FoundComp" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак нахождения компонента в БД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CompareCompName" type="recqu:CompareCompNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат сверки наименования компонента</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IDNumber" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Сборочный номер компонента</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KGWeight" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вес компонента в кг (в ДТ)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SupplementaryQuantity" type="catESAD_cu:SupplementaryQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество компонента и единицы измерения (в ДТ)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CompareMeasureUnit" type="recqu:CompareMeasureUnitType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат сверки единиц измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BalanceWeight" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Остаток в кг после выполнения запроса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BalanceQuantity" type="catESAD_cu:SupplementaryQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Остаток компонента после выполнения запроса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CompareResult" type="recqu:CompareResultType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Результаты контроля компонента</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GTDID" type="cat_ru:GTDIDType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Номера ДТ, по которым производились списания</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GTDIDRes" type="cat_ru:GTDIDType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Номера ДТ, по которым производилось резервирование без списания</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CompareResType">
+    <xs:annotation>
+      <xs:documentation>Результат контроля</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="InspResCode" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Код результата контроля: 0 -  соответствует; 1 - не соответствует; 2 - требуется решение инспектора </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Item" type="clt_ru:CodeVariable20Type">
+        <xs:annotation>
+          <xs:documentation>Код критерия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ItemName" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование критерия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CompareDirectionType">
+    <xs:annotation>
+      <xs:documentation>Результат сверки направления перемещения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="InspResCode" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Код результата контроля: 0 -  соответствует; 1 - не соответствует; 2 - требуется решение инспектора </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Direction" type="clt_ru:Code2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Направление перемещения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CompareModeType">
+    <xs:annotation>
+      <xs:documentation>Результат сверки таможенной процедуры</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="InspResCode" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Код результата контроля: 0 -  соответствует; 1 - не соответствует; 2 - требуется решение инспектора </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsModeCode" type="cltESAD_cu:CustomsModeCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Таможенная процедура</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CompareKindType">
+    <xs:annotation>
+      <xs:documentation>Результат сверки кода особенности декларирования товаров </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="InspResCode" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Код результата контроля: 0 -  соответствует; 1 - не соответствует; 2 - требуется решение инспектора </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DeclarationKind" type="cltESAD_cu:CustomsDeclarationKindType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Код особенности декларирования товаров </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CompareTNVEDType">
+    <xs:annotation>
+      <xs:documentation>Результат сверки кода ТНВЭД</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="InspResCode" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Код результата контроля: 0 -  соответствует; 1 - не соответствует; 2 - требуется решение инспектора </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsTNVEDCode" type="clt_ru:CUGoodsNomenclatuerCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код товара по ТН ВЭД ЕАЭС из Решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CompareContractType">
+    <xs:annotation>
+      <xs:documentation>Результат сверки контракта</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="InspResCode" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Код результата контроля: 0 -  соответствует; 1 - не соответствует; 2 - требуется решение инспектора </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Contract" type="cat_ru:DocumentBaseType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Реквизиты контракта из Решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CompareDescriptionType">
+    <xs:annotation>
+      <xs:documentation>Результат сверки описания товара</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="InspResCode" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Код результата контроля: 0 -  соответствует; 1 - не соответствует; 2 - требуется решение инспектора </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание товара из Решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CompareCompNameType">
+    <xs:annotation>
+      <xs:documentation>Результат сверки наименования компонента</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="InspResCode" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Код результата контроля: 0 -  соответствует; 1 - не соответствует; 2 - требуется решение инспектора </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CompName" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Наименование компонента из Решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CompareCustomsType">
+    <xs:annotation>
+      <xs:documentation>Результат сверки код контролирующего ТО</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="InspResCode" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Код результата контроля: 0 -  соответствует; 1 - не соответствует; 2 - требуется решение инспектора </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код контролирующего ТО из Решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CompareINNType">
+    <xs:annotation>
+      <xs:documentation>Результат сверки ИНН заявителя</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="InspResCode" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Код результата контроля: 0 -  соответствует; 1 - не соответствует; 2 - требуется решение инспектора </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INN" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН заявителя из Решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CompareMeasureUnitType">
+    <xs:annotation>
+      <xs:documentation>Результат сверки единиц измерения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="InspResCode" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Код результата контроля: 0 -  соответствует; 1 - не соответствует; 2 - требуется решение инспектора </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MeasureUnitQualifierCode" type="cltESAD_cu:MeasureUnitQualifierCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код единицы измерения из Решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CompareResultType">
+    <xs:annotation>
+      <xs:documentation>Результат сверки параметра</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="recqu:CompareResType">
+        <xs:sequence>
+          <xs:element name="CompareResText" type="clt_ru:FreeText500Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сверяемый параметр из Решения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

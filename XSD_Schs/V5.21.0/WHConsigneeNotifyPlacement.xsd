@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:catWH_ru="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonAggregateTypesCust:5.21.0" xmlns:whcnp="urn:customs.ru:Information:WarehouseDocuments:WHConsigneeNotifyPlacement:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:WarehouseDocuments:WHConsigneeNotifyPlacement:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonAggregateTypesCust:5.21.0" schemaLocation="WarehouseCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Уведомление грузополучателем (иным уполномоченным лицом) таможенного органа о помещении товаров на временное хранение</xs:documentation>
+  </xs:annotation>
+  <xs:element name="WHConsigneeNotifyPlacement" type="whcnp:WHConsigneeNotifyPlacementType">
+    <xs:annotation>
+      <xs:documentation>Уведомление грузополучателем (иным уполномоченным лицом) таможенного органа о помещении товаров на временное хранение</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="WHConsigneeNotifyPlacementType">
+    <xs:annotation>
+      <xs:documentation>Уведомление грузополучателем (иным уполномоченным лицом) таможенного органа о помещении товаров на временное хранение</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="NotifyDateTime" type="clt_ru:DateTimeCustType">
+            <xs:annotation>
+              <xs:documentation>Дата и время уведомления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Consignee" type="whcnp:NotifyConsigneeType">
+            <xs:annotation>
+              <xs:documentation>Сведения о получателе (ином уполномоченном лице), уведомляющем ТО о помещении товаров на ВХ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Carrier" type="catWH_ru:WHCarrierType">
+            <xs:annotation>
+              <xs:documentation>Сведения о перевозчике, предоставлявшем документы в ТО в месте прибытия / доставки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Warehouse" type="catWH_ru:WarehouseOwnerType">
+            <xs:annotation>
+              <xs:documentation>Сведения о СВХ, на котором предполагается разместить товары</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:annotation>
+              <xs:documentation>Идентификация товарной партии, помещаемой на ВХ</xs:documentation>
+            </xs:annotation>
+            <xs:element name="PI_RegID" type="clt_ru:DocumentIDType">
+              <xs:annotation>
+                <xs:documentation>Регистрационный идентификатор предварительной информации</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="SubmittedDocs" type="catWH_ru:WhBillDocumentType" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>Товаро-транспортный документ, представленный перевозчиком при прибытии / при завершении доставки</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+          <xs:element name="KeepingReason" type="whcnp:WHKeepingReasonType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Причины помещения на ВХ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1008038E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="NotifyConsigneeType">
+    <xs:annotation>
+      <xs:documentation>Комплексный тип для описания лица, уведомляющего о помещении товаров на ВХ</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="catWH_ru:ConsigneeType">
+        <xs:sequence>
+          <xs:element name="ConsigneePerson" type="cat_ru:PersonBaseType">
+            <xs:annotation>
+              <xs:documentation>Представитель лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="WHKeepingReasonType">
+    <xs:annotation>
+      <xs:documentation>Комплексный тип для описания причин размещения товаров на временном хранении</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ReasonText" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Текстовое описание причин</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WHContract" type="whcnp:WHKeepingContractType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Реквизиты договора на ВХ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="WHKeepingContractType">
+    <xs:annotation>
+      <xs:documentation>Комплексный тип для описания договора на оказание услуг по временному хранению</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType" />
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

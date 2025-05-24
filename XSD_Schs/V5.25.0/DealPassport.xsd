@@ -1,0 +1,386 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:dep="urn:customs.ru:Information:CommercialFinanceDocuments:DealPassport:5.24.0" targetNamespace="urn:customs.ru:Information:CommercialFinanceDocuments:DealPassport:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Паспорт сделки (ПС) </xs:documentation>
+  </xs:annotation>
+  <xs:element name="DealPassport" type="dep:DealPassportType" />
+  <xs:complexType name="DealPassportType">
+    <xs:annotation>
+      <xs:documentation>Паспорт сделки (ПС) - документ валютного контроля,  предназначенный для осуществления контроля за вывозимыми с территории Российской Федерации товарами</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="BankName" type="clt_ru:NameType">
+            <xs:annotation>
+              <xs:documentation>Наименование банка</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DPNumber" type="dep:DPNumberType">
+            <xs:annotation>
+              <xs:documentation>Номер паспорта сделки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AnotherBankDPNumber" type="dep:DPNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер паспорта сделки, оформленного в другом банке</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DPoldNumber" type="dep:DPoldNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер паспорта сделки, оформленного до 18.06.2004</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Resident" type="dep:ResidentType">
+            <xs:annotation>
+              <xs:documentation>Сведения о резиденте</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ForeignContractor" type="dep:ForeignContractorType">
+            <xs:annotation>
+              <xs:documentation>Реквизиты иностранного контрагента</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ContractTerms" type="dep:ContractTermsType">
+            <xs:annotation>
+              <xs:documentation>Общие сведения о контракте</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AddContractTerms" type="dep:AddContractTermsType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения об изменениях/дополнениях к контракту</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Permissions" type="dep:PermissionsType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Информация о разрешениях</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BankSignature" type="cat_ru:PersonSignatureType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Подпись со стороны банка</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ResidentSignature" type="cat_ru:PersonSignatureType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Подпись резидента</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DPEnd" type="dep:DPEndType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Информация о закрытии ПС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DPReMade" type="dep:DPReMadeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Информация о переоформлении ПС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SpecialInformation" type="dep:SpecialInformationType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Специальные сведения о контракте</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1002015E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AddContractTermsType">
+    <xs:annotation>
+      <xs:documentation>Дополнительные сведения о контракте</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="dep:TermsType">
+        <xs:sequence>
+          <xs:element name="Amount" type="clt_ru:AmountType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Общая сумма сделки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CurrencyCode" type="clt_ru:CurrencyA3CodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код валюты контракта (цены)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AdditionalInformation" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Дополнительная информация. Указывается только в электронном виде.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="WS" type="clt_ru:DigitalIndicatorType">
+            <xs:annotation>
+              <xs:documentation>1 - "Без суммы"</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ContractTermsType">
+    <xs:annotation>
+      <xs:documentation>Общие сведения о контракте</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="dep:TermsType">
+        <xs:sequence>
+          <xs:element name="Amount" type="clt_ru:AmountType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Общая сумма сделки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CurrencyCode" type="clt_ru:CurrencyA3CodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код валюты контракта (цены)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="WS" type="clt_ru:DigitalIndicatorType">
+            <xs:annotation>
+              <xs:documentation>1 - "Без суммы"</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CurrencyName" type="clt_ru:CurrencyNameType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Краткое наименование валюты контракта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DPEndType">
+    <xs:annotation>
+      <xs:documentation>Информация о закрытии ПС</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Date" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата закрытия ПС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Reason" type="clt_ru:Text10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Основание для закрытия ПС (указывается номер подпункта 3.18.1 - 3.18.3 пункта 3.18 Инструкции ЦБ РФ от 15.06.2004 г. N 117-И, на основании которого закрывается ПС)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DPNumberType">
+    <xs:annotation>
+      <xs:documentation>Номер паспорта сделки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Part1" type="clt_ru:Code8Type">
+        <xs:annotation>
+          <xs:documentation>Номер ПС - часть 1. 2 знака - две последние цифры года, в котором оформлен ПС, 2 знака - номер месяца в котором оформлен ПС, 4 знака - порядковый номер оформленного банком ПС в течение календарного месяца по виду контракта, код которого указан в третьей части номера ПС.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Part2" type="clt_ru:Code4Type">
+        <xs:annotation>
+          <xs:documentation>Номер ПС - часть 2. Регистрационный номер банка.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Part3" type="clt_ru:Code4Type">
+        <xs:annotation>
+          <xs:documentation>Номер ПС - часть 3. Регистрационный номер филиала банка. При отсутствии филиала выставляется "0000".</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Part4" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Номер ПС - часть 4. Вид контракта (кредитного договора) - согласно инструкции ЦБ РФ от 15.06.2004 г.  N 117-И.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Part5" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Номер ПС - часть 5.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IssueDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата подписания Паспорта сделки ответственным лицом банка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DPReMadeType">
+    <xs:annotation>
+      <xs:documentation>Информация о переоформлении ПС</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocumentNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер переоформления ПС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Date" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата переоформления ПС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DPoldNumberType">
+    <xs:annotation>
+      <xs:documentation>Номер паспорта сделки, оформленного до 18.06.2004</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TypeOfDP" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Тип ПС: 1 - экспорт, 2 - импорт.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BankOKPO" type="clt_ru:OKPOIDType">
+        <xs:annotation>
+          <xs:documentation>Номер банка (подразделения), оформившего ПС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OldReNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер, присвоенный ПС при переоформлении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OldPart4" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Четвертая часть номера ПС из десяти цифр</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ForeignContractorType">
+    <xs:annotation>
+      <xs:documentation>Реквизиты иностранного контрагента</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Name" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование иностранного контрагента</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код страны регистрации контрагента</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryName" type="clt_ru:CountryNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование страны</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PermissionsType">
+    <xs:annotation>
+      <xs:documentation>Информация о разрешениях</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocumentNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер разрешения. В случае отсутствия номера ставиться "б/н"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IssueDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата разрешения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Summa" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сумма разрешенной операции в валюте цены</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PermitEndDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата окончания действия разрешения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ResidentType">
+    <xs:annotation>
+      <xs:documentation>Сведения о резиденте</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:OrganizationBaseType">
+        <xs:sequence>
+          <xs:element name="RegDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата внесения записи в государственный реестр</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ResidentAddress" type="cat_ru:AddressType">
+            <xs:annotation>
+              <xs:documentation>Описание адреса резидента</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SpecialInformationType">
+    <xs:annotation>
+      <xs:documentation>Специальные сведения о контракте</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ContractTerms" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Условия о сроках и порядке расчетов по контракту</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Term" type="clt_ru:CodeVariable4Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отсрочка платежа/предварительная оплата (0000, НДАН, либо количество дней)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="List2IssueDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата оформления листа 2</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TermsType">
+    <xs:annotation>
+      <xs:documentation>Общие сведения о контракте, дополнениях/изменениях</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="ContractEndDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата завершения исполнения обязательств по контракту</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SpecialTerms1" type="clt_ru:AmountType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Особые условия - сумма подлежащая зачислению на счета за рубежом</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SpecialTerms2" type="clt_ru:LetterIndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Особые условия - валютная оговорка</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SpecialTerms3" type="clt_ru:LetterIndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Особые условия - ввоз/вывоз товаров, указанных в разделах XVI, XVII и XIX ТН ВЭД ЕАЭС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SpecialTerms4" type="clt_ru:LetterIndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Особые условия - проведение строительных и подрядных работ за пределами территории РФ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

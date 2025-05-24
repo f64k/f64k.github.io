@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:cltTrans_ru="urn:customs.ru:Information:TransportDocuments:TransportCommonLeafTypesCust:5.14.3" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:nofa="urn:customs.ru:Information:TransportDocuments:Railway:NotifFactArrival:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:TransportDocuments:Railway:NotifFactArrival:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:TransportDocuments:TransportCommonLeafTypesCust:5.14.3" schemaLocation="TransportCommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Уведомление о фактической подаче железнодорожного состава на ЖДПП</xs:documentation>
+  </xs:annotation>
+  <xs:element name="NotifFactArrival" type="nofa:NotifFactArrivalType" />
+  <xs:complexType name="NotifFactArrivalType">
+    <xs:annotation>
+      <xs:documentation>Уведомление о фактической подаче железнодорожного состава на ЖДПП</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocumentSign" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Признак документа: 0 - уведомление об убытии; 1 - уведомление о прибытии</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="URN" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Уникальный идентификационный номер пакета электронных документов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NotifDate" type="clt_ru:DateTimeCustType">
+            <xs:annotation>
+              <xs:documentation>Дата прибытия/убытия железнодорожного состава</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Customs" type="cat_ru:CUCustomsType">
+            <xs:annotation>
+              <xs:documentation>Сведения о таможенном органе убытия/прибытия</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DestinationStation" type="nofa:RailwayStationType">
+            <xs:annotation>
+              <xs:documentation>Станция назначения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DepartureStation" type="nofa:RailwayStationType">
+            <xs:annotation>
+              <xs:documentation>Станция отправления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Transport" type="cat_ru:TransportMeansBaseType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о транспортных средствах</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Seal" type="nofa:SealType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о средствах идентификации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TD" type="cat_ru:GTDIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер транзитной декларации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1003405E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="RailwayStationType">
+    <xs:annotation>
+      <xs:documentation>Сведения о ж.д. станции</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RailwayStationName" type="clt_ru:PlaceNameType">
+        <xs:annotation>
+          <xs:documentation>Наименование станции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RailwayStationCode" type="clt_ru:RailwayStationCodeType">
+        <xs:annotation>
+          <xs:documentation>Код станции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RailwayCode" type="cltTrans_ru:RailwayCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код железнодорожной дороги </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SealType">
+    <xs:annotation>
+      <xs:documentation>Сведения о средствах идентификации</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="IdentNumber" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Номер наложенного средства идентификации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdentKind" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Вид средств идентификации: 1 - пломба, 2 - печать, 3 - иное</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdentDesc" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Примечание по средству идентификации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Quantity" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

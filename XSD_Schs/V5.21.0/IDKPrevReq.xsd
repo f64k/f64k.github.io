@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:idkr="urn:customs.ru:Information:CustomsDocuments:IDKPrevReq:5.21.0" xmlns:ATDcat="urn:customs.ru:Information:CustomsDocuments:ATDCommon:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:IDKPrevReq:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:CustomsDocuments:ATDCommon:5.21.0" schemaLocation="ATDCommon.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос на наличие/предоставление результатов ранее проведенного осмотра с ИДК и наличия технических возможностей</xs:documentation>
+  </xs:annotation>
+  <xs:element name="IDKPrevReq" type="idkr:IDKPrevReqType" />
+  <xs:complexType name="IDKPrevReqType">
+    <xs:annotation>
+      <xs:documentation>Запрос на наличие/предоставление результатов ранее проведенного осмотра с ИДК и наличия технических возможностей</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="InspectionDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Предположительная дата осмотра</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="InspectionTime" type="clt_ru:TimeCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Предположительное время осмотра</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Customs" type="cat_ru:CustomsType">
+            <xs:annotation>
+              <xs:documentation>Таможенный орган оформления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IDKCustoms" type="cat_ru:CustomsType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Таможенные  органы, приближенные к объекту осмотра</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsOfficer" type="RUScat_ru:CustomsPersonDetails" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsProcedure" type="clt_ru:Code2Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Направление перемещения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustDocNumber" type="ATDcat:CustDocNumberType">
+            <xs:annotation>
+              <xs:documentation>Номер таможенного документа, по которому необходимо произвести осмотр</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PrevDocNumber" type="ATDcat:CustDocNumberType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Номера предшествующих таможенных документов, по которым осмотр мог производиться</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PrevTransportIdentifier" type="clt_ru:TransportMeansIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер транспортного средства для поиска предшествующих осмотров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PrevDocuments" type="idkr:InspDocumentsType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Номера сопроводительных документов для поиска предшествующих осмотров </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ContainerIdentificaror" type="clt_ru:ContainerIdentityType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Номера  контейнеров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="INNParticipant" type="idkr:INNParticipantType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения об участниках ВЭД</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006240E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="InspDocumentsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о документах</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="PresentedDocumentModeCode" type="clt_ru:CustomsDocumentCodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код вида представляемого документа. </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="INNParticipantType">
+    <xs:annotation>
+      <xs:documentation>ИНН участника ВЭД</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="INNConsignor" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН отправителя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INNConsignee" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН получателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INNCarrier" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН перевозчика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+</xs:schema>

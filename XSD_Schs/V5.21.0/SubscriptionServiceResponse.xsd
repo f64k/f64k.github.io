@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:ssr="urn:customs.ru:Information:SQDocuments:SubscriptionServiceResponse:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" targetNamespace="urn:customs.ru:Information:SQDocuments:SubscriptionServiceResponse:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Ответ подписки на предоставление уведомлений</xs:documentation>
+  </xs:annotation>
+  <xs:element name="SubscriptionServiceResponse" type="ssr:SubscriptionServiceResponseType">
+    <xs:annotation>
+      <xs:documentation>Ответ подписки на предоставление уведомлений</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="SubscriptionServiceResponseType">
+    <xs:annotation>
+      <xs:documentation>Ответ подписки на предоставление уведомлений</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="ID" type="clt_ru:Text50Type">
+            <xs:annotation>
+              <xs:documentation>Идентификатор ответа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Rgid" type="clt_ru:Text50Type">
+            <xs:annotation>
+              <xs:documentation>Идентификатор запроса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RecipientIdentifier" type="ssr:URNType">
+            <xs:annotation>
+              <xs:documentation>УРН участника-получателя</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Timestamp" type="clt_ru:DateTimeCustType">
+            <xs:annotation>
+              <xs:documentation>Дата и время формирования сообщения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:element name="CreateSubscriptionResult" type="ssr:CreateSubscriptionResultType">
+              <xs:annotation>
+                <xs:documentation>Ответ с результатом обработки запроса о подписке (изменении/удалении подписки) участника</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="Subscriptions" type="ssr:SubscriptionsType" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>Варианты уведомлений, доступные участнику для оформления подписки</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009329E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CreateSubscriptionResultType">
+    <xs:annotation>
+      <xs:documentation>Ответ с результатом обработки запроса о подписке (изменении/удалении подписки) участника</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DispatchDate" type="clt_ru:DateTimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата и время добавления/удаления подписки или изменения значений параметров (группы параметров) подписки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExpiryDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата автоматического окончания срока действия значений параметров подписки в ГИС ГМП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SubscriptionCode" type="ssr:SubscriptionCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код варианта уведомлений</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SubscriptionIdentifier" type="ssr:SubscriptionIdType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор подписки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SubscriptionProtocol" type="ssr:SubscriptionProtocolType" maxOccurs="250">
+        <xs:annotation>
+          <xs:documentation>Результат обработки запроса о подписке или уточнения/удаления подписки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SubscriptionParameterType">
+    <xs:annotation>
+      <xs:documentation>Перечень параметров, значения которых необходимо указать при оформлении подписки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ParameterCode" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Код параметра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ParameterName" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Наименование параметра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ParameterPattern" type="ssr:FreeText2000Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Формат параметра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Required" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак обязательности параметра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ParameterDescription" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="4">
+        <xs:annotation>
+          <xs:documentation>Описание дополнительных ограничений для значений параметра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SubscriptionProtocolType">
+    <xs:annotation>
+      <xs:documentation>Результат обработки запроса о подписке или уточнения/удаления подписки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ParameterId" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор значения параметра (группы параметров)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Code" type="ssr:CodeType">
+        <xs:annotation>
+          <xs:documentation>Код результата обработки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Description" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Описание результата обработки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SubscriptionsType">
+    <xs:annotation>
+      <xs:documentation>Варианты уведомлений, доступные участнику для оформления подписки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SubscriptionCode" type="ssr:SubscriptionCodeType">
+        <xs:annotation>
+          <xs:documentation>Код варианта уведомлений</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SubscriptionName" type="ssr:FreeText2000Type">
+        <xs:annotation>
+          <xs:documentation>Наименование варианта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SubscriptionOperation" type="ssr:FreeText2000Type">
+        <xs:annotation>
+          <xs:documentation>Описание типа уведомления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SubscriptionParameter" type="ssr:SubscriptionParameterType" maxOccurs="10">
+        <xs:annotation>
+          <xs:documentation>Перечень параметров, значения которых необходимо указать при оформлении подписки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные простые прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="FreeText2000Type">
+    <xs:annotation>
+      <xs:documentation>Текстовая строка. До 2000 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="0" />
+      <xs:maxLength value="2000" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="URNType">
+    <xs:annotation>
+      <xs:documentation>УРН</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:IdentifierCategoriesCust">
+      <xs:pattern value="[0-9a-fA-F]{6}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SubscriptionCodeType">
+    <xs:annotation>
+      <xs:documentation>Код варианта уведомлений</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:pattern value="N[A-Z][0-9]{4}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SubscriptionIdType">
+    <xs:annotation>
+      <xs:documentation>Идентификатор подписки участника</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:IdentifierCategoriesCust">
+      <xs:length value="12" />
+      <xs:pattern value="([0-9a-fA-F]{6})N[A-Z][0-9]{4}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CodeType">
+    <xs:annotation>
+      <xs:documentation>Код результата обработки</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:maxLength value="32" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

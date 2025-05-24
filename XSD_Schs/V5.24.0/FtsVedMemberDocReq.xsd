@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--SQ.00370, СМЭВ - ftsVedMemberDoc-root.xsd (Предоставление электронного документа по субъекту - участнику ВЭД, режим по требованию)-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:vmd_req="urn:customs.ru:Information:SQDocuments:FtsVedMemberDocReq:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:FtsVedMemberDocReq:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос на предоставление электронного документа по субъекту - участнику ВЭД, режим по требованию</xs:documentation>
+  </xs:annotation>
+  <xs:element name="FtsVedMemberDocReq" type="vmd_req:FtsVedMemberDocReqType">
+    <xs:annotation>
+      <xs:documentation>Запрос на предоставление электронного документа по субъекту - участнику ВЭД, режим по требованию</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="FtsVedMemberDocReqType">
+    <xs:annotation>
+      <xs:documentation>Запрос на предоставление электронного документа по субъекту - участнику ВЭД, режим по требованию</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:choice>
+          <xs:sequence>
+            <xs:element name="SubjectIdentifier" type="clt_ru:Text150Type">
+              <xs:annotation>
+                <xs:documentation>Идентификатор субъекта, в отношении которого производится запрос документа</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="InfoTypeCode" type="clt_ru:Code2Type">
+              <xs:annotation>
+                <xs:documentation>Код вида информации (24 - Перечень деклараций на товары; 25 - Разрешительный документ о допущении транспортных средств международной перевозки к перевозке товаров под таможенными пломбами и печатями; 26 - Документ, подтверждающий право использования тарифных преференций; 27 - Перечень сведений о документах, предоставляемых с декларацией на товары)</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:choice>
+              <xs:element name="DocInfo" type="vmd_req:DocInfoType">
+                <xs:annotation>
+                  <xs:documentation>Номер и дата электронного документа</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="DocId" type="clt_ru:DocumentIDType">
+                <xs:annotation>
+                  <xs:documentation>Идентификатор, позволяющий однозначно идентифицировать электронный документ на стороне ФТС России</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:choice>
+          </xs:sequence>
+          <xs:element name="AID" type="vmd_req:AIDType">
+            <xs:annotation>
+              <xs:documentation>Архив юридически значимых документов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:choice>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1060009E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AIDType">
+    <xs:annotation>
+      <xs:documentation>Архив юридически значимых документов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ED_AID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор архива</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ED_ADID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор документа в архиве</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocInfoType">
+    <xs:annotation>
+      <xs:documentation>Номер и дата электронного документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocNumber" type="clt_ru:Text150Type">
+        <xs:annotation>
+          <xs:documentation>Номер электронного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата электронного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

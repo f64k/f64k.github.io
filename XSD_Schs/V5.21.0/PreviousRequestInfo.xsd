@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:pri="urn:customs.ru:Information:CustomsDocuments:PreviousRequestInfo:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:PreviousRequestInfo:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Информация о наличии ранее поступивших запросов от таможенных органов о размещении товаров на СВХ</xs:documentation>
+  </xs:annotation>
+  <xs:element name="PreviousRequestInfo" type="pri:PreviousRequestInfoType" />
+  <xs:complexType name="PreviousRequestInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о наличии ранее поступивших запросов от таможенных органов о размещении товаров на СВХ</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="PreviousRequestSign" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Признак наличия предыдущих запросов о размещении товаров на СВХ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocType" type="clt_ru:CodeVariable2Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Тип взаимодействия: 1 - ДТ, 2 - ТД</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PreviousRequests" type="pri:PreviousRequestsType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о ранее поступивших запросах</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006190E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="PreviousRequestsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о ранее поступивших запросах</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PreviousRequestDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата запроса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PreviousRequestTime" type="clt_ru:TimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Время запроса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Customs" type="cat_ru:CustomsType">
+        <xs:annotation>
+          <xs:documentation>Таможенный орган</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:paycp="urn:customs.ru:Information:ExchangeDocuments:PayConfirmPersonal:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:ExchangeDocuments:PayConfirmPersonal:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Распоряжение об уплате в счет исполнения обязанности физического лица</xs:documentation>
+  </xs:annotation>
+  <xs:element name="PayConfirmPersonal" type="paycp:PayConfirmPersonalType">
+    <xs:annotation>
+      <xs:documentation>Распоряжение об уплате в счет исполнения обязанности физического лица</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="PayConfirmPersonalType">
+    <xs:annotation>
+      <xs:documentation>Распоряжение об уплате в счет исполнения обязанности физического лица</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="ConfirmNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер распоряжения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ConfirmDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата распоряжения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReceiptNum" type="clt_ru:Text150Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Справочный номер квитанции</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DTRegNum" type="paycp:ExpressDocNumberType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер ПТДЭГ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PaymentInfo" type="paycp:PaymentInfoType">
+            <xs:annotation>
+              <xs:documentation>Платежи физического лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Comment" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Примечание</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1004155E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="PayerType">
+    <xs:annotation>
+      <xs:documentation>Личные данные плательщика</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PayerName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>ФИО плательщика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:choice>
+        <xs:element name="INN" type="clt_ru:INNIDType">
+          <xs:annotation>
+            <xs:documentation>ИНН плательщика</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="CountryCode" type="clt_ru:CountryA2CodeType">
+          <xs:annotation>
+            <xs:documentation>Кодовое обозначение страны, выдавшей  удостоверение личности (отлично от RU) </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+      <xs:element name="Passport" type="RUScat_ru:RUIdentityCardType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Удостоверение личности плательщика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaymentInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о платежах</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PayIndicator" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Признак платежа: 0 - распоряжение физического лица об использовании авансовых платежей в счет оплаты квитанции; 1- подтверждение оператором таможенных платежей проведении пользователем операции оплаты платежей</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InvoiceNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер индивидуальной накладной</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Payer" type="paycp:PayerType">
+        <xs:annotation>
+          <xs:documentation>Сведения о фактическом плательщике</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Payments" type="paycp:PaymentsType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Перечень платежей</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TotalAmount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Общая сумма подлежащих к уплате платежей</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaymentsType">
+    <xs:annotation>
+      <xs:documentation>Перечень платежей</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PaymentsKind" type="clt_ru:CUCustomsPaymentCodeType">
+        <xs:annotation>
+          <xs:documentation>Код вида платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentsName" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Amount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма к оплате в рублях</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ExpressDocNumberType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер ПТДЭГ</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:GTDIDType">
+        <xs:sequence>
+          <xs:element name="AddNumber" type="clt_ru:CodeVariable3Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дополнительная составляющая номера </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

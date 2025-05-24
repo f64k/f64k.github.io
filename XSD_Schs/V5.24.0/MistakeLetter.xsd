@@ -1,0 +1,263 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:catWH_ru="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonAggregateTypesCust:5.24.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:ml="urn:customs.ru:Information:WarehouseDocuments:MistakeLetter:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:WarehouseDocuments:MistakeLetter:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonAggregateTypesCust:5.24.0" schemaLocation="WarehouseCommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Письмо владельца СВХ о самостоятельно выявленных ошибках в отчетности по форме ДО-1</xs:documentation>
+  </xs:annotation>
+  <xs:element name="MistakeLetter" type="ml:MistakeLetterType" />
+  <xs:complexType name="MistakeLetterType">
+    <xs:annotation>
+      <xs:documentation>Письмо владельца СВХ о самостоятельно выявленных ошибках в отчетности по форме ДО-1</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="LetterDetails" type="ml:LetterDetailsType">
+            <xs:annotation>
+              <xs:documentation>Сведения о письме</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DO1Report" type="catWH_ru:WareHouseReportLinkDataType">
+            <xs:annotation>
+              <xs:documentation>Сведения об отчете о принятии по форме ДО-1, в отношении которого составлено настоящее Письмо</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="WarehouseOwner" type="catWH_ru:WarehouseOwnerType">
+            <xs:annotation>
+              <xs:documentation>Данные о владельце склада</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MistakesInfo" type="ml:MistakesInfoType">
+            <xs:annotation>
+              <xs:documentation>Сведения о выявленных ошибках</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="WareHousePerson" type="cat_ru:PersonBaseType">
+            <xs:annotation>
+              <xs:documentation>Уполномоченный сотрудник склада, подписавший настоящее Письмо</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1008029E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DocDateMistakeType">
+    <xs:annotation>
+      <xs:documentation>Ошибка в дате документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DateMistakeValue" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Ошибочное значение, указанное в отчете по форме ДО-1</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateValidValue" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Правильное значение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocModeCodeMistakeType">
+    <xs:annotation>
+      <xs:documentation>Ошибка в коде вида документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CodeMistakeValue" type="clt_ru:CodeVariable5Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Ошибочное значение, указанное в отчете по форме ДО-1</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CodeValidValue" type="clt_ru:CodeVariable5Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Правильное значение. Если не указано, то считается, что код должен был отсутствовать вовсе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocNameMistakeType">
+    <xs:annotation>
+      <xs:documentation>Ошибка в наименовании документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="NameMistakeValue" type="clt_ru:DocumentNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Ошибочное значение, указанное в отчете по форме ДО-1</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NameValidValue" type="clt_ru:DocumentNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Правильное значение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocNumberMistakeType">
+    <xs:annotation>
+      <xs:documentation>Ошибка в номере документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="NumberMistakeValue" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Ошибочное значение, указанное в отчете по форме ДО-1</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NumberValidValue" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Правильное значение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LetterDetailsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о письме</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="LetterName" type="clt_ru:DocumentNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование письма (Письмо, Уведомление о выявленных ошибках и т.п.)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LetterNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер письма </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LetterDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата письма </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LetterOrderNumber" type="clt_ru:Count10Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер письма (для первого начиная с единицы), составленного в отношении товаров указанного отчета о принятии, начиная с подачи отчета</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MistakesDescriptionType">
+    <xs:annotation>
+      <xs:documentation>Описание выявленных ошибок</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsDocsMistakes" type="ml:PresentedDocMistakeType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Ошибки в реквизитах таможенных документов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CommercialDocsMistakes" type="ml:PresentedDocMistakeType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Ошибки в реквизитах коммерческих документов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransportDocsMistakes" type="ml:TransportDocMistakeType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Ошибки в реквизитах транспортных документов (в накладных)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MistakesInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о выявленных ошибках</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Date" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата выявления ошибок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Time" type="clt_ru:TimeCustType">
+        <xs:annotation>
+          <xs:documentation>Время выявления ошибок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Reasons" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание причин ошибок и обстоятельств их выявления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MistakesDescription" type="ml:MistakesDescriptionType">
+        <xs:annotation>
+          <xs:documentation>Описание выявленных ошибок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PresentedDocMistakeType">
+    <xs:annotation>
+      <xs:documentation>Комплексный тип для описания выявленной ошибки в реквизитах представленного документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PrDocumentOrderNumber" type="clt_ru:Count10Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер документа в соответствующем списке документов отчета о принятии по форме ДО-1</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocModeCodeMistake" type="ml:DocModeCodeMistakeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Ошибка в коде вида документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocNameMistake" type="ml:DocNameMistakeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Ошибка в наименовании документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocNumberMistake" type="ml:DocNumberMistakeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Ошибка в номере документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocDateMistake" type="ml:DocDateMistakeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Ошибка в дате документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TransportDocMistakeType">
+    <xs:annotation>
+      <xs:documentation>Комплексный тип для описания выявленной ошибки в реквизитах транспортного документа</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ml:PresentedDocMistakeType">
+        <xs:sequence>
+          <xs:element name="WaybillRegNumberMistake" type="ml:WaybillRegNumberMistakeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Ошибка в регистрационном номере накладной</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="WaybillRegNumberMistakeType">
+    <xs:annotation>
+      <xs:documentation>Ошибка в регистрационном номере накладной</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="MistakeValue" type="catWH_ru:TransportDocRegNumType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Ошибочное значение, указанное в отчете по форме ДО-1</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ValidValue" type="catWH_ru:TransportDocRegNumType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Правильное значение. Если не указано, то считается, что регистрационный номер должен был отсутсвовать вовсе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

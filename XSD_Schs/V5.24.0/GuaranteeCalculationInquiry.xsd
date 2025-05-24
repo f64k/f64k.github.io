@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:cltESAD_cu="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" xmlns:catESAD_cu="urn:customs.ru:CUESADCommonAggregateTypesCust:5.24.0" xmlns:grn_cat="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeCommonAggregateTypesCust:5.24.0" xmlns:gclc_inq="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeCalculationInquiry:5.24.0" targetNamespace="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeCalculationInquiry:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+	<xs:import namespace="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" schemaLocation="CUESADCommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CUESADCommonAggregateTypesCust:5.24.0" schemaLocation="CUESADCommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeCommonAggregateTypesCust:5.24.0" schemaLocation="GuaranteeCommonAggregateTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Запрос на расчет сумм обеспечения уплаты таможенных пошлин, налогов</xs:documentation>
+	</xs:annotation>
+	<xs:element name="GuaranteeCalculationInquiry" type="gclc_inq:GuaranteeCalculationInquiryType">
+		<xs:annotation>
+			<xs:documentation>Запрос на расчет сумм обеспечения уплаты таможенных пошлин, налогов</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="GuaranteeCalculationInquiryType">
+		<xs:annotation>
+			<xs:documentation>Запрос на расчет сумм обеспечения уплаты таможенных пошлин, налогов</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="DocumentDateTime" type="clt_ru:DateTimeCustType">
+						<xs:annotation>
+							<xs:documentation>Дата и время формирования электронного документа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SoftInfo" type="clt_ru:Numeric1Type">
+						<xs:annotation>
+							<xs:documentation>ИПС, сформировавшее запрос: 0 - АИС АИСТ-М, 1 - АС КТТ-2, 2 - АПС Личный кабинет, 3 - Постконтроль</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DTNumber" type="gclc_inq:DocNumberType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Регистрационный номер документа к котому требуется расчет</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="IDOU" type="clt_ru:DocumentIDType">
+						<xs:annotation>
+							<xs:documentation>Уникальный идентификатор документа расчета </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="NumOU" type="clt_ru:Count3Type">
+						<xs:annotation>
+							<xs:documentation>Номер расчета по порядку</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomsDirect" type="clt_ru:CUCustomsProcedureType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Направление перемещения ИМ, ЭК</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DeclarationKind" type="cltESAD_cu:CustomsDeclarationKindType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Код особенности декларирования товаров по классификатору особенностей таможенного декларирования товаров. Гр.7 ДТ</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomsProcedure" type="clt_ru:CUCustomsProcedureType">
+						<xs:annotation>
+							<xs:documentation>Код таможенной процедуры (заполняется в соответствии с Классификатором видов таможенных процедур)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CheckDate" type="clt_ru:DateCustType">
+						<xs:annotation>
+							<xs:documentation>Дата применения ставок</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DateLimit" type="clt_ru:DateCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Планируемый срок завершения использования обеспечения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Obligation" type="grn_cat:ObligationType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Код и наименование вида обязательства</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DocSign" type="clt_ru:DigitalIndicatorType">
+						<xs:annotation>
+							<xs:documentation>Признак: 0 - без особенностей; 1 - физ. лица; 2 - таможенный представитель; 3 - с автоматическим выбором максимальных ставок; 4 - сборы в ОУ</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomsOffice" type="cat_ru:CustomsType">
+						<xs:annotation>
+							<xs:documentation>Код таможенного органа, сформировавшего запрос на расчет сумм обеспечения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomsOfficial" type="cat_ru:CustomsPersonType">
+						<xs:annotation>
+							<xs:documentation>Должностное лицо таможенного органа, сформировавшее запрос</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="AmountPaid" type="grn_cat:AmountPaidType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Уплаченные ранее суммы, разбитые по кодам платежей</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TradeCountryCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Буквенный код торгующей страны в соответствии с классификатором стран мира. </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DispatchCountryCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Страна отправления. Буквенный код страны в соответствии с классификатором стран мира</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DestinationCountryCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Страна назначения. Буквенный код страны в соответствии с классификатором стран мира / 00 (неизвестна)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Declarant" type="clt_ru:INNIDType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>ИНН декларанта</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DeclarantOrgName" type="clt_ru:NameType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Наименование декларанта</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="AEORegistryIdDetails" type="catESAD_cu:AEORegistryIdDetailsType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Номер свидетельства о включении в реестр уполномоченных экономических операторов</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomsRepresentative" type="clt_ru:INNIDType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>ИНН таможенного представителя</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="GoodsInfo" type="gclc_inq:GoodsInfoType" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Товарная часть запроса</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Comments" type="clt_ru:FreeText250Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Комментарии о применении льгот/преференций</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1050001E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="CostType">
+		<xs:annotation>
+			<xs:documentation>Цена товара за единицу</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="UnitPrice" type="clt_ru:AmountType">
+				<xs:annotation>
+					<xs:documentation>Цена товара за единицу</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CurrencyCode" type="clt_ru:CurrencyA3CodeType">
+				<xs:annotation>
+					<xs:documentation>Код валюты котировки цены</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MeasureUnitQualifierName" type="clt_ru:MeasureUnitQualifierNameType">
+				<xs:annotation>
+					<xs:documentation>Условное обозначение единицы измерения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MeasureUnitQualifierCode" type="clt_ru:MeasureUnitQualifierCodeType">
+				<xs:annotation>
+					<xs:documentation>Код единицы измерения в соответствии с единицами измерения, применяемыми в ТН ВЭД ЕАЭС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CustomsPaymentCalculationType">
+		<xs:annotation>
+			<xs:documentation>Ставки таможенных платежей и налогов</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="catESAD_cu:CUCustomsPaymentCalculationType">
+				<xs:sequence>
+					<xs:element name="CustomsCountryCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Код страны применения ставки</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="4">
+						<xs:annotation>
+							<xs:documentation>Описание товаров, для которых применима ставка</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="WeightType" type="clt_ru:LetterIndicatorType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Тип веса, как основы начисления (специфическая ставка): 1 - вес НЕТТО; 2- чистый вес НЕТТО; 3 - вес БРУТТО</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="WeightType2" type="clt_ru:LetterIndicatorType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Тип веса, как основы начисления (специфическая ставка): 1 - вес НЕТТО; 2- чистый вес НЕТТО; 3 - вес БРУТТО</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="WeightType3" type="clt_ru:LetterIndicatorType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Тип веса, как основы начисления (специфическая ставка): 1 - вес НЕТТО; 2- чистый вес НЕТТО; 3 - вес БРУТТО</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DocNumberType">
+		<xs:annotation>
+			<xs:documentation>Регистрационный номер исходного документа</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:GTDIDType">
+				<xs:sequence>
+					<xs:element name="AddNumber" type="clt_ru:CodeVariable2Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дополнительная составляющая 3ей части номера (В)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GoodsInfoType">
+		<xs:annotation>
+			<xs:documentation>Товарная часть запроса</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CheckedItem" type="gclc_inq:GuaranteeGoodsType">
+				<xs:annotation>
+					<xs:documentation>Заявленный в ДТ(ТД) товар</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CorrectedItem" type="gclc_inq:GuaranteeGoodsType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Корректируемый товар</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReservedSum" type="clt_ru:AmountType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Общая сумма обеспечения по товару, предполагаемая по текущему расчету</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PreviousOU" type="gclc_inq:PreviousOUType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Ранее зарезервированные суммы обеспечения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GuaranteeGoodsType">
+		<xs:annotation>
+			<xs:documentation>Информация о товаре для расчета сумм обеспечения</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Numeric" type="clt_ru:Count3Type">
+				<xs:annotation>
+					<xs:documentation>Номер товара по порядку</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NumericDT" type="clt_ru:Count3Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер товара в ДТ/ТД</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TNVEDCode" type="clt_ru:CUGoodsNomenclatuerCodeType">
+				<xs:annotation>
+					<xs:documentation>Код товара по ТН ВЭД ЕАЭС (указывается от 6 до 10 знаков)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OriginCountry" type="clt_ru:CountryA2CodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код страны происхождения товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OriginCountrySign" type="clt_ru:Quantity4point2Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Признак страны происхождения - коэффициент, применяющийся к базовой ставке ввозной таможенной пошлины (0; 1; 0.75; 2)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="WeightQuantity" type="clt_ru:QuantityBasisType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Вес товара, нетто (кг)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NetWeightQuantity2" type="clt_ru:QuantityBasisType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Вес товара, нетто без учета всех видов упаковки (кг)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GrossWeightQuantity" type="clt_ru:QuantityBasisType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Вес товара, брутто (кг)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ObligationCode" type="clt_ru:CodeVariable6Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код обязательства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AdditionalCheckSign" type="clt_ru:LetterIndicatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Признак дополнительной проверки для кода обязательства 040440: 1-стоимость+код ТН ВЭД ЕАЭС; 2-стоимость+страна происхождения; 3-страна происхождения+код ТН ВЭД ЕАЭС; 4-стоимость+страна происхождения+код ТН ВЭД ЕАЭС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SupplementaryQuantity" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Количество товара в дополнительной единице измерения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AddSupplementaryQuantity" type="cat_ru:SupplementaryQuantityType" minOccurs="0" maxOccurs="3">
+				<xs:annotation>
+					<xs:documentation>Количество товара в единице измерения, отличной от основной и дополнительной</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Preferencii" type="catESAD_cu:CUPreferenciiType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Преференции (виды льгот)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PrecedingCustomsModeCode" type="cltESAD_cu:CustomsModeCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код предшествующей таможенной процедуры</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FullPartialPayFree" type="clt_ru:LetterIndicatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Отметка о полном/частичном условном освобождении от уплаты таможенных пошлин, налогов при временном ввозе (допуске): 0 - полное освобождение;  1 - частичное освобождение</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TemporaryStorageImportMounth" type="clt_ru:Count2Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Количество полных и неполных месяцев временного ввоза</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Cost" type="gclc_inq:CostType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Цена товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CustomsCost" type="clt_ru:AmountType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Таможенная стоимость товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CostCurrencyCode" type="clt_ru:CurrencyA3CodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код валюты стоимости товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TobaccoCost" type="clt_ru:AmountType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Максимальная розничная цена  всей партии</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TobaccoMax" type="clt_ru:AmountType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Максимальная розничная цена упаковки табачных изделий</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="QuantityTobaccoPack" type="clt_ru:PackagesQuantityType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Количество упаковок табачных изделий (в штуках)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="QuantityPack" type="clt_ru:Quantity4Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Количество сигарет в упаковке</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Concentration" type="clt_ru:ProcentNumericType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Процент содержания этилового спирта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InformationSourceDetails" type="gclc_inq:InformationSourceDetailsType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Сведения об информационном источнике</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RateChoice" type="gclc_inq:CustomsPaymentCalculationType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Выбранные для товара ставки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CheckDateGood" type="clt_ru:DateCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата применения ставок в товаре</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RouteInfo" type="grn_cat:RouteInfoType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Маршрут перевозки при транзите</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InformationSourceDetailsType">
+		<xs:annotation>
+			<xs:documentation>Сведения об информационном источнике</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="InformationSourceName" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование информационного ресурса</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DetailsResourceId" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Ссылка на информационный ресурс</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EventDate" type="clt_ru:DateCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата обращения к информационному ресурсу</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DTNumber" type="gclc_inq:DTNumberType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Номер ДТ с идентичными товарами</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DTNumberType">
+		<xs:annotation>
+			<xs:documentation>Номер ДТ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DTRegNum" type="cat_ru:GTDIDType">
+				<xs:annotation>
+					<xs:documentation>Регистрационный номер ДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DetailsResourceId" type="clt_ru:Count3Type" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Номер товара ДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PreviousOUType">
+		<xs:annotation>
+			<xs:documentation>История предшествующих ОУ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="IDOU" type="clt_ru:DocumentIDType">
+				<xs:annotation>
+					<xs:documentation>Уникальный идентификатор документа расчета</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NumOU" type="clt_ru:Count3Type">
+				<xs:annotation>
+					<xs:documentation>Номер расчета по порядку</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Numeric" type="clt_ru:Count3Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер товара по порядку в предшествующем расчете</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NumericDT" type="clt_ru:Count3Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер товара в ДТ/ТД</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DeltaAmount" type="grn_cat:AmountPaidType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Суммы обеспечения по видам платежей</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReservedSum" type="clt_ru:AmountType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Общая сумма обеспечения по товару, зарезервированная по предшествующему расчету</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

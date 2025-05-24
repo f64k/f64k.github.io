@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Схемы ГИС ГМП -  аналог SQ.05061 -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:ggfc_res="urn:customs.ru:Information:SQDocuments:GisGmpForcedConfirmationResponse:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:GisGmpForcedConfirmationResponse:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+	<xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Прием информации о погашении начисления (ответ)</xs:documentation>
+	</xs:annotation>
+	<xs:element name="GisGmpForcedConfirmationResponse" type="ggfc_res:GisGmpForcedConfirmationResponseType">
+		<xs:annotation>
+			<xs:documentation>Прием информации о погашении начисления (ответ)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="GisGmpForcedConfirmationResponseType">
+		<xs:annotation>
+			<xs:documentation>Прием информации о погашении начисления (ответ)</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="Id" type="clt_ru:Text50Type">
+						<xs:annotation>
+							<xs:documentation>Идентификатор ответа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Rgid" type="clt_ru:Text50Type">
+						<xs:annotation>
+							<xs:documentation>Идентификатор запроса</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RecipientIdentifier" type="clt_ru:CodeVariable6Type">
+						<xs:annotation>
+							<xs:documentation>УРН участника – получателя ответа на запрос</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Timestamp" type="clt_ru:DateTimeCustType">
+						<xs:annotation>
+							<xs:documentation>Дата и время формирования сообщения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:choice>
+						<xs:element name="Result" type="ggfc_res:ResultType" maxOccurs="100">
+							<xs:annotation>
+								<xs:documentation>Результат обработки</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Done" type="ggfc_res:DoneType" maxOccurs="100">
+							<xs:annotation>
+								<xs:documentation>Содержит результат выполнения следующих операций: - Отмена принудительного квитирования начисления с платежами; - Установление платежу признака "Услуга предоставлена"; - Отмена факта установления платежу признака "Услуга предоставлена".</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009260E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="DiscountFixedType">
+		<xs:annotation>
+			<xs:documentation>Условия оплаты с фиксированной суммой скидки</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DiscountValue" type="ggfc_res:NonIntegerType">
+				<xs:annotation>
+					<xs:documentation>Сумма скидки от полной суммы начисления</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DiscountDate" type="ggfc_res:DiscountDateType">
+				<xs:annotation>
+					<xs:documentation>Срок действия скидки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DoneType">
+		<xs:annotation>
+			<xs:documentation>Результат выполнения операций</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ServiceDataID" type="clt_ru:DocumentModeIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Идентификатор информации об учете платежа. Присутствует в случае указания в запросе на установление платежу признака «Услуга предоставлена» блока данных «Дополнительные сведения о предоставлении услуги/об учете платежа»</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PaymentId" type="ggfc_res:PaymentIdType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>УПНО (УИП). Присутствует в случае указания в запросе на установление платежу признака «Услуга предоставлена» блока данных «Дополнительные сведения о предоставлении услуги/об учете платежа»</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Code" type="ggfc_res:Text32Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код результата обработки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Value" type="clt_ru:IndicatorType">
+				<xs:annotation>
+					<xs:documentation>Код результата обработки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DiscountSizeType">
+		<xs:annotation>
+			<xs:documentation>Условия оплаты со скидкой (процент)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DiscountValue" type="ggfc_res:ProcentDiscountValueType">
+				<xs:annotation>
+					<xs:documentation>Процент скидки от суммы начисления</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DiscountDate" type="ggfc_res:DiscountDateType">
+				<xs:annotation>
+					<xs:documentation>Срок действия скидки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DiscountType">
+		<xs:annotation>
+			<xs:documentation>Дополнительные условия оплаты</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="DiscountFixed" type="ggfc_res:DiscountFixedType">
+					<xs:annotation>
+						<xs:documentation>Условия оплаты с фиксированной суммой скидки</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="DiscountSize" type="ggfc_res:DiscountSizeType">
+					<xs:annotation>
+						<xs:documentation>Условия оплаты со скидкой (процент)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="MultiplierSize" type="ggfc_res:MultiplierSizeType">
+					<xs:annotation>
+						<xs:documentation>Условия оплаты с применением понижающего размер коэффициента</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MultiplierSizeType">
+		<xs:annotation>
+			<xs:documentation>Условия оплаты с применением понижающего размер коэффициента</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DiscountValue" type="ggfc_res:FloatTypePattren">
+				<xs:annotation>
+					<xs:documentation>Коэффициент, понижающий размер начисления</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DiscountDate" type="ggfc_res:DiscountDateType">
+				<xs:annotation>
+					<xs:documentation>Срок действия учета коэффициента, понижающего размер начисления</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="QuittanceType">
+		<xs:annotation>
+			<xs:documentation>Результаты квитирования</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SupplierBillID" type="ggfc_res:SupplierBillIDType">
+				<xs:annotation>
+					<xs:documentation>УИН</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TotalAmount" type="ggfc_res:LongIntegerType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Сумма, указанная в начислении</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CreationDate" type="clt_ru:DateTimeCustType">
+				<xs:annotation>
+					<xs:documentation>Дата квитирования (создания квитанции)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BillStatus" type="clt_ru:CodeVariable2Type">
+				<xs:annotation>
+					<xs:documentation>Статус, присвоенный начислению при создании квитанции. Возможные значения:
+                        1 – сквитировано (полностью совпали все параметры квитирования). Статус устанавливается в результате автоматического квитирования;
+                        2 – предварительно сквитировано (не совпал хотя бы один из параметров квитирования, за исключением УИН). Статус устанавливается в результате автоматического квитирования;
+                        3 – не сквитировано (не был получен ни один платеж, соответствующий начислению);
+                        4 – сквитировано по инициативе АН/ГАН с отсутствующим платежом. Статус устанавливается в результате обработки запроса от АН/ГАН на квитирование начисления с отсутствующим в ГИС ГМП платежом.
+                        5 – принудительно сквитировано по инициативе АН/ГАН с платежом. Статус устанавливается в результате обработки запроса на принудительное квитирование с платежом по инициативе АН/ГАН.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Balance" type="ggfc_res:LongType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Разность между суммой, указанной в начислении, и суммой платежей с учетом возвратов.
+                        Целое число, показывающее сумму в копейках.
+                        Отрицательное значение информирует о переплате.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PaymentId" type="ggfc_res:PaymentIdType">
+				<xs:annotation>
+					<xs:documentation>УИП, присвоенный участником, принявшим платеж</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AmountPayment" type="ggfc_res:LongIntegerType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Сумма, указанная в платеже</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PayeeINN" type="clt_ru:INNIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ИНН получателя средств</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PayeeKPP" type="ggfc_res:KPPType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>КПП получателя средств</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="KBK" type="clt_ru:CodeVariable20Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>КБК</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OKTMO" type="clt_ru:CodeVariable11Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код ОКТМО</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PayerIdentifier" type="ggfc_res:PayerIdentifierType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Идентификатор плательщика</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AccountNumber" type="clt_ru:AccountType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер счета получателя средств</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BIK" type="clt_ru:BICIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>БИК банка получателя средств</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IsRevoked" type="clt_ru:IndicatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Признак аннулирования квитанции. true - квитанция аннулирована; false - квитанция действующая.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PaymentPortal" type="clt_ru:IndicatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Признак уплаты с использованием ЕПГУ, РПГУ и иных порталов, интегрированных с ЕСИА</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReconcileID" type="clt_ru:DocumentModeIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер операции принудительного квитирования начисления с отсутствующим в ГИС ГМП платежом</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Discount" type="ggfc_res:DiscountType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дополнительные условия оплаты</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Refund" type="ggfc_res:RefundType" minOccurs="0" maxOccurs="20">
+				<xs:annotation>
+					<xs:documentation>Сведения о возврате денежных средств</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Income" type="ggfc_res:IncomeType" minOccurs="0" maxOccurs="20">
+				<xs:annotation>
+					<xs:documentation>Сведения о зачислениях денежных средств</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Clarification" type="ggfc_res:ClarificationType" minOccurs="0" maxOccurs="20">
+				<xs:annotation>
+					<xs:documentation>Сведения об уточнениях вида и принадлежности платежа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RefundType">
+		<xs:annotation>
+			<xs:documentation>Сведения о возврате денежных средств</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RefundId" type="ggfc_res:RefundIdType">
+				<xs:annotation>
+					<xs:documentation>Уникальный идентификатор возврата (УИВ)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Amount" type="ggfc_res:LongIntegerType">
+				<xs:annotation>
+					<xs:documentation>Сумма возврата</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IncomeType">
+		<xs:annotation>
+			<xs:documentation>Сведения о возврате</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="IncomeId" type="ggfc_res:TextPatternTypeUIZ">
+				<xs:annotation>
+					<xs:documentation>Уникальный идентификатор зачисления (УИЗ)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ClarificationType">
+		<xs:annotation>
+			<xs:documentation>Сведения об уточнениях вида и принадлежности платежа</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ClarificationId" type="ggfc_res:TextPatternTypeUVPP">
+				<xs:annotation>
+					<xs:documentation>Уникальный идентификатор уточнения вида и принадлежности платежа (УВПП)
+                    </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ResultType">
+		<xs:annotation>
+			<xs:documentation>Результат обработки</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Quittance" type="ggfc_res:QuittanceType" maxOccurs="100">
+				<xs:annotation>
+					<xs:documentation>Результаты квитирования</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="DiscountDateType">
+		<xs:annotation>
+			<xs:documentation>Срок действия скидки.
+                Возможные значения:
+                - дата окончания скидки в формате «ГГГГ-ММ-ДД»;
+                - при отсутствии срока действия	указывается значение «0».</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:TextCategoriesCust">
+			<xs:pattern value="(\d{4}-\d{2}-\d{2})|0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PayerIdentifierType">
+		<xs:annotation>
+			<xs:documentation>Идентификатор плательщика</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:TextCategoriesCust">
+			<xs:maxLength value="22"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PaymentIdType">
+		<xs:annotation>
+			<xs:documentation>Структура УПНО для кредитных организаций, ТОФК и для остальных участников</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:TextCategoriesCust">
+			<xs:pattern value="1\d{15}((0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])\d{4})\d{8}">
+				<xs:annotation>
+					<xs:documentation>Структура УПНО для кредитных организаций</xs:documentation>
+				</xs:annotation>
+			</xs:pattern>
+			<xs:pattern value="2\d{4}0{11}((0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])\d{4})\d{8}">
+				<xs:annotation>
+					<xs:documentation>Структура УПНО для ТОФК</xs:documentation>
+				</xs:annotation>
+			</xs:pattern>
+			<xs:pattern value="3[a-fA-F0-9]{6}((0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])\d{4})\d{17}">
+				<xs:annotation>
+					<xs:documentation>Структура УПНО для остальных участников</xs:documentation>
+				</xs:annotation>
+			</xs:pattern>
+			<xs:pattern value="\w{32}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RefundIdType">
+		<xs:annotation>
+			<xs:documentation>Уникальный идентификатор извещения о возврате денежных средств. 25 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:IdentifierCategoriesCust">
+			<xs:pattern value="\d{8}((0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])\d{4})\d{9}"/>
+			<xs:pattern value="^6\d{4}((0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])\d{4})\d{19}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SupplierBillIDType">
+		<xs:annotation>
+			<xs:documentation>УИН</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:IdentifierCategoriesCust">
+			<xs:pattern value="\d{15}"/>
+			<xs:pattern value="\w{20}"/>
+			<xs:pattern value="\d{25}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LongType">
+		<xs:annotation>
+			<xs:documentation>Целое число от -9223372036854775808 до 9223372036854775807</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:IntegerCategoriesCust">
+			<xs:minInclusive value="-9223372036854775808"/>
+			<xs:maxInclusive value="9223372036854775807"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LongIntegerType">
+		<xs:annotation>
+			<xs:documentation>Целое неотрицательное число от 0 до 18446744073709551615</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:IntegerCategoriesCust">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="18446744073709551615"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DiscountValueType">
+		<xs:annotation>
+			<xs:documentation>Сумма скидки от полной суммы начисления.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:NumericCategoriesCust">
+			<xs:pattern value="\d+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ProcentDiscountValueType">
+		<xs:annotation>
+			<xs:documentation>Процент скидки от суммы начисления.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:IntegerCategoriesCust">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="100"/>
+			<xs:totalDigits value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="KPPType">
+		<xs:annotation>
+			<xs:documentation>КПП юр. лица</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:CodeCategoriesCust">
+			<xs:pattern value="([^0^\D]\d|\d[^0^\D])\d{2}[A-Z0-9]{2}\d{3}">
+				<xs:annotation>
+					<xs:documentation>9 символов, пятый и шестой из которых могут быть прописными
+                        (заглавными) латинскими буквами или цифрами, а все остальные только цифрами,
+                        и при этом первый и второй знаки (цифры) не могут одновременно принимать
+                        значение ноль ("0").
+                    </xs:documentation>
+				</xs:annotation>
+			</xs:pattern>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NonIntegerType">
+		<xs:annotation>
+			<xs:documentation>Целочисленный тип</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:IntegerCategoriesCust">
+			<xs:minInclusive value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Text32Type">
+		<xs:annotation>
+			<xs:documentation>Строковый тип 32 длина</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:TextCategoriesCust">
+			<xs:maxLength value="32"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FloatTypePattren">
+		<xs:annotation>
+			<xs:documentation>Числовой тип с плавающей запятой с паттерном</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:NumericCategoriesCust">
+			<xs:minExclusive value="0"/>
+			<xs:pattern value="0\.\d\d?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TextPatternTypeUIZ">
+		<xs:annotation>
+			<xs:documentation>Структура УИЗ для ТОФК</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:TextCategoriesCust">
+			<xs:pattern value="4\d{4}((0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])\d{4})\d{19}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TextPatternTypeUVPP">
+		<xs:annotation>
+			<xs:documentation>Уникальный идентификатор уточнения вида и принадлежности платежа (УВПП)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:TextCategoriesCust">
+			<xs:pattern value="5\d{4}((0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])\d{4})\d{19}"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

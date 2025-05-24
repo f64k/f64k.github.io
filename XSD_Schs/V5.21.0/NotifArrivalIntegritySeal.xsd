@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" elementFormDefault="qualified" targetNamespace="urn:customs.ru:Information:CustomsDocuments:NotifArrivalIntegritySeal:5.21.0" version="5.21.0.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:naigs="urn:customs.ru:Information:CustomsDocuments:NotifArrivalIntegritySeal:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Уведомление о прибытии и целостности/нарушении пломб</xs:documentation>
+  </xs:annotation>
+  <xs:element name="NotifArrivalIntegritySeal" type="naigs:NotifArrivalIntegritySealType" />
+  <xs:complexType name="NotifArrivalIntegritySealType">
+    <xs:annotation>
+      <xs:documentation>Уведомление о прибытии и целостности/нарушении пломб</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Date" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата создания уведомления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Time" type="clt_ru:TimeCustType">
+            <xs:annotation>
+              <xs:documentation>Время создания уведомления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AcceptDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата прибытия товаров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="AcceptTime" type="clt_ru:TimeCustType">
+            <xs:annotation>
+              <xs:documentation>Время прибытия товаров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ModificationSign" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Признак того, что средства идентификации нарушены</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="EconomicOperator" type="RUScat_ru:SubjectDetailsType">
+            <xs:annotation>
+              <xs:documentation>Уполномоченный экономический оператор</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="IdentifModification" type="naigs:IdentifModificationType">
+            <xs:annotation>
+              <xs:documentation>Нарушение средств идентификации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Carrier" type="RUScat_ru:SubjectDetailsType">
+            <xs:annotation>
+              <xs:documentation>Перевозчик</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute fixed="1006164E" name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="IdentifModificationType">
+    <xs:annotation>
+      <xs:documentation>Нарушение средств идентификации</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ModificationInfo" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Описание выявленного факта нарушения средств идентификации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="Container" type="clt_ru:ContainerIdentityType">
+        <xs:annotation>
+          <xs:documentation>Номер (идентификатор) контейнера(ов), на которых нарушены средства идентификации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="TransportMean" type="cat_ru:TransportMeansBaseType">
+        <xs:annotation>
+          <xs:documentation>Транспортное средство, на котором нарушены средства идентификации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="ModifiedIdentifyMean" type="naigs:ModifiedIdentifyMeanType">
+        <xs:annotation>
+          <xs:documentation>Характеристика нарушенного средства идентификации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ModifiedIdentifyMeanType">
+    <xs:annotation>
+      <xs:documentation>Характеристика нарушенного средства идентификации</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="IdentMeanState" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Статус средства идентификации 1 - средство идентификации до начала проведения таможенного досмотра 2 - средство идентификации после проведения таможенного досмотра (наложенные)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdentNumber" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Номер наложенного средства идентификации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdentBreakFlag" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак нарушения средств идентификации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdentKind" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Вид средств идентификации: 1 - пломба, 2 - печать, 3 - иное</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="IdentDesc" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Примечание по средству идентификации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

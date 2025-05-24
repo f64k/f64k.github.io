@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" xmlns:akts="urn:customs.ru:Information:CustomsDocuments:AKTS:5.21.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:AKTS:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Протокол автоматизированного контроля таможенной стоимости</xs:documentation>
+  </xs:annotation>
+  <xs:element name="AKTS" type="akts:AKTSType">
+    <xs:annotation>
+      <xs:documentation>Протокол автоматизированного контроля таможенной стоимости</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="AKTSType">
+    <xs:annotation>
+      <xs:documentation>Протокол автоматизированного контроля таможенной стоимости</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="HeaderInfo" type="akts:HeaderInfoType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Основные сведения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1061004E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="HeaderInfoType">
+    <xs:annotation>
+      <xs:documentation>Основные сведения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="EDOC_GUID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор протокола</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GTDNumber" type="cat_ru:GTDIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="P_EDOC_ID" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Ссылка на идентификатор документа в пакете</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Version" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Версия протокола</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateTime" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата и время проведения проверок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LNP" type="clt_ru:LNPIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ЛНП должностного лица, сформировавшего Протокол</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ConsigneeCategory" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Категория участника ВЭД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Score" type="clt_ru:Count6Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сумма баллов сообщений</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Note" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Примечания. Комментарий инспектора</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ChangeFlag" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак внесения изменений в ДТ после принятого решения в отношении таможенной стоимости. Признак поступления новых документо («0» - нет, «1» - да)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Result" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Принятое решение (значение из классификатора)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PostControlFlag" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак необходимости контроля после выпуска («0» - нет, «1» - да)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Message" type="akts:MessageType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Протокол АКТС – сообщения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FieldType">
+    <xs:annotation>
+      <xs:documentation>Перечень полей с обнаруженными ошибками</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PathGUID" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор записи</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="D_EDOC_ID" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор документа, содержащего ошибку (при междокументной проверке)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FullXPath" type="RUSclt_ru:FreeText4000Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Xpath  путь к узлу документа в XML</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SchemeAnnotation" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Аннотация схемы xsd узла документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MessageType">
+    <xs:annotation>
+      <xs:documentation>Сообщения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="MSG_GUID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор сообщения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MessageCode" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код сообщения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SchemeAnnotation" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Аннотация схемы xsd узла документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FullXPath" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>XPath  путь к узлу документа в XML. Для случая одного поля ошибки.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FullMesage" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Полный текст сообщения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ShortlMesage" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Краткое сообщение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Passed" type="clt_ru:Numeric1Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Проверка пройдена («0» - не соответствует, «1» - соответствует, 
+«2» - не определено)
+</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsNum" type="clt_ru:Count5Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер товара, к которому относится сообщение («0» - для сообщений, которые относятся ко всей ДТ или ко всему документу) </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="VerificationError" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Тип проверки, выявившей ошибку</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NotesFlag" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак возможности закрытия при наличии комментария инспектора</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Categories" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Категории участников ВЭД, сработавшие при проверке</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Code" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Номер (код) раздела Протокола</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CorrectedErrorLevel" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Балл сообщения (критичность)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Field" type="akts:FieldType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Перечень полей с обнаруженными ошибками</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

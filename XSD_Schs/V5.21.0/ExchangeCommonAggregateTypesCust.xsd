@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:catExch_ru="urn:customs.ru:Information:ExchangeDocuments:ExchangeCommonAggregateTypes:5.21.0" targetNamespace="urn:customs.ru:Information:ExchangeDocuments:ExchangeCommonAggregateTypes:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Общие сложные типы документов информационного обмена.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AgreementNumType">
+    <xs:annotation>
+      <xs:documentation>Реквизиты Соглашения о предоставлении доступа к документам ЭАДД</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="UniqueID" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Идентификатор cоглашения/документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DeclPersonType">
+    <xs:annotation>
+      <xs:documentation>Декларант, представитель декларанта.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:PersonBaseType">
+        <xs:sequence>
+          <xs:element name="AuthoritesDocument" type="cat_ru:AuthoritesDocumentType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Документ, подтверждающий полномочия. </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PaymentIndicationType">
+    <xs:annotation>
+      <xs:documentation>Признаки ПП</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DepletedResources" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Средства на ПП исчерпаны</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AllowancesResources" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>По ПП уже были списания таможенных платежей</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:choice minOccurs="0">
+        <xs:element name="AttestedPaymentOrder" type="clt_ru:IndicatorType">
+          <xs:annotation>
+            <xs:documentation>ПП заверена инспектором в программном средстве учета и контроля таможенных платежей</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="NotAttestedPaymentOrder" type="clt_ru:IndicatorType">
+          <xs:annotation>
+            <xs:documentation>ПП не заверена инспектором в программном средстве учета и контроля таможенных платежей</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+      <xs:choice minOccurs="0">
+        <xs:element name="PermitRemotenessWritten" type="clt_ru:IndicatorType">
+          <xs:annotation>
+            <xs:documentation>ПП разрешена к использованию при удаленном списании средств из СТО</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="InterdictionRemotenessWritten" type="clt_ru:IndicatorType">
+          <xs:annotation>
+            <xs:documentation>ПП не разрешена к использованию при удаленном списании средств из СТО</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RecipDocumentType">
+    <xs:annotation>
+      <xs:documentation>Сведения о полученном документе</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="RecipDocumentID" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Уникальный идентификатор полученного документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RecipDocumentModeID" type="clt_ru:DocumentModeIDType">
+            <xs:annotation>
+              <xs:documentation>Код вида полученного документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RecipDocTime" type="clt_ru:TimeCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Время создания полученного документа.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RecipDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата получения документа.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RecipTime" type="clt_ru:TimeCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Время получения документа.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XML Viewer AG Grid</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-grid.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-alpine.css">
+  <style>
+    html, body, #myGrid {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+  <input type="file" id="fileInput" accept=".xml, .xsd" title="xml | xsd">
+  <div id="myGrid" class="ag-theme-alpine"></div>
+
+  <!--<script src="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>-->
+  <!--<script src="https://cdn.jsdelivr.net/npm/ag-grid-enterprise@33.2.4/dist/ag-grid-enterprise.min.js"></script>-->
+  <script src="https://cdn.jsdelivr.net/npm/ag-grid-enterprise@31.0.1/dist/ag-grid-enterprise.min.js"></script>
+  <script>
+    const gridOptions = {
+      columnDefs: [
+        { field: "name", cellRenderer: "agGroupCellRenderer" },
+        { field: "value" }
+      ],
+      defaultColDef: { flex: 1, resizable: true },
+      rowData: [],
+      treeData: true,
+      animateRows: true,
+      getDataPath: data => data.path,
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const gridDiv = document.querySelector("#myGrid");
+
+      document.getElementById('fileInput').addEventListener('change', e => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+          const parser = new DOMParser();
+          const xml = parser.parseFromString(reader.result, "application/xml");
+          const data = [];
+          traverse(xml.documentElement, [], data);
+          gridOptions.rowData = data;
+          //
+          new agGrid.Grid(gridDiv, gridOptions);
+        };
+        reader.readAsText(file);
+      });
+    });
+
+    function traverse(node, path, result) {
+      const currentPath = [...path, node.nodeName];
+      const children = Array.from(node.children);
+      if (children.length === 0) {
+        result.push({
+          path: currentPath,
+          name: node.nodeName,
+          value: node.textContent.trim()
+        });
+      } else {
+        result.push({
+          path: currentPath,
+          name: node.nodeName,
+          value: ""
+        });
+        children.forEach(child => traverse(child, currentPath, result));
+      }
+    }
+  </script>
+</body>
+</html>

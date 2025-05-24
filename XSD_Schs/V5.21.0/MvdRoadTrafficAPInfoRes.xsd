@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:rt_res="urn:customs.ru:Information:SQDocuments:MvdRoadTrafficAPInfoRes:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:MvdRoadTrafficAPInfoRes:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Ответ на запрос сведений об административных правонарушениях в области дорожного движения</xs:documentation>
+  </xs:annotation>
+  <xs:element name="MvdRoadTrafficAPInfoRes" type="rt_res:MvdRoadTrafficAPInfoResType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос сведений об административных правонарушениях в области дорожного движения</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="MvdRoadTrafficAPInfoResType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос сведений об административных правонарушениях в области дорожного движения</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DateTime" type="clt_ru:DateTimeCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Время формирования запроса или ответа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Result" type="rt_res:ResultType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Результат по отдельному правонарушению</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CountResult" type="clt_ru:Count5Type">
+            <xs:annotation>
+              <xs:documentation>Количество записей в результате</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009135E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="OtherDataType">
+    <xs:annotation>
+      <xs:documentation>Прочие данные фильтра для поиска в виде списка параметров</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Key" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Ключ параметра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Value" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Значение параметра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RequestedPersonType">
+    <xs:annotation>
+      <xs:documentation>Сведения о лице, в отношении которого совершается запрос</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:PersonBaseType">
+        <xs:sequence>
+          <xs:element name="BirthDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата рождения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ResultType">
+    <xs:annotation>
+      <xs:documentation>Результат по отдельному правонарушению</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RequestID" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор запроса для которого ответы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="UnicNumber" type="cat_ru:DocumentBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Уникальный номер дела</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocType" type="clt_ru:Text150Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Тип первичного материала</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocNumber" type="cat_ru:DocumentBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Серия и номер первичного материала</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BreachDateTime" type="clt_ru:DateTimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата и время нарушения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BreachPlace" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="4">
+        <xs:annotation>
+          <xs:documentation>Место нарушения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KOAP" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Статья КоАП и состав правонарушения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExecDepartment" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="4">
+        <xs:annotation>
+          <xs:documentation>Подразделение, выявившее нарушение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegionWhere" type="clt_ru:RegionType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Регион, куда отправлен протокол</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExecutionState" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="4">
+        <xs:annotation>
+          <xs:documentation>Состояние делопроизводства по нарушению</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DecisionNumber" type="cat_ru:DocumentBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Серия и номер постановления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DecisionDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата вынесения постановления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Penalty" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вид административного наказания</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DecisionSumma" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Размер штрафа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DecisionTerm" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Срок лишения права управления / ареста в мес</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PostNum" type="cat_ru:DocumentBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Серия и номер постановления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LicenseWithdrawalDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата изъятия вод.уд</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DriveLicenseOutDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата выдачи вод.уд</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateSSP" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата направления судебным приставам</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WhoDecided" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Кем вынесено постановление</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DepartmentDecided" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="4">
+        <xs:annotation>
+          <xs:documentation>Подразделение где вынесено постановление</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SupplierBillID" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор платежа в казначействе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RoskaznaIn" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак, что получено подтверждение оплаты из казначейства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="VehicleInfo" type="rt_res:VehicleInfoType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о транспортном средстве</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StateName" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="4">
+        <xs:annotation>
+          <xs:documentation>Текущее состояние дела</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WaitDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата отстрочки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RWaitDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата отстрочки исполнения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DriveLicenseEndDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата окончания срока лишения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EndDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата исполнения или закрытия дела</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LicenseStartDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата начала исчесления срока</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RequestedPerson" type="rt_res:RequestedPersonType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о лице, в отношении которого совершается запрос</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExtensionData" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Дополнительные сведения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AdministrativeStatus" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="4">
+        <xs:annotation>
+          <xs:documentation>Состояние административного дела</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DepartmentDecidedCode" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код подразделения, вынесшего постановление</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExecDepartmentCode" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код подразделения, выявившего нарушение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OtherData" type="rt_res:OtherDataType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Прочие данные о нарушении, массив параметров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="VehicleInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о транспортном средстве</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="VehicleCategory" type="clt_ru:TransportCategoryCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Категория ТС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="VehicleModel" type="clt_ru:MarkCarNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Марка ТС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="VehicleOwnerCategory" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Категория владельца ТС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="VehicleRegPoint" type="clt_ru:DocumentModeIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Гос.рег. знак ТС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

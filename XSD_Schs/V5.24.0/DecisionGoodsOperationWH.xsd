@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Распоряжение ФТС России от 30.12.2021 № 331-р "Об организации работы таможенных органов при контроле за совешением операций, связанных с осмотром товаров, находящихся под таможенным контролем (во исполнение Приказа ФТС России от 18.03.2019 № 444) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:dgowh="urn:customs.ru:Information:WarehouseDocuments:DecisionGoodsOperationWH:5.24.0" targetNamespace="urn:customs.ru:Information:WarehouseDocuments:DecisionGoodsOperationWH:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Решение по заявлению лица, обладающего полномочиями в отношении товаров, о необходимости совершения в отношении товаров, находящихся под таможенным контролем, операций, предусмотренных подпунктами 1 и 2 пункта 1 статьи 84 и статьей 102 ТК ЕАЭС</xs:documentation>
+  </xs:annotation>
+  <xs:element name="DecisionGoodsOperationWH" type="dgowh:DecisionGoodsOperationWHType">
+    <xs:annotation>
+      <xs:documentation>Решение по заявлению лица, обладающего полномочиями в отношении товаров, о необходимости совершения в отношении товаров, находящихся под таможенным контролем, операций, предусмотренных подпунктами 1 и 2 пункта 1 статьи 84 и статьей 102 ТК ЕАЭС</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DecisionGoodsOperationWHType">
+    <xs:annotation>
+      <xs:documentation>Решение по заявлению лица, обладающего полномочиями в отношении товаров, о необходимости совершения в отношении товаров, находящихся под таможенным контролем, операций, предусмотренных подпунктами 1 и 2 пункта 1 статьи 84 и статьей 102 ТК ЕАЭС</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="AppGoodsOperNumber" type="cat_ru:GTDIDType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер Заявления о необходимости совершения операций в отношении товаров, находящихся под таможенным контролем</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TransportDetails" type="dgowh:TransportDetailsType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о транспортном средстве, на котором размещены либо прибыли товары</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="WHDetails" type="dgowh:WHDetailsType">
+            <xs:annotation>
+              <xs:documentation>Сведения о месте нахождения товаров </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DecisionDateTime" type="clt_ru:DateTimeCustType">
+            <xs:annotation>
+              <xs:documentation>Дата и время принятия решения </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Decision" type="clt_ru:Code2Type">
+            <xs:annotation>
+              <xs:documentation>Код принятого решения: 10 – Разрешаю, 11 – Разрешаю под таможенным наблюдением, 12 – Разрешаю под таможенным наблюдением с составлением акта таможенного наблюдения, 13 – Отказ, с указанием причины </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Reason" type="clt_ru:FreeText500Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Причина отказа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CistomsPerson" type="RUScat_ru:CustomsPersonDetails">
+            <xs:annotation>
+              <xs:documentation>Сведения о лице, принявшем решение </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1008044E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="TransportDetailsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о транспортном средстве, на котором размещены либо прибыли товары </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TransportModeCode" type="clt_ru:TransportModeCodeType">
+        <xs:annotation>
+          <xs:documentation>Код вида транспортного средства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransportIdentifier" type="clt_ru:TransportMeansIDType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор. Номер транспортного средства, наименование судна, номер авиарейса, номер поезда, номер железнодорожного вагона (платформ, цистерн и т.п.)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransportMeansNationalityCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Буквенный код страны принадлежности транспортного средства по классификатору стран мира</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ContainerNumber" type="clt_ru:ContainerIdentityType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Номер контейнера</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="WHDetailsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о месте нахождения товаров </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="WHCode" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Код места нахождения товаров </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CertificateNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер Свидетельства о включении в Реестр / Номер лицензии / Номер разрешения таможни на ОХ / Номер приказа о создании ЗТК</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Address" type="RUScat_ru:RUAddressType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Адрес места нахождения товаров ЗТК/СВХ/иные места временного хранения товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,415 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:debt_hop="urn:customs.ru:Information:SQDocuments:DebtHopeless:5.24.0" xmlns:catESAD_cu="urn:customs.ru:CUESADCommonAggregateTypesCust:5.24.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:SQDocuments:DebtHopeless:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonAggregateTypesCust:5.24.0" schemaLocation="CUESADCommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Обмен данными о вхождении участника ВЭД в реестр безнадежных лиц</xs:documentation>
+  </xs:annotation>
+  <xs:element name="DebtHopeless" type="debt_hop:DebtHopelessType">
+    <xs:annotation>
+      <xs:documentation>Обмен данными о вхождении участника ВЭД в реестр безнадежных лиц</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DebtHopelessType">
+    <xs:annotation>
+      <xs:documentation>Обмен данными о вхождении участника ВЭД в реестр безнадежных лиц</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="InfoDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата формирования сведений</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="InfoTime" type="clt_ru:TimeCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Время формирования сведений</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="InfoKind" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Тип сведений: 0 - включение в реестр, 1 - исключение из реестра, 2 - запрос информации по реестру, 3 - информация о реестре</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OriginKind" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Происхождение сведений: 0 - первичное направление сведений, 1 - внесение изменений</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Feamember" type="debt_hop:FeamemberType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о должнике</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DecisHopeles" type="debt_hop:DocumentInfoType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Решение о включении в реестр безнадёжных лиц</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ExcludeKind" type="clt_ru:Numeric1Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Основание исключения из реестра: 0 - уплата таможенных, иных платежей, в отношении которых было вынесено решение, 1 - свидетельство о смерти, 2 - истечение 5-летнего срока нахождения лица в реестре, 3 - отмена решения о признании безнадёжным к взысканию, в связи с ошибкой инспектора</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RepresentDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата, на которую предоставляются сведения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1040049E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DebtorENTType">
+    <xs:annotation>
+      <xs:documentation>Сведения о юридическом лице</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OrganizationName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Полное наименование</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INN" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KPP" type="clt_ru:KPPCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>КПП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ITN" type="clt_ru:ITNType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИТН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TaxpayerId" type="RUSclt_ru:UITNCode40Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор субъекта в реестре налогоплательщиков страны регистрации налогоплательщика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegAddress" type="debt_hop:ExtendedAddressType" minOccurs="0" maxOccurs="3">
+        <xs:annotation>
+          <xs:documentation>Адрес регистрации (с возможностью указания 2х дополнительных адресов)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrganizationForm" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование организационно-правовой формы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryA2Code" type="clt_ru:CountryA2CodeType">
+        <xs:annotation>
+          <xs:documentation>Кодовое обозначение страны</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DebtorIP_PHYSType">
+    <xs:annotation>
+      <xs:documentation>Лицо, в отношении которого вынесено решение</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:PersonBaseType">
+        <xs:sequence>
+          <xs:element name="PassInfo" type="debt_hop:IdentityCardType" minOccurs="0" maxOccurs="2">
+            <xs:annotation>
+              <xs:documentation>Сведения о документе, удостоверяющем личность(с возможностью указания 1-го дополнительного документа, для бывших иностранцев)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="INN" type="clt_ru:INNIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>ИНН</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ITN" type="clt_ru:ITNType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>ИТН</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TaxpayerId" type="RUSclt_ru:UITNCode40Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Идентификатор субъекта в реестре налогоплательщиков страны регистрации налогоплательщика</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SurnameLat" type="clt_ru:Text50Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Фамилия латиницей</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NameLat" type="clt_ru:Text50Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Имя латиницей</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PatronymicLat" type="clt_ru:Text50Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Отчество латиницей</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BirthPlace" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Место рождения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BirthDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата рождения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DeathDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата смерти</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DeathPlace" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Место смерти</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Gender" type="clt_ru:IndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Пол: 0 - мужской, 1 - женский</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegAddress" type="debt_hop:ExtendedAddressType" minOccurs="0" maxOccurs="3">
+            <xs:annotation>
+              <xs:documentation>Адрес регистрации (с возможностью указания 2х дополнительных адресов)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OrganizationForm" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Наименование организационно-правовой формы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CountryA2Code" type="clt_ru:CountryA2CodeType">
+            <xs:annotation>
+              <xs:documentation>Кодовое обозначение страны</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DebtorType">
+    <xs:annotation>
+      <xs:documentation>Сведения об Участнике ВЭД (основные)</xs:documentation>
+    </xs:annotation>
+    <xs:choice>
+      <xs:element name="DebtorENT" type="debt_hop:DebtorENTType">
+        <xs:annotation>
+          <xs:documentation>Сведения о юр.лице</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DebtorIP_PHYS" type="debt_hop:DebtorIP_PHYSType">
+        <xs:annotation>
+          <xs:documentation>Сведения об ИП/физ.лице</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="DocumentInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о документе</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsOffice" type="cat_ru:CustomsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код и наименование таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RequisiDecisHopeles" type="cat_ru:DocumentBaseType">
+        <xs:annotation>
+          <xs:documentation>Реквизиты решения о признании сумм ТП безнадежными к взысканию</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TotalAmount" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Общая сумма</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FineAmount" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сумма пени</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentAmount" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сумма платежей</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Base" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Основание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentSignature" type="debt_hop:DocumentSignatureType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Подпись документов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DebtDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата возникновения задолженности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocumentSignatureType">
+    <xs:annotation>
+      <xs:documentation>Типы подписи документов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustChiefSignature" type="cat_ru:PersonSignatureType">
+        <xs:annotation>
+          <xs:documentation>Подпись Ф.И.О. начальника таможенного органа. Заполняется в АПС Задолженность.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExecutiveSignature" type="cat_ru:PersonSignatureType">
+        <xs:annotation>
+          <xs:documentation>Подпись исполнителя. Заполняется в АПС Задолженность.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ExtendedAddressType">
+    <xs:annotation>
+      <xs:documentation>Сведения об Участнике ВЭД (адрес)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:AddressType">
+        <xs:sequence>
+          <xs:element name="KindAddress" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Тип адреса: 0 - адрес постоянной регистрации; 1 – адрес фактического места нахождения; 2 – адрес регистрации по месту прибывания</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FeamemberType">
+    <xs:annotation>
+      <xs:documentation>Сведения об Участнике ВЭД (расширенные)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="debt_hop:DebtorType">
+        <xs:sequence>
+          <xs:element name="DebtReestrRecord" type="debt_hop:MemberInfoType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения из реестра, заполняется на стороне АИС ЦРСВЭД</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="HeadOrganization" type="debt_hop:HeadOrganizationType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения об основателях/руководстве организации,заполняется на стороне АИС ЦРСВЭД</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="HeadOrganizationType">
+    <xs:annotation>
+      <xs:documentation>Сведения об основателе</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="HeadName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование организации/ФИО лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="HeadType" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Тип: 0 - Физическое лицо; 1-Управляющая компания; 2-Юридическое лицо</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FounderType" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Признак учредителя: 0 - Да; 1-Нет</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INN" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="HeadPost" type="clt_ru:PostType">
+        <xs:annotation>
+          <xs:documentation>Должность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="HeadPassInfo" type="catESAD_cu:CUIdentityCardType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о документе, удостоверяющем личность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StartDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата начала действия полномочий</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EndDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата окончания действия полномочий</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="IdentityCardType">
+    <xs:annotation>
+      <xs:documentation>Сведения о документе, удостоверяющем личность(с возможностью указания 1-го дополнительного документа, для бывших иностранцев)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="catESAD_cu:CUIdentityCardType">
+        <xs:sequence>
+          <xs:element name="KindIdentityCard" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Тип документа, удостоверяющего личность: 0 - основной; 1 – не основной</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="MemberInfoType">
+    <xs:annotation>
+      <xs:documentation>Вхождение в реестры</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ReestrType" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Тип реестра: 0 - Безнадёжный должник</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="State" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Текущее состояние: 0 - Действует, 1 - Исключен</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IncludeOrderDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата включения в реестр</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExcludeOrderDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата исключения из реестра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

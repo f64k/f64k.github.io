@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:nfc="urn:customs.ru:Information:ExchangeDocuments:NotifFinishControl:5.25.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:ExchangeDocuments:NotifFinishControl:5.25.0" elementFormDefault="qualified" version="5.25.0.0">
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Уведомление о завершении таможенного контроля</xs:documentation>
+	</xs:annotation>
+	<xs:element name="NotifFinishControl" type="nfc:NotifFinishControlType"/>
+	<xs:complexType name="NotifFinishControlType">
+		<xs:annotation>
+			<xs:documentation>Уведомление о завершении таможенного контроля</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="ResolDate" type="clt_ru:DateCustType">
+						<xs:annotation>
+							<xs:documentation>Дата уведомления</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="OfficeName" type="clt_ru:CustomsOfficeNameType">
+						<xs:annotation>
+							<xs:documentation>Наименование таможенного органа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DeclName" type="clt_ru:NameType">
+						<xs:annotation>
+							<xs:documentation>Наименование декларанта (таможенного представителя)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomsInf" type="nfc:CustomsInfType" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Сведения, требующие подтверждения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="GTDID" type="cat_ru:GTDIDType">
+						<xs:annotation>
+							<xs:documentation>Регистрационный номер  ДТ</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomsPerson" type="cat_ru:CustomsPersonType">
+						<xs:annotation>
+							<xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1004140E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="CustomsInfType">
+		<xs:annotation>
+			<xs:documentation>Сведения, требующие подтверждения</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Position" type="clt_ru:Count3Type">
+				<xs:annotation>
+					<xs:documentation>Порядковый номер</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocSign" type="clt_ru:CodeVariable2Type" maxOccurs="20">
+				<xs:annotation>
+					<xs:documentation>Направление таможенного контроля: 1 - таможенная стоимость товаров;
+2 - классификация товара в соответствии с ТН ВЭД ЕАЭС;
+3 - происхождение товаров и (или) тарифных преференциях;
+4 - соблюдение мер технического регулирования;
+5 - соблюдение санитарных мер;
+6- соблюдение ветеринарно-санитарных мер;
+7 - соблюдение карантинных фитосанитарных мер;
+8 - соблюдение мер нетарифного регулирования;
+9 - соблюдение специальных экономических мер;
+10- соблюдение мер экспортного контроля, в том числе мер в отношении продукции военного назначения;
+11 - соблюдение прав на объекты интеллектуальной собственности.
+12 - применение льгот по уплате таможенных платежей;
+13 - применение ставки НДС в размере 10%;
+14 - контроль правильности исчисления таможенных пошлин, специальных, антидемпинговых, компенсационных пошлин, таможенных сборов за таможенные операции;
+15 - контроль правильности исчисления акциза;
+16 - проверка количественных (весовых) характеристик товара, а также признаков, указывающих на недостоверность или неполноту заявленных в ДТ сведений
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CustCostInf" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="4">
+				<xs:annotation>
+					<xs:documentation>Перечень сведений, требующих подтверждения/уточнения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodNum" type="clt_ru:Count3Type" maxOccurs="999">
+				<xs:annotation>
+					<xs:documentation>Номера товаров, по которым таможенный контроль завершен</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

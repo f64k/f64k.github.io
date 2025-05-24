@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:nirsq="urn:customs.ru:Information:CustomsDocuments:NotifImpossibleResSomeQuestions:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:NotifImpossibleResSomeQuestions:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Уведомление о невозможности ответа на часть вопросов</xs:documentation>
+  </xs:annotation>
+  <xs:element name="NotifImpossibleResSomeQuestions" type="nirsq:NotifImpossibleResSomeQuestionsType">
+    <xs:annotation>
+      <xs:documentation>Уведомление о невозможности ответа на часть вопросов</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="NotifImpossibleResSomeQuestionsType">
+    <xs:annotation>
+      <xs:documentation>Уведомление о невозможности ответа на часть вопросов</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DateNIRSQ" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата формирования Уведомления о невозможности ответа на часть вопросов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ExpertiseNumber" type="clt_ru:Text50Type">
+            <xs:annotation>
+              <xs:documentation>Номер экспертно-исследовательской работы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CEKTUDivision" type="nirsq:CEKTUDivisionInformationType">
+            <xs:annotation>
+              <xs:documentation>Код и наименование подразделения ЦЭКТУ, проводящего ЭИР</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BasisOfExpertise" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Основание назначения экспертизы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Question" type="nirsq:QuestionType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Перечень вопросов, на которые ответ невозможен</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ExpertInfo" type="nirsq:PersonType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Должностное лицо, сформировавшее Уведомление о невозможности ответа на часть вопросов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1051018E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CEKTUDivisionInformationType">
+    <xs:annotation>
+      <xs:documentation>Сведения о подразделении ЦЭКТУ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код подразделения ЦЭКТУ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Name" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование подразделения ЦЭКТУ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Address" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Адрес подразделения ЦЭКТУ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PersonType">
+    <xs:annotation>
+      <xs:documentation>Информация о должностном лице</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:PersonBaseType">
+        <xs:sequence>
+          <xs:element name="Phone" type="clt_ru:PhoneNumberType">
+            <xs:annotation>
+              <xs:documentation>Телефон должностного лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="QuestionType">
+    <xs:annotation>
+      <xs:documentation>Вопрос, на который ответ невозможен</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="QuestionNumber" type="clt_ru:Quantity3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер вопроса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="QuestionText" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Текст вопроса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="QuestionReason" type="clt_ru:FreeText500Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Причины невозможности в проведении ЭИР</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

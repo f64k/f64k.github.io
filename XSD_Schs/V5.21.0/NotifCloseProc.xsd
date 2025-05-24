@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:cltExch_ru="urn:customs.ru:Information:ExchangeDocuments:ExchangeCommonLeafTypes:5.0.8" xmlns:ncdp="urn:customs.ru:Information:ExchangeDocuments:NotifCloseProc:5.21.0" targetNamespace="urn:customs.ru:Information:ExchangeDocuments:NotifCloseProc:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:ExchangeDocuments:ExchangeCommonLeafTypes:5.0.8" schemaLocation="ExchangeCommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Уведомление о закрытии процедуры</xs:documentation>
+  </xs:annotation>
+  <xs:element name="NotifCloseProc" type="ncdp:NotifCloseProcType">
+    <xs:annotation>
+      <xs:documentation>Уведомление о закрытии процедуры</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="NotifCloseProcType">
+    <xs:annotation>
+      <xs:documentation>Уведомление о закрытии процедуры</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="CloseProcedureID" type="cltExch_ru:ProcessIDType">
+            <xs:annotation>
+              <xs:documentation>Уникальный идентификатор закрытой процедуры</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CloseDateTime" type="clt_ru:DateTimeCustType">
+            <xs:annotation>
+              <xs:documentation>Дата / время закрытия процедуры</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Comment" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Комментарии</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="WorkingTimeSchedule" type="ncdp:WorkingTimeScheduleType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Информация о рабочем времени поста</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RefReason" type="clt_ru:IndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Основание для отказа в приеме документов на бумажном носителе для сканирования: 0 - отсутствие технической возможности сканирования; 1 - представление в ТО документа на бумажном носителе не требуется и отсутствует запрос ТО на представление документа на бумажном носителе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1004075E">
+          <xs:annotation>
+            <xs:documentation>Уникальный идентификатор документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="WorkingTimeScheduleType">
+    <xs:annotation>
+      <xs:documentation>Информация о рабочем времени поста</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OpenWorkday" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата и время начала ближайшего рабочего дня</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CloseWorkDay" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата и время завершения ближайшего рабочего дня</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

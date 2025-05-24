@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Приказ Минфина России № 55н от 3 мая 2024 года «Об утверждении Порядка и технологии совершения таможенных операций в отношении товаров Евразийского экономического союза, ввозимых (ввезенных) на территорию Особой экономической зоны в Калининградской области и вывозимых с территории Особой экономической зоны в Калининградской области на остальную часть таможенной территории Евразийского экономического союза, в том числе с использованием электронных документов» -->
+<!-- Приказ Минфина России № 59н от 6 мая 2024 года «Об утверждении Порядка и технологии совершения таможенных операций в отношении товаров Евразийского экономического союза, ввозимых (ввезенных) на территорию Особой экономической зоны, созданной в Магаданской области и на территориях Южно-Курильского, Курильского и Северо-Курильского городских округов Сахалинской области, и вывозимых с территории Особой экономической зоны, созданной в Магаданской области и на территориях Южно-Курильского, Курильского и Северо-Курильского городских округов Сахалинской области, на остальную часть таможенной территории Евразийского экономического союз» -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:notccz="urn:customs.ru:Information:CustomsDocuments:OEZ_GoodsNotifCCZ:5.25.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:OEZ_GoodsNotifCCZ:5.25.0" elementFormDefault="qualified" version="5.25.0.0">
+	<xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Уведомление о размещении товаров в ЗТК</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OEZ_GoodsNotifCCZ" type="notccz:OEZ_GoodsNotifCCZType">
+		<xs:annotation>
+			<xs:documentation>Уведомление о размещении товаров в ЗТК</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="OEZ_GoodsNotifCCZType">
+		<xs:annotation>
+			<xs:documentation>Уведомление о размещении товаров в ЗТК</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="Customs" type="cat_ru:CustomsType">
+						<xs:annotation>
+							<xs:documentation>Наименование и код таможенного органа </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Applicant" type="cat_ru:OrganizationBaseType">
+						<xs:annotation>
+							<xs:documentation>Сведения об инициаторе вывоза товаров ЕАЭС (назначенном операторе почтовой связи) </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RegistrationNumber" type="notccz:RegistrationNumberType">
+						<xs:annotation>
+							<xs:documentation>Регистрационный номер Описи документов по которой принято решение</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CCZAddress" type="RUScat_ru:RUAddressType">
+						<xs:annotation>
+							<xs:documentation>Место нахождения ЗТК, адрес</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PlacementTerm" type="clt_ru:DateCustType">
+						<xs:annotation>
+							<xs:documentation>Срок размещения товаров в ЗТК </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomsPerson" type="cat_ru:CustomsPersonType">
+						<xs:annotation>
+							<xs:documentation>Сведения о должностном лице таможенного органа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006382E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="RegistrationNumberType">
+		<xs:annotation>
+			<xs:documentation>Регистрационный номер документа</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+				<xs:annotation>
+					<xs:documentation>Код таможенного органа, зарегистрировавшего документ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegistrationDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата регистрации документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Number" type="clt_ru:CodeVariable10Type">
+				<xs:annotation>
+					<xs:documentation>Порядковый номер документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocKind" type="clt_ru:CodeVariable5Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Четвертая часть регистрационного номера документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

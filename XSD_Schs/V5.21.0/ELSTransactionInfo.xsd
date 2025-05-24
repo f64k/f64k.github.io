@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:cat_crd="urn:customs.ru:CardCommonAggregateTypes:5.21.0" xmlns:trinf="urn:customs.ru:Information:ELSDocuments:ELSTransactionInfo:5.21.0" xmlns:els_agr="urn:customs.ru:Information:ELSDocuments:ELSAggregateTypes:5.21.0" targetNamespace="urn:customs.ru:Information:ELSDocuments:ELSTransactionInfo:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CardCommonAggregateTypes:5.21.0" schemaLocation="CardCommonAggregateTypes.xsd"/>
+	<xs:import namespace="urn:customs.ru:Information:ELSDocuments:ELSAggregateTypes:5.21.0" schemaLocation="ELSAggregateTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Сведения о расходовании денежных средств, внесенных в качестве авансовых платежей</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ELSTransactionInfo" type="trinf:ELSTransactionInfoType">
+		<xs:annotation>
+			<xs:documentation>Сведения о расходовании денежных средств, внесенных в качестве авансовых платежей</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ELSTransactionInfoType">
+		<xs:annotation>
+			<xs:documentation>Сведения о расходовании денежных средств, внесенных в качестве авансовых платежей</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_crd:BaseDocType">
+				<xs:sequence>
+					<xs:element name="INN" type="clt_ru:INNIDType">
+						<xs:annotation>
+							<xs:documentation>ИНН</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="OrganizationName" type="clt_ru:NameType">
+						<xs:annotation>
+							<xs:documentation>Наименование организации</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PeriodBegin" type="clt_ru:DateCustType">
+						<xs:annotation>
+							<xs:documentation>Начало запрашиваемого периода</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PeriodEnd" type="clt_ru:DateCustType">
+						<xs:annotation>
+							<xs:documentation>Окончание запрашиваемого периода</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ReportDate" type="clt_ru:DateCustType">
+						<xs:annotation>
+							<xs:documentation>Дата отчета</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ReportType" type="clt_ru:IndicatorType">
+						<xs:annotation>
+							<xs:documentation>0 - отчет по запросу; 1 - отчет по заявлению</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ELSConfInfoApp" type="cat_ru:DocumentBaseType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Заявление лица, внесшего авансовые платежи, о предоставлении отчета о расходовании денежных средств, внесенных в качестве авансовых платежей</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="BalanceIn" type="clt_ru:AmountType">
+						<xs:annotation>
+							<xs:documentation>Входящий остаток денежных средств</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="BalanceOut" type="clt_ru:AmountType">
+						<xs:annotation>
+							<xs:documentation>Исходящий остаток денежных средств</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PaymentInformation" type="trinf:PaymentInformationType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Сведения о платеже</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TotalPayAmountReceipt" type="clt_ru:AmountType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Итоговая сумма поступлений по сведениям о платеже</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TotalPayAmountChargeOff" type="clt_ru:AmountType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Итоговая сумма списаний по сведениям о платеже</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomsDetails" type="cat_ru:CustomsType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Сведения о таможенном органе, сформировавшем отчет</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomSignature" type="cat_ru:PersonSignatureType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Инициалы, фамилия должностного лица таможенного органа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1040024E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы.</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="DocumentType">
+		<xs:annotation>
+			<xs:documentation>Сведения о документе</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:DocumentBaseType">
+				<xs:sequence>
+					<xs:element name="PrDocumentCustomCode" type="clt_ru:CustomsCodeType">
+						<xs:annotation>
+							<xs:documentation>Код таможенного органа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PaymentInformationType">
+		<xs:annotation>
+			<xs:documentation>Сведения о платеже</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OperationType" type="clt_ru:IndicatorType">
+				<xs:annotation>
+					<xs:documentation>Тип операции. 1 - поступление, 0 - списание</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OperationDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата операции</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocumentReq" type="trinf:DocumentType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Реквизиты документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocumentAmount" type="els_agr:ELSAmountType">
+				<xs:annotation>
+					<xs:documentation>Сумма денежных средств по документу</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

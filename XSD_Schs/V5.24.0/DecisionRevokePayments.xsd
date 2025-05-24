@@ -1,0 +1,326 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Функциональные требования ГУФТДиТР 2018 № 00415 ФТ на ЛК и Задолженность по формам (пошлины) (приложение).tif Приложения 3, 5, 7, 8 
+Приложение 3 Решение таможенного органа об отзыве инкассового поручения (DocType = РОИ) - УБРАН отсюда в версии 5.14.5 (переехал в DebtIncashANDCommission.xsd)
+Приложение 5 Решение таможенного органа об отзыве поручения таможенного органа на перевод электронных денежных средств (DocType = РОП) - УБРАН отсюда в версии 5.14.5 (переехал в DebtIncashANDCommission.xsd)
+Приложение 7 Решение таможенного органа о приостановлении операций по счетам плательщика таможенных пошлин, налогов, специальных, антидемпинговых, компенсационных пошлин и переводов его электронных денежных средств (DocType = РПО)
+Приложение 8 Решение таможенного органа об отмене приостановления операций по счетам (счету) плательщика таможенных пошлин, налогов, специальных, антидемпинговых, компенсационных пошлин и переводов его электронных денежных средств (DocType = РОПО)
+
+С 01.01.2025 С 01.01.2025 вступают в силу положения Федерального закона от 24.07.2023 № 340-ФЗ «О внесении изменений в отдельные законодательные акты Российской Федерации» (далее – Федеральный закон № 340) в части взыскания таможенных платежей, пеней за счет цифровых рублей, учитываемых на счете цифрового рубля плательщика (лица, несущего солидарную обязанность)» 
+DocType = РПОЦ - Решение таможенного органа о приостановлении операций по счету цифрового рубля плательщика
+DocType = РОПОЦ - Решение таможенного органа об отмене приостановления операций по счету цифрового рубля плательщика
+-->
+<xs:schema xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:drp="urn:customs.ru:Information:CommercialFinanceDocuments:DecisionRevokePayments:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CommercialFinanceDocuments:DecisionRevokePayments:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Решение о приостановлении; Решение об отмене приостановления; Решение о приостановлении по счету цифрового рубля; Решение об отмене приостановления  по счету цифрового рубля</xs:documentation>
+  </xs:annotation>
+  <xs:element name="DecisionRevokePayments" type="drp:DecisionRevokePaymentsType">
+    <xs:annotation>
+      <xs:documentation>Решение о приостановлении; Решение об отмене приостановления; Решение о приостановлении по счету цифрового рубля; Решение об отмене приостановления  по счету цифрового рубля </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DecisionRevokePaymentsType">
+    <xs:annotation>
+      <xs:documentation>Решение о приостановлении; Решение об отмене приостановления; Решение о приостановлении по счету цифрового рубля; Решение об отмене приостановления  по счету цифрового рубля</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocType" type="clt_ru:CodeVariable5Type">
+            <xs:annotation>
+              <xs:documentation>Тип документа: РПО - Решение о приостановлении; РОПО - Решение об отмене приостановления; РПОЦ - Решение о приостановлении по счету цифрового рубля; РОПОЦ - Решение об отмене приостановления  по счету цифрового рубля</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DateDecision" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата Решения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NumberDecision" type="clt_ru:DocumentNumberType">
+            <xs:annotation>
+              <xs:documentation>Номер Решения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DRP_Customs" type="drp:DRP_CustomsType">
+            <xs:annotation>
+              <xs:documentation>Таможенный орган</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AccountInfoPayer" type="drp:AccountInfoPayerType">
+            <xs:annotation>
+              <xs:documentation>Информация о счете плательщика</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BankInfoPayer" type="drp:BankInfoPayerType">
+            <xs:annotation>
+              <xs:documentation>Информация о банке плательщика</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ParagraphNumber" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Основание для принятия Решения о приостановлении (номер пункта (при наличии) и части статьи 77 Федерального закона от 3 августа 2018 г. № 289-ФЗ «О таможенном регулировании в Российской Федерации и о внесении изменений в отдельные законодательные акты Российской Федерации» (Собрание законодательства Российской Федерации, 2018, № 32, ст. 5082))</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DRP_Doc" type="drp:DRP_DocType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Отменяемое Решение о приостановлении/ Отменяемое Решение о приостановлении по счету цифрового рубля</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Amount" type="clt_ru:AmountType">
+            <xs:annotation>
+              <xs:documentation>Сумма</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CurrencyA3Code" type="clt_ru:CurrencyA3CodeType">
+            <xs:annotation>
+              <xs:documentation>Код валюты</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PayerInfo" type="drp:PayerInfoType">
+            <xs:annotation>
+              <xs:documentation>Сведения о плательщике-владельце счета</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsChief" type="drp:CustomsPersonType">
+            <xs:annotation>
+              <xs:documentation>Подпись начальника таможенного органа (лица, им уполномоченного)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Executor" type="drp:ExecutorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Исполнитель</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1002029E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AccountInfoPayerType">
+    <xs:annotation>
+      <xs:documentation>Информация о банке и счёте плательщика</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="BankAccount" type="drp:Text20Type">
+        <xs:annotation>
+          <xs:documentation>Номер счета плательщика или реквизиты корпоративного электронного средства платежа плательщика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BankAccountDescription" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вид счета плательщика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CurrencyA3Code" type="clt_ru:CurrencyA3CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Буквенный код валюты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="BankInfoPayerType">
+    <xs:annotation>
+      <xs:documentation>Сведения о банке плательщика</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OrganizationName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Полное наименование организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ShortName" type="clt_ru:ShortNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Краткое наименование организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrganizationLanguage" type="clt_ru:LanguageCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код языка для заполнения наименования </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INN" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН банка плательщика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KPP" type="clt_ru:KPPCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>КПП банка плательщика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OGRN" type="clt_ru:OGRNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ОГРН/ОГРНИП банка плательщика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OKPOID" type="clt_ru:OKPOIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код организации по ОКПО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OKATOCode" type="clt_ru:OKATOCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код ОКАТО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BICID" type="clt_ru:BICIDType">
+        <xs:annotation>
+          <xs:documentation>БИК банка плательщика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CustomsPersonType">
+    <xs:annotation>
+      <xs:documentation>Подпись, фамилия, имя, отчество начальника таможенного органа (лица, им уполномоченного).</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonSurname" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Фамилия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Имя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonMiddleName" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonPost" type="clt_ru:PostType">
+        <xs:annotation>
+          <xs:documentation>Должность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DRP_CustomsType">
+    <xs:annotation>
+      <xs:documentation>Код и наименование таможенного органа. Заполняется автоматически таможенными органами. </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:CustomsType">
+        <xs:sequence>
+          <xs:element name="FullOfficeName" type="clt_ru:FreeText250Type">
+            <xs:annotation>
+              <xs:documentation>Полное наименование таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DRP_DocType">
+    <xs:annotation>
+      <xs:documentation>Отменяемое Решение о приостановлении. Заполняется в Решении об отмене приостановления.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DRP_DocNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер Решения о приостановлении/ Номер решения о приостановлении по счету цифрового рубля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DRP_DocDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата Решения о приостановлении/ Дата Решения о приостановлении по счету цифрового рубля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ExecutorType">
+    <xs:annotation>
+      <xs:documentation>Исполнитель</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonSurname" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Фамилия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Имя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonMiddleName" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonPost" type="clt_ru:PostType">
+        <xs:annotation>
+          <xs:documentation>Должность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IssueDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата подписания</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Phone" type="clt_ru:PhoneNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер телефона исполнителя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PayerInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о плательщике</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OrganizationName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Полное наименование организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ShortName" type="clt_ru:ShortNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Краткое наименование организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrganizationLanguage" type="clt_ru:LanguageCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код языка для заполнения наименования </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INN" type="clt_ru:INNIDType">
+        <xs:annotation>
+          <xs:documentation>ИНН плательщика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KPP" type="clt_ru:KPPCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>КПП плательщика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OGRN" type="clt_ru:OGRNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ОГРН/ОГРНИП плательщика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="Text20Type">
+    <xs:annotation>
+      <xs:documentation>Текст. Строка от 1 до 20 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="20" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

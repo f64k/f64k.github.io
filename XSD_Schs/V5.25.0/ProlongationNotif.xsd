@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:pn="urn:customs.ru:Information:ExchangeDocuments:ProlongationNotif:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mpco="urn:customs.ru:Information:CustomsDocuments:MPOCommon:5.24.0" targetNamespace="urn:customs.ru:Information:ExchangeDocuments:ProlongationNotif:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:CustomsDocuments:MPOCommon:5.24.0" schemaLocation="MPOCommon.xsd" />
+  <xs:annotation>
+    <xs:documentation>Уведомление о разрешении/запрете  продления срока выпуска товаров / Решение о продлении/отказе в продлении срока приостановления выпуска товаров / Уведомление о продлении сроков выдачи МПО</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ProlongationNotif" type="pn:ProlongationNotifType">
+    <xs:annotation>
+      <xs:documentation>Уведомление о разрешении/запрете  продления срока выпуска товаров / Решение о продлении/отказе в продлении срока приостановления выпуска товаров / Уведомление о продлении сроков выдачи МПО</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ProlongationNotifType">
+    <xs:annotation>
+      <xs:documentation>Уведомление о разрешении/запрете  продления срока выпуска товаров / Решение о продлении/отказе в продлении срока приостановления выпуска товаров / Уведомление о продлении сроков выдачи МПО</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="NotifDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата уведомления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NotifTime" type="clt_ru:TimeCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Время уведомления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocSign" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Тип документа : 0 - Уведомление о запрете продления срока выпуска товаров; 1 - Уведомление о разрешении продления срока выпуска товаров ; 2 - Решение о продлении срока приостановления выпуска товаров, 3 - Решение об отказе в продлении срока приостановления выпуска товаров ; 4 - Уведомление о продлении сроков выдачи МПО; 5 - Решение о продлении срока выпуска товаров ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ProlongDate" type="clt_ru:DateTimeCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата и время, до которых продлевается срок </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Period" type="clt_ru:Count2Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Количество рабочих дней, на которые продлевается срок приостановления выпуска товаров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReasonsCode" type="clt_ru:CodeVariable2Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код основания продления срока выпуска товаров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Reasons" type="clt_ru:FreeText250Type">
+            <xs:annotation>
+              <xs:documentation>Описание решения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Comments" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Комментарии</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegNumberDT" type="cat_ru:GTDIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MPO_Registration" type="mpco:MPO_RegistrationType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер МПО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsPerson" type="cat_ru:CustomsPersonType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Customs" type="cat_ru:CustomsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о таможенном органе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Goods" type="pn:GoodsType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о товарах ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1004109E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="GoodsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товаре</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsNumeric" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер декларируемого  товара Гр.32 ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsTNVEDCode" type="clt_ru:CUGoodsNomenclatuerCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код товара по ТН ВЭД ЕАЭС. Гр.33 первый раздел</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Наименование (торговое, коммерческое или иное традиционное наименование) товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProlongDate" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата и время, до которых продлевается срок выпуска товара ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

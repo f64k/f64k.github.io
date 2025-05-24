@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:epres="urn:customs.ru:Information:CustomsDocuments:ExpertisePreResponse:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:ExpertisePreResponse:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Ответ на предварительный запрос возможности проведения ЭИР</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ExpertisePreResponse" type="epres:ExpertisePreResponseType">
+    <xs:annotation>
+      <xs:documentation>Ответ на предварительный запрос возможности проведения ЭИР</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ExpertisePreResponseType">
+    <xs:annotation>
+      <xs:documentation>Ответ на предварительный запрос возможности проведения ЭИР</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="ExpertisePreResponseDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата формирования ответа на предварительный запрос</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IsPossibleExpertise" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Возможность проведения ЭИР подразделением ЦЭКТУ, в который поступил Предварительный запрос: 1 - Полностью возможно, 2 - Полностью невозможно, 3 - Частично невозможно</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IsNotPossibleReason" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Причины невозможности проведения ЭИР в ЦЭКТУ в целом либо по части вопросов, поставленных перед экспертом</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IsPossibleOtherCEKTUDivision" type="epres:IsPossibleOtherCEKTUDivisionType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Возможность проведения ЭИР другим подразделением ЦЭКТУ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BeginDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата начала ЭИР</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="EndDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата окончания ЭИР</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Question" type="epres:QuestionType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Вопрос, поставленный перед экспертом, не входящий в его компетенцию, либо некорректный вопрос</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IsPossybleExpertiseOnlyPhoto" type="epres:IsPossybleType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Ответ на вопрос о возможности проведения ЭИР на основании копий документов, электронных документов или фотоматериалов без представления объектов исследования</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IsPossibleGiveStudyObjects" type="epres:IsPossybleType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Ответ на вопрос о возможности выезда Эксперта для осмотра объектов ЭИР по месту их хранения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CEKTUPerson" type="epres:CEKTUPersonType">
+            <xs:annotation>
+              <xs:documentation>Должностное лицо, сформировавшее ответ на Предварительный запрос</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1051015E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CEKTUDivisionInformationType">
+    <xs:annotation>
+      <xs:documentation>Сведения о подразделении ЦЭКТУ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код подразделения ЦЭКТУ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Name" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование подразделения ЦЭКТУ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Address" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Адрес подразделения ЦЭКТУ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CEKTUPersonType">
+    <xs:annotation>
+      <xs:documentation>Должностное лицо, сформировавшее ответ на Предварительный запрос</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:PersonBaseType">
+        <xs:sequence>
+          <xs:element name="Phone" type="clt_ru:PhoneNumberType">
+            <xs:annotation>
+              <xs:documentation>Номер служебного телефона</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CEKTUDivision" type="epres:CEKTUDivisionInformationType">
+            <xs:annotation>
+              <xs:documentation>Подразделение ЦЭКТУ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="IsPossibleOtherCEKTUDivisionType">
+    <xs:annotation>
+      <xs:documentation>Возможность проведения ЭИР другим подразделением ЦЭКТУ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CEKTUDivision" type="epres:CEKTUDivisionInformationType">
+        <xs:annotation>
+          <xs:documentation>Подразделение ЦЭКТУ, в котором возможно проведение ЭИР</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Reason" type="clt_ru:FreeText500Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Причины</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="IsPossybleType">
+    <xs:annotation>
+      <xs:documentation>Ответ на вопрос о возможности проведения ЭИР и (или) выезда эксперта, поставленный в предварительном запросе</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="IsPossyble" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Ответ на вопрос. Если значение "true" - да, возможно; "false" - нет, невозможно.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Reason" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Причины невозможности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="QuestionType">
+    <xs:annotation>
+      <xs:documentation>Вопрос вне компетенции эксперта или некорректный</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="QuestionNumber" type="clt_ru:Quantity3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер вопроса в предварительном запросе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="QuestionText" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Текст вопроса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TypeQuestion" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Тип вопроса: 1 - вне компетенции эксперта, 2 - некорректный.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="QuestionReason" type="clt_ru:FreeText500Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Причины</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

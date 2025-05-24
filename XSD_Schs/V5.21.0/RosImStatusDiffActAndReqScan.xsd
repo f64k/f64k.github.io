@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Сведения из системы ФГИАС ЕСУГИ Росимущества Передача Росимуществом статуса о несовпадении данных в актах приема-передачи и запрос скан-образа акта приема-передачи и фото Имущества /Товаров (WhoSendsStatus = 1)
+Сведения из системы ЕАИС таможенных органов Передача ФТС России  статуса о несовпадении данных в актах приема-передачи и запрос скан-образа акта приема-передачи и фото Имущества /Товаров (WhoSendsStatus = 2)
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" xmlns:ri_sdars="urn:customs.ru:Information:SQDocuments:RosImStatusDiffActAndReqScan:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:RosImStatusDiffActAndReqScan:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Передача Росимуществом или ФТС России статуса о несовпадении данных в актах приема-передачи и запрос скан-образа акта приема-передачи и фото Имущества /Товаров</xs:documentation>
+  </xs:annotation>
+  <xs:element name="RosImStatusDiffActAndReqScan" type="ri_sdars:RosImStatusDiffActAndReqScanType">
+    <xs:annotation>
+      <xs:documentation>Передача Росимуществом или ФТС России статуса о несовпадении данных в актах приема-передачи и запрос скан-образа акта приема-передачи и фото Имущества /Товаров</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RosImStatusDiffActAndReqScanType">
+    <xs:annotation>
+      <xs:documentation>Передача Росимуществом или ФТС России статуса о несовпадении данных в актах приема-передачи и запрос скан-образа акта приема-передачи и фото Имущества /Товаров</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="WhoSendsStatus" type="clt_ru:LetterIndicatorType">
+            <xs:annotation>
+              <xs:documentation>Кто передает статус: 1 - Росимущество; 2 - ФТС России</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NotifPIBIRegNumber" type="RUSclt_ru:Text100Type">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер ПИБИ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NumberCaseAcc" type="RUSclt_ru:Text100Type">
+            <xs:annotation>
+              <xs:documentation>Номер дела учета Имущества / Товара в таможенном органе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ActDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата акта приема-передачи </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ActNumber" type="RUSclt_ru:Text100Type">
+            <xs:annotation>
+              <xs:documentation>Номер акта приема-передачи Имущества / Товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsDescription" type="clt_ru:FreeText500Type" maxOccurs="4">
+            <xs:annotation>
+              <xs:documentation>Наименование Имущества / Товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsID" type="RUSclt_ru:Text100Type">
+            <xs:annotation>
+              <xs:documentation>Идентификационный номер позиции Имущества / Товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CountGoods" type="clt_ru:QuantityBasisType">
+            <xs:annotation>
+              <xs:documentation>Количество Имущества / Товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MeasureUnitCountName" type="clt_ru:FreeText250Type">
+            <xs:annotation>
+              <xs:documentation>Наименование единицы измерения (шт., кг, литры и т.п.)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ParamName" type="clt_ru:FreeText500Type" maxOccurs="6">
+            <xs:annotation>
+              <xs:documentation>Наименование парметра, по которому информация в акте приема-передаче не соответствует информации в запросе 10 / запросе 11</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ParamValue" type="clt_ru:Text150Type" maxOccurs="6">
+            <xs:annotation>
+              <xs:documentation>Значение не соответствующего параметра </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Status" type="clt_ru:Text50Type">
+            <xs:annotation>
+              <xs:documentation>Статус принятия (статичное значение при передаче Росимуществом: "Имеются расхождения в актах приема-передачи Имущества / Товаров" или "Имущество / Товары Росимуществом не принимались"; при передаче ФТС России " Имеются расхождения в актах приема-передачи Имущества / Товаров" или "Имущество / Товары в Росимущество не передавались")</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009246E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

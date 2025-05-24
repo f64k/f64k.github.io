@@ -1,0 +1,340 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:cltSCVV="urn:customs.ru:SCVVCommonLeafTypesCust:5.9.0" xmlns:catSCVV="urn:customs.ru:SCVVCommonAggregateTypesCust:5.24.0" targetNamespace="urn:customs.ru:SCVVCommonAggregateTypesCust:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:SCVVCommonLeafTypesCust:5.9.0" schemaLocation="SCVVCommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Общие сложные типы документов СКВВ</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="GTDExportInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о фактическом вывозе по декларации на товары</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ShipmentFactInfo" type="catSCVV:SCVVShipmentFactInfoType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о фактически вывезенных товарах</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DTID" type="catSCVV:GTDInqType">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер ДТ.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GTDInqType">
+    <xs:annotation>
+      <xs:documentation>Номер ДТ с порядковыми номерами товаров.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="cltSCVV:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, зарегистрировавшего документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GTDNumber" type="cltSCVV:GTDIDType">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер документа по журналу регистрации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsNumeric" type="clt_ru:Count5Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Номер товара по порядку</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GoodsDiscrepancyInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о найденных расхождениях в товаре</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsDiscrepancyIndicator" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Код найденных расхождений (в соответствии со Спецификацией обмена)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PlanFactGoodsInfo" type="catSCVV:SCVVGoodsType">
+        <xs:annotation>
+          <xs:documentation>Информация о планируемых к вывозу товарах</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Balance" type="catSCVV:SCVVGoodsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Остатки по ДТ по данному товару.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SCVVConsigmentDecisionType">
+    <xs:annotation>
+      <xs:documentation>Сведения о решении о вывозе товарной партии</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="StateShipment" type="cltSCVV:StateShipmentType">
+        <xs:annotation>
+          <xs:documentation>Статус вывоза после принятия решения.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Cause" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание причин принятого решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ShipmentFactInfo" type="catSCVV:SCVVConsignmentType">
+        <xs:annotation>
+          <xs:documentation>Информация о фактическом вывозе по товарной партии (в случае принятия решения о разрешении фактического вывоза товаров)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SCVVConsignmentType">
+    <xs:annotation>
+      <xs:documentation>Информация о фактическом вывозе по товарной партии</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="catSCVV:SCVVShipmentFactInfoType">
+        <xs:sequence>
+          <xs:element name="DTID" type="catSCVV:GTDInqType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер ДТ.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SCVVGoodsDecisionType">
+    <xs:annotation>
+      <xs:documentation>СКВВ. Сведения о товаре  с выявленными расхождениями</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="catSCVV:SCVVGoodsType">
+        <xs:sequence>
+          <xs:element name="GoodsDiscrepancyIndicator" type="clt_ru:Code2Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Вид найденных расхождений (00- расхождений не выявлено; 11-товар с указанным порядковым номером не найден в ГТД; 12 - код товара по ТН ВЭД ЕАЭС не совпадает с указанным в ГТД; 13 - превышен вес брутто по ГТД; 14 - превышен вес нетто по ГТД; 15 - превышено количество товара в ДЕИ; 16 - таможенная стоимость товара не совпадает с заявленной в ГТД)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SCVVGoodsType">
+    <xs:annotation>
+      <xs:documentation>СКВВ. Сведения о товаре </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:GoodsBaseType">
+        <xs:sequence>
+          <xs:element name="Amount" type="clt_ru:AmountType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Таможенная стоимость товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsAddTNVEDCode" type="clt_ru:GoodsNomenclatuerAddCodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код товара по  классификатору дополнительной таможенной информации.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SupplementaryGoodsQuantity" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Количество в дополнительной единице измерения.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SCVVPresentedDocumentType">
+    <xs:annotation>
+      <xs:documentation>Представленный документ. (Код вида, наименование, номер, дата)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="PresentedDocumentModeCode" type="clt_ru:CustomsDocumentCodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код вида представляемого документа.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsNumeric" type="clt_ru:Quantity3Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SCVVShipmentFactInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о фактическом вывозе</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ExportDateTime" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата и время убытия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AddInfo" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Примечания</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DispatchCountryCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Страна отправления. Буквенный код по общероссийскому классификатору стран мира либо по классификатору экономических союзов и сообществ.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DestinationCountryCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Страна назначения. Буквенный код по общероссийскому классификатору стран мира либо по классификатору экономических союзов и сообществ / 00 (неизвестна)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TotalGoodsWeight" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Общий вес брутто (кг) вывезенного товара </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BorderPointCode" type="clt_ru:Code6Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код пограничного пункта пропуска.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Таможенный номер накладной</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Consignee" type="cat_ru:OrganizationBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о получателе товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Consignor" type="cat_ru:OrganizationBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения об отправителе товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PresentedDocument" type="catSCVV:SCVVPresentedDocumentType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Транспортный документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsFactInfo" type="catSCVV:SCVVGoodsType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о товаре</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DepartureTransport" type="catSCVV:SCVVTransportMeansType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Транспортные средства при убытии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Customs" type="cat_ru:CustomsType">
+        <xs:annotation>
+          <xs:documentation>Таможенный орган убытия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsPerson" type="RUScat_ru:CustomsPersonDetails">
+        <xs:annotation>
+          <xs:documentation>Инспектор, зарегистрировавший убытие </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SCVVTransportMeansType">
+    <xs:annotation>
+      <xs:documentation>Транспортное средство</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TransportIdentifier" type="clt_ru:TransportMeansIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор (номер) основного транспортного средства.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TrailerIdentifier" type="clt_ru:TransportMeansIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор (номер) прицепного транспортного средства.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SecondTrailerIdentifier" type="clt_ru:TransportMeansIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор (номер) второго прицепного транспортного средства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransportModeCode" type="clt_ru:TransportModeCodeType">
+        <xs:annotation>
+          <xs:documentation>Код вида транспортного средства по классификатору видов транспорта и транспортировки товаров.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransportMeansNationalityCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Буквенный код страны принадлежности транспортного средства по общероссийскому классификатору стран мира.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransportTraditionalName" type="clt_ru:TransportNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Традиционное наименование транспортного средства. по классификатору видов транспорта и транспортировки товаров.. </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ShipmentBaseInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о товарной партии</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Таможенный номер накладной</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DTID" type="catSCVV:GTDInqType">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер декларации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ShipmentDiscrepancyInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о найденных расхождениях в товарной партии</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ShipmentDiscrepancyCode" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Код найденных расхождений (в соответствии со Спецификацией обмена)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Таможенный номер накладной</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DTID" type="catSCVV:GTDInqType">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер таможенного документа.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsDiscrepancyInfo" type="catSCVV:GoodsDiscrepancyInfoType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Информация о найденных расхождениях в товаре</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PresentedDocument" type="catSCVV:SCVVPresentedDocumentType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Транспортный документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,602 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Приложение №1 к Технологии информационного взаимодействия ОАО «РЖД» и  ФТС России при предоставлении документов и отметок таможенных органов, которые будут необходимы в случае истребования налоговыми органами при проверке обоснованности применения налоговой ставки 0% по НДС в электронном виде -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:cltTrans_ru="urn:customs.ru:Information:TransportDocuments:TransportCommonLeafTypesCust:5.14.3" xmlns:catTrans_ru="urn:customs.ru:Information:TransportDocuments:TransportCommonAgregateTypesCust:5.24.0" xmlns:rwbe="urn:customs.ru:Information:TransportDocuments:Railway:RwBillExtract:5.24.0" targetNamespace="urn:customs.ru:Information:TransportDocuments:Railway:RwBillExtract:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:TransportDocuments:TransportCommonLeafTypesCust:5.14.3" schemaLocation="TransportCommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:TransportDocuments:TransportCommonAgregateTypesCust:5.24.0" schemaLocation="TransportCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Транспортный, товаросопроводительный документ (железнодорожная накладная), используемый для налоговых целей</xs:documentation>
+  </xs:annotation>
+  <xs:element name="RwBillExtract" type="rwbe:RwBillExtractType" />
+  <xs:complexType name="RwBillExtractType">
+    <xs:annotation>
+      <xs:documentation>Транспортный, товаросопроводительный документ (железнодорожная накладная), используемый для налоговых целей (тип)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Number" type="clt_ru:DocumentNumberType">
+            <xs:annotation>
+              <xs:documentation>Номер отправки, присвоенный перевозчиком (графа 29 СМГС)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RWBDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата ж/д накладной</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RWBMain_ID" type="xs:decimal">
+            <xs:annotation>
+              <xs:documentation>Идентификатор цепочки документов </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TDInfo" type="rwbe:TDInfoType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Номер таможенной декларации (декларации на товары или транзитной декларации) и информация по товарам (грузу)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Consignor" type="rwbe:RBOrganizationType">
+            <xs:annotation>
+              <xs:documentation>Реквизиты отправителя </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DepartureStation" type="rwbe:StationType">
+            <xs:annotation>
+              <xs:documentation>Ж/д станция и дорога отправления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ConsignorNotice" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Особые заявления отправителя</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Consignee" type="rwbe:RBOrganizationType">
+            <xs:annotation>
+              <xs:documentation>Реквизиты получателя</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DestinationStation" type="rwbe:RailwayType">
+            <xs:annotation>
+              <xs:documentation>Ж/д станция и дорога назначения </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BorderStation" type="rwbe:StationType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Пограничные ж/д станции</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Carriage" type="rwbe:CarriageType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Данные об используемых вагонах </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Container" type="rwbe:ContainerType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о контейнерах</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Auto" type="rwbe:AutoType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения об интермодальных транспортных средствах (ИТЕ), АТС  (автомобильных транспортных средствах)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ExchangePallet" type="rwbe:ExchangePalletType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения об обменных поддонах (дополнительное оборудование)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="WorkTool" type="rwbe:WorkToolType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Описание перевозочных приспособлений (дополнительное оборудование)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CarriersAndRoute" type="rwbe:CarrierType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о перевозчиках и  маршруте</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PaidRailwayCodeName" type="rwbe:PaidRailwayCodeNameType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Наименования и коды транзитных железнодорожных дорог, за перевозку по которым отправитель принимает на себя платежи</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Contract" type="cat_ru:DocumentBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Реквизиты договора на поставку, заключенного между экспортером и импортером</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ContractCarrierDate" type="rwbe:StampType">
+            <xs:annotation>
+              <xs:documentation>Дата время подачи накладной перевозчику </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1003409E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CarriageType">
+    <xs:annotation>
+      <xs:documentation>Данные об используемых вагонах </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CarriageID" type="clt_ru:TransportMeansIDType">
+        <xs:annotation>
+          <xs:documentation>Номер вагона  (графа 7 СМГС)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RWName" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование железной дороги (графа 7 СМГС)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OwnerName" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование собственника вагона (графа 7 СМГС)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OwnerType" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Вагон предоставлен (О- отправителем, П-перевозчиком)
+(графа 8 СМГС)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Power" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Подъемная сила вагона в тоннах (графа 9 СМГС)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AxisQuantity" type="clt_ru:Quantity11Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество осей вагона (графа 10 СМГС)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Tare" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вес тары в кг (графа 11 СМГС)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsWeight" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вес груза после перегрузки (графа 13 СМГС)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Caliber" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Тип цистерны (калибр котла) Г(рафа 12 СМГС)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ContainerType">
+    <xs:annotation>
+      <xs:documentation>Сведения о контейнере</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RailwayCode" type="cltTrans_ru:RailwayCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код железнодорожной дороги - владельца контейнера. Не указывается, если контейнер не принадлежит железным дорогам</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ContainerID" type="clt_ru:TransportMeansIDType">
+        <xs:annotation>
+          <xs:documentation>Номер контейнера</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ContainerKind" type="clt_ru:PackageCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Тип контейнера в соответствии с классификатором видов груза, упаковки и упаковочных материалов </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ContainerModeDescription" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание вида контейнера</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ContainerCapacity" type="clt_ru:Quantity11Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Емкость контейнера</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ContainerCapacityUnitQualifierCode" type="clt_ru:MeasureUnitQualifierNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Название единицы измерения емкости контейнера</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Tare" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Масса тары контейнера в кг</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsWeight" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Масса груза в контейнере в кг</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PlacesQuantity" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество мест груза в вагоне</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PocketQuantity" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество транспортных пакетов в вагоне</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ContainerLength" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Длина контейнера в футах</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ExchangePalletType">
+    <xs:annotation>
+      <xs:documentation>Сведения об обменных поддонах</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FlatPalletQuantity" type="clt_ru:Quantity11Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество плоских поддонов </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BoxPalletQuantity" type="clt_ru:Quantity11Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество поддонов ящичного типа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExchangeMode" type="cltTrans_ru:ExchangeModeCodeType">
+        <xs:annotation>
+          <xs:documentation>Код режим обмена поддонов. </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InfoPayerType">
+    <xs:annotation>
+      <xs:documentation>Сведения о плательщике</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PayerName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование плательщика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PayerCode" type="clt_ru:Code2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код плательщика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaidRailwayCodeNameType">
+    <xs:annotation>
+      <xs:documentation>Наименования и коды транзитных железнодорожных дорог, за перевозку по которым отправитель принимает на себя платежи </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PaidRailwayCode" type="cltTrans_ru:RailwayCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Коды транзитных железнодорожных дорог</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaidRailwayName" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименования транзитных железнодорожных дорог</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaidRailwayShortName" type="clt_ru:ShortNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сокращенное наименование транзитных железнодорожных дорог</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InfoPayer" type="rwbe:InfoPayerType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о плательщике</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RBOrganizationType">
+    <xs:annotation>
+      <xs:documentation>Сведения о грузополучателе/грузоотправителе </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:OrganizationType">
+        <xs:sequence>
+          <xs:element name="RBCode" type="clt_ru:CodeVariable18Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код грузополучателя/грузоотправителя</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ConsignorSign" type="clt_ru:NameType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>ФИО представителя отправителя (графа 1 СМГС)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RWBGoodsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товарах</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="catTrans_ru:TransportGoodsType">
+        <xs:sequence>
+          <xs:element name="ContainerIndicator" type="clt_ru:IndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Отметка перевозки грузов в контейнерах </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="WorkToolDescription" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>В случае осуществления перевозки с применением перевозочных приспособлений указывается наименование применяемых перевозочных приспособлений</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ConductorDescription" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Заполняется при перевозках грузов с проводниками. Указываются сведения о проводниках и в соответствующих случаях — название пограничной станции, на которой производится замена проводников. </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PlaceGoodsQuantity" type="clt_ru:QuantityBasisType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Количество товара в грузовом месте</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PlacesQuantity" type="clt_ru:QuantityBasisType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Общее количество грузовых мест товара, если "навал" или налив" то не заполняется</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GrossWeightQuantity" type="clt_ru:QuantityBasisType">
+            <xs:annotation>
+              <xs:documentation>Вес товара определенный отправителем, брутто (кг)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PlacesDescription" type="clt_ru:FreeText250Type">
+            <xs:annotation>
+              <xs:documentation>Описание грузовых мест (коробок, упаковок, паллет и т.д.)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="HarmonizedRangeGoods" type="clt_ru:Count8Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код товара по ГНГ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Packing" type="clt_ru:Text50Type">
+            <xs:annotation>
+              <xs:documentation>Упаковка</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Marking" type="clt_ru:Text50Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Маркировка</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CarriageNumber" type="clt_ru:TransportMeansIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер вагона</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ContainerNumber" type="clt_ru:TransportMeansIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Номер контейнера</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RailwayType">
+    <xs:annotation>
+      <xs:documentation>Сведения о железной дороге</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RailwayCode" type="cltTrans_ru:RailwayCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код железнодорожной дороги </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StationCode" type="clt_ru:Count10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код железнодорожной станции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RailwayAndStationName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование дороги и станции назначения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="StationType">
+    <xs:annotation>
+      <xs:documentation>Сведения о железнодорожной станции и дороге</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="StationCode" type="clt_ru:RailwayStationCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код станции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StationName" type="clt_ru:PlaceNameType">
+        <xs:annotation>
+          <xs:documentation>Тарифное наименование станции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RailwayCode" type="cltTrans_ru:RailwayCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код железнодорожной дороги </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RWName" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование железной дороги</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="WorkToolType">
+    <xs:annotation>
+      <xs:documentation>Описание перевозочных приспособлений</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RailwayCode" type="cltTrans_ru:RailwayCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код железнодорожной дороги - владельца перевозочного приспособления. Не указывается, если приспособление не принадлежит железным дорогам</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WorkToolID" type="clt_ru:TransportMeansIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Знак и номер перевозочного приспособления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ContainerModeDescription" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Описание вида контейнера</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AutoType">
+    <xs:annotation>
+      <xs:documentation>Тип, описывающий автотранспортные средства (АТС) и интермодальные единицы (ИТЕ), кроме контейнеров</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:TransportMeansBaseType">
+        <xs:sequence>
+          <xs:element name="WagonNumber" type="clt_ru:TransportMeansIDType">
+            <xs:annotation>
+              <xs:documentation>Номер вагона c ИТЕ, АТС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Tare" type="clt_ru:QuantityBasisType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Масса тары ИТЕ, АТС в кг</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsWeight" type="xs:int" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Масса груза в ИТЕ, АТС в кг</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PlacesQuantity" type="clt_ru:QuantityBasisType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Количество мест груза в ИТЕ, АТС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PocketQuantity" type="clt_ru:QuantityBasisType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Количество транспортных пакетов в ИТЕ, АТС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ContainerLength" type="clt_ru:QuantityBasisType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Длина ИТЕ, АТС в м</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TDNumberType">
+    <xs:annotation>
+      <xs:documentation>Номер таможенной декларации</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:GTDIDType">
+        <xs:sequence>
+          <xs:element name="DocumentNumber" type="clt_ru:Count5Type">
+            <xs:annotation>
+              <xs:documentation>Номер  документа по порядку</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocumentCode" type="clt_ru:LetterIndicatorType">
+            <xs:annotation>
+              <xs:documentation>Вид документа: 1 - декларация на товары; 2 - транзитная декларация</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TDInfoType">
+    <xs:annotation>
+      <xs:documentation>Номер ТД и информация по товарам ТД</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="rwbe:TDNumberType">
+        <xs:sequence>
+          <xs:element name="Goods" type="rwbe:RWBGoodsType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Информация по товарам (грузу)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CarrierType">
+    <xs:annotation>
+      <xs:documentation>Тип для описания маршрута и перевозчиков</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CarrierName" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Наименование перевозчика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CarrierCode" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код перевозчика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FromStation" type="rwbe:StationType">
+        <xs:annotation>
+          <xs:documentation>Перевозка от станции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ToStation" type="rwbe:StationType">
+        <xs:annotation>
+          <xs:documentation>Перевозка до станции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="StampType">
+    <xs:annotation>
+      <xs:documentation>Тип для описания штемпеля</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CarrierName" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Наименование перевозчика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Date" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Календарная дата штемпеля (местное время)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Time" type="clt_ru:TimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Время</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Station" type="rwbe:StationType">
+        <xs:annotation>
+          <xs:documentation>Станция простановки штемпеля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

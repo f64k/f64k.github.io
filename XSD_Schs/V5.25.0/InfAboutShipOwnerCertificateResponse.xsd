@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:iasocr="urn:customs.ru:Information:SQDocuments:InfAboutShipOwnerCertificateResponse:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:InfAboutShipOwnerCertificateResponse:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Ответ на запрос сведений из свидетельства о праве собственности на судно</xs:documentation>
+	</xs:annotation>
+	<xs:element name="InfAboutShipOwnerCertificateResponse" type="iasocr:InfAboutShipOwnerCertificateResponseType">
+		<xs:annotation>
+			<xs:documentation>Ответ на запрос сведений из свидетельства о праве собственности на судно</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="InfAboutShipOwnerCertificateResponseType">
+		<xs:annotation>
+			<xs:documentation>Ответ на запрос сведений из свидетельства о праве собственности на судно</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="GUID" type="iasocr:IdType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Идентификатор запроса</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="StatementDate" type="clt_ru:DateTimeCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дата и время направления запроса </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:choice>
+						<xs:element name="DataResponse" type="iasocr:DataResponseType">
+							<xs:annotation>
+								<xs:documentation>Сведения о зарегистрированных правах собственности на маломерное судно, используемое в некоммерческих целях</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Reject" type="iasocr:RejectType">
+							<xs:annotation>
+								<xs:documentation>Отказ в предоставлении сведений</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009407E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы.</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="BoatType">
+		<xs:annotation>
+			<xs:documentation>Сведения о судне</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Registered" type="iasocr:TextMax2048Type">
+				<xs:annotation>
+					<xs:documentation>Наименование органа, осуществившего регистрацию</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Share" type="iasocr:TextMax16Type">
+				<xs:annotation>
+					<xs:documentation>Размер доли собственности</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegisterNumber" type="iasocr:TextMax17Type">
+				<xs:annotation>
+					<xs:documentation>Номер реестровой записи</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DateRegistry" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата регистрации в реестре</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegistrationStatus" type="iasocr:ReferenceType">
+				<xs:annotation>
+					<xs:documentation>Статус регистрационной записи</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BoatNumber" type="iasocr:TextMax32Type">
+				<xs:annotation>
+					<xs:documentation>Идентификационный (бортовой) номер</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BrandModel" type="iasocr:BrandModelType">
+				<xs:annotation>
+					<xs:documentation>Тип судна</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FactoryNumber" type="iasocr:TextMax64Type">
+				<xs:annotation>
+					<xs:documentation>Строительный идентификационный номер</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="YearBuilding" type="iasocr:Text4TypePattern" nillable="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Год постройки судна</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Engine" type="iasocr:EngineType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Сведения о двигателе</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BrandModelType">
+		<xs:annotation>
+			<xs:documentation>Сведения о типе судна</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Type" type="iasocr:ReferenceType">
+				<xs:annotation>
+					<xs:documentation>Тип</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Brand" type="iasocr:TextMax64Type">
+				<xs:annotation>
+					<xs:documentation>Марка</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Model" type="iasocr:TextMax64Type">
+				<xs:annotation>
+					<xs:documentation>Модель</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DataResponseType">
+		<xs:annotation>
+			<xs:documentation>Сведения о зарегистрированных правах собственности на маломерное судно, используемое в некоммерческих целях</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="InfoOwnerRes" type="iasocr:InfoOwnerResType">
+				<xs:annotation>
+					<xs:documentation>Сведения об объекте запроса – дублирование данных собственника из запроса</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Boat" type="iasocr:BoatType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Сведения о судне</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EngineType">
+		<xs:annotation>
+			<xs:documentation>Сведения о двигателе</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="BrandModel" type="iasocr:BrandModelType">
+				<xs:annotation>
+					<xs:documentation>Марка и модель двигателя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EngineNumber" type="iasocr:TextMax64Type">
+				<xs:annotation>
+					<xs:documentation>Номер двигателя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PowerHp" type="iasocr:FloatType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Мощность, л.с.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PowerKWt" type="iasocr:FloatType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Мощность, кВт</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InfoOwnerResType">
+		<xs:annotation>
+			<xs:documentation>Сведения об объекте запроса – дублирование данных собственника из запроса</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="PhysicalPersonRes" type="iasocr:PhysicalPersonResType">
+				<xs:annotation>
+					<xs:documentation>Сведения о ФЛ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LegalPersonRes" type="iasocr:LegalPersonResType">
+				<xs:annotation>
+					<xs:documentation>Сведения о ЮЛ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="LegalPersonResType">
+		<xs:annotation>
+			<xs:documentation>Сведения о ЮЛ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Name" type="iasocr:TextMax2048Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="INN" type="clt_ru:INNIDType">
+				<xs:annotation>
+					<xs:documentation>ИНН ЮЛ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="KPP" type="clt_ru:KPPCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>КПП</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="OGRN" type="clt_ru:OGRNIDType">
+					<xs:annotation>
+						<xs:documentation>ОГРН (Для российского ЮЛ)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="NZA" type="iasocr:TextMax16Type">
+					<xs:annotation>
+						<xs:documentation>Номер записи об аккредитации (Для иностранного ЮЛ)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PassportType">
+		<xs:annotation>
+			<xs:documentation>Сведения о паспорте</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Series" type="clt_ru:CodeVariable10Type">
+				<xs:annotation>
+					<xs:documentation>Серия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Number" type="clt_ru:CodeVariable10Type">
+				<xs:annotation>
+					<xs:documentation>Номер</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PhysicalPersonResType">
+		<xs:annotation>
+			<xs:documentation>Сведения о ФЛ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="FamilyName" type="iasocr:TextMax100Type">
+				<xs:annotation>
+					<xs:documentation>Фамилия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FirstName" type="iasocr:TextMax100Type">
+				<xs:annotation>
+					<xs:documentation>Имя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Patronymic" type="iasocr:TextMax100Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Отчество</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DateBirth" type="clt_ru:DateCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата рождения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="INN" type="clt_ru:INNIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ИНН ФЛ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SNILS" type="clt_ru:CodeVariable11Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>СНИЛС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Passport" type="iasocr:PassportType">
+				<xs:annotation>
+					<xs:documentation>Сведения о паспорте</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReferenceType">
+		<xs:annotation>
+			<xs:documentation>Сведения о статусе</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Code" type="iasocr:TextMax16Type">
+				<xs:annotation>
+					<xs:documentation>Код</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Title" type="iasocr:TextMax255Type">
+				<xs:annotation>
+					<xs:documentation>Наименование</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RejectType">
+		<xs:annotation>
+			<xs:documentation>Отказ в предоставлении сведений</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Reject" type="iasocr:TextMax2048Type">
+				<xs:annotation>
+					<xs:documentation>Отказ в предоставлении сведений</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RejectCode" type="iasocr:TextMax16Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код причины отказа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="FloatType">
+		<xs:annotation>
+			<xs:documentation>Число с плавающей запятой</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:NumericCategoriesCust"/>
+	</xs:simpleType>
+	<xs:simpleType name="IdType">
+		<xs:annotation>
+			<xs:documentation>Произвольный текст длиной до 36 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:TextCategoriesCust">
+			<xs:maxLength value="36"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Text4TypePattern">
+		<xs:annotation>
+			<xs:documentation>Строка 4 символа - цифры</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:TextCategoriesCust">
+			<xs:length value="4"/>
+			<xs:pattern value="\d{4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TextMax100Type">
+		<xs:annotation>
+			<xs:documentation>Произвольный текст длиной до 100 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:TextCategoriesCust">
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TextMax16Type">
+		<xs:annotation>
+			<xs:documentation>Произвольный текст длиной до 16 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:TextCategoriesCust">
+			<xs:maxLength value="16"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TextMax17Type">
+		<xs:annotation>
+			<xs:documentation>Произвольный текст длиной до 17 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:TextCategoriesCust">
+			<xs:maxLength value="17"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TextMax2048Type">
+		<xs:annotation>
+			<xs:documentation>Произвольный текст длиной до 2048 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:TextCategoriesCust">
+			<xs:maxLength value="2048"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TextMax255Type">
+		<xs:annotation>
+			<xs:documentation>Произвольный текст длиной до 255 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:TextCategoriesCust">
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TextMax32Type">
+		<xs:annotation>
+			<xs:documentation>Произвольный текст длиной до 32 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:TextCategoriesCust">
+			<xs:maxLength value="32"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TextMax64Type">
+		<xs:annotation>
+			<xs:documentation>Произвольный текст длиной до 64 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:TextCategoriesCust">
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

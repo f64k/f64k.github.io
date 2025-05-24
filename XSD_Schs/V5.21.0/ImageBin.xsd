@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:imb="urn:customs.ru:Information:CustomsDocuments:ImageBin:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:ImageBin:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Изображение объекта</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ImageBin" type="imb:ImageBinType" />
+  <xs:complexType name="ImageBinType">
+    <xs:annotation>
+      <xs:documentation>Изображение объекта</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="ImageID" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Идентификатор информации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocumentInfo" type="cat_ru:DocumentBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Информация о изображении</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MainDocumentInfo" type="cat_ru:DocumentBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Информация об основном документе (заполняется в случае, если данные являются приложением к другому документу)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Comments" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="4">
+            <xs:annotation>
+              <xs:documentation>Комментарии к изображению</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocumentBody" type="imb:DocBodyType">
+            <xs:annotation>
+              <xs:documentation>Тело  документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006243E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="Text50MB">
+    <xs:annotation>
+      <xs:documentation>Текстовая информация. До 50Мбайт</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="52428800" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="DocBodyType">
+    <xs:annotation>
+      <xs:documentation>Тело документа с бинарными данными</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Type" type="clt_ru:Text10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Формат изображения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FileName" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Имя файла</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FileData" type="imb:Text50MB">
+        <xs:annotation>
+          <xs:documentation>Данные файла  в кодировке BASE64</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

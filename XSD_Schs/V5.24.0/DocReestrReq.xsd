@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:sq_clt="urn:customs.ru:Information:SQDocuments:SQCommonLeafTypesCust:5.0.10" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:dresrq="urn:customs.ru:Information:SQDocuments:DocReestrReq:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:DocReestrReq:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:SQDocuments:SQCommonLeafTypesCust:5.0.10" schemaLocation="SQCommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сведения из реестра разрешительных документов</xs:documentation>
+  </xs:annotation>
+  <xs:element name="DocReestrReq" type="dresrq:DocReestrReqType">
+    <xs:annotation>
+      <xs:documentation>Сведения из реестра разрешительных документов </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DocReestrReqType">
+    <xs:annotation>
+      <xs:documentation>Сведения из реестра разрешительных документов </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="RequestID" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Идентификатор пакета данных</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PermissionInfo" type="dresrq:PermissionInfoType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Данные по разрешению</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009033E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CarrierType">
+    <xs:annotation>
+      <xs:documentation>Перевозчик</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:SubjectDetailsType">
+        <xs:sequence>
+          <xs:element name="IsForeign" type="clt_ru:Numeric1Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Статус перевозчика: 0 - российский; 1 - иностранный</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PermissionInfoType">
+    <xs:annotation>
+      <xs:documentation>Данные по разрешению</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="MinNumber" type="clt_ru:Count19Type">
+        <xs:annotation>
+          <xs:documentation>Начало диапазона номеров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MaxNumber" type="clt_ru:Count19Type">
+        <xs:annotation>
+          <xs:documentation>Конец диапазона номеров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Count" type="clt_ru:Count19Type">
+        <xs:annotation>
+          <xs:documentation>Количество номеров в диапазоне</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Country" type="clt_ru:CountryA3CodeType">
+        <xs:annotation>
+          <xs:documentation>Страна</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Information" type="sq_clt:FreeText4000Type">
+        <xs:annotation>
+          <xs:documentation>Примечание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RestrictCondition" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Ограничения, особые условия по экологическим нормам </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ShipmentKind" type="clt_ru:Numeric1Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вид перевозки: 1 - двусторонние перевозки  (если вид разрешения "многосторонние перевозки грузов"); 2 - транзитный проезд (если вид разрешения "многосторонние перевозки грузов"); 3 - перевозки в/из третьих стран (если вид разрешения "многосторонние перевозки грузов")</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryRestriction" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Ограничения, особые условия по странам, перевозка в/из которых не разрешена </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TransitTransportation" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак только транзитного проезда</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IsTransit" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак наличия отметки "Транзит"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TSRoute" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Маршрут ТС </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PermitDocument" type="dresrq:PermitDocumentType">
+        <xs:annotation>
+          <xs:documentation>Разрешение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="APP" type="cat_ru:CustomsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>АПП, через которые проходит маршрут ТС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Carrier" type="dresrq:CarrierType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Перевозчик</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PermitDocumentType">
+    <xs:annotation>
+      <xs:documentation>Разрешение</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TransitPermitKind" type="clt_ru:DocumentNameType">
+        <xs:annotation>
+          <xs:documentation>Вид разрешительного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PermitNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер разрешения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IssueDateTime" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата/время выдачи</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Duration" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата окончания действия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StopCancelDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата приостановления, аннулирования</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Status" type="clt_ru:Numeric1Type">
+        <xs:annotation>
+          <xs:documentation>Статус: 1 - ACTIVE - Действует; 2 - EXPIRED - Истек срок действия; 3 - SUSPENDED - Приостановлено; 4 - CANCELED - Аннулировано</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PermUseAnalysis" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Результаты анализа использования разрешения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

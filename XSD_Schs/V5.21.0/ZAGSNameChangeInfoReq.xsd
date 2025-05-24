@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:znci_req="urn:customs.ru:Information:SQDocuments:ZAGSNameChangeInfoReq:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:ZAGSNameChangeInfoReq:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос на поиск актовой записи о перемене имени для получения сведений в объеме свидетельства о перемене имени</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ZAGSNameChangeInfoReq" type="znci_req:ZAGSNameChangeInfoReqType" />
+  <xs:complexType name="ZAGSNameChangeInfoReqType">
+    <xs:annotation>
+      <xs:documentation>Запрос на поиск актовой записи о перемене имени для получения сведений в объеме свидетельства о перемене имени</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="OKTMO" type="clt_ru:CodeVariable11Type">
+            <xs:annotation>
+              <xs:documentation>Код ОКТМО региона, в который подается запрос</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegisterDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата регистрации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PersonInfo" type="znci_req:PersonInfoType">
+            <xs:annotation>
+              <xs:documentation>Информация о лице</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009163E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="PersonInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о лице</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonNameBeforeChange" type="znci_req:FIOType">
+        <xs:annotation>
+          <xs:documentation>Сведения о лице до перемены имени</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonNameAfterChange" type="znci_req:FIOType">
+        <xs:annotation>
+          <xs:documentation>Сведения о лице после перемены имени</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonBirthDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата рождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FIOType">
+    <xs:annotation>
+      <xs:documentation>ФИО</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PersonSurname" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Фамилия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Имя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PersonMiddleName" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:otd="urn:customs.ru:Information:SertifDocuments:OwnershipTransferDoc:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:SertifDocuments:OwnershipTransferDoc:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сведения о документах, подтверждающих передачу прав на объекты интеллектуальной собственности</xs:documentation>
+  </xs:annotation>
+  <xs:element name="OwnershipTransferDoc" type="otd:OwnershipTransferDocType" />
+  <xs:complexType name="OwnershipTransferDocType">
+    <xs:annotation>
+      <xs:documentation>Сведения о документах, подтверждающих передачу прав на объекты интеллектуальной собственности.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="RegCertifNum" type="clt_ru:DocumentNumberType">
+            <xs:annotation>
+              <xs:documentation>Номер свидетельства о регистрации объекта интеллектуальной собственности</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegExpiretionDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Срок действия регистрации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MovementDirection" type="clt_ru:FreeText250Type">
+            <xs:annotation>
+              <xs:documentation>Направление перемещения по договору</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Description" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Описание</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RightHolder" type="cat_ru:OrganizationBaseType">
+            <xs:annotation>
+              <xs:documentation>Сведения о правообладателе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsOwner" type="cat_ru:OrganizationBaseType">
+            <xs:annotation>
+              <xs:documentation>Сведения о владельце товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OwnershipDocInfo" type="otd:OwnershipDocInfoType">
+            <xs:annotation>
+              <xs:documentation>Информация о документах, подтверждающих право собственности</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Наименование товаров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Sender" type="otd:OrganizationInfoType">
+            <xs:annotation>
+              <xs:documentation>Отправитель по договору</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Recipient" type="otd:OrganizationInfoType">
+            <xs:annotation>
+              <xs:documentation>Получатель по договору</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" default="1009014E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="OrganizationInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация об организации</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:OrganizationBaseType">
+        <xs:sequence>
+          <xs:element name="Address" type="cat_ru:AddressType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Адрес организации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="OwnershipDocInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о документах, подтверждающих право собственности</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="ObjectName" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Наименование объекта интеллектуальной собственности</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ContractTerms" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Срок действия договора</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OwnershipKind" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Вид права: 0 - неисключительное, 1- исключительное</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Licensee" type="cat_ru:OrganizationBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Лицензиат</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Licensor" type="cat_ru:OrganizationBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Лицензиар</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

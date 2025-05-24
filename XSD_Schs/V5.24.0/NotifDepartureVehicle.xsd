@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:catESAD_cu="urn:customs.ru:CUESADCommonAggregateTypesCust:5.24.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:catTrans_ru="urn:customs.ru:Information:TransportDocuments:TransportCommonAgregateTypesCust:5.24.0" xmlns:ndv="urn:customs.ru:Information:TransportDocuments:NotifDepartureVehicle:5.24.0" targetNamespace="urn:customs.ru:Information:TransportDocuments:NotifDepartureVehicle:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CUESADCommonAggregateTypesCust:5.24.0" schemaLocation="CUESADCommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd"/>
+	<xs:import namespace="urn:customs.ru:Information:TransportDocuments:TransportCommonAgregateTypesCust:5.24.0" schemaLocation="TransportCommonAggregateTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Уведомление об убытии автомобильным транспортом</xs:documentation>
+	</xs:annotation>
+	<xs:element name="NotifDepartureVehicle" type="ndv:NotifDepartureVehicleType">
+		<xs:annotation>
+			<xs:documentation>Уведомление об убытии автомобильным транспортом</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="NotifDepartureVehicleType">
+		<xs:annotation>
+			<xs:documentation>Уведомление об убытии автомобильным транспортом</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="Vehicle" type="ndv:VehicleType">
+						<xs:annotation>
+							<xs:documentation>Сведения о транспортном средстве</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:choice>
+						<xs:element name="Carrier" type="cat_ru:OrganizationType">
+							<xs:annotation>
+								<xs:documentation>Сведения о перевозчике</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="CustomsRepresentative" type="cat_ru:OrganizationType">
+							<xs:annotation>
+								<xs:documentation>Сведения о таможенном представителе</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+					<xs:element name="DepartureCountry" type="RUScat_ru:CountryDetailsType">
+						<xs:annotation>
+							<xs:documentation>Страна отправления</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DestinationCountry" type="RUScat_ru:CountryDetailsType">
+						<xs:annotation>
+							<xs:documentation>Страна назначения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Consignments" type="ndv:ConsignmentsType" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Сведения о товарных партиях</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="OfficialPerson" type="cat_ru:PersonSignatureType">
+						<xs:annotation>
+							<xs:documentation>Должностное лицо, подписавшее документ</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1003445E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="ConsignmentsType">
+		<xs:annotation>
+			<xs:documentation>Сведения о товарных партиях</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ConsignmentNum" type="clt_ru:Count3Type">
+				<xs:annotation>
+					<xs:documentation>Номер товарной партии</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Consignor" type="cat_ru:OrganizationType">
+				<xs:annotation>
+					<xs:documentation>Сведения об отправителе</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Consignee" type="cat_ru:OrganizationType">
+				<xs:annotation>
+					<xs:documentation>Сведения о получателе</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Seller" type="cat_ru:OrganizationType">
+				<xs:annotation>
+					<xs:documentation>Сведения о продавце</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Buyer" type="cat_ru:OrganizationType">
+				<xs:annotation>
+					<xs:documentation>Сведения о покупателе</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TDNumber" type="ndv:TDNumberType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Номер ДТ / ТД</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BillCreatPlase" type="clt_ru:Text150Type">
+				<xs:annotation>
+					<xs:documentation>Место составления международной товаротранспортной накладной</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BillDateNumber" type="cat_ru:DocumentBaseType">
+				<xs:annotation>
+					<xs:documentation>Дата и номер международной товаротранспортной накладной</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GoodsType">
+		<xs:annotation>
+			<xs:documentation>Сведения о товарах</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:GoodsBaseType">
+				<xs:sequence>
+					<xs:element name="DTGoodsNumber" type="clt_ru:Count5Type">
+						<xs:annotation>
+							<xs:documentation>Номер товара в ДТ</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="GoodsQuantity" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Объем товара в м3/ Количество товара в ДЕИ</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="GoodsPackInfo" type="catESAD_cu:ESADGoodsPackagingType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Сведения о грузовых местах, поддонах и упаковке товаров</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ContainerNumber" type="clt_ru:TransportMeansIDType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Номера контейнеров</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ProhibitedGoodsSign" type="clt_ru:IndicatorType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Сведения о наличии (отсутствии) товаров, ввоз которых на таможенную территорию ЕАЭС запрещен или ограничен: 1 - товары, ограниченные к ккозу присутствуют, 0 - отсутствуют товары, ограниченные к ввозу</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ComplianceProhibitionSign" type="clt_ru:LetterIndicatorType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Сведения подтверждающие соблюдение запретов и ограничений: 1 - соблюдение запретов и ограничений подтверждено; 2 - соблюдение запретов и ограничений не подтверждено (или не требуется)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TDNumberType">
+		<xs:annotation>
+			<xs:documentation>Номер таможенной декларации</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:GTDIDType">
+				<xs:sequence>
+					<xs:element name="DocumentCode" type="clt_ru:LetterIndicatorType">
+						<xs:annotation>
+							<xs:documentation>Вид документа: 1 - декларация на товары; 2 - транзитная декларация</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Goods" type="ndv:GoodsType" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Сведения о товарах</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="VehicleType">
+		<xs:annotation>
+			<xs:documentation>Сведения о транспортном средстве</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="catTrans_ru:TDTransportMeansType">
+				<xs:sequence>
+					<xs:element name="TrailerIdentifier" type="clt_ru:TransportMeansIDType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Идентификатор (номер) прицепного транспортного средства</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SecondTrailerIdentifier" type="clt_ru:TransportMeansIDType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Идентификатор (номер) второго прицепного транспортного средства</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

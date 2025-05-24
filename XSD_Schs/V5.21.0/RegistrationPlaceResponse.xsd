@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:RPRes="urn:customs.ru:Information:SQDocuments:RegistrationPlaceResponse:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:RegistrationPlaceResponse:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Документ, содержащий сведения о регистрации по месту пребывания (Ответ)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="RegistrationPlaceResponse" type="RPRes:RegistrationPlaceResponseType">
+    <xs:annotation>
+      <xs:documentation>Документ, содержащий сведения о регистрации по месту пребывания (Ответ)</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RegistrationPlaceResponseType">
+    <xs:annotation>
+      <xs:documentation>Документ, содержащий сведения о регистрации по месту пребывания (запрос) (тип)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:choice>
+          <xs:element name="Document" type="RPRes:DocumentType">
+            <xs:annotation>
+              <xs:documentation>Сведения о документе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocumentStatusResponse" type="RPRes:DocumentStatusResponseType" maxOccurs="500">
+            <xs:annotation>
+              <xs:documentation>Результаты запроса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:choice>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentIDType" use="required" fixed="1009345E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор электронного документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DocumentStatusResponseType">
+    <xs:annotation>
+      <xs:documentation>Результаты запроса</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ReqID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор запроса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Passport" type="RPRes:DocumentType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Данные документа о регистрации по месту жительства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Status" type="RPRes:StatusType">
+        <xs:annotation>
+          <xs:documentation>Ответ по статусу документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocumentType">
+    <xs:annotation>
+      <xs:documentation>Сведения о документе</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CITIZEN_LASTNAME" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Фамилия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CITIZEN_FIRSTNAME" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Имя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CITIZEN_GIVENNAME" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CITIZEN_BIRTHDAY" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата рождения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CITIZEN_SNILS" type="clt_ru:CodeVariable11Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>СНИЛС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DOC_SERIE" type="clt_ru:Code10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Серия документа</xs:documentation>
+        </xs:annotation>
+        <!--не обязателен для "Свидетельство рождения"-->
+      </xs:element>
+      <xs:element name="DOC_NUMBER" type="clt_ru:Code10Type">
+        <xs:annotation>
+          <xs:documentation>Номер документа</xs:documentation>
+        </xs:annotation>
+        <!--не обязателен для "Свидетельство рождения"-->
+      </xs:element>
+      <xs:element name="DOC_ISSUEDATE" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата выдачи документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="REGION_CODE" type="clt_ru:Code4Type">
+        <xs:annotation>
+          <xs:documentation>Регион запроса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DOC_TYPE" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Тип паспорта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="REG_TYPE" type="clt_ru:Text150Type">
+        <xs:annotation>
+          <xs:documentation>Наличие регистрации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LPLACE_REGION" type="clt_ru:Text150Type">
+        <xs:annotation>
+          <xs:documentation>Регион регистрации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LPLACE_DISTRICT" type="clt_ru:Text150Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Район</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LPLACE_CITY" type="clt_ru:Text40Type">
+        <xs:annotation>
+          <xs:documentation>Населенный пункт</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LPLACE_STREET" type="clt_ru:Text40Type">
+        <xs:annotation>
+          <xs:documentation>Улица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LPLACE_HOUSE" type="clt_ru:Text10Type">
+        <xs:annotation>
+          <xs:documentation>Дом</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LPLACE_BUILDING" type="clt_ru:Text10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Корпус</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LPLACE_FLAT" type="clt_ru:Text10Type">
+        <xs:annotation>
+          <xs:documentation>Квартира</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="REG_DATE_FROM" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата начала регистрации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="REG_DATE_TILL" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата окончания срока регистрации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="StatusType">
+    <xs:annotation>
+      <xs:documentation>Статус документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DOC_STATUS" type="clt_ru:CodeVariable3Type">
+        <xs:annotation>
+          <xs:documentation>Статус паспорта: 0-действительный</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INVALIDITY_REASON" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Причина недействительности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INVALIDITY_SINCE" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Недействительно с даты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

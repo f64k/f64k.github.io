@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>XML Viewer</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        details { margin-left: 20px; border: 1px solid #ccc; }
+        summary { cursor: pointer; font-family: monospace; border: 1px solid #eee; }
+        table { border-collapse: collapse; margin: 5px 0; }
+        td { border: 1px solid #ddd; padding: 4px 8px; }
+    </style>
+</head>
+<body>
+    <input type="file" id="fileInput" accept=".xml, .xsd" title="xml | xsd">
+    <div id="output"></div>
+
+    <script>
+        class XMLParser {
+            constructor(xmlString) {
+                this.parser = new DOMParser();
+                this.xmlDoc = this.parser.parseFromString(xmlString, "text/xml");
+            }
+
+            parse() {
+                return this._parseNode(this.xmlDoc.documentElement);
+            }
+
+            _parseNode(node) {
+                return {
+                    name: node.nodeName,
+                    value: node.children.length ? null : node.textContent.trim(),
+                    children: Array.from(node.children).map(child => this._parseNode(child))
+                };
+            }
+        }
+
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                document.getElementById('output').innerHTML = '';
+                const parser = new XMLParser(event.target.result);
+                renderXML(parser.parse());
+            };
+
+            reader.readAsText(file);
+        });
+
+        function renderXML(node, parent = document.getElementById('output')) {
+            const container = document.createElement('div');
+
+            if (node.children.length) {
+                const details = document.createElement('details');
+                const summary = document.createElement('summary');
+                summary.textContent = node.name;
+                details.appendChild(summary);
+
+                const table = document.createElement('table');
+                node.children.forEach(child => {
+                    const row = table.insertRow();
+                    row.insertCell().textContent = child.name;
+                    row.insertCell().textContent = child.value || '';
+                    if (child.children.length) renderXML(child, details);
+                });
+
+                details.appendChild(table);
+                container.appendChild(details);
+            } else {
+                const table = document.createElement('table');
+                const row = table.insertRow();
+                row.insertCell().textContent = node.name;
+                row.insertCell().textContent = node.value;
+                container.appendChild(table);
+            }
+
+            parent.appendChild(container);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peer.js Чат с Quasar</title>
+  
+  <!-- Подключаем Quasar через CDN -->
+  <!--
+  <link href="https://cdn.jsdelivr.net/npm/quasar@2.12.0/dist/quasar.min.css" rel="stylesheet">
+  -->
+  <link href="https://cdn.jsdelivr.net/npm/quasar@2.11.3/dist/quasar.min.css" rel="stylesheet"/>
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+  
+  <!-- Подключаем Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Подключаем PeerJS -->
+  <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
+  
+  <style>
+    .video-container {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 56.25%;
+      background-color: #000;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .video-container video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .local-video {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 200px;
+      height: 150px;
+      z-index: 100;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .message-bubble {
+      max-width: 70%;
+      word-wrap: break-word;
+    }
+    .call-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .user-list-item:hover {
+      background-color: rgba(0,0,0,0.05);
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+  <div id="q-app">
+    <div class="min-h-screen flex flex-col">
+      <!-- Шапка -->
+      <q-header elevated class="bg-blue-600 text-white">
+        <q-toolbar>
+          <q-toolbar-title>
+            <div class="flex items-center">
+              <q-icon name="chat" size="28px" class="mr-2"></q-icon>
+              Peer.js Чат
+            </div>
+          </q-toolbar-title>
+          <div class="text-sm">Ваш ID: <span id="my-peer-id" class="font-bold"></span></div>
+        </q-toolbar>
+      </q-header>
+
+      <!-- Основное содержимое -->
+      <div class="flex flex-1 overflow-hidden">
+        <!-- Боковая панель с пользователями -->
+        <div class="w-64 bg-white border-r border-gray-200 flex flex-col">
+          <div class="p-4 border-b border-gray-200">
+            <q-input 
+              outlined 
+              dense 
+              placeholder="Поиск пользователей" 
+              class="bg-gray-50"
+            >
+              <template v-slot:append>
+                <q-icon name="search"></q-icon>
+              </template>
+            </q-input>
+          </div>
+          <div class="flex-1 overflow-y-auto">
+            <div class="p-2 font-medium text-gray-500">Онлайн ({{ users.length }})</div>
+            <div 
+              v-for="user in users" 
+              :key="user.id" 
+              class="user-list-item p-3 flex items-center justify-between cursor-pointer hover:bg-blue-50"
+              @click="startPrivateChat(user)"
+            >
+              <div class="flex items-center">
+                <q-avatar color="primary" text-color="white" size="36px">
+                  {{ user.name.charAt(0).toUpperCase() }}
+                </q-avatar>
+                <div class="ml-3">
+                  <div class="font-medium">{{ user.name }}</div>
+                  <div class="text-xs text-gray-500">{{ user.id }}</div>
+                </div>
+              </div>
+              <q-btn 
+                round 
+                dense 
+                flat 
+                icon="call" 
+                color="green" 
+                size="sm"
+                @click.stop="callUser(user)"
+              ></q-btn>
+            </div>
+          </div>
+        </div>
+
+        <!-- Основная область чата -->
+        <div class="flex-1 flex flex-col">
+          <!-- Заголовок чата -->
+          <div class="p-4 border-b border-gray-200 bg-white flex items-center">
+            <template v-if="currentChat.type === 'group'">
+              <q-icon name="groups" size="24px" class="text-blue-600 mr-2"></q-icon>
+              <div class="text-lg font-medium">Групповой чат</div>
+            </template>
+            <template v-else>
+              <q-icon name="person" size="24px" class="text-green-600 mr-2"></q-icon>
+              <div class="text-lg font-medium">{{ currentChat.user?.name }}</div>
+            </template>
+          </div>
+
+          <!-- Сообщения -->
+          <div 
+            class="flex-1 overflow-y-auto p-4 bg-gray-50" 
+            id="messages-container"
+            ref="messagesContainer"
+          >
+            <div 
+              v-for="(message, index) in messages" 
+              :key="index" 
+              class="mb-4"
+              :class="{'flex justify-end': message.isMe, 'flex justify-start': !message.isMe}"
+            >
+              <div 
+                class="message-bubble p-3 rounded-lg"
+                :class="{'bg-blue-500 text-white': message.isMe, 'bg-white border border-gray-200': !message.isMe}"
+              >
+                <div v-if="!message.isMe" class="text-xs font-medium text-gray-700 mb-1">
+                  {{ message.senderName }}
+                </div>
+                <div>{{ message.text }}</div>
+                <div class="text-xs mt-1" :class="{'text-blue-100': message.isMe, 'text-gray-500': !message.isMe}">
+                  {{ formatTime(message.timestamp) }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Форма отправки сообщения -->
+          <div class="p-4 bg-white border-t border-gray-200">
+            <div class="flex items-center">
+              <q-input 
+                v-model="newMessage" 
+                outlined 
+                dense 
+                placeholder="Напишите сообщение..." 
+                class="flex-1 mr-2"
+                @keyup.enter="sendMessage"
+              ></q-input>
+              <q-btn 
+                round 
+                dense 
+                flat 
+                icon="send" 
+                color="primary"
+                @click="sendMessage"
+              ></q-btn>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Локальное видео (показывается во время звонка) -->
+    <div class="local-video bg-gray-800" v-if="localStream">
+      <video autoplay muted ref="localVideo"></video>
+    </div>
+
+    <!-- Модальное окно входящего звонка -->
+    <div class="call-modal" v-if="incomingCall">
+      <div class="bg-white rounded-lg p-6 w-full max-w-md">
+        <div class="text-center">
+          <q-icon name="call" size="48px" class="text-green-600 mb-4"></q-icon>
+          <div class="text-xl font-medium mb-2">Входящий звонок</div>
+          <div class="text-gray-600 mb-6">{{ incomingCall.fromName }} звонит вам</div>
+          <div class="flex justify-center space-x-4">
+            <q-btn 
+              round 
+              color="red" 
+              icon="call_end" 
+              size="lg"
+              @click="rejectCall"
+            ></q-btn>
+            <q-btn 
+              round 
+              color="green" 
+              icon="call" 
+              size="lg"
+              @click="acceptCall"
+            ></q-btn>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Модальное окно звонка -->
+    <div class="call-modal" v-if="activeCall">
+      <div class="w-full h-full flex flex-col">
+        <div class="flex-1 relative">
+          <div class="video-container">
+            <video autoplay ref="remoteVideo"></video>
+          </div>
+        </div>
+        <div class="p-4 bg-white flex justify-center">
+          <q-btn 
+            round 
+            color="red" 
+            icon="call_end" 
+            size="lg"
+            @click="endCall"
+          ></q-btn>
+        </div>
+      </div>
+    </div>
+
+    <!-- Диалог ввода имени -->
+    <q-dialog v-model="nameDialog" persistent>
+      <q-card style="width: 400px">
+        <q-card-section>
+          <div class="text-h6">Введите ваше имя</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <q-input 
+            v-model="userName" 
+            autofocus 
+            outlined 
+            label="Ваше имя" 
+            @keyup.enter="saveName"
+          />
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn 
+            flat 
+            label="Продолжить" 
+            color="primary" 
+            @click="saveName"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+  </div>
+
+  <!-- Подключаем Vue и Quasar -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@3.2.47/dist/vue.global.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/quasar@2.11.3/dist/quasar.umd.prod.js"></script>
+  <!--
+  <script src="https://cdn.jsdelivr.net/npm/quasar@2.12.0/dist/quasar.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/quasar@2.12.0/dist/lang/ru.umd.min.js"></script>
+  -->
+  <script>
+    const { createApp, ref, onMounted, nextTick } = Vue;
+    const { Quasar, Notify, Dialog } = window.Quasar;
+    
+    createApp({
+      setup() {
+        const peer = ref(null);
+        const myPeerId = ref('');
+        const userName = ref('');
+        const nameDialog = ref(true);
+        const users = ref([]);
+        const messages = ref([]);
+        const newMessage = ref('');
+        const messagesContainer = ref(null);
+        const currentChat = ref({ type: 'group' });
+        const localStream = ref(null);
+        const localVideo = ref(null);
+        const remoteVideo = ref(null);
+        const activeCall = ref(false);
+        const incomingCall = ref(null);
+        const call = ref(null);
+        const dataConnections = ref({});
+        const mediaConnections = ref({});
+        
+        // Сохраняем имя пользователя
+        const saveName = () => {
+          if (!userName.value.trim()) {
+            Notify.create({
+              message: 'Пожалуйста, введите ваше имя',
+              color: 'negative'
+            });
+            return;
+          }
+          nameDialog.value = false;
+          initializePeer();
+        };
+        
+        // Инициализируем Peer
+        const initializePeer = () => {
+          peer.value = new Peer({
+            host: '0.peerjs.com',
+            port: 443,
+            path: '/',
+            secure: true,
+            debug: 3
+          });
+          
+          peer.value.on('open', (id) => {
+            myPeerId.value = id;
+            document.getElementById('my-peer-id').textContent = id;
+            // Симулируем подключение других пользователей (в реальном приложении нужно использовать сервер)
+            simulateOtherUsers();
+          });
+          
+          peer.value.on('connection', (conn) => {
+            conn.on('open', () => {
+              // Сохраняем соединение для обмена сообщениями
+              dataConnections.value[conn.peer] = conn;
+              
+              // Запрашиваем имя пользователя
+              conn.send({
+                type: 'user-info-request'
+              });
+              
+              conn.on('data', handleIncomingData);
+            });
+          });
+          
+          peer.value.on('call', (incomingCallObj) => {
+            // Сохраняем информацию о входящем звонке
+            incomingCall.value = {
+              call: incomingCallObj,
+              from: incomingCallObj.peer,
+              fromName: 'Неизвестный' // Имя будет обновлено, если оно известно
+            };
+            
+            // Проверяем, знаем ли мы имя звонящего
+            if (dataConnections.value[incomingCallObj.peer]) {
+              const conn = dataConnections.value[incomingCallObj.peer];
+              conn.send({
+                type: 'user-info-request'
+              });
+            }
+          });
+          
+          peer.value.on('error', (err) => {
+            console.error('Peer error:', err);
+            Notify.create({
+              message: 'Произошла ошибка соединения',
+              color: 'negative'
+            });
+          });
+        };
+        
+        // Симулируем других пользователей (для демонстрации)
+        const simulateOtherUsers = () => {
+          setTimeout(() => {
+            users.value = [
+              { id: 'user2', name: 'Анна' },
+              { id: 'user3', name: 'Иван' },
+              { id: 'user4', name: 'Мария' }
+            ];
+          }, 1000);
+        };
+        
+        // Обрабатываем входящие данные
+        const handleIncomingData = (data) => {
+          if (data.type === 'message') {
+            // Новое сообщение
+            const isMe = data.senderId === myPeerId.value;
+            const senderName = isMe ? userName.value : (users.value.find(u => u.id === data.senderId)?.name || 'Неизвестный');
+            
+            messages.value.push({
+              text: data.text,
+              timestamp: new Date(),
+              isMe,
+              senderName,
+              senderId: data.senderId
+            });
+            
+            scrollToBottom();
+          } else if (data.type === 'user-info') {
+            // Информация о пользователе
+            const userIndex = users.value.findIndex(u => u.id === data.peerId);
+            if (userIndex === -1) {
+              users.value.push({
+                id: data.peerId,
+                name: data.name
+              });
+            } else {
+              users.value[userIndex].name = data.name;
+            }
+            
+            // Обновляем имя звонящего, если есть входящий звонок
+            if (incomingCall.value && incomingCall.value.from === data.peerId) {
+              incomingCall.value.fromName = data.name;
+            }
+          } else if (data.type === 'user-info-request') {
+            // Запрос информации о пользователе
+            const conn = dataConnections.value[data.peerId];
+            if (conn) {
+              conn.send({
+                type: 'user-info',
+                peerId: myPeerId.value,
+                name: userName.value
+              });
+            }
+          }
+        };
+        
+        // Отправляем сообщение
+        const sendMessage = () => {
+          if (!newMessage.value.trim()) return;
+          
+          const messageData = {
+            type: 'message',
+            text: newMessage.value,
+            senderId: myPeerId.value,
+            timestamp: new Date()
+          };
+          
+          // Добавляем сообщение в локальный список
+          messages.value.push({
+            text: newMessage.value,
+            timestamp: new Date(),
+            isMe: true,
+            senderName: userName.value,
+            senderId: myPeerId.value
+          });
+          
+          // Отправляем сообщение всем подключенным пользователям
+          if (currentChat.value.type === 'group') {
+            Object.values(dataConnections.value).forEach(conn => {
+              conn.send(messageData);
+            });
+          } else if (currentChat.value.type === 'private' && dataConnections.value[currentChat.value.user.id]) {
+            dataConnections.value[currentChat.value.user.id].send(messageData);
+          }
+          
+          newMessage.value = '';
+          scrollToBottom();
+        };
+        
+        // Начинаем приватный чат
+        const startPrivateChat = (user) => {
+          currentChat.value = {
+            type: 'private',
+            user: user
+          };
+          messages.value = [];
+          
+          // Если соединение еще не установлено, создаем его
+          if (!dataConnections.value[user.id]) {
+            const conn = peer.value.connect(user.id);
+            
+            conn.on('open', () => {
+              dataConnections.value[user.id] = conn;
+              
+              // Запрашиваем информацию о пользователе
+              conn.send({
+                type: 'user-info-request'
+              });
+              
+              conn.on('data', handleIncomingData);
+            });
+          }
+        };
+        
+        // Звоним пользователю
+        const callUser = async (user) => {
+          try {
+            // Получаем доступ к медиаустройствам
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+            localStream.value = stream;
+            nextTick(() => {
+              localVideo.value.srcObject = stream;
+            });
+            
+            // Создаем вызов
+            const mediaCall = peer.value.call(user.id, stream);
+            call.value = mediaCall;
+            
+            mediaCall.on('stream', (remoteStream) => {
+              activeCall.value = true;
+              nextTick(() => {
+                remoteVideo.value.srcObject = remoteStream;
+              });
+            });
+            
+            mediaCall.on('close', endCall);
+            
+            // Сохраняем соединение
+            mediaConnections.value[user.id] = mediaCall;
+          } catch (err) {
+            console.error('Failed to call:', err);
+            Notify.create({
+              message: 'Не удалось начать звонок',
+              color: 'negative'
+            });
+          }
+        };
+        
+        // Принимаем входящий звонок
+        const acceptCall = async () => {
+          try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+            localStream.value = stream;
+            nextTick(() => {
+              localVideo.value.srcObject = stream;
+            });
+            
+            incomingCall.value.call.answer(stream);
+            call.value = incomingCall.value.call;
+            
+            call.value.on('stream', (remoteStream) => {
+              activeCall.value = true;
+              incomingCall.value = null;
+              nextTick(() => {
+                remoteVideo.value.srcObject = remoteStream;
+              });
+            });
+            
+            call.value.on('close', endCall);
+          } catch (err) {
+            console.error('Failed to answer call:', err);
+            Notify.create({
+              message: 'Не удалось принять звонок',
+              color: 'negative'
+            });
+          }
+        };
+        
+        // Отклоняем звонок
+        const rejectCall = () => {
+          incomingCall.value.call.close();
+          incomingCall.value = null;
+        };
+        
+        // Завершаем звонок
+        const endCall = () => {
+          if (call.value) {
+            call.value.close();
+          }
+          
+          if (localStream.value) {
+            localStream.value.getTracks().forEach(track => track.stop());
+            localStream.value = null;
+          }
+          
+          activeCall.value = false;
+          call.value = null;
+        };
+        
+        // Форматируем время
+        const formatTime = (date) => {
+          if (!date) return '';
+          if (typeof date === 'string') date = new Date(date);
+          
+          const hours = date.getHours().toString().padStart(2, '0');
+          const minutes = date.getMinutes().toString().padStart(2, '0');
+          return `${hours}:${minutes}`;
+        };
+        
+        // Прокручиваем чат вниз
+        const scrollToBottom = () => {
+          nextTick(() => {
+            if (messagesContainer.value) {
+              messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight;
+            }
+          });
+        };
+        
+        onMounted(() => {
+          // При монтировании компонента прокручиваем вниз
+          scrollToBottom();
+        });
+        
+        return {
+          peer,
+          myPeerId,
+          userName,
+          nameDialog,
+          users,
+          messages,
+          newMessage,
+          messagesContainer,
+          currentChat,
+          localStream,
+          localVideo,
+          remoteVideo,
+          activeCall,
+          incomingCall,
+          
+          saveName,
+          sendMessage,
+          startPrivateChat,
+          callUser,
+          acceptCall,
+          rejectCall,
+          endCall,
+          formatTime,
+          scrollToBottom
+        };
+      }
+    })
+    .use(Quasar, {
+      plugins: { Notify, Dialog },
+      config: {
+        notify: {},
+        //lang: Quasar.lang.ru
+      }
+    })
+    .mount('#q-app');
+  </script>
+</body>
+</html>

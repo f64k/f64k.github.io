@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Приказ Минфина России № 111н от 18 июля 2022 года "Об установлении Порядка принятия и выдачи предварительного решения по вопросам применения методов определения таможенной стоимости товаров, ввозимых в Российскую Федерацию, а также принятия решения о прекращении действия предварительного решения"-->
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cvur="urn:customs.ru:Information:ExchangeDocuments:CustomsValueUsagePrelimRequest:5.25.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:ExchangeDocuments:CustomsValueUsagePrelimRequest:5.25.0" elementFormDefault="qualified" version="5.25.0">
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Запрос Предварительного решения / Решение о прекращении действия предварительного решения по применению методов определения таможенной стоимости товаров, ввозимых в Российскую Федерацию</xs:documentation>
+	</xs:annotation>
+	<xs:element name="CustomsValueUsagePrelimRequest" type="cvur:CustomsValueUsagePrelimRequestType">
+		<xs:annotation>
+			<xs:documentation>Запрос Предварительного решения / Решение о прекращении действия предварительного решения по применению методов определения таможенной стоимости товаров, ввозимых в Российскую Федерацию</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="CustomsValueUsagePrelimRequestType">
+		<xs:annotation>
+			<xs:documentation>Запрос Предварительного решения / Решение о прекращении действия предварительного решения по применению методов определения таможенной стоимости товаров, ввозимых в Российскую Федерацию</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="DecisionRegNumber" type="cvur:DecisionRegNumberType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Регистрационный номер предварительного решения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="INN" type="clt_ru:INNIDType">
+						<xs:annotation>
+							<xs:documentation>ИНН Заявителя</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SearchRange" type="cvur:SearchRangeType">
+						<xs:annotation>
+							<xs:documentation>Диапазон поиска</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="GoodInfo" type="cvur:GoodInfoType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Товар</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Customs" type="cat_ru:CustomsType">
+						<xs:annotation>
+							<xs:documentation>Таможенный орган, направивший запрос</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomsPersonInfo" type="cat_ru:PersonBaseType">
+						<xs:annotation>
+							<xs:documentation>Должностное лицо таможенного органа направившее запрос</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1004163E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="DecisionRegNumberType">
+		<xs:annotation>
+			<xs:documentation>Регистрационный номер предварительного решения</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+				<xs:annotation>
+					<xs:documentation>Код таможенного органа, зарегистрировавшего документ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegistrationDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата регистрации документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SerialNumber" type="clt_ru:Code6Type">
+				<xs:annotation>
+					<xs:documentation>Порядковый номер документа по журналу регистрации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AddNumber" type="clt_ru:Code2Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Порядковый номер вносимых изменений</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GoodInfoType">
+		<xs:annotation>
+			<xs:documentation>Сведения о товаре</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TradeMark" type="clt_ru:NameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Объект интеллектуальной собственности</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ForeignPurchaseAgreementInfo" type="cat_ru:DocumentBaseType">
+				<xs:annotation>
+					<xs:documentation>Номер и дата внешнеэкономического договора купли-продажи (договора поставки)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LicenseAgreementInfo" type="cat_ru:DocumentBaseType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Сведения о лицензионном договоре (соглашении), сублицензионном договоре (соглашении), договоре коммерческой концессии (франчайзинга), договоре коммерческой субконцессии (субфранчайзинга) либо ином виде договора, которым урегулированы договорные отношения между лицензиатом и правообладателем (лицензиаром)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SearchRangeType">
+		<xs:annotation>
+			<xs:documentation>Диапазон поиска</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="StartDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата начала диапазона</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EndDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата окончания диапазона</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:cltESAD_cu="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" xmlns:rskmsg="urn:customs.ru:Information:CustomsDocuments:RiskMSGInfo:5.24.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:RiskMSGInfo:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" schemaLocation="CUESADCommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Информация для создания сообщения о выявленном риске в ЕБВР</xs:documentation>
+  </xs:annotation>
+  <xs:element name="RiskMSGInfo" type="rskmsg:RiskMSGInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация для создания сообщения о выявленном риске в ЕБВР</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RiskMSGInfoType">
+    <xs:annotation>
+      <xs:documentation>Тип, описывающий информацию для создания сообщения в ЕБВР</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+            <xs:annotation>
+              <xs:documentation>Код ТО, отправившего запрос</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RiskDecsription" type="clt_ru:FreeText250Type" maxOccurs="4">
+            <xs:annotation>
+              <xs:documentation>Краткое описание выявленного риска</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RiskType" type="clt_ru:CodeVariable2Type">
+            <xs:annotation>
+              <xs:documentation>Тип выявленного риска. 1– классификация, 2 – тарифные преференции, 3 – льготы по уплате таможенных платежей (кроме тарифных преференций); 4 – освобождение от уплаты таможенных пошлин, налогов; 5 – применением ставок таможенных пошлин (кроме 1,2,3,4), 6 – таможенная стоимость, 7 – лицензирование; 8 – ветеринарный контроль; 9 – фитосанитарный контроль; 10 – техническое регулирование; 11 – экспортное регулирование; 12 – интеллектуальная собст-ть, 13 – кол-во товара, недекларир-е товара 14 – валютный контроль; 15 - прочее; 17 - cоответствие сертификатов происхождения товаров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocType" type="clt_ru:LetterIndicatorType">
+            <xs:annotation>
+              <xs:documentation>Тип документа, на котором выявлен риск: 0 – не выбрано, 1 – декларация на товары, 2 – транзитная декларация,  3 – прочие документы, 4 – предварительная информация, 5 – уведомление о прибытии, 6 – уведомление об убытии.
+Примечание: для документа RISKMSGInfo DocType всегда равен 1.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocNumber" type="cat_ru:GTDIDType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер документа, на котором выявлен риск</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Procedure" type="clt_ru:Code2Type">
+            <xs:annotation>
+              <xs:documentation>Код таможенный процедуры по справочнику OTAMREG</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Direct" type="clt_ru:LetterIndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Направление перемещения.
+Кодификация: 0 – Импорт, 1 – Экспорт</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MeasureCode" type="clt_ru:Code2Type">
+            <xs:annotation>
+              <xs:documentation>Код результата применения меры по минимизации риска по справочнику RSKRMERA.DBF</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="EconomicDamage" type="clt_ru:AmountType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Размер экономического ущерба, руб.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="INNViolator" type="clt_ru:INNIDType">
+            <xs:annotation>
+              <xs:documentation>ИНН налогоплательщика</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NameViolator" type="clt_ru:NameType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Наименование налогоплательшика</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RiskIndicator" type="clt_ru:Text3MB" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Индикикаторы, по которым может быть выявлен риск</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Measures" type="clt_ru:Text3MB">
+            <xs:annotation>
+              <xs:documentation>Меры по минимизации выявленного риска</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Goods" type="rskmsg:GoodsInfoType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Товары документа, на котором выявлен риск</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Attachments" type="rskmsg:AttachmentType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Приложенные файлы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Division" type="clt_ru:Code2Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код подразделения, выявившего риск</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CriterionCode" type="clt_ru:Count4Type">
+            <xs:annotation>
+              <xs:documentation>Код типового критерия</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ActivityCode" type="clt_ru:Code4Type">
+            <xs:annotation>
+              <xs:documentation>Код направления деятельности подразделения, по направлению которого выявлен риск</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SoftKind" type="clt_ru:Code2Type">
+            <xs:annotation>
+              <xs:documentation>ИПС, сформировавшее запрос. Кодификация: 00 – КПС «Постконтроль»;
+01 – АИС «АИСТ-М».</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006217E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="GoodsInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация по "рисковым" товарам</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Description" type="clt_ru:Text3MB">
+        <xs:annotation>
+          <xs:documentation>Заявленное описание товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ForeignContractorName" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Иностранный контрагент</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OriginCountryCode" type="clt_ru:CountryA2CodeType">
+        <xs:annotation>
+          <xs:documentation>Заявленный код страны происхождения товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CorrectedOriginCountryCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Откорректированный код страны происхождения товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TNVEDCode" type="clt_ru:CUGoodsNomenclatuerCodeType">
+        <xs:annotation>
+          <xs:documentation>Заявленный код ТН ВЭД ЕАЭС. Гр. 33 первый раздел</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AddTNVEDCode" type="clt_ru:GoodsNomenclatuerAddCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Заявленный код товара в соответствии с Классификатором дополнительной таможенной информации для РФ и РК</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CorrectedTNVEDCode" type="clt_ru:CUGoodsNomenclatuerCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Откорректированный код ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CorrectedAddTNVEDCode" type="clt_ru:GoodsNomenclatuerAddCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Откорректированный код товара в соответствии с Классификатором дополнительной таможенной информации для РФ и РК</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsInfoCode" type="clt_ru:GoodsNomenclatuerAddCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код дополнительной таможенной информации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CorrectedCustomsInfoCode" type="clt_ru:GoodsNomenclatuerAddCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Откорректированный код дополнительной таможенной информации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsInformation" type="rskmsg:GoodsInformationType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Информация о товаре</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GoodsInformationType">
+    <xs:annotation>
+      <xs:documentation>Описание и характеристики "рискового" товара: производитель, модель, артикул, торговая марка</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Manufacturer" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Производитель товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Marking" type="cltESAD_cu:GoodsArticulType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Артикул товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Model" type="cltESAD_cu:GoodsArticulType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Модель товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TradeMark" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Товарный знак</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AttachmentType">
+    <xs:annotation>
+      <xs:documentation>Тип, описывающий вложение к сообщению о выявленном риске</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FileName" type="clt_ru:Text50Type">
+        <xs:annotation>
+          <xs:documentation>Имя файла</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FileData" type="clt_ru:Text3MB">
+        <xs:annotation>
+          <xs:documentation>Данные файла  в кодировке BASE64</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FileKind" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Формат файла. Кодификация: 01 - изображение JPEG, 02 - изображение PNG, 03 - документ MS Word, 04 - документ MS Excel, 05 - видео (3gp), 06 - видео (avi), 07 - изображение BMP, 08 - файл базы данных DBase, 09 - изображение EMF, 10 - документ PostScript (EPS), 11 - видео Flash, 12 - изображение GIF, 13 - веб-страница htm, html, 14 - база данных MS Access, 15 - сканированное изображение mdi, 16 - видео MKV, 17 - аудиофайл MP3, 18 - видео MP4, 19 - документ PDF, 20 - презентация MS PowerPoint, 21 - изображение Photoshop, 22 - документ RTF, 23 - изображение TIF, 24 - документ TXT, 25 - аудиофайл WAV, 26 - аудиофайл WMA, 27 - изображение WMF, 28 - видео WNV, 29 - документ MS Write, 30 - архив ZIP, 31 - архив RAR, 32 - видео MPG, 33 - видео MP2.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Спецификация обмена АИС "АИСТ-М" и КПС "Марка-Т" -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:els_agr="urn:customs.ru:Information:ELSDocuments:ELSAggregateTypes:5.21.0" xmlns:els_leaf="urn:customs.ru:Information:ELSDocuments:ELSLeafTypes:5.21.0" xmlns:tpocsi="urn:customs.ru:Information:ELSDocuments:TPOChangeStatusInquiry:5.21.0" targetNamespace="urn:customs.ru:Information:ELSDocuments:TPOChangeStatusInquiry:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:Information:ELSDocuments:ELSAggregateTypes:5.21.0" schemaLocation="ELSAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:ELSDocuments:ELSLeafTypes:5.21.0" schemaLocation="ELSLeafTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос об изменении статуса ТПО</xs:documentation>
+  </xs:annotation>
+  <xs:element name="TPOChangeStatusInquiry" type="tpocsi:TPOChangeStatusInquiryType">
+    <xs:annotation>
+      <xs:documentation>Запрос об изменении статуса ТПО</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="TPOChangeStatusInquiryType">
+    <xs:annotation>
+      <xs:documentation>Запрос об изменении статуса ТПО</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="RegistrationNumber" type="els_agr:RegistrationNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер ТПО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocumentStatus" type="els_leaf:DocChargeStatusType">
+            <xs:annotation>
+              <xs:documentation>Состояние ТПО (0-Не оплачен,1-Оплачен, 2-Аннулирован)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ApplicationDocument" type="tpocsi:ApplicationDocumentType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Представленные документы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Comment" type="clt_ru:FreeText500Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дополнительная информация</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1040041E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ApplicationDocumentType">
+    <xs:annotation>
+      <xs:documentation>Документ-основание</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="CustomsDocumentCode" type="clt_ru:CustomsDocumentCodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

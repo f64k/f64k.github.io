@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:catTrans_ru="urn:customs.ru:Information:TransportDocuments:TransportCommonAgregateTypesCust:5.24.0" xmlns:tdts="urn:customs.ru:Information:CustomsDocuments:TDTSCustomsMark:5.24.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:TDTSCustomsMark:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:Information:TransportDocuments:TransportCommonAgregateTypesCust:5.24.0" schemaLocation="TransportCommonAggregateTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Отметки таможенного органа по ТДТС</xs:documentation>
+	</xs:annotation>
+	<xs:element name="TDTSCustomsMark" type="tdts:TDTSCustomsMarkType"/>
+	<xs:complexType name="TDTSCustomsMarkType">
+		<xs:annotation>
+			<xs:documentation>Отметки таможенного органа по ТДТС</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="Comments" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Комментарий</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DTDocumentID" type="clt_ru:DocumentIDType">
+						<xs:annotation>
+							<xs:documentation>Уникальный идентификатор декларации, к которой относятся служебные отметки (GUID).</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TDTSRegNumber" type="tdts:TDTSType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Регистрационный номер ТДТС</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TransportMeans" type="catTrans_ru:TDTransportMeansType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Номера ТС</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TDTSCommonMark" type="tdts:TDTSCommonMarkType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Служебные отметки ТДТС</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CancellationInfo" type="tdts:CancellationInfoType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Сведения об отказе</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CEPInfo" type="tdts:CancellationInfoType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>О переходе на общеустановленный порядок</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CurrentImportProlongNum" type="clt_ru:Text50Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Рег. номер уведомления о продлении срока временного ввоза ТСМП</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TDTSCloseRegNumber" type="tdts:TDTSType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Регистрационный номер ТДТС завершения временного ввоза/вывоза</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006174E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="CancellationInfoType">
+		<xs:annotation>
+			<xs:documentation>Сведения об отказе</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Date" type="clt_ru:DateCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Time" type="clt_ru:TimeCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Время</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Foundation" type="clt_ru:FreeText250Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Обоснование</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ResolutionDescription" type="clt_ru:FreeText250Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Описание принятого решения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CustomsPerson" type="cat_ru:CustomsPersonType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Должностное лицо таможенного органа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TDTSCommonMarkType">
+		<xs:annotation>
+			<xs:documentation>Служебные отметки ТДТС</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GRNumber" type="clt_ru:LetterIndicatorType">
+				<xs:annotation>
+					<xs:documentation>Обозначение графы: A, B, C</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Date" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата регистрации ТДТС/совершения таможенной операции</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ControlMark" type="clt_ru:FreeText250Type">
+				<xs:annotation>
+					<xs:documentation>Отметка о форме таможенного контроля</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SpecialMark" type="clt_ru:FreeText250Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Особые отметки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Deadline" type="clt_ru:DateCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Срок временного ввоза ТСМП</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Customs" type="cat_ru:CustomsType">
+				<xs:annotation>
+					<xs:documentation>Таможенный орган</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CustomsPerson" type="cat_ru:CustomsPersonType">
+				<xs:annotation>
+					<xs:documentation>Инспектор таможенного органа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TDTSType">
+		<xs:annotation>
+			<xs:documentation>Регистрационный номер ТДТС</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:GTDIDType">
+				<xs:sequence>
+					<xs:element name="TransportModeCode" type="clt_ru:TransportModeCodeType">
+						<xs:annotation>
+							<xs:documentation>Код вида транспорта</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

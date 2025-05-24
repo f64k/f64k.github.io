@@ -1,0 +1,266 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="urn:customs.ru:Information:CommercialFinanceDocuments:IndulgenceStatement:5.21.0" version="5.21.0.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:cltComFin_ru="urn:customs.ru:Information:CommercialFinanceDocuments:CommercialFinanceCommonLeafTypesCust:5.8.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:is="urn:customs.ru:Information:CommercialFinanceDocuments:IndulgenceStatement:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="urn:customs.ru:Information:CommercialFinanceDocuments:CommercialFinanceCommonLeafTypesCust:5.8.0" schemaLocation="CommercialFinanceCommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Заявление на предоставление отсрочки (рассрочки) уплаты таможенных платежей</xs:documentation>
+  </xs:annotation>
+  <xs:element name="IndulgenceStatement" type="is:IndulgenceStatementType" />
+  <xs:complexType name="IndulgenceStatementType">
+    <xs:annotation>
+      <xs:documentation>Заявление на предоставление отсрочки (рассрочки) уплаты таможенных платежей </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="IndulgenceStatementRegistration" type="cat_ru:DocumentBaseType">
+            <xs:annotation>
+              <xs:documentation>Регистрационные данные заявления</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ContractRegistration" type="cat_ru:DocumentBaseType">
+            <xs:annotation>
+              <xs:documentation>Регистрационные данные контракта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ContractTerms" type="is:ContractTermsType">
+            <xs:annotation>
+              <xs:documentation>Условия контракта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Declarant" type="is:DeclarantType">
+            <xs:annotation>
+              <xs:documentation>Сведения о заявителе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DeclarantBank" type="is:DeclarantBankType">
+            <xs:annotation>
+              <xs:documentation>Сведения о банке заявителя </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IndulgenceStatementContractor" type="is:IndulgenceStatementContractorType">
+            <xs:annotation>
+              <xs:documentation>Сведения о контрагенте</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" name="Payment" type="is:PaymentType">
+            <xs:annotation>
+              <xs:documentation>Сведения о платежах</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute fixed="1002006E" name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ContractTermsType">
+    <xs:annotation>
+      <xs:documentation>Условия контракта</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="LastDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата окончания расчетов по контракту</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CurrencyCode" type="clt_ru:CurrencyA3CodeType">
+        <xs:annotation>
+          <xs:documentation>Код валюты контракта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeclarantBankType">
+    <xs:annotation>
+      <xs:documentation>Сведения о банке заявителя </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:OrganizationBaseType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="BICID" type="clt_ru:BICIDType">
+            <xs:annotation>
+              <xs:documentation>БИК банка</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AccountNumeric" type="clt_ru:AccountType">
+            <xs:annotation>
+              <xs:documentation>Номер корреспондентского счета банка</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Phone" type="clt_ru:PhoneNumberType">
+            <xs:annotation>
+              <xs:documentation>Номер телефона.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Fax" type="clt_ru:PhoneNumberType">
+            <xs:annotation>
+              <xs:documentation>Номер факса.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Telex" type="clt_ru:PhoneNumberType">
+            <xs:annotation>
+              <xs:documentation>Номер телекса.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="OKPOID" type="clt_ru:OKPOIDType">
+            <xs:annotation>
+              <xs:documentation>Код организации по ОКПО.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="OKATOCode" type="clt_ru:OKATOCodeType">
+            <xs:annotation>
+              <xs:documentation>Код ОКАТО.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="LegalAddress" type="cat_ru:AddressType">
+            <xs:annotation>
+              <xs:documentation>Юридический адрес банка</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DeclarantType">
+    <xs:annotation>
+      <xs:documentation>Сведения о заявителе</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:OrganizationType">
+        <xs:sequence>
+          <xs:choice>
+            <xs:annotation>
+              <xs:documentation>Сведения о государственной регистрации индивидуального предпринимателя или юридического лица</xs:documentation>
+            </xs:annotation>
+            <xs:element minOccurs="0" name="NaturalPersonRegistration" type="is:NaturalPersonRegistrationType">
+              <xs:annotation>
+                <xs:documentation>Сведения о государственной регистрации индивидуального предпринимателя</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="JuridicalPersonRegistration" type="is:JuridicalPersonRegistrationType">
+              <xs:annotation>
+                <xs:documentation>Сведения о государственной регистрации юридического лица</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="IndulgenceStatementContractorType">
+    <xs:annotation>
+      <xs:documentation>Сведения о контрагенте</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Name" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Наименование иностранного контрагента</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CountryCode" type="clt_ru:CountryN3CodeType">
+        <xs:annotation>
+          <xs:documentation>Код страны регистрации контрагента</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationPlace" type="clt_ru:PlaceNameType">
+        <xs:annotation>
+          <xs:documentation>Место регистрации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="GoodsCountryCode" type="clt_ru:CountryN3CodeType">
+        <xs:annotation>
+          <xs:documentation>Код страны происхождения товаров</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="JuridicalPersonRegistrationType">
+    <xs:annotation>
+      <xs:documentation>Сведения о государственной регистрации юридического лица</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RegistrationOrganization" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Наименование регистрирующего органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateInf" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Place" type="clt_ru:PlaceNameType">
+        <xs:annotation>
+          <xs:documentation>Место регистрации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CertificateNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер свидетельства о государственной регистрации </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CertificateSeriesCode" type="cltComFin_ru:CertificateSeriesCodeType">
+        <xs:annotation>
+          <xs:documentation>Серия свидетельства о государственной регистрации </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="NaturalPersonRegistrationType">
+    <xs:annotation>
+      <xs:documentation>Сведения о государственной регистрации индивидуального предпринимателя</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RegistrationOrganization" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Наименование регистрирующего органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateInf" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата государственной регистрации физического лица в качестве индивидуального предпринимателя и данные документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaymentType">
+    <xs:annotation>
+      <xs:documentation>Сведения о платежах</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsPaymentModeCode" type="clt_ru:CustomsPaymentCodeType">
+        <xs:annotation>
+          <xs:documentation>Вид платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateInf" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата, до которой запрашивается отсрочка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Amount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма, по которой запрашивается отсрочка (в валюте цены по контракту)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CurrencyCode" type="clt_ru:CurrencyA3CodeType">
+        <xs:annotation>
+          <xs:documentation>Код валюты платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SecurityText" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Форма обеспечения уплаты таможенных платежей по предоставленным отсрочкам</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

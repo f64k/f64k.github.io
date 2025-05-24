@@ -1,0 +1,314 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>I6 Gun.js Chat with Quasar</title>
+
+    <!-- Quasar CSS CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/quasar@2.11.3/dist/quasar.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Material Icons -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons"
+      rel="stylesheet"
+    />
+
+    <style>
+      .chat-container {
+        height: calc(100vh - 120px);
+      }
+      .message-input {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 16px;
+        background: white;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+      }
+      .message-bubble {
+        max-width: 70%;
+        border-radius: 18px;
+        padding: 10px 16px;
+        margin-bottom: 8px;
+        position: relative;
+        word-wrap: break-word;
+      }
+      .message-bubble.sent {
+        background-color: #1976d2;
+        color: white;
+        margin-left: auto;
+        border-bottom-right-radius: 4px;
+      }
+      .message-bubble.received {
+        background-color: #f0f0f0;
+        color: black;
+        margin-right: auto;
+        border-bottom-left-radius: 4px;
+      }
+      .message-time {
+        font-size: 0.75rem;
+        opacity: 0.7;
+        margin-top: 4px;
+        text-align: right;
+      }
+    </style>
+    
+  </head>
+  
+  <body class="bg-gray-100">
+    <div id="q-app">
+      <div class="q-pa-md">
+        <div class="q-gutter-y-md" style="max-width: 800px; margin: 0 auto">
+          <!-- Header -->
+          <q-toolbar class="bg-primary text-white rounded-borders">
+            <q-toolbar-title>
+              <div class="flex items-center">
+                <q-icon name="chat" size="28px" class="q-mr-sm"></q-icon>
+                <span>I6 Gun.js Chat</span>
+              </div>
+            </q-toolbar-title>
+
+            <q-btn
+              flat
+              round
+              dense
+              icon="settings"
+              @click="settingsDialog = true"
+            ></q-btn>
+          </q-toolbar>
+
+          <!-- Chat area -->
+          <div
+            class="chat-container bg-white rounded-borders q-pa-md overflow-y-auto"
+          >
+            <div
+              v-if="messages.length === 0"
+              class="text-center q-pt-lg text-grey"
+            >
+              <q-icon name="sms" size="48px"></q-icon>
+              <div class="text-h6 q-mt-md">No messages yet</div>
+              <div class="text-subtitle1">Start the conversation!</div>
+            </div>
+
+            <div
+              v-for="(message, index) in messages"
+              :key="index"
+              class="q-mb-sm"
+            >
+              <div
+                v-if="message.sender === username"
+                class="message-bubble sent"
+              >
+                {{ message.text }}
+                <div class="message-time">
+                  {{ formatTime(message.timestamp) }}
+                </div>
+              </div>
+              <div v-else class="message-bubble received">
+                <div class="text-weight-bold">{{ message.sender }}</div>
+                {{ message.text }}
+                <div class="message-time">
+                  {{ formatTime(message.timestamp) }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Message input -->
+          <div class="message-input">
+            <div class="row items-center q-gutter-sm">
+              <q-input
+                v-model="newMessage"
+                placeholder="Type a message..."
+                outlined
+                rounded
+                dense
+                class="col-grow"
+                @keyup.enter="sendMessage"
+              ></q-input>
+              <q-btn
+                round
+                color="primary"
+                icon="send"
+                @click="sendMessage"
+                :disable="!newMessage.trim()"
+              ></q-btn>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Settings dialog -->
+      <q-dialog v-model="settingsDialog">
+        <q-card style="width: 400px; max-width: 90vw">
+          <q-card-section class="row items-center q-pb-none">
+            <q-space />
+            <q-btn icon="close" flat round dense v-close-popup />
+          </q-card-section>
+
+          <q-card-section>
+            <div class="text-h6">Settings</div>
+          </q-card-section>
+
+          <q-card-section class="q-pt-none">
+            <q-input
+              v-model="username"
+              label="Your name"
+              outlined
+              dense
+              :rules="[val => !!val || 'Name is required']"
+            ></q-input>
+
+            <q-input
+              v-model="peerServer"
+              label="Peer server URL"
+              outlined
+              dense
+              class="q-mt-md"
+              hint="Default: https://gun-manhattan.herokuapp.com/gun"
+            ></q-input>
+
+            <q-toggle
+              v-model="darkMode"
+              label="Dark mode"
+              class="q-mt-md"
+              @update:model-value="toggleDarkMode"
+            ></q-toggle>
+          </q-card-section>
+
+          <q-card-actions align="right">
+            <q-btn flat label="Cancel" color="primary" v-close-popup />
+            <q-btn
+              flat
+              label="Save"
+              color="primary"
+              v-close-popup
+              @click="saveSettings"
+            />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
+    </div>
+
+    <!-- Gun.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gun/sea.js"></script>
+
+    <!-- Vue and Quasar JS CDNs -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quasar@2.11.3/dist/quasar.umd.prod.js"></script>
+
+    <script>
+      const { createApp, ref, onMounted } = Vue;
+      const chatName = "chat-messages-ID-i6-glitch-me";
+      
+      createApp({
+        setup() {
+          const username = ref(
+            localStorage.getItem("chat-username") ||
+              "User" + Math.floor(Math.random() * 1000)
+          );
+          const newMessage = ref("");
+          const messages = ref([]);
+          const settingsDialog = ref(false);
+          const peerServer = ref(
+            localStorage.getItem("chat-peer-server") ||
+              "https://gun-manhattan.herokuapp.com/gun"
+          );
+          const darkMode = ref(
+            localStorage.getItem("chat-dark-mode") === "true"
+          );
+          const gun = ref(null);
+
+          const initGun = () => {
+            gun.value = Gun({
+              peers: [peerServer.value],
+              localStorage: false,
+              radisk: false,
+            });
+
+            // Get messages from Gun
+            gun.value
+              .get(chatName)
+              .map()
+              .once((data, id) => {
+                if (data && !messages.value.find((m) => m.id === id)) {
+                  messages.value.push({ ...data, id });
+                }
+              });
+          };
+
+          const sendMessage = () => {
+            if (!newMessage.value.trim()) return;
+
+            const message = {
+              text: newMessage.value,
+              sender: username.value,
+              timestamp: Date.now(),
+              id: Date.now().toString(),
+            };
+
+            // Add message to Gun
+            gun.value.get(chatName).set(message);
+
+            newMessage.value = "";
+          };
+
+          const formatTime = (timestamp) => {
+            return new Date(timestamp).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            });
+          };
+
+          const saveSettings = () => {
+            localStorage.setItem("chat-username", username.value);
+            localStorage.setItem("chat-peer-server", peerServer.value);
+            localStorage.setItem("chat-dark-mode", darkMode.value);
+
+            // Reinitialize Gun with new peer server
+            initGun();
+          };
+
+          const toggleDarkMode = (value) => {
+            if (value) {
+              document.body.classList.add("bg-gray-900");
+              document.body.classList.add("text-white");
+            } else {
+              document.body.classList.remove("bg-gray-900");
+              document.body.classList.remove("text-white");
+            }
+          };
+
+          onMounted(() => {
+            initGun();
+            if (darkMode.value) {
+              toggleDarkMode(true);
+            }
+          });
+
+          return {
+            username,
+            newMessage,
+            messages,
+            settingsDialog,
+            peerServer,
+            darkMode,
+            sendMessage,
+            formatTime,
+            saveSettings,
+            toggleDarkMode,
+          };
+        },
+      })
+        .use(Quasar)
+        .mount("#q-app");
+    </script>
+  </body>
+</html>

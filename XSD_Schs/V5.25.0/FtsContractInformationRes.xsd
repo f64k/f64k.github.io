@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:fcires="urn:customs.ru:Information:SQDocuments:FtsContractInformationRes:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:FtsContractInformationRes:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Ответ на запрос сведений о контрактах</xs:documentation>
+  </xs:annotation>
+  <xs:element name="FtsContractInformationRes" type="fcires:FtsContractInformationResType" />
+  <xs:complexType name="FtsContractInformationResType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос сведений о контрактах</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Importer" type="fcires:ImporterType">
+            <xs:annotation>
+              <xs:documentation>Организация-импортер</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RecipientINN" type="clt_ru:INNIDType">
+            <xs:annotation>
+              <xs:documentation>ИНН получателя</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ContractsInfo" type="fcires:ContractsInfoType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о выданных контрактах</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009155E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор электронного документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ContractsInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о выданных контрактах</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ContractInfo" type="fcires:ContractInfoType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о выданном контракте</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ContractInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о выданном контракте</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Contract" type="cat_ru:DocumentBaseType">
+        <xs:annotation>
+          <xs:documentation>Номер и дата контракта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProductInfo" type="fcires:ProductInfoType" minOccurs="1" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Продукция в контракте</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CounterpartyInfo" type="fcires:CounterpartyInfoType" minOccurs="1" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Информация о контрагентах</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CounterpartyInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о контрагентах</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CounterpartyName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование контрагента</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CounterpartyAddress" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Адрес контрагента</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ImporterType">
+    <xs:annotation>
+      <xs:documentation>Сведения об организации-импортёре</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OrganizationName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование организации-импортера</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrganizationAddress" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Адрес местонахождения и осуществления деятельности организации-импортера</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ProductInfoType">
+    <xs:annotation>
+      <xs:documentation>Продукция в контракте</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TNVEDCode" type="clt_ru:GoodsNomenclatureCodeType">
+        <xs:annotation>
+          <xs:documentation>Наименование продукции (Код ТН ВЭД ЕАЭС)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ContractDeclaredGood" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Заявленный товар в контракте</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

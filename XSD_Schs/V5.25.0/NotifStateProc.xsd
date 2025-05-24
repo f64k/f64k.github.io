@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:nsp="urn:customs.ru:Information:EArchDocuments:NotifStateProc:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:catExch_ru="urn:customs.ru:Information:ExchangeDocuments:ExchangeCommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:cltExch_ru="urn:customs.ru:Information:ExchangeDocuments:ExchangeCommonLeafTypes:5.0.8" targetNamespace="urn:customs.ru:Information:EArchDocuments:NotifStateProc:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:ExchangeDocuments:ExchangeCommonAggregateTypes:5.24.0" schemaLocation="ExchangeCommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:ExchangeDocuments:ExchangeCommonLeafTypes:5.0.8" schemaLocation="ExchangeCommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Уведомление о состояниях процесса оформления</xs:documentation>
+  </xs:annotation>
+  <xs:element name="NotifStateProc" type="nsp:NotifStateProcType" />
+  <xs:complexType name="NotifStateProcType">
+    <xs:annotation>
+      <xs:documentation>Уведомление о состояниях процесса оформления</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="AgreementParticipants" type="catExch_ru:AgreementNumType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Реквизиты Соглашения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AgreementINN" type="clt_ru:INNIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>ИНН участника Соглашения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DTNum" type="cat_ru:GTDIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер ДТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ProcInformation" type="nsp:ProcInformationType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Информация о процессе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1005020E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="EventListType">
+    <xs:annotation>
+      <xs:documentation>Информация о событиях / сообщениях</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="MessageCode" type="cltExch_ru:MessageCodeType">
+        <xs:annotation>
+          <xs:documentation>Код сообщения согласно спецификации обмена.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MessageDescription" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание сообщения (справочник сообщений).</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProcState" type="clt_ru:ArchStatusCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Статус процесса после обработки сообщения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StateDescription" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание статусного состояния</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RecvDateTime" type="clt_ru:DateTimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата и время приема сообщения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SendDateTime" type="clt_ru:DateTimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата/время отправки сообщения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentCode" type="clt_ru:DocumentModeIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код вида документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentDescription" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание вида документа (справочник)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MessageID" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор обработанного сообщения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MsgInitialEnvelopeID" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Ссылочный идентификатор сообщения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MsgPreparationDateTime" type="clt_ru:DateTimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата/время  создания сообщения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MsgDocumentID" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MsgRefDocumentID" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Ссылочный идентификатор документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentResult" type="nsp:DocumentResultType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Результат обработки документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocumentResultType">
+    <xs:annotation>
+      <xs:documentation>Результат обработки документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ResultCode" type="cltExch_ru:ResultCodeType">
+        <xs:annotation>
+          <xs:documentation>Код обработки сообщения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentID" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор документа - результата обработки.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ProcInformationType">
+    <xs:annotation>
+      <xs:documentation>Информация о процессе для которого запрашивается статус/история</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ProcState" type="clt_ru:ArchStatusCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Текущий статус процесса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProcessID" type="cltExch_ru:ProcessIDType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор процесса, для которого запрашивается статус / история</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StateDescription" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание статусного состояния</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SoftVersion" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Версия программного обеспечения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EventList" type="nsp:EventListType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Информация о событиях / сообщениях</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

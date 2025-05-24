@@ -1,0 +1,501 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Спецификация обмена АИС "Ордер" и КПС "Марка-Т" -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:cltESAD_cu="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:els_agr="urn:customs.ru:Information:ELSDocuments:ELSAggregateTypes:5.24.0" xmlns:ctiq="urn:customs.ru:Information:SQDocuments:CreateTPOInquiry:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:CreateTPOInquiry:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:ELSDocuments:ELSAggregateTypes:5.24.0" schemaLocation="ELSAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" schemaLocation="CUESADCommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос на формирование ТПО</xs:documentation>
+  </xs:annotation>
+  <xs:element name="CreateTPOInquiry" type="ctiq:CreateTPOInquiryType">
+    <xs:annotation>
+      <xs:documentation>Запрос на формирование ТПО</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="CreateTPOInquiryType">
+    <xs:annotation>
+      <xs:documentation>Запрос на формирование ТПО</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+            <xs:annotation>
+              <xs:documentation>Код таможенного органа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TPOKind" type="ctiq:TPOKindType">
+            <xs:annotation>
+              <xs:documentation>Параметры ТПО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DeclarantInfo" type="els_agr:DeclarantInfoType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о декларанте</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PresentedDocument" type="ctiq:DocTPOType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Представленные документы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Goods" type="ctiq:GoodsType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Товары ТПО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PaymentInfo" type="ctiq:PaymentInfoType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Информация о платежах за акцизные марки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AddInfo" type="clt_ru:FreeText500Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дополнительная информация</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1040030E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DocTPOType">
+    <xs:annotation>
+      <xs:documentation>Сведения о документах</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:DocBaseV4Type">
+        <xs:sequence>
+          <xs:element name="CRPreviousCustomsDocCode" type="clt_ru:LetterIndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Тип документа: 4 - заявление на акцизные марки; 5 - заявление об уплате акциза ; 9 - иной документ                       </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ESADExciseListType">
+    <xs:annotation>
+      <xs:documentation>Перечень номеров акцизных или специальных марок</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ExciseNumber" type="ctiq:ExciseNumberType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Номер (идентификатор) акцизных или специальных марок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ESADExciseRangeType">
+    <xs:annotation>
+      <xs:documentation>Диапазон номеров акцизных марок</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ExciseFirstNumber" type="ctiq:ExciseNumberType">
+        <xs:annotation>
+          <xs:documentation>Первый номер (идентификатор) диапазона номеров акцизных марок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExciseLastNumber" type="ctiq:ExciseNumberType">
+        <xs:annotation>
+          <xs:documentation>Последний номер (идентификатор) диапазона номеров акцизных марок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ESADExciseType">
+    <xs:annotation>
+      <xs:documentation>Сведения об акцизных марках</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ExciseQuantity" type="clt_ru:Quantity8Type">
+        <xs:annotation>
+          <xs:documentation>Количество акцизных или специальных марок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExciseSerieses" type="cltESAD_cu:ExciseSeriesesType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер серии акцизных или специальных марок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExciseList" type="ctiq:ESADExciseListType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Перечень номеров (идентификаторов) акцизных или специальных марок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExciseRange" type="ctiq:ESADExciseRangeType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Диапазон номеров акцизных или специальных марок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ExciseRateType">
+    <xs:annotation>
+      <xs:documentation>Ставка акциза</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DutyTaxFeeRateValue" type="cltESAD_cu:RateType">
+        <xs:annotation>
+          <xs:documentation>Значение ставки (Rate1)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RateTypeCode" type="clt_ru:LetterIndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вид ставки (адвалорная -«%», специфическая - «*»)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RateCurrencyCode" type="clt_ru:CurrencyN3CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Цифровой код валюты ставки (специфическая ставка)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RateTNVEDQualifierCode" type="clt_ru:MeasureUnitQualifierCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код единицы измерения ставки (специфическая ставка)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WeightingFactor" type="cltESAD_cu:WeightingFactorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Весовой коэффициент единицы измерения (специфическая ставка)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ComparisonOperationsSign" type="clt_ru:Numeric1Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Знак операции сравнения (1 - меньше, 2 - больше)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Rate2" type="cltESAD_cu:RateType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Ставка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RateTypeCode2" type="clt_ru:LetterIndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вид ставки (адвалорная -«%», специфическая - «*»)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RateCurrencyCode2" type="clt_ru:CurrencyN3CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Цифровой код валюты ставки (специфическая ставка)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RateTNVEDQualifierCode2" type="clt_ru:MeasureUnitQualifierCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код единицы измерения ставки (специфическая ставка)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WeightingFactor2" type="cltESAD_cu:WeightingFactorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Весовой коэффициент единицы измерения (специфическая ставка)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OperationsSign" type="clt_ru:LetterIndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Знак операции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Rate3" type="cltESAD_cu:RateType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Ставка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RateTypeCode3" type="clt_ru:LetterIndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вид ставки (адвалорная -«%», специфическая - «*»)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RateCurrencyCode3" type="clt_ru:CurrencyN3CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Цифровой код валюты ставки (специфическая ставка)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RateTNVEDQualifierCode3" type="clt_ru:MeasureUnitQualifierCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код единицы измерения ставки (специфическая ставка)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WeightingFactor3" type="cltESAD_cu:WeightingFactorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Весовой коэффициент единицы измерения (специфическая ставка)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ComparisonResult" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат выполнения операции сравнения: 1 - истина; 0 - ложь</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RateUseDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата применения ставки таможенного платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GoodsType">
+    <xs:annotation>
+      <xs:documentation>Описание товара</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsNumber" type="clt_ru:Count3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер товара </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="4">
+        <xs:annotation>
+          <xs:documentation>Наименование товара или категории товаров </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsTNVEDCode" type="clt_ru:CUGoodsNomenclatuerCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код товара по ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="UnifiedNetMassMeasure" type="clt_ru:QuantityBasisType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вес товара, нетто</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ContractCost" type="RUScat_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Стоимость товара в валюте договора</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SupplementaryQuantity" type="cat_ru:SupplementaryQuantityType" minOccurs="0" maxOccurs="2">
+        <xs:annotation>
+          <xs:documentation>Количество в дополнительной единице измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PresentedDocument" type="RUScat_ru:DocBaseV4Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Представленные документы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StampsDetails" type="ctiq:StampsDetailsType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о товарах, маркированных акцизными или специальными марками</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Concentration" type="ctiq:ProcentNumericType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Процент содержания этилового спирта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TobaccoDetails" type="ctiq:TobaccoDetailsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о табаке и табачных изделиях</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Penalties" type="clt_ru:LetterIndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак необходимости начисления пени : 0 - пени не начисляются, 1- основа начисления пени вся сумма платежа, 2 - основа начисления пени - сумма доначисленного платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsAccDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата принятия товара на учет</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentModeCode" type="clt_ru:CUCustomsPaymentCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код вида платежа уплачиваемого акциза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExciseRate" type="ctiq:ExciseRateType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Ставка акциза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExciseSum" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сумма акциза к уплате</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaymentInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о платежах за акцизные марки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PaymentDescription" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentModeCode" type="clt_ru:CUCustomsPaymentCodeType">
+        <xs:annotation>
+          <xs:documentation>Код вида платежа по классификатору видов налогов, сборов и иных платежей, взимание которых возложено на таможенные органы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TaxBase" type="clt_ru:QuantityBasisType">
+        <xs:annotation>
+          <xs:documentation>Основа начисления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Rate" type="cltESAD_cu:RateType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Ставка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RateQualifierCode" type="clt_ru:MeasureUnitQualifierCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код единицы измерения ставки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TaxBaseName" type="clt_ru:MeasureUnitQualifierNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование единицы измерения основы начисления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="UnifiedCurrencyN3Code" type="clt_ru:CurrencyN3CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Цифровое кодовое обозначение валюты ставки </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentAmount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма платежа в рублях</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="StampsDetailsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товарах, маркированных акцизными или специальными марками</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="StampsKind" type="clt_ru:LetterIndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вид марок (крилицей): "Т" - акцизные марки, предназначенные для маркировки табачной продукции, "А" - акцизные марки, предназначенные для маркировки алкогольной продукции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TotalExciseQuantity" type="clt_ru:Quantity8Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Общее количество акцизных или специальных марок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StampsSeriesNumber" type="ctiq:ESADExciseType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения об акцизных или специальных марках</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsSupplementaryQuantity" type="cat_ru:SupplementaryQuantityType" minOccurs="0" maxOccurs="2">
+        <xs:annotation>
+          <xs:documentation>Объем  продукции в единичной маркируемой потребительской емкости (единицы измерения: литр/штука /киллограмм)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AmountObligation" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сумма обеспечения исполнения обязательства импортера об использовании акцизных марок в соответствии с их назначением за единицу измерения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TobaccoDetailsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о табаке и табачных изделиях</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TobaccoCost" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Расчетная стоимость</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TobaccoMax" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Максимальная розничная цена упаковки табачных изделий</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="QuantityTobaccoPack" type="clt_ru:Quantity8Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество упаковок табачных изделий (пачек) в шт</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="QuantityPack" type="clt_ru:Quantity4Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество табачного изделия в одной единице потребительской упаковки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TobaccoConcentration" type="ctiq:ProcentNumericType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Концентрация табачного сырья (%)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TobaccoContent" type="clt_ru:QuantityBasis0Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Содержание табачного сырья (кг)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="HookahTobacco" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Кальянный табак (0 - нет, 1 - да)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SeasonalMultiplier" type="ctiq:ProcentNumericType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сезонный повышающий коэффициент</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TPOKindType">
+    <xs:annotation>
+      <xs:documentation>Параметры ТПО</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OrderTypeIndicator" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Тип ордера Ф - физическое лицо, Ю/О - юридическое лицо</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MovementPurpose" type="clt_ru:Code2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код цели перемещения товара (ИМ/ИД/ИВ/ИЮ/ЭЮ/РЗ/СХ/УС/АК/РЕ/МА/ДЗ/ПЛ)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Regim" type="clt_ru:Code2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код таможенного режима по ТПО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MoveType" type="clt_ru:Code3Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Способ перемещения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="ProcentNumericType">
+    <xs:annotation>
+      <xs:documentation>Процент от 0 до 100. До 4 знаков после запятой. Числовой</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:NumericCategoriesCust">
+      <xs:minInclusive value="0" />
+      <xs:fractionDigits value="4" />
+      <xs:maxInclusive value="100" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ExciseNumberType">
+    <xs:annotation>
+      <xs:documentation>Номер марки акцизного сбора. Целое положительное число. До 9 цифр</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:NumericCategoriesCust">
+      <xs:minInclusive value="1" />
+      <xs:fractionDigits value="0" />
+      <xs:totalDigits value="9" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

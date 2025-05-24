@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:pdpi_res="urn:customs.ru:Information:SQDocuments:PreliminaryDecisionPIResponse:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:PreliminaryDecisionPIResponse:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Передача обновлённого предварительного решения по ПИ от Роспотребнадзора (Ответ)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="PreliminaryDecisionPIResponse" type="pdpi_res:PreliminaryDecisionPIResponseType" />
+  <xs:complexType name="PreliminaryDecisionPIResponseType">
+    <xs:annotation>
+      <xs:documentation>Передача обновлённого предварительного решения по ПИ от Роспотребнадзора (Ответ)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="ReceiptConfirmation" type="pdpi_res:ReceiptConfirmationType">
+            <xs:annotation>
+              <xs:documentation>Подтверждение о получении обновленного предварительного решения. Допустимые значения: "OK" - Положительный ответ; "ERROR_UNKNOWN" - id ПИ отсутствует; "ERROR_OUTDATED" - ПИ устарел и удален; "ERROR_USED" - ПИ уже использован при таможенном оформлении</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReceiptPrelimDecisionId" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Идентификатор полученного предварительного решения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GUID" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Идентификатор процесса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009137E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="ReceiptConfirmationType">
+    <xs:annotation>
+      <xs:documentation>Подтверждение о получении обновленного предварительного решения</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="OK">
+        <xs:annotation>
+          <xs:documentation>Положительный ответ</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ERROR_UNKNOWN">
+        <xs:annotation>
+          <xs:documentation>id ПИ отсутствует</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ERROR_OUTDATED">
+        <xs:annotation>
+          <xs:documentation>ПИ устарел и удален</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ERROR_USED">
+        <xs:annotation>
+          <xs:documentation>ПИ уже использован при таможенном оформлении</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

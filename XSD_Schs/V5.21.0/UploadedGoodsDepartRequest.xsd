@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:catTrans_ru="urn:customs.ru:Information:TransportDocuments:TransportCommonAgregateTypesCust:5.21.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:ugdr="urn:customs.ru:Information:TransportDocuments:Air:UploadedGoodsDepartRequest:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:TransportDocuments:Air:UploadedGoodsDepartRequest:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:TransportDocuments:TransportCommonAgregateTypesCust:5.21.0" schemaLocation="TransportCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос на убытие фактически загруженных на борт товаров</xs:documentation>
+  </xs:annotation>
+  <xs:element name="UploadedGoodsDepartRequest" type="ugdr:UploadedGoodsDepartRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос на убытие фактически загруженных на борт товаров</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="UploadedGoodsDepartRequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос на убытие фактически загруженных на борт товаров</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="UIN" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>УИН описи документов, поданных ранее для получения разрешения на погрузку</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Flight" type="catTrans_ru:FlightInfoType">
+            <xs:annotation>
+              <xs:documentation>Сведения о рейсе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="UploadedGoods" type="ugdr:GoodsType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Товары, фактически загруженные на борт</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1003314E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="GoodsType">
+    <xs:annotation>
+      <xs:documentation>Сведения о товарах</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsDescription" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Описание товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsTNVEDCode" type="clt_ru:CUGoodsNomenclatuerCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код товара по товарной номенклатуре</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PlacesQuantity" type="clt_ru:PakageNumberType">
+        <xs:annotation>
+          <xs:documentation>Количество мест, принятых к перевозке / Количество мест товара по накладной при полной загрузке товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GrossWeightQuantity" type="clt_ru:WeighQuantityType">
+        <xs:annotation>
+          <xs:documentation>Вес товара, брутто (кг)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ContainerNumber" type="clt_ru:ContainerIdentityType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Номер контейнера</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WayBillNumber" type="catTrans_ru:AWBNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер накладной</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

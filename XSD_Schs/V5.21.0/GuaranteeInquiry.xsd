@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:griq="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeInquiry:5.21.0" targetNamespace="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeInquiry:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос сведений о принятом  обеспечении</xs:documentation>
+  </xs:annotation>
+  <xs:element name="GuaranteeInquiry" type="griq:GuaranteeInquiryType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений о принятом  обеспечении</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GuaranteeInquiryType">
+    <xs:annotation>
+      <xs:documentation>Запрос сведений о принятом  обеспечении</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="TPOID" type="griq:TPOIDType">
+            <xs:annotation>
+              <xs:documentation>Идентифицирующие параметры документа ТПО/ТР</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ExciseApplication" type="griq:ExciseApplicationType">
+            <xs:annotation>
+              <xs:documentation>Идентифицирующие параметры заявления на выдачу акцизных марок</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1050021E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ExciseApplicationType">
+    <xs:annotation>
+      <xs:documentation>Идентифицирующие параметры заявления на выдачу акцизных марок</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ExciseApplicationNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер заявления </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExciseApplicationDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации заявления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExcisePaymentAmount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма обеспечения по заявлению</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentCurrencyCode" type="clt_ru:CurrencyN3CodeType">
+        <xs:annotation>
+          <xs:documentation>Цифровой код валюты </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateObligationEnd" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Предельный срок выполнения обязательства импортёра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="TPOIDType">
+    <xs:annotation>
+      <xs:documentation>Идентифицирующие параметры документа ТПО/ТР.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TPOIndicator" type="clt_ru:DigitalIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Индикатор типа документа ТПО/ТР (0 - ТПО, 1 - ТР)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, зарегистрировавшего документ.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации документа.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrderNumber" type="clt_ru:Code10Type">
+        <xs:annotation>
+          <xs:documentation>Типографский номер бланка ТПО/ТР</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

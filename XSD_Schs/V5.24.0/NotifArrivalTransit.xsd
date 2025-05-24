@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:natr="urn:customs.ru:Information:TransportDocuments:Railway:NotifArrivalTransit:5.24.0" targetNamespace="urn:customs.ru:Information:TransportDocuments:Railway:NotifArrivalTransit:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Уведомление о прибытии в ТО назначения</xs:documentation>
+  </xs:annotation>
+  <xs:element name="NotifArrivalTransit" type="natr:NotifArrivalTransitType">
+    <xs:annotation>
+      <xs:documentation>Уведомление о прибытии в ТО назначения</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="NotifArrivalTransitType">
+    <xs:annotation>
+      <xs:documentation>Уведомление о прибытии в ТО назначения</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="NotifDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата подачи уведомления о прибытии</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NotifTime" type="clt_ru:TimeCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Время подачи уведомления о прибытии</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Carrier" type="cat_ru:OrganizationBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Информация о перевозчике</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Comment" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Комментарий</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TransportMeanArrive" type="cat_ru:TransportMeansBaseType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения о транспортных средствах</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Customs" type="cat_ru:CUCustomsType">
+            <xs:annotation>
+              <xs:documentation>Таможенный орган прибытия</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:element name="TD" type="cat_ru:GTDIDType">
+              <xs:annotation>
+                <xs:documentation>Номер транзитной декларации</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="TIRID" type="natr:TIRIDType">
+              <xs:annotation>
+                <xs:documentation>Номер книжки МДП</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1003431E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="TIRIDType">
+    <xs:annotation>
+      <xs:documentation>Номер книжки МДП</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TIRID" type="clt_ru:Code8Type">
+        <xs:annotation>
+          <xs:documentation>Номер книжки МДП.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TIRSeries" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Серия книжки МДП.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TIRPageNumber" type="clt_ru:Count5Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер листа книжки МДП.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

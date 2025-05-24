@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Ag-Grid Example</title>
+    <!-- Подключение CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/styles/ag-grid.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/styles/ag-theme-alpine.css"
+    />
+
+    <!-- Агроиды: бесплатная версия -->
+    <script src="https://cdn.jsdelivr.net/npm/ag-grid-community@31.0.1/dist/ag-grid-community.min.noStyle.js"></script>
+
+    <!-- AG-Grid Enterprise Script -->
+    <script src="https://cdn.jsdelivr.net/npm/ag-grid-enterprise@31.0.1/dist/ag-grid-enterprise.min.js"></script>
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/ag-grid-enterprise@latest/dist/ag-grid-enterprise.min.js"></script>
+    -->
+
+    <style>
+      .grid-container {
+        height: 300px;
+        width: 60%;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body class="ag-theme-alpine">
+    <div id="communityGrid" class="grid-container"></div>
+    <div id="enterpriseGrid" class="grid-container"></div>
+
+    <script type="text/javascript">
+      // Данные для демонстрации иерархии начальника-подчиненного
+      const data = [
+        { name: "Игорь Иванов", position: "Директор" },
+        {
+          parentName: "Игорь Иванов",
+          name: "Анна Смирнова",
+          position: "Менеджер отдела продаж",
+        },
+        {
+          parentName: "Игорь Иванов",
+          name: "Дмитрий Петров",
+          position: "Главный бухгалтер",
+        },
+        {
+          parentName: "Анна Смирнова",
+          name: "Елена Кузнецова",
+          position: "Продавец",
+        },
+      ];
+
+      // Настройки колонок
+      const columnDefs = [
+        { field: "name", headerName: "Имя сотрудника" },
+        { field: "position", headerName: "Должность" },
+      ];
+
+      // Фильтрация родительских элементов
+      let rowDataCommunity = [];
+      for (let i = 0; i < data.length; i++) {
+        if (!data[i].parentName) {
+          let children = data.filter(
+            (child) => child.parentName === data[i].name
+          );
+          data[i]["children"] = children;
+          rowDataCommunity.push(data[i]);
+        }
+      }
+
+      // Функция для загрузки таблицы
+      function createGrid(gridId, gridOptions) {
+        const gridDiv = document.querySelector(`#${gridId}`);
+        new agGrid.Grid(gridDiv, gridOptions);
+      }
+
+      // Грид для Community версии
+      createGrid("communityGrid", {
+        columnDefs,
+        autoGroupColumnDef: true,
+        defaultColDef: { resizable: true },
+        rowData: rowDataCommunity,
+      });
+
+      // Для enterprise версий используется тот же набор данных
+      createGrid("enterpriseGrid", {
+        columnDefs,
+        autoGroupColumnDef: true,
+        defaultColDef: { resizable: true },
+        rowData: rowDataCommunity,
+        groupIncludeFooter: false, // Показывать группы
+      });
+    </script>
+  </body>
+</html>

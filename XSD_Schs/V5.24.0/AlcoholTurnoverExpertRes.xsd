@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:at_exp="urn:customs.ru:Information:SQDocuments:AlcoholTurnoverExpertRes:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:AlcoholTurnoverExpertRes:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Представление сведений о результатах таможенной экспертизы в отношении этилового спирта, алкогольной и спиртосодержащей продукции</xs:documentation>
+  </xs:annotation>
+  <xs:element name="AlcoholTurnoverExpertRes" type="at_exp:AlcoholTurnoverExpertResType">
+    <xs:annotation>
+      <xs:documentation>Представление сведений о результатах таможенной экспертизы в отношении этилового спирта, алкогольной и спиртосодержащей продукции</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="AlcoholTurnoverExpertResType">
+    <xs:annotation>
+      <xs:documentation>Представление сведений о результатах таможенной экспертизы в отношении этилового спирта, алкогольной и спиртосодержащей продукции</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="ExpertizeInfo" type="at_exp:ExpertizeInfoType" minOccurs="1" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения из БД "Экспертиза"</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009361E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор электронного документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ExpertizeInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения из БД "Экспертиза"</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ExpertizeNumber" type="cat_ru:DocumentBaseType">
+        <xs:annotation>
+          <xs:documentation>Номер экспертно-исследовательской работы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExpertizeDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Фактическая дата окончания ЭИР</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Participant" type="at_exp:ParticipantType">
+        <xs:annotation>
+          <xs:documentation>Участник ВЭД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExpertizeResults" type="at_exp:ExpertizeResultsType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Результаты экспертизы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ExpertizeResultsType">
+    <xs:annotation>
+      <xs:documentation>Результаты экспертизы</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TNVEDCode" type="clt_ru:GoodsNomenclatureCodeType">
+        <xs:annotation>
+          <xs:documentation>Код ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Decision" type="clt_ru:FreeText250Type" maxOccurs="4">
+        <xs:annotation>
+          <xs:documentation>Решение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Notes" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="4">
+        <xs:annotation>
+          <xs:documentation>Примечание</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ParticipantType">
+    <xs:annotation>
+      <xs:documentation>Участник ВЭД</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OrganizationName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование участника ВЭД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RecipientINN" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН участника ВЭД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

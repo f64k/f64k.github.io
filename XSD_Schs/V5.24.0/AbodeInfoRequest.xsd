@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:ai_req="urn:customs.ru:Information:SQDocuments:AbodeInfoRequest:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:AbodeInfoRequest:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Запрос cведений о регистрации по месту пребывания граждан РФ (запрос)</xs:documentation>
+	</xs:annotation>
+	<xs:element name="AbodeInfoRequest" type="ai_req:AbodeInfoRequestType">
+		<xs:annotation>
+			<xs:documentation>Запрос cведений о регистрации по месту пребывания граждан РФ (запрос)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AbodeInfoRequestType">
+		<xs:annotation>
+			<xs:documentation>Запрос cведений о регистрации по месту пребывания граждан РФ (запрос)</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="FIO" type="ai_req:FIOType">
+						<xs:annotation>
+							<xs:documentation>ФИО физического лица</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="BirthDate" type="clt_ru:DateCustType">
+						<xs:annotation>
+							<xs:documentation>Дата рождения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:choice>
+						<xs:element name="PassportRF" type="ai_req:PassportRFType">
+							<xs:annotation>
+								<xs:documentation>Данные паспорта РФ</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="ForeignPassport" type="ai_req:ForeignPassportType">
+							<xs:annotation>
+								<xs:documentation>Данные заграничного паспорта</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="BirthCertificate" type="ai_req:BirthCertificateType">
+							<xs:annotation>
+								<xs:documentation>Данные свидетельства о рождении</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentIDType" use="required" fixed="1009390E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор электронного документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="BirthCertificateSeriesType">
+		<xs:annotation>
+			<xs:documentation>Серия свидетельства о рождении</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="clt_ru:CodeVariable14Type">
+			<xs:maxLength value="13"/>
+			<xs:pattern value="[IVXLCDM]{1,10}[\-][А-Я]{2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="BirthCertificateType">
+		<xs:annotation>
+			<xs:documentation>Реквизиты свидетельства о рождении</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Series" type="ai_req:BirthCertificateSeriesType">
+				<xs:annotation>
+					<xs:documentation>Серия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Number" type="clt_ru:CodeVariable6Type">
+				<xs:annotation>
+					<xs:documentation>Номер</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IssueDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата выдачи документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FIOType">
+		<xs:annotation>
+			<xs:documentation>ФИО физического лица</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="FamilyName" type="clt_ru:NameType">
+				<xs:annotation>
+					<xs:documentation>Фамилия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FirstName" type="clt_ru:NameType">
+				<xs:annotation>
+					<xs:documentation>Имя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Patronymic" type="clt_ru:NameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Отчество</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ForeignPassportType">
+		<xs:annotation>
+			<xs:documentation>Реквизиты заграничного паспорта гражданина Российской Федерации</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Series" type="clt_ru:CodeVariable2Type">
+				<xs:annotation>
+					<xs:documentation>Серия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Number" type="clt_ru:CodeVariable7Type">
+				<xs:annotation>
+					<xs:documentation>Номер</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IssueDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата выдачи документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PassportRFType">
+		<xs:annotation>
+			<xs:documentation>Реквизиты паспорта гражданина Российской Федерации</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Series" type="clt_ru:Code4Type">
+				<xs:annotation>
+					<xs:documentation>Серия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Number" type="clt_ru:Code6Type">
+				<xs:annotation>
+					<xs:documentation>Номер</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IssueDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата выдачи документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

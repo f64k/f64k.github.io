@@ -1,0 +1,1110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:catWH_ru="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonAggregateTypesCust:5.24.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:cltWH_ru="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonLeafTypesCust:5.16.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonAggregateTypesCust:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+	<xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:Information:WarehouseDocuments:WarehouseCommonLeafTypesCust:5.16.0" schemaLocation="WarehouseCommonLeafTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Общие сложные типы документов СВХ</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="AISTSDocumentIDType">
+		<xs:annotation>
+			<xs:documentation>Справочный номер документа</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CustomsCode" type="clt_ru:Code5Type">
+				<xs:annotation>
+					<xs:documentation>Код таможенного органа регистрации документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IssueDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата оформления документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocNumber" type="clt_ru:Code5Type">
+				<xs:annotation>
+					<xs:documentation>Номер документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ArriveCustomsDocType">
+		<xs:annotation>
+			<xs:documentation>Таможенные документы</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="catWH_ru:WhPresentDocType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AviaParticularsType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для описания подробностей для авиационного транспорта</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="FlightNumber" type="cltWH_ru:FlightNumber" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер рейса</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FlightDate" type="clt_ru:DateCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата рейса</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AvtoParticularsType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для описания подробностей для автомобильного транспорта</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TrailerIdentifier" type="clt_ru:TransportMeansIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Идентификатор (номер) прицепного транспортного средства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SecondTrailerIdentifier" type="clt_ru:TransportMeansIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Идентификатор (номер) второго прицепного транспортного средства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CWDocType">
+		<xs:annotation>
+			<xs:documentation>Базовый тип для СВХ</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="DocumentDateTime" type="clt_ru:DateTimeCustType">
+						<xs:annotation>
+							<xs:documentation>Дата и время создания электронного документа.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomsProperties" type="cat_ru:CustomsType">
+						<xs:annotation>
+							<xs:documentation>Реквизиты таможенного органа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ConsigneeType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для описания грузополучателя</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:OrganizationBaseType">
+				<xs:sequence>
+					<xs:element name="Address" type="catWH_ru:WHAddressType">
+						<xs:annotation>
+							<xs:documentation>Адрес получателя</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="IdentityCard" type="RUScat_ru:RUIdentityCardType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Документ, удостоверяющий личность получателя. Заполняется в случае, если получатель - физ. лицо</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ConsignorType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для описания грузоотправителя</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CountryCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код страны отправителя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OrganizationName" type="clt_ru:NameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование организации / ФИО физического лица</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Address" type="catWH_ru:WHAddressType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Адрес</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DO1GoodKeepingLimitType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для описания срока временного хранения товара</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GoodsNumber" type="clt_ru:Count10Type">
+				<xs:annotation>
+					<xs:documentation>Валовый номер товара по отчету о принятии ДО-1</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="KeepingLimitDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата истечения срока ВХ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GoodsDescriptionFullType">
+		<xs:annotation>
+			<xs:documentation>Описание товара</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Описание товара</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GoodsLoadingPlaceType">
+		<xs:annotation>
+			<xs:documentation>Местонахождение товаров</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+				<xs:annotation>
+					<xs:documentation>Код таможенного органа, в зоне деятельности которого находятся товары</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="Warehouse" type="catWH_ru:WarehouseType">
+					<xs:annotation>
+						<xs:documentation>Сведения о  СВХ на котором находятся товары</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="OtherLoadingPlace" type="catWH_ru:OtherLoadingPlaceType">
+					<xs:annotation>
+						<xs:documentation>Иное место нахождения товаров</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MPONumberComplexType">
+		<xs:annotation>
+			<xs:documentation>Номер МПО в форме комплексного типа</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ServiceIndicator" type="clt_ru:CodeVariable2Type">
+				<xs:annotation>
+					<xs:documentation>Указатель сервиса</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SerialNumber" type="clt_ru:Code9Type">
+				<xs:annotation>
+					<xs:documentation>Порядковый номер</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CountryCode" type="clt_ru:CountryA2CodeType">
+				<xs:annotation>
+					<xs:documentation>Код страны</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MPONumberType">
+		<xs:annotation>
+			<xs:documentation>Номер МПО</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:annotation>
+				<xs:documentation>Допустается заполнение либо в форме комплексного типа, либо в форме строки</xs:documentation>
+			</xs:annotation>
+			<xs:element name="MPONumberComplex" type="catWH_ru:MPONumberComplexType">
+				<xs:annotation>
+					<xs:documentation>Номер МПО в форме комплексного типа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Number" type="cltWH_ru:MPONumberTokenType">
+				<xs:annotation>
+					<xs:documentation>Номер МПО в формате строки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="OtherLoadingPlaceType">
+		<xs:annotation>
+			<xs:documentation>Иное место нахождения товаров</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GoodsLocationPlaceDesc" type="clt_ru:PlaceNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Место нахождения товаров/СКЛАД ПОЛУЧАТЕЛЯ (кроме названия ж/д cтанции)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RailwayStationCode" type="clt_ru:RailwayStationCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код ж/д станции местонахождения товара.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RailwayStationName" type="clt_ru:PlaceNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование ж/д станции местонахождения товара.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Address" type="cat_ru:AddressType">
+				<xs:annotation>
+					<xs:documentation>Адрес</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RailRoadParticularsType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для описания подробностей для железнодорожного транспорта</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RailStation" type="clt_ru:RailwayStationCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код станции отправления (для прибытия) или назначения (для убытия)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SeaParticularsType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для описания подробностей для морского/речного транспорта</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="EntryNumber" type="cltWH_ru:SeaEntryNumberType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер прихода/ухода</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CountryCode" type="clt_ru:CountryA2CodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Данные о стране принадлежности судна</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Captain" type="cat_ru:PersonBaseType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Данные о капитане</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransportDocRegNumType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для описания регистрационного номера транспортного документа</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:GTDIDType">
+				<xs:sequence>
+					<xs:element name="WaybillNumPP" type="clt_ru:CodeVariable3Type">
+						<xs:annotation>
+							<xs:documentation>Порядковый номер транспортного документа по журналу регистрации</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="WHAddressType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для адреса организации</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:AddressType">
+				<xs:sequence>
+					<xs:element name="AddressLine" type="clt_ru:FreeText250Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Информация об адресе организации в виде одной строки</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="WHAngarType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для расширенного описания данных о размещении товара на СВХ</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="catWH_ru:WHPlaceBaseType">
+				<xs:sequence>
+					<xs:element name="Parking" type="cltWH_ru:SVHPlaceType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Парковочное место</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Angar" type="cltWH_ru:SVHPlaceType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Ангар</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="WHPackind" type="cltWH_ru:SVHPlaceType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Номер стеллажа или полки (для товара) / номер места в ангаре (для контейнера)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Cell" type="cltWH_ru:SVHPlaceType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Номер ячейки (заполняется при указании сведений о товаре)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="WithoutUnloadIndicator" type="clt_ru:IndicatorType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Признак хранения без выгрузки из ТС (контейнеров)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="WHCargoPlaceType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для описания грузовых мест товара</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PlaceNumber" type="clt_ru:Quantity8Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Количество грузовых мест</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PackageCode" type="clt_ru:PackageCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код вида упаковки (груза)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PlaceDescription" type="cltWH_ru:CargoPlacesDescriptionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Вид  грузовых  мест - описание</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WHCarrierType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для описания организации-перевозчика</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:OrganizationBaseType">
+				<xs:sequence>
+					<xs:element name="CountryCode" type="clt_ru:CountryA2CodeType">
+						<xs:annotation>
+							<xs:documentation>Код страны перевозчика</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Address" type="catWH_ru:WHAddressType">
+						<xs:annotation>
+							<xs:documentation>Адрес перевозчика</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CarrierPerson" type="cat_ru:PersonBaseType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Представитель перевозчика</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="WHContainerExtendedType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для расширенного описания контейнера</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="catWH_ru:WHContainerInformationType">
+				<xs:sequence>
+					<xs:element name="KeepingPlace" type="catWH_ru:WHAngarType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Информация о хранении контейнера</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="WHContainerInformationType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для описания контейнера</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ContainerNumber" type="clt_ru:ContainerIdentityType">
+				<xs:annotation>
+					<xs:documentation>Номер контейнера.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SizeCode" type="cltWH_ru:ContainerSizeCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код размера контейнера по ГОСТ 52524-2005</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="KindCode" type="cltWH_ru:ContainerKindCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код типа контейнера по ГОСТ 52524-2005</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GrossWeightQuantity" type="clt_ru:QuantityBasisType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Вес брутто (кг) всех товаров в контейнере</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WHCustomInspectorType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для описания должностного лица таможенного органа</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:PersonBaseType">
+				<xs:sequence>
+					<xs:element name="LNP" type="clt_ru:LNPIDType">
+						<xs:annotation>
+							<xs:documentation>Л.Н.П. сотрудника таможенного органа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomsCode" type="clt_ru:CustomsCodeType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Код таможенного органа, указанный на оттиске ЛНП</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="WHCustomRegisterDocumentDataType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для данных о регистрации документа в таможенном органе</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CustomState" type="cltWH_ru:CustomDocumentState">
+				<xs:annotation>
+					<xs:documentation>Таможенный статус отчета</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegisterTime" type="clt_ru:TimeCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Время регистрации отчета в журнале регистрации ДО таможенного органа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Inspector" type="catWH_ru:WHCustomInspectorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Сотрудник таможенного органа, зарегистрировавший отчет</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Cancelation" type="catWH_ru:WHDocumentCancelationType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Данные об аннулировании отчета</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegisterNumber" type="catWH_ru:WHDocumentRegisterNumberType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Регистрационный номер отчета по журналу регистрации ДО таможенного органа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WHDocumentCancelationType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для данных об аннулировании документа</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CancelDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата аннулирования</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CancelReason" type="clt_ru:FreeText250Type">
+				<xs:annotation>
+					<xs:documentation>Причина аннулирования</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Inspector" type="catWH_ru:WHCustomInspectorType">
+				<xs:annotation>
+					<xs:documentation>Сотрудник таможенного органа, аннулировавший отчет</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WHDocumentRegisterNumberType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для регистрационного номера отчета ДО-1/ДО-2/ДО-3 по журналу регистрации ДО таможенного органа</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:GTDIDType">
+				<xs:sequence>
+					<xs:choice minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Для отчетов, зарегистрированных начиная с 1.01.2016 г., не используется</xs:documentation>
+						</xs:annotation>
+						<xs:element name="CertificateNumber" type="clt_ru:DocumentNumberType">
+							<xs:annotation>
+								<xs:documentation>Номер свидетельства о включении в реестр владельцев временного хранения</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="OtherWHPlaceKind" type="clt_ru:Numeric1Type">
+							<xs:annotation>
+								<xs:documentation>Цифровой признак места временного хранения в соответствии с нумерацией, установленной пунктом 34 Порядка</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="WHGoodContLinkType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для описания размещения товара в контейнере</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GoodNumber" type="clt_ru:Count10Type">
+				<xs:annotation>
+					<xs:documentation>Порядковый номер товара в транспортном документе</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ContainerNumber" type="clt_ru:Count10Type">
+				<xs:annotation>
+					<xs:documentation>Порядковый номер контейнера  в транспортном документе</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WHOrganizationBaseType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для описания организации</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:OrganizationBaseType">
+				<xs:sequence>
+					<xs:element name="Address" type="cat_ru:AddressType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Адрес</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="IdentityCard" type="RUScat_ru:RUIdentityCardType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Документ, удостоверяющий личность</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="WHPackingInformationType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для описания первичных упаковок товара</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PackingCode" type="clt_ru:PackageCodeType">
+				<xs:annotation>
+					<xs:documentation>Код вида упаковки товаров в соответствии с  классификатором видов груза, упаковки и упаковочных материалов.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PakingQuantity" type="clt_ru:PackagesQuantityType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Количество упаковок</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WHPalleteInformationType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для описания паллет и поддонов, на которых находится товар</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PalleteQuantity" type="clt_ru:PackagesQuantityType">
+				<xs:annotation>
+					<xs:documentation>Количество поддонов</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PalleteDescription" type="clt_ru:FreeText250Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Описание поддонов.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WHPlaceBaseType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для описания размещения на складе</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Area" type="cltWH_ru:SVHPlaceType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер площадки / зона</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Square" type="clt_ru:Quantity14point2Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Занимаемая площадь в кв.м.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Comments" type="clt_ru:FreeText250Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Комментарий к размещению</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WHShipmentInfoType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для  указания сведений о партии товаров, помещаемых на ВХ, согласно транспортным документам</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="catWH_ru:WhTransportDocType">
+				<xs:sequence>
+					<xs:element name="Goods" type="catWH_ru:WhGoodsExtendedType" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Сведения о товарах</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Containers" type="catWH_ru:WHContainerExtendedType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Сведения о контейнерах</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="GoodContLinks" type="catWH_ru:WHGoodContLinkType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Сведения о размещении товаров в контейнерах</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomDocLink" type="clt_ru:Count10Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Сведения о связанном таможеннном документе. Указывается порядковый номер (начиная с единицы) таможенного документа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="WHSuppQuantityType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для описания количественной характеристики товара</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GoodsQuantity" type="clt_ru:QuantityBasisType">
+				<xs:annotation>
+					<xs:documentation>Количество товара в единице измерения.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MeasureUnitQualifierName" type="clt_ru:MeasureUnitQualifierNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Краткое наименование единицы измерения.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MeasureUnitQualifierCode" type="clt_ru:MeasureUnitQualifierCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код единицы измерения в соответствии с единицами измерения, применяемыми в Таможенном тарифе Российской Федерации..</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WareHouseReportLinkDataType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для указания сведений об отчете, составленном владельцем СВХ (ДО-1 или ДО-2)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ReportDate" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата составления отчета</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReportNumber" type="clt_ru:CodeVariable7Type">
+				<xs:annotation>
+					<xs:documentation>Номер отчета (согласно нумерации в информационной системе владельца СВХ)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WareHouseReportType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для описания документа, составляемого при помещении, в процессе временного хранения товаров и при выпуске товаров со складов временного хранения.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="MainTransportModeCode" type="clt_ru:TransportModeCodeType">
+						<xs:annotation>
+							<xs:documentation>Код вида основного ТС (по классификатору видов транспорта и транспортировки товаров)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ReportNumber" type="clt_ru:GTDIDType">
+						<xs:annotation>
+							<xs:documentation>Номер отчета. Присваивается оформляющей системой владельца СВХ</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ReportDate" type="clt_ru:DateCustType">
+						<xs:annotation>
+							<xs:documentation>Дата составления отчета</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ReportTime" type="clt_ru:TimeCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Время составления отчета</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="WarehouseOwner" type="catWH_ru:WarehouseOwnerType">
+						<xs:annotation>
+							<xs:documentation>Данные о владельце склада</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="WareHouseCustomsRegisteredReportType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для описания документа ВХ после его регистрации в ТО.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="catWH_ru:WareHouseReportType">
+				<xs:sequence>
+					<xs:element name="ModificationDateTime" type="clt_ru:DateTimeCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дата и время последней модификации документа. Временная часть содержит локальное время отправителя без указания часового пояса</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomRegistration" type="catWH_ru:WHCustomRegisterDocumentDataType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Данные о регистрации отчета в таможенном органе</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="WarehouseCertificateType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для описания документа, на основании которого осуществляет свою деятельность владелец склада</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CertificateKind" type="cltWH_ru:WareHouseCertificateKind">
+				<xs:annotation>
+					<xs:documentation>Вид документа, на основании которого осуществляет свою деятельность владелец склада</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CertificateNumber" type="clt_ru:DocumentNumberType">
+				<xs:annotation>
+					<xs:documentation>Номер Свидетельства о включении в Реестр / Номер лицензии / Номер приказа о создании ЗТК</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CertificateDate" type="clt_ru:DateCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата документа, на основании которого разрешено хранение</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WarehouseOwnerType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для описания организации - владельца места хранения</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:OrganizationBaseType">
+				<xs:sequence>
+					<xs:element name="Address" type="catWH_ru:WHAddressType">
+						<xs:annotation>
+							<xs:documentation>Адрес места хранения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="WarehouseLicense" type="catWH_ru:WarehouseCertificateType">
+						<xs:annotation>
+							<xs:documentation>Документ, на основании которого разрешено временное хранение</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ActualWarehouseLicense" type="catWH_ru:WarehouseCertificateType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Действующий документ владельца СВХ. Заполняется в отчетах о выдаче по форме ДО-2 в том случае, если в течение периода временного хранения, документ, по которому товары принимались на временное хранение, указанный в элементе WarehouseLicense, прекратил свое действие</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="WarehousePerson" type="cat_ru:PersonBaseType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Представитель СВХ</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="WarehouseType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для описания склада, на котором находятся товары</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="catWH_ru:WHOrganizationBaseType">
+				<xs:sequence>
+					<xs:element name="CertificateNumber" type="clt_ru:DocumentNumberType">
+						<xs:annotation>
+							<xs:documentation>Номер Свидетельства о включении в Реестр / Номер лицензии / Номер разрешения таможни на ОХ / Номер приказа о создании ЗТК</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CertificateDate" type="clt_ru:DateCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дата выдачи свидетельства о включении в Реестр владельцев СВХ / ТС / Дата выдачи лицензии </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="WhCustomDocumentType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для описания таможенного документа</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="catWH_ru:ArriveCustomsDocType">
+				<xs:sequence>
+					<xs:element name="VttCustomsCode" type="clt_ru:CustomsCodeType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Код таможни отправления (при прибытии) / назначения (при убытии)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="WhGoodType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для описания товара на временном хранении</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GoodsNumber" type="clt_ru:Count10Type">
+				<xs:annotation>
+					<xs:documentation>Валовый номер товара по отчету</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsTNVEDCode" type="clt_ru:GoodsNomenclatureCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код товара по ТН ВЭД ЕАЭС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InvoiceCost" type="clt_ru:AmountType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Фактурная стоимость</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CurrencyCode" type="clt_ru:CurrencyA3CodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Буквенный код валюты фактурной стоимости</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="GoodsDescriptionFull" type="catWH_ru:GoodsDescriptionFullType">
+					<xs:annotation>
+						<xs:documentation>Описание товара</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="MPONumber" type="catWH_ru:MPONumberType">
+					<xs:annotation>
+						<xs:documentation>Номер МПО</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="MPOCaseNum" type="cltWH_ru:MPOCaseNumType">
+					<xs:annotation>
+						<xs:documentation>Номер емкости, в которой находится МПО.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="CargoPlace" type="catWH_ru:WHCargoPlaceType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Сведения о грузовых  местах</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BruttoVolQuant" type="catWH_ru:WHSuppQuantityType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Вес брутто / объем</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MeasureQuantity" type="catWH_ru:WHSuppQuantityType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Кол-во в дополнительных  единицах измерения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WhGoodsExtendedType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для расширенного описания сведений о товарах</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="catWH_ru:WhGoodType">
+				<xs:sequence>
+					<xs:element name="GoodsWHNumber" type="cltWH_ru:SVHGoodsNum">
+						<xs:annotation>
+							<xs:documentation>Складской номер товара (графа 5 отчета)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Comments" type="clt_ru:FreeText250Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Примечание по условиям хранения (графа 11 отчета)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="MPOCaseNumber" type="cltWH_ru:MPOCaseNumType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Номер емкости МПО, 29 знаков</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="MpoBillBruttoVolQuant" type="catWH_ru:WHSuppQuantityType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Вес брутто МПО (емкости МПО) по сопроводительным документам. Заполняется в случае выявления при принятии на временное хранение несоответствия веса, сведениям, указанным в документах сопровождающих МПО</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="KeepingPlace" type="catWH_ru:WHAngarType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Описание места хранения товаров</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="AcceptDateTime" type="clt_ru:DateTimeCustType">
+						<xs:annotation>
+							<xs:documentation>Дата и время принятия товара на ВХ</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="WhPresentDocType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для описания товаросопроводительного документа, используемый при описании товаров на временном хранении</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:DocumentBaseType">
+				<xs:sequence>
+					<xs:element name="PresentedDocumentModeCode" type="clt_ru:CustomsDocumentCodeType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Код вида представляемого документа. Заполняется в соответствии с классификатором видов документов, используемых при таможенном оформлении (справочник docg44)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="WhTransportDocType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для описания товаро-транспортной накладной, используемый при описании товаров на временном хранении</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="catWH_ru:WhPresentDocType">
+				<xs:choice>
+					<xs:annotation>
+						<xs:documentation>Общая информация о товарной партии. Указываются сведения из товаро-транспортной накладной, либо для авиа-превозок допускается проставлять признак прилета груза без документов</xs:documentation>
+					</xs:annotation>
+					<xs:element name="WhCommDoc" type="catWH_ru:WhCommDocType">
+						<xs:annotation>
+							<xs:documentation>Общая информация о товарной партии</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ArrivalCargoWithoutDocsIndicator" type="clt_ru:IndicatorType">
+						<xs:annotation>
+							<xs:documentation>Признак прилета груза без документов</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:choice>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="WhCommDocType">
+		<xs:annotation>
+			<xs:documentation>Общая информация о товарной партии</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CompletteList" type="clt_ru:DocumentNumberType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Номера связанных ТТН. Заполняется в случае партии комплектных (насыпных, наливных) товаров, следующих по нескольким накладным</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CustomNumber" type="catWH_ru:TransportDocRegNumType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Регистрационный номер</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Consignor" type="catWH_ru:ConsignorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Отправитель. При осуществлении временного хранения емкостей МПО в месте, указанном в подпункте 4 пункта 34 Порядка при временном хранении, указываются сведения о ММПО отправления.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Consignee" type="catWH_ru:ConsigneeType">
+				<xs:annotation>
+					<xs:documentation>Получатель. При осуществлении временного хранения емкостей МПО в месте, указанном в подпункте 4 пункта 34 Порядка при временном хранении, указываются сведения о ММПО назначения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WhBillDocumentType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для описания сведений о номере товаро-транспортной накладной</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="catWH_ru:WhPresentDocType">
+				<xs:sequence>
+					<xs:element name="CustomNumber" type="catWH_ru:TransportDocRegNumType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Регистрационный номер</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="WhTransportType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для описания транспортного средства</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TransportModeCode" type="clt_ru:TransportModeCodeType">
+				<xs:annotation>
+					<xs:documentation>Код вида транспортного средства по классификатору видов транспорта и транспортировки товаров</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransportIdentifier" type="clt_ru:TransportMeansIDType">
+				<xs:annotation>
+					<xs:documentation>Номер ТС (для морского транспорта указывается наименование судна, для авиа - номер борта, для железной дороги - номер вагона и т.д.)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice minOccurs="0">
+				<xs:element name="Avia" type="catWH_ru:AviaParticularsType">
+					<xs:annotation>
+						<xs:documentation>Подробности для авиа</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Avto" type="catWH_ru:AvtoParticularsType">
+					<xs:annotation>
+						<xs:documentation>Подробности для авто</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="RailRoad" type="catWH_ru:RailRoadParticularsType">
+					<xs:annotation>
+						<xs:documentation>Подробности для ж/д</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Sea" type="catWH_ru:SeaParticularsType">
+					<xs:annotation>
+						<xs:documentation>Подробности для моря/реки</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WhIssueDocumentType">
+		<xs:annotation>
+			<xs:documentation>Комплексный тип для описания основания для выдачи товаров</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="catWH_ru:WhCustomDocumentType">
+				<xs:sequence>
+					<xs:choice>
+						<xs:element name="WhGoodOutWithoutRegister" type="clt_ru:IndicatorType">
+							<xs:annotation>
+								<xs:documentation>Признак отсутствия Уведомления о возможности выдачи товаров</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="WhGoodOutRegisterNumber" type="cat_ru:GTDIDType">
+							<xs:annotation>
+								<xs:documentation>Основание для выдачи - регистрационный номер Уведомления о возможности выдачи товаров</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

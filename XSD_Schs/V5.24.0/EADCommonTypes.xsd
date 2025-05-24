@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ct="urn:customs.ru:Information:EArchDocuments:EADCommonTypes:5.22.0" targetNamespace="urn:customs.ru:Information:EArchDocuments:EADCommonTypes:5.22.0" elementFormDefault="qualified" version="5.22.0.0">
+	<xs:annotation>
+		<xs:documentation>Общие прикладные типы</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="DocumentBaseType">
+		<xs:annotation>
+			<xs:documentation>Базовый класс для указания документов. Наименование, номер, дата</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PrDocumentName" type="ct:DocumentNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PrDocumentNumber" type="ct:DocumentNumberType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PrDocumentDate" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AgreementNumType">
+		<xs:annotation>
+			<xs:documentation>Базовый класс для указания реквизитов Соглашения о предоставлении доступа к документам ЭАДД</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ct:DocumentBaseType">
+				<xs:sequence>
+					<xs:element name="UniqueID" type="ct:GUID">
+						<xs:annotation>
+							<xs:documentation>Идентификатор cоглашения/документа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="GUID">
+		<xs:annotation>
+			<xs:documentation>Идентификатор в формате GUID</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="36"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CustomsDocumentCodeType">
+		<xs:annotation>
+			<xs:documentation>Код вида представляемого документа. 5 символов. Текстовый</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:length value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DocumentNumberType">
+		<xs:annotation>
+			<xs:documentation>Номер представляемого документа. До 50 символов. Текстовый</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DocumentModeIDType">
+		<xs:annotation>
+			<xs:documentation>Идентификатор. Идентификатор вида документа (код документа по Альбому форматов). До 30 символов. Текстовый</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="30"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DocumentNameType">
+		<xs:annotation>
+			<xs:documentation>Наименование представляемого документа. До 250 символов. Текстовый</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="250"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OrganizationNameType">
+		<xs:annotation>
+			<xs:documentation>Наименование организации / ФИО физического лица</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="250"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OGRNIDType">
+		<xs:annotation>
+			<xs:documentation>Идентификатор. Основной государственный регистрационный номер (ОГРН) индивидуального предпринимателя или организации. 15 или 13 символов. Числовой</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(\d{15})|(\d{13})"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="INNIDType">
+		<xs:annotation>
+			<xs:documentation>Индивидуальный номер налогоплательщика в соответствии с национальной системой кодирования (в РФ для юр. лиц - 10 цифр, для физ. лиц - 12 цифр). От 10 до 12 символов. Числовой</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="10"/>
+			<xs:maxLength value="12"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="KPPCodeType">
+		<xs:annotation>
+			<xs:documentation>Код причины постановки на налоговый учет. 9 символов. Числовой</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{9}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CustomsCodeType">
+		<xs:annotation>
+			<xs:documentation>Код таможенного органа</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:length value="8"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GTDNumberType">
+		<xs:annotation>
+			<xs:documentation>Порядковый номер документа по журналу регистрации</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:length value="7"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FreeText255Type">
+		<xs:annotation>
+			<xs:documentation>Текстовая строка. До 255 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ResultCodeType">
+		<xs:annotation>
+			<xs:documentation>Код ошибки. В системе электронного декларирования. Текст. До 11 символов. (Определяется Спецификацией обмена.)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="11"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ArchBaseDocType">
+		<xs:annotation>
+			<xs:documentation>Базовый для документа из архива</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ct:ArchBaseType">
+				<xs:sequence>
+					<xs:element name="ArchDocID" type="ct:GUID" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Идентификатор документа в архиве</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ArchDocumentID" type="ct:GUID" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Уникальный идентификатор документа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ArchBaseType">
+		<xs:annotation>
+			<xs:documentation>Базовый тип для архива</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ct:BaseDocType">
+				<xs:sequence>
+					<xs:element name="ArchDeclID" type="ct:GUID">
+						<xs:annotation>
+							<xs:documentation>Идентификатор декларанта в архиве. </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ArchID" type="ct:GUID">
+						<xs:annotation>
+							<xs:documentation>Идентификатор архива</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="BaseDocType">
+		<xs:annotation>
+			<xs:documentation>Базовый тип для электронного документа</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DocumentID" type="ct:GUID">
+				<xs:annotation>
+					<xs:documentation>Уникальный идентификатор документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RefDocumentID" type="ct:GUID" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Уникальный идентификатор исходного документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="INNSign" type="ct:INNIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ИНН владельца МЧД</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MCD_ID" type="ct:GUID" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Единый регистрационный номер доверенности в формате МЧД</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GTDIDType">
+		<xs:annotation>
+			<xs:documentation>Регистрационный номер таможенного документа. Применяется для всех документов, имеющих структуру номера, совпадающую со структурой номера ДТ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CustomsCode" type="ct:CustomsCodeType">
+				<xs:annotation>
+					<xs:documentation>Код таможенного органа, зарегистрировавшего документ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegistrationDate" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Дата регистрации документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GTDNumber" type="ct:GTDNumberType">
+				<xs:annotation>
+					<xs:documentation>Порядковый номер документа по журналу регистрации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EADOrgType">
+		<xs:annotation>
+			<xs:documentation>Сведения об организации</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ParticipantID" type="ct:GUID">
+				<xs:annotation>
+					<xs:documentation>Идентификатор внешнего участника обмена</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OrganizationName" type="ct:OrganizationNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование организации / ФИО физического лица</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OGRN" type="ct:OGRNIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ОГРН/ОГРНИП. Основной государственный регистрационный номер</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="INN" type="ct:INNIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ИНН - Индивидуальный номер налогоплательщика</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="KPP" type="ct:KPPCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>КПП - Код причины постановки на учет</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Role" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Роль организации. 0 - декларант, 1 - таможенный представитель, 2 - перевозчик</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

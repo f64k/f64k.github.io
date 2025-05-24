@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+VS01550v001-FNS001 (Сведения о текущем отчетном периоде расширенных сведений, передаваемым в отношении субъектов - налогоплательщиков и участников ВЭД), fns-period-ru-root.xsd
+VS01546v001-FNS001 (Расширенные сведения по субъектам - налогоплательщикам и участникам ВЭД), fns-datasub-ru-root.xsd
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:sei_req="urn:customs.ru:Information:SQDocuments:FnsSubjectExtInfoReq:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:FnsSubjectExtInfoReq:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос расширенных сведений о субъектам - налогоплательщиках и участниках ВЭД</xs:documentation>
+  </xs:annotation>
+  <xs:element name="FnsSubjectExtInfoReq" type="sei_req:FnsSubjectExtInfoReqType">
+    <xs:annotation>
+      <xs:documentation>Запрос расширенных сведений о субъектам - налогоплательщиках и участниках ВЭД</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="FnsSubjectExtInfoReqType">
+    <xs:annotation>
+      <xs:documentation>Запрос расширенных сведений о субъектам - налогоплательщиках и участниках ВЭД</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="InfoKind" type="clt_ru:LetterIndicatorType">
+            <xs:annotation>
+              <xs:documentation>Вид запрашиваемой информации: 1 - Запрос сведений о текущем отчетном периоде расширенных сведений, передаваемым в отношении субъектов - налогоплательщиков и участников ВЭД; 2 - Запрос расширенных сведений по субъектам - налогоплательщикам и участникам ВЭД.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RequestId" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Идентификатор запроса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RequestDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата формирования запроса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CodeInfoBlock" type="clt_ru:Code2Type">
+            <xs:annotation>
+              <xs:documentation>Код вида запрашиваемой информации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AddCondition" type="sei_req:AddConditionType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дополнительные условия отбора сведений</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1060020E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AddConditionType">
+    <xs:annotation>
+      <xs:documentation>Дополнительные условия отбора сведений</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="INNPersons" type="sei_req:INNPersonsType" minOccurs="0" maxOccurs="500">
+        <xs:annotation>
+          <xs:documentation>Идентификатор субъекта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ReportingPeriod" type="sei_req:ReportingPeriodType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отчетный период</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="INNPersonsType">
+    <xs:annotation>
+      <xs:documentation>Идентификатор субъекта</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="INN" type="clt_ru:INNIDType">
+          <xs:annotation>
+            <xs:documentation>ИНН организации</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="INNIP" type="clt_ru:INNIDType">
+          <xs:annotation>
+            <xs:documentation>ИНН физического лица</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReportingPeriodType">
+    <xs:annotation>
+      <xs:documentation>Отчетный период</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DateBegin" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата начала отчетного периода</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DateEnd" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата окончания отчетного периода</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:catESAD_cu="urn:customs.ru:CUESADCommonAggregateTypesCust:5.21.0" xmlns:at_mark="urn:customs.ru:Information:SQDocuments:AlcoholTurnoverMarkRes:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:AlcoholTurnoverMarkRes:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CUESADCommonAggregateTypesCust:5.21.0" schemaLocation="CUESADCommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Представление сведений об уплате акциза в отношении маркированных товаров ЕАЭС</xs:documentation>
+  </xs:annotation>
+  <xs:element name="AlcoholTurnoverMarkRes" type="at_mark:AlcoholTurnoverMarkResType">
+    <xs:annotation>
+      <xs:documentation>Представление сведений об уплате акциза в отношении маркированных товаров ЕАЭС</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="AlcoholTurnoverMarkResType">
+    <xs:annotation>
+      <xs:documentation>Представление сведений об уплате акциза в отношении маркированных товаров ЕАЭС</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="AppInfo" type="at_mark:AppInfoType" minOccurs="1" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения из заявления на уплату акциза</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009360E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор электронного документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AppInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения из заявления на уплату акциза</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AppNumber" type="cat_ru:DocumentBaseType">
+        <xs:annotation>
+          <xs:documentation>Номер заявления на уплату акциза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Seller" type="at_mark:OrganizationType">
+        <xs:annotation>
+          <xs:documentation>Продавец</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Manufacturer" type="at_mark:OrganizationType">
+        <xs:annotation>
+          <xs:documentation>Производитель</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsInfo" type="at_mark:GoodsInfoType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Информация о товаре</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TPONumber" type="at_mark:TPORegNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер ТПО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GoodsInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о товаре</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsNumber" type="clt_ru:Count3Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер товара в заявлении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" maxOccurs="4">
+        <xs:annotation>
+          <xs:documentation>Описание товара в заявлении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsTNVEDCode" type="clt_ru:CUGoodsNomenclatuerCodeType">
+        <xs:annotation>
+          <xs:documentation>Код товара по ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExciseSumm" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Сумма уплаченного акциза</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ProductCount" type="cat_ru:SupplementaryQuantityType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество товара (в дополнительной единице измерения)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StampsSeriesNumber" type="catESAD_cu:ESADExciseType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения об акцизных или специальных марках</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OrganizationType">
+    <xs:annotation>
+      <xs:documentation>Сведения об организации</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OrganizationName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Наименование организации-импортера</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrganizationINN" type="clt_ru:INNIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИНН организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TPORegNumberType">
+    <xs:annotation>
+      <xs:documentation>Справочный номер ТПО</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, зарегистрировавшего документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocNumber" type="clt_ru:Code10Type">
+        <xs:annotation>
+          <xs:documentation>Номер документа по журналу регистрации/типографский номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NumPP" type="clt_ru:Code2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер вносимых изменений</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

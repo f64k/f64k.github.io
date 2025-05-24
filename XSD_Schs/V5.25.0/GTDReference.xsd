@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:gref="urn:customs.ru:Information:CustomsDocuments:GTDReference:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:GTDReference:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Справка, прилагаемая к декларации на товары</xs:documentation>
+  </xs:annotation>
+  <xs:element name="GTDReference" type="gref:GTDReferenceType">
+    <xs:annotation>
+      <xs:documentation>Справка, прилагаемая к декларации на товары</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GTDReferenceType">
+    <xs:annotation>
+      <xs:documentation>Справка, прилагаемая к декларации на товары</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="GoodsInformation" type="gref:GoodsInformationType">
+            <xs:annotation>
+              <xs:documentation>Информация о товаре</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GTDNumber" type="cat_ru:GTDIDType">
+            <xs:annotation>
+              <xs:documentation>Номер ДТ, к которой прилагается справка</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RussianContractPart" type="RUScat_ru:SubjectDetailsType">
+            <xs:annotation>
+              <xs:documentation>Российская сторона договора</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Contractor" type="RUScat_ru:SubjectDetailsType">
+            <xs:annotation>
+              <xs:documentation>Контрагент</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Recipient" type="RUScat_ru:SubjectDetailsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Получатель товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GoodsOwner" type="RUScat_ru:SubjectDetailsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Собственник товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DestinationCustoms" type="cat_ru:CustomsType">
+            <xs:annotation>
+              <xs:documentation>Таможенный орган, расположенный в месте прибытия товаров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="FloatingCustoms" type="cat_ru:CustomsType">
+            <xs:annotation>
+              <xs:documentation>Таможенный орган, осуществивший выпуск товара</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="FillingPerson" type="cat_ru:PersonSignatureType">
+            <xs:annotation>
+              <xs:documentation>Лицо, заполнившее справку</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BSideDealInfo" type="gref:BSideDealInfoType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Раздел Б.Сведения о сделках</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006149E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="BSideDealInfoType">
+    <xs:annotation>
+      <xs:documentation>Раздел Б.Сведения о сделках</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Seller" type="gref:OrgDealInfoType">
+        <xs:annotation>
+          <xs:documentation>Сведения, касающиеся организации-продавца</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Buyer" type="gref:OrgDealInfoType">
+        <xs:annotation>
+          <xs:documentation>Сведения, касающиеся организации-покупателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GoodsInformationType">
+    <xs:annotation>
+      <xs:documentation>Информация о товаре</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание товара</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MarkIndicator" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак наличия акцизных марок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SellPermitionDoc" type="cat_ru:DocumentBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Документ, подтверждающий наличие разрешения на реализацию</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Manufacturer" type="RUScat_ru:SubjectDetailsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о производителе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NormDocs" type="cat_ru:DocumentBaseType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Сведения о документе, свидетельствующем о подтверждении соответствия продукции требованиям технических регламентов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Contract" type="cat_ru:DocumentBaseType">
+        <xs:annotation>
+          <xs:documentation>Реквизиты договора</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsPackingInfo" type="cat_ru:SupplementaryQuantityType">
+        <xs:annotation>
+          <xs:documentation>Сведения о количестве товара в индивидуальной упаковке</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IndividualPackingInfo" type="cat_ru:SupplementaryQuantityType">
+        <xs:annotation>
+          <xs:documentation>Сведения об индивидуальной упаковке</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OrgDealInfoType">
+    <xs:annotation>
+      <xs:documentation>Данные об организации, участвующей в сделке</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RUScat_ru:SubjectDetailsType">
+        <xs:sequence>
+          <xs:element name="DirectorSignature" type="cat_ru:PersonSignatureType">
+            <xs:annotation>
+              <xs:documentation>Подпись руководителя и дата сделки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

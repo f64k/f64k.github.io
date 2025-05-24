@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" xmlns:catESAD_ru="urn:customs.ru:RUCommonAggregateTypes:5.21.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:gicm="urn:customs.ru:Information:CustomsDocuments:GTDInCustomsMark:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:GTDInCustomsMark:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:RUCommonAggregateTypes:5.21.0" schemaLocation="RUESADCommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Служебные отметки ДТ.(внутренний формат)</xs:documentation>
+	</xs:annotation>
+	<xs:element name="GTDInCustomsMark" type="gicm:GTDInCustomsMarkType"/>
+	<xs:complexType name="GTDInCustomsMarkType">
+		<xs:annotation>
+			<xs:documentation>Служебные отметки ДТ (внутренний формат)</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="Comments" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Комментарий</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="GTDDocumentID" type="clt_ru:DocumentIDType">
+						<xs:annotation>
+							<xs:documentation>Уникальный идентификатор ДТ к которой относятся служебные отметки (GUID).</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="GTDInCommonMark" type="gicm:GTDInCommonMarkType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Служебные отметки ДТ </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="GTDInGoodsResolution" type="gicm:GTDInGoodsResolutionType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Служебные отметки по товарам ДТ </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="GTDID" type="gicm:DocNumberType">
+						<xs:annotation>
+							<xs:documentation>Регистрационный номер основного документа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="AddID" type="gicm:DocNumberType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Регистрационный номер связанного документа (Номер ДТ для указания в Заявлении о выпуске до подачи)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TechMarks" type="gicm:TechMarksType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Технологические отметки.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ProcessID" type="clt_ru:DocumentIDType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Идентификатор процедуры декларирования</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="KDTInfo" type="gicm:KDTInfoType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Сведения о КДТ</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TechID" type="clt_ru:Text50Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Системный идентификатор</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006136E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы.</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="DocNumberType">
+		<xs:annotation>
+			<xs:documentation>Регистрационный номер исходного документа</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:GTDIDType">
+				<xs:sequence>
+					<xs:element name="AddNumber" type="clt_ru:CodeVariable2Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дополнительная составляющая 3ей части номера (ОБ/ЗВ)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AutoCodeType">
+		<xs:annotation>
+			<xs:documentation>Критерии авторегистрации и автовыпуска</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="aAddCode" type="clt_ru:CodeVariable3Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код группы критериев алгоритма авторегистрации и автовыпуска </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CriterionCode" type="clt_ru:CodeVariable3Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код критерия алгоритма авторегистрации и автовыпуска </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="KDTInfoType">
+		<xs:annotation>
+			<xs:documentation>Сведения о КДТ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="KTDNumber" type="clt_ru:Count2Type">
+				<xs:annotation>
+					<xs:documentation>Порядковый номер КДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="KDTId" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Идентификатор КДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Reason" type="gicm:ReasonType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Подразделение и причины корректировки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="KDTGoodsInfo" type="gicm:KDTGoodsInfoType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Товары КДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="KDTPayType">
+		<xs:annotation>
+			<xs:documentation>Сведения начислениях в КДТ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PaymentModeCode" type="clt_ru:CUCustomsPaymentCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код вида платежа </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="K470ModeCode" type="clt_ru:AmountType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Cумма, подлежащая взысканию (возврату) по виду платежа по товару</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="KDTGoodsInfoType">
+		<xs:annotation>
+			<xs:documentation>Сведения о товаре КДТ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GoodsNumeric" type="clt_ru:Count3Type">
+				<xs:annotation>
+					<xs:documentation>Номер товара по КДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DTGoodsNumeric" type="clt_ru:Count3Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер товара по ДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="KDTPay" type="gicm:KDTPayType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Начисления по видам платежей</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="K470Amount" type="clt_ru:AmountType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Общая сумма, подлежащая взысканию (возврату) по товару</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="K470UAmount" type="clt_ru:AmountType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Общая сумма доначисленных условно таможенных платежей, не подлежащая взысканию  по товару</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HistoryMarkType">
+		<xs:annotation>
+			<xs:documentation>История отметки</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="catESAD_ru:RUESADCommonOfficialMarkType">
+				<xs:sequence>
+					<xs:element name="DeleteDataTime" type="clt_ru:DateTimeCustType">
+						<xs:annotation>
+							<xs:documentation>Дата удаления отметки</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomsPersonDetails" type="RUScat_ru:CustomsPersonDetails" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Сведения о лице, удалившем отметку</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GTDInCommonMarkType">
+		<xs:annotation>
+			<xs:documentation>Служебные отметки ДТ </xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="catESAD_ru:RUESADCommonOfficialMarkType">
+				<xs:sequence>
+					<xs:element name="INPI_GUID" type="clt_ru:DocumentIDType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Идентификационный номер предварительной информации о товарах, направленной таможенными органами Турецкой Республики в ЕАИС таможенных органов Российской Федерации (глобальный идентификатор)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="GoodsPresentDate" type="clt_ru:DateCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дата предъявления товаров / Дата начала работы таможенного органа / Дата завершающего состояния ДТ / Дата подтверждения получения сообщения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="GoodsPresentTime" type="clt_ru:TimeCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Время предъявления  товаров/ Время начала работы таможенного органа / Время завершающего состояния ДТ / Время подтверждения получения сообщения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="aAutoCode" type="gicm:AutoCodeType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Критерии алгоритма авторегистрации и автовыпуска </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="OutType" type="clt_ru:IndicatorType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Тип отметки: 1 - внешняя, 0 - внутренняя</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="HistoryMark" type="gicm:HistoryMarkType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>История ранее проставленных отметок</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GTDInGoodsResolutionType">
+		<xs:annotation>
+			<xs:documentation>Служебные отметки по товарам</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GoodsNumeric" type="clt_ru:Count5Type">
+				<xs:annotation>
+					<xs:documentation>Номер товара по ДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GTDInGoodsCustomsMark" type="gicm:GTDInGoodsCustomsMarkType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Служебные отметки по товару</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GTDInGoodsCustomsMarkType">
+		<xs:annotation>
+			<xs:documentation>Служебные отметки по товару ДТ</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="catESAD_ru:RUESADCommonOfficialMarkType">
+				<xs:sequence>
+					<xs:element name="aAutoCode" type="gicm:AutoCodeType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Критерии алгоритма авторегистрации и автовыпуска </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="OutType" type="clt_ru:IndicatorType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Тип отметки: 1 - внешняя, 0 - внутренняя</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="HistoryMark" type="gicm:HistoryMarkType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>История отметок</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ReasonType">
+		<xs:annotation>
+			<xs:documentation>Подразделение и причины корректировки</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+				<xs:annotation>
+					<xs:documentation>Код ТО, сформировавшего КДТ/проект</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Strukture_P" type="clt_ru:CodeVariable6Type">
+				<xs:annotation>
+					<xs:documentation>Код структурного подразделения, сформировавшего КДТ/проект</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReasonChange" type="clt_ru:CodeVariable4Type">
+				<xs:annotation>
+					<xs:documentation>Код причины корректировки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReasonDT" type="clt_ru:CodeVariable2Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код основания внесения изменений в ДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PersonType" type="clt_ru:LetterIndicatorType">
+				<xs:annotation>
+					<xs:documentation>Инициатор КДТ:  1 - ТО, 2 - декларант </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TechMarksType">
+		<xs:annotation>
+			<xs:documentation>Технологические отметки</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="EXTRNL" type="clt_ru:FreeText250Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Служебное поле.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SCHET" type="clt_ru:FreeText250Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Служебное поле. Подписи этапов.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="STEPCTRL" type="clt_ru:FreeText250Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Служебное поле. Этапы контроля.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PresenceDTS" type="clt_ru:LetterIndicatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наличие ДТС ("1"-есть)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="STAT" type="clt_ru:LetterIndicatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Признак учета в таможенной статистике внешней торговли (0 - все товары ДТ не учитываются  в статистике внешней торговли, 1 - хотя бы один товар ДТ учитывается в статистике внешней торговли)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ElDeclIndicator" type="clt_ru:LetterIndicatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Признак применения электронной формы декларирования: </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GDDF" type="clt_ru:DateCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата фактического перемещения товаров.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ModificationDate" type="clt_ru:DateCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата последнего внесения изменений в документ.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ModificationTime" type="clt_ru:TimeCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Время последнего внесения изменений</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="P_STATUS1" type="clt_ru:Count2Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Прикладной статус ДТ (1- зарегистрированная 2 - оформленная ДТ)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PS_CONTR" type="clt_ru:LetterIndicatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Результат сверки сведений из ДТ и сведений от уполномоченного банка при постановке контракта на учет</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

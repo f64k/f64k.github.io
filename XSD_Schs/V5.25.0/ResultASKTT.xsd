@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="urn:customs.ru:Information:CustomsDocuments:ResultASKTT:5.24.0" version="5.24.0.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:retrz="urn:customs.ru:Information:CustomsDocuments:ResultASKTT:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Результат проверки АСКТТ-2</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ResultASKTT" type="retrz:ResultASKTTType" />
+  <xs:complexType name="ResultASKTTType">
+    <xs:annotation>
+      <xs:documentation>Результат проверки АСКТТ-2</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" name="TDCheckResult" type="retrz:TDCheckResultType">
+            <xs:annotation>
+              <xs:documentation>Результаты проверки по ТД</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute fixed="1006165E" name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="TDCheckResultType">
+    <xs:annotation>
+      <xs:documentation>Результаты проверки по ТД</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Result" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Признак успешного результата проверки по ТД (корректно)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Comment" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Комментарии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="OperatorDeliveryPlace" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Место доставки товаров УЭО </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="TDNumber" type="cat_ru:GTDIDType">
+        <xs:annotation>
+          <xs:documentation>Номер ТД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DeliveryPlace" type="cat_ru:CustomsType">
+        <xs:annotation>
+          <xs:documentation>Место доставки: планируемый таможенный орган назначения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

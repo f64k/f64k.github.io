@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:edrs="urn:customs.ru:Information:ExchangeDocuments:EPS_DocResponse:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:ExchangeDocuments:EPS_DocResponse:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Предоставление документа по запросу</xs:documentation>
+  </xs:annotation>
+  <xs:element name="EPS_DocResponse" type="edrs:EPS_DocResponseType" />
+  <xs:complexType name="EPS_DocResponseType">
+    <xs:annotation>
+      <xs:documentation>Предоставление документа по запросу</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="RequestPositionID" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Идентификатор позиции в исходном запросе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice minOccurs="0">
+            <xs:sequence>
+              <xs:element name="DocResponse" type="edrs:DocResponseType">
+                <xs:annotation>
+                  <xs:documentation>Представлен запрошенный документ</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+            <xs:sequence>
+              <xs:element name="ArchDocumentInfo" type="edrs:ArchDocInfoType">
+                <xs:annotation>
+                  <xs:documentation>Представлена только информация из архива декларанта</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+            <xs:sequence>
+              <xs:annotation>
+                <xs:documentation>Представлен документ и информация из архива (только для внутренней спецификации)</xs:documentation>
+              </xs:annotation>
+              <xs:element name="ArchDocumentInfoAdd" type="edrs:ArchDocInfoType">
+                <xs:annotation>
+                  <xs:documentation>Информация архива декларанта</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="DocResponseAdd" type="edrs:DocResponseType">
+                <xs:annotation>
+                  <xs:documentation>Запрошенный документ</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+            <xs:element name="ScanInfo" type="edrs:ScanInfoType">
+              <xs:annotation>
+                <xs:documentation>Идентификатор ранее сканированного документа в архиве ТО / Присвоенный идентификатор сканированного документа </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="ScanCustoms" type="edrs:ScanCustomsType">
+              <xs:annotation>
+                <xs:documentation>Информация о сканировании документа</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="ReasonPaper" type="clt_ru:Text50Type">
+              <xs:annotation>
+                <xs:documentation>Причина представления документа в бумажном виде очно в ТО оформления</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+          <xs:element name="Declarant" type="cat_ru:OrganizationType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Информация об участнике ВЭД</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ResponcePerson" type="edrs:ResponcePersonType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Лицо, предоставляющее запрошенный документ.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ArchiveInformation" type="edrs:ArchiveInformationType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Информация из архива</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1004081E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="ArchDocInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о документе из архива</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ArchID" type="clt_ru:DocumentIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор архива</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ArchDeclID" type="clt_ru:ArchiveDeclarantIDType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор декларанта в архиве</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ArchDocID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Архивный идентификатор документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ArchDocStatus" type="clt_ru:ArchStatusCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Статус документа в архиве</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ScanCustomsType">
+    <xs:annotation>
+      <xs:documentation>Информация о сканировании документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код ТО, куда может быть представлен документ для сканирования</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Comment" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Комментарии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ScanDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Планируемая дата сканирования</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ScanInfoType">
+    <xs:annotation>
+      <xs:documentation>Cканированный документ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ScanID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор сканированного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentModeID" type="clt_ru:DocumentModeIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код вида представленного документа в соответствии с альбомом форматов электронных форм документов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArchiveInformationType">
+    <xs:annotation>
+      <xs:documentation>Информация из архива</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ArchDocAlbum" type="clt_ru:CodeVariable8Type">
+        <xs:annotation>
+          <xs:documentation>Номер версии альбома форматов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ArchDocDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата помещения документа в электронный архив декларанта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FirstDT" type="cat_ru:GTDIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер первой ДТ, при подаче который использован документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocResponseBodyType">
+    <xs:annotation>
+      <xs:documentation>Тело запрошенного документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:any processContents="skip">
+        <xs:annotation>
+          <xs:documentation>Тело запрошенного документа</xs:documentation>
+        </xs:annotation>
+      </xs:any>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocResponseType">
+    <xs:annotation>
+      <xs:documentation>Запрошенный документ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocResponseBody" type="edrs:DocResponseBodyType">
+        <xs:annotation>
+          <xs:documentation>Тело запрошенного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ResponcePersonType">
+    <xs:annotation>
+      <xs:documentation>Лицо, предоставляющее запрошенный документ.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:PersonBaseType" />
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

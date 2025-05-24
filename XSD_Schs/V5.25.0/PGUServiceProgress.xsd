@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" xmlns:pgusp="urn:customs.ru:Information:SQDocuments:PGUServiceProgress:5.25.0" targetNamespace="urn:customs.ru:Information:SQDocuments:PGUServiceProgress:5.25.0" elementFormDefault="qualified" version="5.25.0.0">
+	<xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Ход исполнения государственной услуги</xs:documentation>
+	</xs:annotation>
+	<xs:element name="PGUServiceProgress" type="pgusp:PGUServiceProgressType">
+		<xs:annotation>
+			<xs:documentation>Ход исполнения государственной услуги</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PGUServiceProgressType">
+		<xs:annotation>
+			<xs:documentation>Ход исполнения государственной услуги</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="EPGU_Details" type="pgusp:EPGU_DetailsType">
+						<xs:annotation>
+							<xs:documentation>Системные данные из ЕПГУ</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Documents" type="pgusp:DocumentType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Документы</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RequestState" type="pgusp:RequestStateType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Состояние запроса</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Payment" type="pgusp:PaymentType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Информация о начислении</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009284E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="OriginalFileMimeType" final="restriction">
+		<xs:annotation>
+			<xs:documentation>Оригинальное расширение файла в формате RFC-2046</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:CodeCategoriesCust">
+			<xs:pattern value="(text|image|audio|video|application)/[a-zA-Z0-9\-+.]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="DocumentType">
+		<xs:annotation>
+			<xs:documentation>Документ</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:DocumentBaseType">
+				<xs:sequence minOccurs="0">
+					<xs:element name="File" type="pgusp:FileType">
+						<xs:annotation>
+							<xs:documentation>Файл документа (при наличии)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="EPGU_DetailsType">
+		<xs:annotation>
+			<xs:documentation>Системные данные из ЕПГУ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TransactionCode" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Код транзакции</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ServiceCode" type="clt_ru:CodeVariable20Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код цели услуги</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ApplicationSourceSystemID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Идентификатор заявления на ЕПГУ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Department" type="cat_ru:CustomsType">
+				<xs:annotation>
+					<xs:documentation>Подразделение, в которое предоставляется заявка</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ApplicationID" type="clt_ru:DocumentIDType">
+				<xs:annotation>
+					<xs:documentation>Номер заявления на АПС "Электронные Госуслуги"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FileType">
+		<xs:annotation>
+			<xs:documentation>Описание приложенных документов</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="FileName" type="clt_ru:Text150Type">
+				<xs:annotation>
+					<xs:documentation>Имя файла</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OriginalFileMime" type="pgusp:OriginalFileMimeType">
+				<xs:annotation>
+					<xs:documentation>Оригинальное расширение файла в формате RFC-2046</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Content" type="clt_ru:Text3MB">
+				<xs:annotation>
+					<xs:documentation>Содержимое файла в формате base64</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Comment" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Комментарий</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentType">
+		<xs:annotation>
+			<xs:documentation>Дополнительная информация</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="UIN" type="clt_ru:FreeText250Type">
+				<xs:annotation>
+					<xs:documentation>УИН (уникальный идентификатор начисления)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="clt_ru:FreeText250Type">
+				<xs:annotation>
+					<xs:documentation>Назначение платежа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RequestStateType">
+		<xs:annotation>
+			<xs:documentation>Состояние запроса </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+				<xs:annotation>
+					<xs:documentation>Код таможенного органа – поставщика услуги</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RequestType" type="clt_ru:Numeric1Type">
+				<xs:annotation>
+					<xs:documentation>Тип запроса</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="State" type="clt_ru:Count2Type">
+				<xs:annotation>
+					<xs:documentation>Код состояния запроса</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StateName" type="clt_ru:Text40Type">
+				<xs:annotation>
+					<xs:documentation>Имя состояния запроса</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Comment" type="RUSclt_ru:FreeText4000Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Комментарий</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

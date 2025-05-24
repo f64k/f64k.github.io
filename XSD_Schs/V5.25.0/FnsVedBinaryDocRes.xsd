@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ответ по сервисам
+VS01542v001-FNS005 (Сведения об операциях с товарами и анализе цепочек движения товарных партий), fns-opergoods-ru-root.xsd
+VS01558v001-FNS001 (Сведения об идентификаторах субъектов - участников ВЭД), fns-idsub-ru-root.xsd
+VS01550v001-FNS001 (Сведения о текущем отчетном периоде расширенных сведений, передаваемым в отношении субъектов - налогоплательщиков и участников ВЭД), fns-period-ru-root.xsd
+VS01546v001-FNS001 (Расширенные сведения по субъектам - налогоплательщикам и участникам ВЭД), fns-datasub-ru-root.xsd
+-->
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:fnvbd_res="urn:customs.ru:Information:SQDocuments:FnsVedBinaryDocRes:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:SQDocuments:FnsVedBinaryDocRes:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Ответ на запрос на предоставление сведений об участниках ВЭД</xs:documentation>
+  </xs:annotation>
+  <xs:element name="FnsVedBinaryDocRes" type="fnvbd_res:FnsVedBinaryDocResType" />
+  <xs:complexType name="FnsVedBinaryDocResType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос на предоставление сведений об участниках ВЭД</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="InfoKind" type="clt_ru:LetterIndicatorType">
+            <xs:annotation>
+              <xs:documentation>Вид ответа на запрашиваемую информацию: 1 - Ответ на запрос сведений об операциях с товарами и анализе цепочек движения товарных партий; 2 - Ответ на запрос сведений об идентификаторах субъектов - участников ВЭД; 3 - Ответ на запрос сведений о текущем отчетном периоде расширенных сведений, передаваемым в отношении субъектов - налогоплательщиков и участников ВЭД; 4 - Ответ на запрос расширенных сведений по субъектам - налогоплательщикам и участникам ВЭД.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ResponseId" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Идентификатор ответа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RequestId" type="clt_ru:DocumentIDType">
+            <xs:annotation>
+              <xs:documentation>Идентификатор исходного запроса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ResponseDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата, по состоянию на которую сформированы сведения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Attachments" type="fnvbd_res:AttachmentsType">
+            <xs:annotation>
+              <xs:documentation>Блок сведений о вложении</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1060019E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AttachmentsType">
+    <xs:annotation>
+      <xs:documentation>Блок сведений о вложении</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Attachment" type="fnvbd_res:AttachmentType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание вложения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AttachmentType">
+    <xs:annotation>
+      <xs:documentation>Описание вложения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FileName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Имя (идентификатор) файла вложения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FileKind" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Вид информации (наименование сведений) файла вложения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FileType" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Тип (формат) файла вложения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FileFormat" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Версия формата файла вложения (имя схемы, по которой сформирован файл вложения)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ArchName" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Имя архива, в который упакован файл вложения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FileData" type="clt_ru:Text3MB" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Данные файла  в кодировке BASE64</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

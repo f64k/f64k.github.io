@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:cltESAD_cu="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" xmlns:davir="urn:customs.ru:Information:DecisionAboutViolationIntellectRights:5.25.0" targetNamespace="urn:customs.ru:Information:DecisionAboutViolationIntellectRights:5.25.0" elementFormDefault="qualified" version="5.25.0.0">
+	<xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CUESADCommonLeafTypes:5.17.0" schemaLocation="CUESADCommonLeafTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Информация о товарах с признаками возможного нарушении прав интеллектуальной собственности и принятом решении о приостановлении срока их выпуска</xs:documentation>
+	</xs:annotation>
+	<xs:element name="DecisionAboutViolationIntellectRights" type="davir:DecisionAboutViolationIntellectRightsType">
+		<xs:annotation>
+			<xs:documentation>Информация о товарах с признаками возможного нарушении прав интеллектуальной собственности и принятом решении о приостановлении срока их выпуска</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="DecisionAboutViolationIntellectRightsType">
+		<xs:annotation>
+			<xs:documentation>Информация о товарах с признаками возможного нарушении прав интеллектуальной собственности и принятом решении о приостановлении срока их выпуска</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="Decision" type="davir:DecisionType">
+						<xs:annotation>
+							<xs:documentation>Решение, принятое таможенным органом относительно выпуска товаров, содержащих признаки нарушения прав интеллектуальной собственности</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="NumberDT" type="cat_ru:GTDIDType">
+						<xs:annotation>
+							<xs:documentation>Регистрационный номер ДТ</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomsModeCode" type="cltESAD_cu:CustomsModeCodeType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Код таможенной процедуры в соответствии с классификатором видов таможенных процедур</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Declarant" type="RUScat_ru:SubjectDetailsType">
+						<xs:annotation>
+							<xs:documentation>Декларант товаров</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="IPOOwner" type="davir:ApplicantType" maxOccurs="6">
+						<xs:annotation>
+							<xs:documentation>Информация о правообладателе</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="GoodsWithSignOfViolation" type="davir:GoodsType" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Товары с признаками нарушения прав интеллектуальной собственности, относительно которых выносится решение</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ProlongDate" type="clt_ru:DateTimeCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дата и время, до которой продлен  срок приостановления срока выпуска товаров </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="LastDate" type="clt_ru:DateCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дата, до которой срок выпуска товаров приостановлен</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DocumentsList" type="cat_ru:DocumentBaseType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Перечень приложенных документов </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="AddInfoAppText" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Дополнительная информация </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006069E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы.</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="DecisionType">
+		<xs:annotation>
+			<xs:documentation>Информация о принятом решении</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DecisionCode" type="clt_ru:LetterIndicatorType">
+				<xs:annotation>
+					<xs:documentation>1 - Решение о приостановлении выпуска товаров, содержащих ОИС; 2 - Отмена Решения о приостановлении срока выпуска товаров, содержащих ОИС; 3 -  Решение о продлении срока приостановления срока выпуска товаров, содержащих ОИС;  4 - Решение об отказе в продлении срока приостановления выпуска товаров, содержащих ОИС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DecisionDTCode" type="clt_ru:Code2Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код решения в соответствии с классификатором решений,  принимаемых таможенными органами </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DecisionNumber" type="cat_ru:DocumentBaseType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер и дата принятого решения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Customs" type="cat_ru:CUCustomsType">
+				<xs:annotation>
+					<xs:documentation>Таможенный орган, принявший решение</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CustomsPerson" type="cat_ru:CustomsPersonType">
+				<xs:annotation>
+					<xs:documentation>Должностное лицо, таможенного органа, принявшее решение</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Foundation" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Обоснование принятого решения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OwnerDocument" type="cat_ru:DocumentBaseType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Сведения о документе правообладателя, если решение принято в ответ на обращение правообладателя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PreviousDecision" type="davir:PreviousDecisionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Информация о предшествующем отменяемом/продлеваемом решении</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PreviousDecisionType">
+		<xs:annotation>
+			<xs:documentation>Сведения о  раннее выданных решениях</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:DocumentBaseType">
+				<xs:sequence>
+					<xs:element name="ObjectRegNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Регистрационный номер объекта</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="EmissionStoppingNotificationNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Номер Уведомления о принятии мер, связанных с приостановкой выпуска объекта</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="EmissionStoppingNotificationDate" type="clt_ru:DateCustType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дата Уведомления о принятии мер, связанных с приостановкой выпуска объекта</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GoodsType">
+		<xs:annotation>
+			<xs:documentation>Сведения о товаре</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Consigment" type="clt_ru:Count8Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер партии товаров / накладной реестра ЭГ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsNumeric" type="clt_ru:Count3Type">
+				<xs:annotation>
+					<xs:documentation>Порядковый номер декларируемого  товара </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsTNVEDCode" type="clt_ru:CUGoodsNomenclatuerCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код товара по ТН ВЭД ЕАЭС. Гр.33 первый раздел</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IntellectPropertySign" type="clt_ru:LetterIndicatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Признак объекта интеллектуальной собственности («И»). Гр.33 второй раздел  в ДТ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GoodsDescription" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Наименование (торговое, коммерческое или иное традиционное наименование) товаров</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SignOfViolation" type="davir:SignOfViolationType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Описание признаков нарушения прав интеллектуальной собственности</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CountryType">
+		<xs:annotation>
+			<xs:documentation>Сведения о стране</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CountryName" type="clt_ru:CountryNameType">
+				<xs:annotation>
+					<xs:documentation>Наименование  страны</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CountryCode" type="clt_ru:CountryA2CodeType">
+				<xs:annotation>
+					<xs:documentation>Код  страны</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Priznac" type="clt_ru:Code2Type">
+				<xs:annotation>
+					<xs:documentation>Код  вида  страны</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PlaceType">
+		<xs:annotation>
+			<xs:documentation>Описание  места</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Name" type="clt_ru:NameType">
+				<xs:annotation>
+					<xs:documentation>Наименование места</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="8">
+				<xs:annotation>
+					<xs:documentation>Описание  места</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CodePlace" type="clt_ru:CodeVariable4Type">
+				<xs:annotation>
+					<xs:documentation>Код места</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SignOfViolationType">
+		<xs:annotation>
+			<xs:documentation>Сведения о признаках нарушения прав интеллектуальной собственности</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="IPOinfo" type="davir:IntellectualPropertyObjectsInfoType">
+				<xs:annotation>
+					<xs:documentation>Информация об объекте ОИС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LegalProductDescription" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Описание внешнего вида легальной продукции</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BogusProductDescription" type="clt_ru:FreeText500Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Описание внешнего вида товаров, обладающих  признаками контрафактных</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Place" type="davir:PlaceType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Место ввоза легальной продукции (01), таможенного оформления легальной продукции (02), место ввоза товаров, обладающих признаками контрафактных (03), таможенного оформления товаров, обладающих признаками контрафактных (04), местонахождение товаров (05)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CountryInfo" type="davir:CountryType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>01- Страна отправления легальной продукции , 02- cтрана происхождения легальной продукции, 03 - cтрана отправления предположительно контрафактной продукции, 04 - cтрана происхождения предположительно контрафактной продукции </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OtherNote" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Иные замечания</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="IntPropObjNumType">
+		<xs:annotation>
+			<xs:documentation>Номер документа в формате XXXXX/XXXXX-XXX/XX-XXXXXX, всего 25 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:maxLength value="25"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="IntelPropertyObjectNumberType">
+		<xs:annotation>
+			<xs:documentation>Регистрационный номер ОИС по Реестру</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="IntelPropertyObjectNumber" type="davir:IntPropObjNumType">
+				<xs:annotation>
+					<xs:documentation>Регистрационный номер ОИС</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IntellectualPropertyObjectsInfoType">
+		<xs:annotation>
+			<xs:documentation>Сведения об объекте интеллектуальной собственности</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="IntelPropertyObjectNumber" type="davir:IntelPropertyObjectNumberType">
+				<xs:annotation>
+					<xs:documentation>Регистрационный номер ОИС по Реестру</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!--<xs:choice>
+        <xs:element name="Copyright" type="ripo:CopyrightType">
+          <xs:annotation>
+            <xs:documentation>Объект авторского и смежного права</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Mark" type="ripo:MarkType">
+          <xs:annotation>
+            <xs:documentation>Товарный знак</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="OriginPlace" type="ripo:OriginPlaceType">
+          <xs:annotation>
+            <xs:documentation>Место происхождения</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>-->
+			<xs:element name="OISName" type="clt_ru:FreeText250Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование ОИС. Товарный знак, место происхождения, объект авторского права, смежных прав, патент и т.д. Гр. 31.12</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IPOInfoDoc" type="cat_ru:DocumentBaseType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Регистрационный номер ОИС в Роспатенте/ВОИС/иное (указать)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ApplicantType">
+		<xs:annotation>
+			<xs:documentation>Сведения о заявителе/правообладателях</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="RUScat_ru:SubjectDetailsType">
+				<xs:sequence>
+					<xs:element name="PersonID" type="clt_ru:DocumentIDType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Идентификатор Заявителя/правообладателя</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PersonType" type="clt_ru:CodeVariable2Type">
+						<xs:annotation>
+							<xs:documentation>Тип лица: 01 - доверенное лицо, 06 - правообладатель</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

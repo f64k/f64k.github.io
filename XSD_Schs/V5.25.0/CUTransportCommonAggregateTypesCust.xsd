@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:catTrans_cu="urn:customs.ru:Information:TransportDocuments:CUTransportCommonAgregateTypesCust:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:cltTrans_cu="urn:customs.ru:Information:TransportDocuments:CUTransportCommonLeafTypesCust:5.10.0" targetNamespace="urn:customs.ru:Information:TransportDocuments:CUTransportCommonAgregateTypesCust:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:TransportDocuments:CUTransportCommonLeafTypesCust:5.10.0" schemaLocation="CUTransportCommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Общие сложные типы транспортных документов (ТС)</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="IdentityMarkType">
+    <xs:annotation>
+      <xs:documentation>Пломбы или опознавательные знаки (число, идентификация)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="IdentityNumber" type="clt_ru:Count5Type">
+        <xs:annotation>
+          <xs:documentation>Количество</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MarkDescription" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Описание и идентификация </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TDDestinationBaseType">
+    <xs:annotation>
+      <xs:documentation>Базовый тип для описания места назначения/доставки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DestinationCustomsCode" type="clt_ru:CustomsCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код таможни назначения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DeliveryCustomsPostCode" type="clt_ru:CustomsCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код поста места доставки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Address" type="cat_ru:AddressType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Адрес</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TIRDestinationType">
+    <xs:annotation>
+      <xs:documentation>Место назначения/доставки в МДП</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="catTrans_cu:TDDestinationBaseType">
+        <xs:sequence>
+          <xs:element name="DestinationPlaceName" type="clt_ru:PlaceNameType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Наименование места назначения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TIRForwarderType">
+    <xs:annotation>
+      <xs:documentation>Экспедитор в книжке МДП</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Name" type="clt_ru:NameType">
+        <xs:annotation>
+          <xs:documentation>Наименование</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Address" type="cat_ru:AddressType">
+        <xs:annotation>
+          <xs:documentation>Адрес</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TIRIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Идентификатор книжки МДП</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TIRID" type="cltTrans_cu:TIRIDType">
+        <xs:annotation>
+          <xs:documentation>Номер книжки МДП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TIRSeries" type="cltTrans_cu:TIRSeriesCodeType">
+        <xs:annotation>
+          <xs:documentation>Серия книжки МДП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TIRWhitePageNumber" type="clt_ru:Count5Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер белого листа книжки МДП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TRPackingInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о грузовых местах и упаковке товаров</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PackingCode" type="clt_ru:PackageCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код вида упаковки/грузового места товаров в соответствии с классификатором видов груза, упаковки и упаковочных материалов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PakingQuantity" type="clt_ru:PackagesQuantityType">
+        <xs:annotation>
+          <xs:documentation>Количество грузовых мест/упаковок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PackingDescription" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание грузовых мест/упаковки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PakagePartQuantity" type="clt_ru:PakageNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество упаковки/грузовых мест, частично занятых товаром</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

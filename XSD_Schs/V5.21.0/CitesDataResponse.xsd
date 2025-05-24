@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:RUSclt_ru="urn:customs.ru:RUSCommonLeafTypes:5.21.0" xmlns:cdres="urn:customs.ru:Information:SQDocuments:CitesDataResponse:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:CitesDataResponse:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+	<xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:RUSCommonLeafTypes:5.21.0" schemaLocation="RUSCommonLeafTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Ответ на запрос на предоставление данных из реестра CITES</xs:documentation>
+	</xs:annotation>
+	<xs:element name="CitesDataResponse" type="cdres:CitesDataResponseType">
+		<xs:annotation>
+			<xs:documentation>Ответ на запрос на предоставление данных из реестра CITES</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="CitesDataResponseType">
+		<xs:annotation>
+			<xs:documentation>Ответ на запрос на предоставление данных из реестра CITES</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="Permit" type="cdres:PermitType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Сведения из разрешения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009389E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы.</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="DocumentNumberType">
+		<xs:annotation>
+			<xs:documentation>Номер представляемого документа (от 5 до 25 символов)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:IdentifierCategoriesCust">
+			<xs:minLength value="5"/>
+			<xs:maxLength value="25"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="INNIDType">
+		<xs:annotation>
+			<xs:documentation>Индивидуальный номер налогоплательщика: для юр. лиц - 10 цифр, для физ. лиц - 12 цифр</xs:documentation>
+		</xs:annotation>
+		<xs:union memberTypes="cdres:LegalEntityInnType cdres:NaturalPersonInnType"/>
+	</xs:simpleType>
+	<xs:simpleType name="LegalEntityInnType">
+		<xs:annotation>
+			<xs:documentation>ИНН юридического лица</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:length value="10"/>
+			<xs:pattern value="(\d[1-9]|[1-9]\d)\d{8}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NaturalPersonInnType">
+		<xs:annotation>
+			<xs:documentation>ИНН физического лица</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:length value="12"/>
+			<xs:pattern value="(\d[1-9]|[1-9]\d)\d{10}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UnitsOfMeasureOfOKEIType">
+		<xs:annotation>
+			<xs:documentation>Справочник ОКЕИ</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:int">
+			<xs:pattern value="\d{3,4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ValueOfUnitsOfMeasureType">
+		<xs:annotation>
+			<xs:documentation>Величина в единицах измерения</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:fractionDigits value="4"/>
+			<xs:totalDigits value="10"/>
+			<xs:minExclusive value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ComponentType">
+		<xs:annotation>
+			<xs:documentation>Часть образца</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Name" type="clt_ru:NameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Quantity" type="clt_ru:Quantity8Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Количество</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Value" type="cdres:ValueOfUnitsOfMeasureType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Величина в единицах измерения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UnitsOfMeasure" type="cdres:UnitsOfMeasureOfOKEIType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Единицы измерения, код справочника ОКЕИ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PermitType">
+		<xs:annotation>
+			<xs:documentation>Сведения из разрешения</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="BDRDID" type="clt_ru:DocumentIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Идентификатор документа по БД РД</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Number" type="cdres:DocumentNumberType">
+				<xs:annotation>
+					<xs:documentation>Номер разрешения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Date" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Дата выдачи разрешения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Position" type="clt_ru:PostType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Должность подписанта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Signer" type="clt_ru:NameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ФИО подписанта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IsCancelled" type="clt_ru:IndicatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Является аннулированным</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Validity" type="clt_ru:DateCustType">
+				<xs:annotation>
+					<xs:documentation>Срок действия разрешения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Incoming" type="clt_ru:DocumentNumberType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Входящий номер заявления на выдачу разрешения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="INN" type="cdres:INNIDType">
+				<xs:annotation>
+					<xs:documentation>ИНН</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Title" type="clt_ru:NameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование юридического или физического лица</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Address" type="RUSclt_ru:AddressTextType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Адрес юридического или физического лица</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DestinationPersonDetails" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation>Куда вывозится (импортер / экспортер) с указанием адреса</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Kind" type="clt_ru:LetterIndicatorType">
+				<xs:annotation>
+					<xs:documentation>Вид разрешения: 1 - импорт; 2 - экспорт; 3 - реэкспорт; 4 - передвижные выставки; 5 - сертификат о происхождении; 6 - преконвенционный сертификат; 7 - заявление на интродукцию</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Purpose" type="clt_ru:FreeText250Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Цель перемещения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Import" type="clt_ru:CountryA2CodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Страна импорта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ImporterDetails" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation>Наименование и адрес импортера</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Export" type="clt_ru:CountryA2CodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Страна экспорта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ExporterDetails" type="clt_ru:FreeText500Type" minOccurs="0" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation>Наименование и адрес экспортера или реэкспортера</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Reexport" type="clt_ru:CountryA2CodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Страна предыдущего реэкспорта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Origin" type="clt_ru:CountryA2CodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Страна происхождения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Birth" type="clt_ru:DateCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата приобретения или происхождения образцов</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Source" type="clt_ru:FreeText250Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Источник происхождения, способ получения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Specials" type="clt_ru:FreeText250Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Особые условия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Sample" type="cdres:SampleType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Образец</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SampleType">
+		<xs:annotation>
+			<xs:documentation>Образец</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DesignationRus" type="clt_ru:NameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Русское наименование животного или растения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DesignationLat" type="clt_ru:NameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Латинское наименование животного или растения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AppendiceNumber" type="clt_ru:LetterIndicatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Приложение СИТЕС №: 1 - I; 2 - II; 3 - III; 4 - II / I; 5 - I / II</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Ordinal" type="clt_ru:Quantity5Type">
+				<xs:annotation>
+					<xs:documentation>Пункт по порядку</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Component" type="cdres:ComponentType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Часть образца</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

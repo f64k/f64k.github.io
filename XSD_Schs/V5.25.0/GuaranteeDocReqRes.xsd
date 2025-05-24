@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:grn_cat="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeCommonAggregateTypesCust:5.24.0" xmlns:grd_inf="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeDocReqRes:5.24.0" targetNamespace="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeDocReqRes:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:GuaranteeDocuments:GuaranteeCommonAggregateTypesCust:5.24.0" schemaLocation="GuaranteeCommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос/Информация о документе обеспечения</xs:documentation>
+  </xs:annotation>
+  <xs:element name="GuaranteeDocReqRes" type="grd_inf:GuaranteeDocReqResType" />
+  <xs:complexType name="GuaranteeDocReqResType">
+    <xs:annotation>
+      <xs:documentation>Запрос/Информация о документе обеспечения</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DocumentDateTime" type="clt_ru:DateTimeCustType">
+            <xs:annotation>
+              <xs:documentation>Дата и время формирования электронного документа</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocumentSign" type="clt_ru:Numeric1Type">
+            <xs:annotation>
+              <xs:documentation>Признак документа: 0 - Запрос информации о документе обеспечения; 1 - Информация о документе обеспечения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PayerSign" type="clt_ru:Numeric1Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Вид лица, предоставившего обеспечение: 0 - поручитель, 1- гарант,  2- залогодатель, 3 - плательщик</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocumentInfo" type="grd_inf:DocumentInfoType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Информация о документе обеспечения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GuaranteeUseDocument" type="grd_inf:DocNumberType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Информация о документе, в котором используется обеспечение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Declarant" type="RUScat_ru:SubjectDetailsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о декларанте</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsRepresentative" type="RUScat_ru:SubjectDetailsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сведения о таможенном представителе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ObligationCode" type="clt_ru:CodeVariable6Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код вида обязательства</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1050007E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DocumentInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о документе обеспечения</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="grn_cat:CustomsGuaranteeDocType">
+        <xs:sequence>
+          <xs:element name="PresentedDocumentModeCode" type="clt_ru:CustomsDocumentCodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код вида документа при декларировании</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Status" type="clt_ru:CityNameType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Статусное состояние документа обеспечения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ExpirationDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата окончания действия обеспечения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GuaranteeType" type="clt_ru:DigitalIndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Тип обеспечения: 0 - простое, 1 - генеральное, 2 - генеральное (учет и контроль ГО с использованием ЕАИС ТО без выдачи таможенным органом подтверждения о предоставлении ГО)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Amount" type="grn_cat:AmountType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сумма обеспечения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="LiableTrader" type="RUScat_ru:SubjectDetailsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Информация о гаранте/поручителе или залогодателе</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RegistrationCustoms" type="cat_ru:CustomsType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код таможенного органа, в котором зарегистрировано обеспечение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DocNumberType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер таможенного документа</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:GTDIDType">
+        <xs:sequence>
+          <xs:element name="AddNumber" type="clt_ru:CodeVariable2Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дополнительная составляющая 3ей части номера (ЗВ)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

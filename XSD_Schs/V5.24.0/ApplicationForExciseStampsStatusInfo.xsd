@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Спецификация обмена АПС "Личный кабинет" и КПС "Марка-К" -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:els_leaf="urn:customs.ru:Information:ELSDocuments:ELSLeafTypes:5.21.0" xmlns:aesi="urn:customs.ru:Information:ELSDocuments:ApplicationForExciseStampsStatusInfo:5.24.0" targetNamespace="urn:customs.ru:Information:ELSDocuments:ApplicationForExciseStampsStatusInfo:5.24.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Information:ELSDocuments:ELSLeafTypes:5.21.0" schemaLocation="ELSLeafTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сведения о статусе Заявления/Отчета</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ApplicationForExciseStampsStatusInfo" type="aesi:ApplicationForExciseStampsStatusInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о статусе Заявления/Отчета</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ApplicationForExciseStampsStatusInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о статусе Заявления/Отчета</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="RegistrationNumber" type="cat_ru:DocumentBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер Заявления/Отчета</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DocumentStatus" type="els_leaf:DocChargeStatusType">
+            <xs:annotation>
+              <xs:documentation>Состояние Заявления/Отчета (0-Поступило, 1-Зарегистрировано, 2-Оплачено, 3-Отклонено, 4-Аннулировано, 5-Марки изготовлены, 5-Обязательство зарегистрировано, 6-Принято обеспечение, 7-Выдано, 8-Исполнено)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="StatusDateTime" type="clt_ru:DateTimeCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата и время изменения статуса Заявления/Отчета</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ConfirmationDocument" type="cat_ru:DocumentBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Документ-подтверждение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Comment" type="clt_ru:FreeText500Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дополнительная информация</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1040035E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

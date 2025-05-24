@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:gure="urn:customs.ru:GuaranteeUseReport:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:GuaranteeUseReport:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Отчет об использовании генерального обеспечения исполнения обязанности по уплате таможенных пошлин, налогов, специальных, антидемпинговых, компенсационных пошлин</xs:documentation>
+  </xs:annotation>
+  <xs:element name="GuaranteeUseReport" type="gure:GuaranteeUseReportType">
+    <xs:annotation>
+      <xs:documentation>Отчет об использовании генерального обеспечения исполнения обязанности по уплате таможенных пошлин, налогов, специальных, антидемпинговых, компенсационных пошлин</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GuaranteeUseReportType">
+    <xs:annotation>
+      <xs:documentation>Отчет об использовании генерального обеспечения исполнения обязанности по уплате таможенных пошлин, налогов, специальных, антидемпинговых, компенсационных пошлин</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="ReportDateTime" type="clt_ru:DateTimeCustType">
+            <xs:annotation>
+              <xs:documentation>Дата и время формирования отчета</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReportStart" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Начало периода формирования отчета</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReportEnd" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Конец периода формирования отчета</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GuaranteeType" type="clt_ru:Code2Type">
+            <xs:annotation>
+              <xs:documentation>Код способа обеспечения по классификатору НСИ.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IsGeneral" type="clt_ru:IndicatorType">
+            <xs:annotation>
+              <xs:documentation>Признак генерального обеспечения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TRRegistrationNumber" type="gure:RegistrationNumberType">
+            <xs:annotation>
+              <xs:documentation>Регистрационный номер ТР</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GuaranteeAmount" type="clt_ru:AmountType">
+            <xs:annotation>
+              <xs:documentation>Сумма принятого обеспечения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ResumStart" type="gure:GAmountType">
+            <xs:annotation>
+              <xs:documentation>Итоги на начало периода формирования отчета</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ResumEnd" type="gure:GAmountType">
+            <xs:annotation>
+              <xs:documentation>Итоги на дату формирования отчета</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="UsedList" type="gure:UsedListType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения об использовании обеспечения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1050027E">
+          <xs:annotation>
+            <xs:documentation>Служебный идентификатор вида документа.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AmountDType">
+    <xs:annotation>
+      <xs:documentation>Учтенная сумма и дата</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="UAmount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Учтенная сумма</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AmountDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата учета</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GAmountType">
+    <xs:annotation>
+      <xs:documentation>Итоговые значения по обеспечению</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="UsedAmount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Зарезервированная сумма  обеспечения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AvailableAmount" type="clt_ru:AmountType">
+        <xs:annotation>
+          <xs:documentation>Свободный остаток обеспечения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PenaltyAmount" type="clt_ru:AmountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сумма обеспечения, на которую обращено взыскание таможенных пошлин и налогов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegistrationNumberType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер ТР</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации документа.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Number" type="clt_ru:CodeVariable10Type">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер ТР</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="UsedListType">
+    <xs:annotation>
+      <xs:documentation>Сведения об использовании обеспечения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Number" type="clt_ru:Count6Type">
+        <xs:annotation>
+          <xs:documentation>Номер по порядку</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustDocument" type="cat_ru:DocumentBaseType">
+        <xs:annotation>
+          <xs:documentation>Документ, по которому осуществленно резервирование</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="UsedAmount" type="gure:AmountDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Зарезервированная сумма  обеспечения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RefundAmount" type="gure:AmountDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Разрарезервированная сумма  обеспечения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PenaltyAmount" type="gure:AmountDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сумма обеспечения, на которую обращено взыскание таможенных пошлин и налогов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

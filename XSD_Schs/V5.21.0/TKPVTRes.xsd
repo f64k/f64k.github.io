@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:tkpvt_res="urn:customs.ru:Information:GuaranteeDocuments:TKPVTRes:5.21.0" targetNamespace="urn:customs.ru:Information:GuaranteeDocuments:TKPVTRes:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Ответ на запрос информации о мероприятиях таможенного контроля после выпуска товаров (ТКПВТ) в отношении подконтрольного лица </xs:documentation>
+  </xs:annotation>
+  <xs:element name="TKPVTRes" type="tkpvt_res:TKPVTResType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос информации о мероприятиях таможенного контроля после выпуска товаров (ТКПВТ) в отношении подконтрольного лица </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="TKPVTResType">
+    <xs:annotation>
+      <xs:documentation>Ответ на запрос информации о мероприятиях таможенного контроля после выпуска товаров (ТКПВТ) в отношении подконтрольного лица </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="INN" type="clt_ru:INNIDType">
+            <xs:annotation>
+              <xs:documentation>ИНН подконтрольного лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TKPVT" type="clt_ru:Code2Type">
+            <xs:annotation>
+              <xs:documentation>Форма ТКПВТ:                   71- камеральная таможенная проверка;    81- выездная таможенная проверка;                       82- встречаня выездная таможенная проверка</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TKPVTDate" type="clt_ru:DateCustType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Дата начала ТКПВТ </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CaseTKPVT" type="tkpvt_res:CaseTKPVTType">
+            <xs:annotation>
+              <xs:documentation>Сведения об электронном деле ТКПВТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Act" type="cat_ru:DocumentBaseType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Сведения об акте ТКПВТ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="KDTRegSign" type="clt_ru:LetterIndicatorType">
+            <xs:annotation>
+              <xs:documentation>Наличие зарегистрированных КДТ по ДТ:                                         1 - по всем ДТ (КДТ сформирована по всем решениям о внесении изменений в ДТ):                           2 - не по всем ДТ (КДТ сформирована по части решений о внесении изменений в ДТ)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1050036E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CaseTKPVTType">
+    <xs:annotation>
+      <xs:documentation>Сведения об электронном деле ТКПВТ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Code" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DepartmentCpde" type="clt_ru:Code3Type">
+        <xs:annotation>
+          <xs:documentation>Код подразделения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SerialNumber" type="clt_ru:Code6Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер проверки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Year" type="clt_ru:DateYearCustType">
+        <xs:annotation>
+          <xs:documentation>Год</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,419 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:rlod_res="urn:customs.ru:Information:SQDocuments:RlodInfoResponse:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:RlodInfoResponse:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Сведения о конкретной лицензии в виде выписки из реестра лицензий на осуществление образовательной деятельности (РЛОД)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="RlodInfoResponse" type="rlod_res:RlodInfoResponseType" />
+  <xs:complexType name="RlodInfoResponseType">
+    <xs:annotation>
+      <xs:documentation>Сведения о конкретной лицензии в виде выписки из реестра лицензий на осуществление образовательной деятельности (РЛОД)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DateRlodInfo" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата выписки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="LicenceInfo" type="rlod_res:LicenceInfoType">
+            <xs:annotation>
+              <xs:documentation>Сведения о лицензии</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Supplement" type="rlod_res:SupplementType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Приложения к лицензии</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009162E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="LicenceInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация о лицензии</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Licence" type="cat_ru:DocumentBaseType">
+        <xs:annotation>
+          <xs:documentation>Реквизиты лицензии </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LicEndDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Срок действия лицензии </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LicStatus" type="rlod_res:LicStatusType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Статус лицензии. 		Допустимые значения: "Valid" - действует; "FullSuspended" - приостановлена полностью; "PartSuspended" - приостановлена частично; "NotValid" - не действует</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LicOrgan" type="rlod_res:Text1000Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование органа, выдавшего лицензию</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Holder" type="rlod_res:HolderType">
+        <xs:annotation>
+          <xs:documentation>Держатель лицензии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Blank" type="rlod_res:BlankType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Бланк лицензии </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AdmIssue" type="rlod_res:AdmIssueType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Распорядительный документ о выдаче</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AdmSuspResume" type="rlod_res:AdmSuspResumeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация о приостановлении и возобновлении действия лицензии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AdmTerminate" type="rlod_res:AdmTerminateType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация о прекращении действия лицензии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InspectionInfo" type="rlod_res:Text1000Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Основания и даты проведения проверок организации, акты по результатам проверок</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AnnulDecision" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Решение суда об аннулировании лицензии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SupplementType">
+    <xs:annotation>
+      <xs:documentation>Информация о приложении к лицензии</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SupNumber" type="clt_ru:Text10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер приложения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SupStatus" type="rlod_res:SupStatusType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Статус приложения. Допустимые значения: "Valid" - Действует; "FullSuspended" - Приостановлено; "NotValid" - Не действует</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Blank" type="rlod_res:BlankType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Бланк приложения </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrgInfo" type="rlod_res:OrgInfoType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация об организации (филиале)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AdmIssue" type="rlod_res:AdmIssueType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Распорядительный документ о выдаче приложения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AdmTerminate" type="rlod_res:AdmTerminateType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация о прекращении действия приложения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Direction" type="rlod_res:DirectionType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Перечни подготовки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DirectionType">
+    <xs:annotation>
+      <xs:documentation>Информация о направлении подготовки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Level" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Уровень образования</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Code" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код направления подготовки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Name" type="rlod_res:Text3000Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование направления подготовки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Kind" type="clt_ru:Text50Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вид направления подготовки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Qualification" type="rlod_res:Text3000Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Присваиваемая квалификация</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HolderType">
+    <xs:annotation>
+      <xs:documentation>Информация о держателе лицензии</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element name="FullOrgName" type="rlod_res:Text1000Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Полное наименование организации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ShortOrgName" type="rlod_res:Text1000Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Сокращенное наименование организации</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:choice>
+      <xs:element name="NameIP" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ФИО индивидуального предпринимателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RFOrganizationFeatures" type="cat_ru:RFOrganizationFeaturesType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ОГРН, ИНН, КПП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Region" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Субъект Российской Федерации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Address" type="rlod_res:Text1000Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Место нахождения организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AdmTerminateType">
+    <xs:annotation>
+      <xs:documentation>Информация о прекращении действия лицензии</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TerminateBase" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Основание прекращения действия лицензии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TerminateDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата прекращения действия лицензии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AdmIssueType">
+    <xs:annotation>
+      <xs:documentation>Распорядительный документ о выдаче</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocNumber" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер распорядительного документа о выдаче</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата распорядительного документа о выдаче</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocTypeName" type="rlod_res:DocType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Тип распорядительного документа о выдаче. Допустимые значения: "Prik" - Приказ; "Rasp" - Распоряжение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AdmSuspResumeType">
+    <xs:annotation>
+      <xs:documentation> Информация о приостановлении, возобновлении действия лицензии</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AdmSuspInfo" type="rlod_res:Text1000Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Постановление об административном приостановлении деятельности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SuspResumeDecisions" type="rlod_res:Text1000Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Решение лицензирующего органа о приостановлении и возобновлении действия лицензии</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="BlankType">
+    <xs:annotation>
+      <xs:documentation>Бланк</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="BlankSer" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Серия бланка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BlankNum" type="clt_ru:DocumentNumberType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер бланка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IsDubl" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дубликат-оригинал (true-false; 1-0)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OrgInfoType">
+    <xs:annotation>
+      <xs:documentation>Информация об организации</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FullOrgName" type="rlod_res:Text1000Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Полное наименование организации (филиала)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ShortOrgName" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сокращенное наименование организации (филиала)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Address" type="rlod_res:Text1000Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Место нахождения организации (филиала)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ImplAddresses" type="rlod_res:Text2000Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Места осуществления образовательной деятельности</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Простые локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="Text1000Type">
+    <xs:annotation>
+      <xs:documentation>Текстовая строка. До 1000 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="1000" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text2000Type">
+    <xs:annotation>
+      <xs:documentation>Текстовая строка. До 2000 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="2000" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Text3000Type">
+    <xs:annotation>
+      <xs:documentation>Текстовая строка. До 3000 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="3000" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DocType">
+    <xs:annotation>
+      <xs:documentation>Тип документа основания для выдачи лицензии / приложения</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:enumeration value="Prik">
+        <xs:annotation>
+          <xs:documentation>Приказ</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Rasp">
+        <xs:annotation>
+          <xs:documentation>Распоряжение</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="LicStatusType">
+    <xs:annotation>
+      <xs:documentation>Статус лицензии</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Valid">
+        <xs:annotation>
+          <xs:documentation>Действует</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FullSuspended">
+        <xs:annotation>
+          <xs:documentation>Приостановлена полностью</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PartSuspended">
+        <xs:annotation>
+          <xs:documentation>Приостановлена частично</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="NotValid">
+        <xs:annotation>
+          <xs:documentation>Не действует</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SupStatusType">
+    <xs:annotation>
+      <xs:documentation>Статус приложения</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Valid">
+        <xs:annotation>
+          <xs:documentation>Действует</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FullSuspended">
+        <xs:annotation>
+          <xs:documentation>Приостановлено</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="NotValid">
+        <xs:annotation>
+          <xs:documentation>Не действует</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

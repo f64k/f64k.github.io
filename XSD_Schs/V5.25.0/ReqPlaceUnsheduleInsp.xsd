@@ -1,0 +1,980 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:ReqPUI="urn:customs.ru:Information:SQDocuments:ReqPlaceUnsheduleInsp:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:ReqPlaceUnsheduleInsp:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Запрос на размещение внеплановой проверки (первичное, корректировка, результаты)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ReqPlaceUnsheduleInsp" type="ReqPUI:ReqPlaceUnsheduleInspType" />
+  <xs:complexType name="ReqPlaceUnsheduleInspType">
+    <xs:annotation>
+      <xs:documentation>Запрос на размещение внеплановой проверки (первичное, корректировка, результаты)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="Request" type="ReqPUI:RequestType">
+            <xs:annotation>
+              <xs:documentation>Запрос к системе АС ЕРП</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="KindRequest" type="clt_ru:LetterIndicatorType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Тип запроса: 1 - Запрос на первичное размещение внеплановой проверки; 2 - Запрос на размещение корректировки  внеплановой проверки; 3 - Запрос на первичное размещение результата внеплановой проверки с заложенной ошибкой форматно логического контроля; 4 - Запрос на повторное первичное размещение результатов внеплановой проверки с корректными данными</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009160E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="KOUserType">
+    <xs:annotation>
+      <xs:documentation>Контролирующий орган - как пользователь АС ЕРП</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Name" type="ReqPUI:String128Type">
+        <xs:annotation>
+          <xs:documentation>Наименование предприятия получателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OGRN" type="clt_ru:OGRNIDType">
+        <xs:annotation>
+          <xs:documentation>ОГРН/ОГРНИП. Основной государственный регистрационный номер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FRGU_ORG_ID" type="clt_ru:CodeVariable11Type">
+        <xs:annotation>
+          <xs:documentation>Номер огранизации в федеральном реестре государственных услуг контролирующего органа - потребителя СМЭВ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FRGU_SERV_ID" type="clt_ru:CodeVariable11Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер услуги (сервиса) в федеральном реестре государственных услуг контролирующего органа - потребителя СМЭВ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LawBook294Type">
+    <xs:annotation>
+      <xs:documentation>Проверки по 294 ФЗ в отношении Юридических лиц и Индивидуальных предпринимателей</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Law_I" type="ReqPUI:LawType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Проверки по 294 ФЗ в отношении Юридических лиц и Индивидуальных предпринимателей</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Law_II" type="ReqPUI:LawType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>136ФЗ (Земельный кодекс) в отношении ЮЛ/ИП ( по основанию 294 ФЗ)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Law_III" type="ReqPUI:LawType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>136ФЗ (Земельный кодекс) в отношении ОГВ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LawType">
+    <xs:annotation>
+      <xs:documentation>Определение федерального закона</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FORMULATION" type="ReqPUI:LawFormulationType">
+        <xs:annotation>
+          <xs:documentation>Формулировка федерального закона. Принимает одно из значений:
+1. "Проверки: 294ФЗ в отношении ЮЛ/ИП"
+2. "Проверки: 136ФЗ (Земельный кодекс) в отношении ЮЛ/ИП"
+3. "Проверки: 136ФЗ (Земельный кодекс) в отношении ОГВ"
+4. "Проверки: 131ФЗ в отношении ОМС"
+5. "Проверки: 136ФЗ (Земельный кодекс) в отношении ОМС"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LAW_BASE" type="ReqPUI:Law_BaseType">
+        <xs:annotation>
+          <xs:documentation>Федеральный закон - основание проведения (294; 136; 131)  </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MessageToERP294Type">
+    <xs:annotation>
+      <xs:documentation>Входящий запрос</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ReqPUI:MessageToERPModelType">
+        <xs:sequence>
+          <xs:choice>
+            <xs:element name="UplanUnregular294Initialization" type="ReqPUI:UplanUnregular294InitializationType">
+              <xs:annotation>
+                <xs:documentation>Первичное размещение внеплановой проверки 294 ФЗ</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="UplanUnregular294Correction" type="ReqPUI:UplanUnregular294CorrectionType">
+              <xs:annotation>
+                <xs:documentation>Размещение корректировки внеплановой проверки 294 ФЗ</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="UplanResult294Initialization" type="ReqPUI:UplanResult294InitializationType">
+              <xs:annotation>
+                <xs:documentation>Первичное размещение результатов проведения внеплановой проверки 294 ФЗ</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="MessageToERPModelType">
+    <xs:annotation>
+      <xs:documentation>Модель запроса</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ReqPUI:MessageType">
+        <xs:sequence>
+          <xs:element name="Mailer" type="ReqPUI:KOUserType">
+            <xs:annotation>
+              <xs:documentation>Отправитель сообщения </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Addressee" type="ReqPUI:ProsecutorType">
+            <xs:annotation>
+              <xs:documentation>Получатель сообщения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="MessageType">
+    <xs:annotation>
+      <xs:documentation>Базовый тип для сообщения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="InfoModel" type="ReqPUI:InfoModelType">
+        <xs:annotation>
+          <xs:documentation>Фиксированное значение = "20150201" </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PreviousInfoModel" type="ReqPUI:PreviousInfoModelType">
+        <xs:annotation>
+          <xs:documentation>Фиксированное значение = "0" </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Plan294HeaderType">
+    <xs:annotation>
+      <xs:documentation>Заголовок плана (внеплановой проверки) 294 ФЗ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ID" type="ReqPUI:IDType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор проверки (присваивается при первичном размещении)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="YEAR" type="clt_ru:DateYearCustType">
+        <xs:annotation>
+          <xs:documentation>Год проверки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ProsecutorType">
+    <xs:annotation>
+      <xs:documentation>Прокуратура Российской Федерации</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Code" type="ReqPUI:ProsecutorCodeType">
+        <xs:annotation>
+          <xs:documentation>Код прокуратуры</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Name" type="ReqPUI:String1024Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование прокуратуры</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegionsCode" type="CategoryCust:IntegerCategoriesCust" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код федерального округа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegionsName" type="CategoryCust:TextCategoriesCust" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование федерального округа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FederalCentersCode" type="CategoryCust:IntegerCategoriesCust" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код федерального центра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FederalCentersName" type="CategoryCust:TextCategoriesCust" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование федерального центра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LocalAreasCode" type="CategoryCust:IntegerCategoriesCust" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код района по версии ЕРП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RequestType">
+    <xs:annotation>
+      <xs:documentation>Запрос к системе АС ЕРП</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Message294" type="ReqPUI:MessageToERP294Type">
+        <xs:annotation>
+          <xs:documentation>Входящий запрос</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="UinspectionUnregular294CorrectionType">
+    <xs:annotation>
+      <xs:documentation>Место проведения внеплановой проверки 294 ФЗ (Размещение корректировки)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ID" type="ReqPUI:IDType">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер места проведения внеплановой проверки в системе АС ЕРП. Целое положительное число от 201000000000 до 203099999999</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ORG_NAME" type="ReqPUI:String1024Type">
+        <xs:annotation>
+          <xs:documentation>Наименование проверяемой организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INN" type="clt_ru:INNIDType">
+        <xs:annotation>
+          <xs:documentation>ИНН проверяемой организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OGRN" type="clt_ru:OGRNIDType">
+        <xs:annotation>
+          <xs:documentation>ОГРН проверяемой организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ADR_SEC_I" type="ReqPUI:String1024Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Место нахождения проверяемой организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ADR_SEC_II" type="ReqPUI:String1024Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Фактический адрес проведения проверки. string-1024</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LAST_VIOLATION_DATE" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата предыдущего выявленного нарушения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CORRELATION_ID" type="ReqPUI:IDUserType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор потребителя. Целое число от 0 до  9x10*18 - системой не обрабатывается и будет возвращено в ответном сообщении в неизменном виде Потребитель СМЭВ может разметить в этом поле свой внутренний идентификатор при первичном размещении и система АС ЕРП вернет это значение в ответном сообщении, 
+таким образом можно будет однозначно сопоставить идентификаторы АС ЕРП и локальных систем пользователя
+</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="UinspectionUnregular294InitializationType">
+    <xs:annotation>
+      <xs:documentation>Место проведения внеплановой проверки 294 ФЗ (Первичное размещение)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ORG_NAME" type="ReqPUI:String1024Type">
+        <xs:annotation>
+          <xs:documentation>Наименование проверяемой организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INN" type="clt_ru:INNIDType">
+        <xs:annotation>
+          <xs:documentation>ИНН проверяемой организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OGRN" type="clt_ru:OGRNIDType">
+        <xs:annotation>
+          <xs:documentation>ОГРН проверяемой организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ADR_SEC_I" type="ReqPUI:String1024Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Место нахождения проверяемой организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ADR_SEC_II" type="ReqPUI:String1024Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Фактический адрес проведения проверки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LAST_VIOLATION_DATE" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата предыдущего выявленного нарушения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CORRELATION_ID" type="ReqPUI:IDUserType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор потребителя. Целое число от 0 до  9x10*18 - системой не обрабатывается и будет возвращено в ответном сообщении в неизменном виде Потребитель СМЭВ может разметить в этом поле свой внутренний идентификатор при первичном размещении и система АС ЕРП вернет это значение в ответном сообщении, 
+таким образом можно будет однозначно сопоставить идентификаторы АС ЕРП и локальных систем пользователя
+</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="UinspectionResult294InitializationType">
+    <xs:annotation>
+      <xs:documentation>Результат проведения внеплановой проверки по месту проведения 294 ФЗ (первичное размещение)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ID" type="ReqPUI:IDType">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер места проведения внеплановой проверки в системе АС ЕРП. Целое положительное число от 201000000000 до 203099999999</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ACT_DATE_CREATE" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата составления акта проведения проверки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ACT_TIME_CREATE" type="clt_ru:TimeCustType">
+        <xs:annotation>
+          <xs:documentation>Время составления акта проведения проверки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ACT_PLACE_CREATE" type="ReqPUI:String1024Type">
+        <xs:annotation>
+          <xs:documentation>Место составления акта проведения проверки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ACT_WAS_READ" type="clt_ru:IndicatorType">
+        <xs:annotation>
+          <xs:documentation>Отметка об отказе в ознакомлении с актом проверки
+ (заполнять в случае отказа)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WRONG_DATA_REASON_SEC_I" type="ReqPUI:String512Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Несоответствие поданных сведений о начале осуществления предпринимательской деятельности (список положений правовых актов)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="WRONG_DATA_ANOTHER" type="ReqPUI:String1024Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Другие несоответствия поданных сведений (список положений  правовых актов)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NAME_OF_OWNER" type="ReqPUI:String256Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ФИО уполномоченного представителя проверяемого лица, присутствовавших при проведении проверки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="UNIMPOSSIBLE_REASON_I" type="ReqPUI:String2048Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация о причинах невозможности проведения проверки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="START_DATE" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата-время проведения проверки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DURATION" type="CategoryCust:IntegerCategoriesCust" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Продолжительность проведения проверки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ADR_INSPECTION" type="ReqPUI:String1024Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Место проведения проверки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INSPECTORS" type="ReqPUI:String1024Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ФИО и должности должностного лица или должностных лиц, проводивших проверку</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="UNDOIG_SEC_I" type="ReqPUI:String256Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация об отмене результатов проверки в случае, если такая отмена была произведена</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="UinspectionViolation294Initialization" type="ReqPUI:InspectionViolation294Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Выявленные нарушения по результатам проведения проверки 294 ФЗ плановой</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InspectionViolation294Type">
+    <xs:annotation>
+      <xs:documentation>Выявленные нарушения по результатам проведения проверки 294 ФЗ (плановой или внеплановой)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="VIOLATION_ID" type="ReqPUI:PositiveIntegerType32000">
+        <xs:annotation>
+          <xs:documentation>Идентификатор нарушения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="VIOLATION_NOTE" type="ReqPUI:String2048Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Характер выявленного нарушения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="VIOLATION_ACT" type="ReqPUI:String1024Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Положение нарушенного провового акта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="VIOLATION_ACTORS_NAME" type="ReqPUI:String1024Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Список лиц допустивших нарушение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INJUNCTION_CODES" type="ReqPUI:String512Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Реквизиты выданного предписания</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INJUNCTION_NOTE" type="ReqPUI:String2048Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Cодержание предписания</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INJUNCTION_DATE_CREATE" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата вынесения предписания</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INJUNCTION_DEADLINE" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата предльного срока исполнения вынесенного предписания</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INJUNCTION_IS_REFUSED" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Отметка о невыполнении выданного предписания</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INJUNCTION_EXECUTION" type="ReqPUI:String1024Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация о выполнении предписания об устранении выявленных нарушений</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LAWSUIT_SEC_I" type="ReqPUI:String1024Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация о направлении материалов о выявленных нарушениях в компетентные органы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LAWSUIT_SEC_II" type="ReqPUI:String2048Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Примененные меры обеспечения производства по делу об административном правонарушении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LAWSUIT_SEC_III" type="ReqPUI:String1024Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Привлеченые к административной ответственности виновные лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LAWSUIT_SEC_IV" type="ReqPUI:String1024Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Приостановление или аннулирование ранее выданных разрешений, имеющих разрешительный характер</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LAWSUIT_SEC_V" type="ReqPUI:String1024Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация об исполнении постановления по делу об административном правонарушении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LAWSUIT_SEC_VI" type="ReqPUI:String1024Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация об обжаловании в вышестоящем органе суде решений контроля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LAWSUIT_SEC_VII" type="ReqPUI:String1024Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация об отзыве продукции</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="UplanResult294InitializationType">
+    <xs:annotation>
+      <xs:documentation>Первичное размещение результатов проведения внеплановой проверки 294 ФЗ</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ReqPUI:Plan294HeaderType">
+        <xs:sequence>
+          <xs:element name="UinspectionResult294Initialization" type="ReqPUI:UinspectionResult294InitializationType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Результат валидации аттрибутов внеплановой проверки 294 ФЗ первичное размещение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="UplanUnregular294Type">
+    <xs:annotation>
+      <xs:documentation>Внеплановая проверка 294 ФЗ (Базовый тип)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ID" type="ReqPUI:IDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ИД внеплановой проверки. Целое положительное число от 2000000000 до 2030999999</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LawBook294" type="ReqPUI:LawBook294Type">
+        <xs:annotation>
+          <xs:documentation>Проверки по 294 ФЗ в отношении Юридических лиц и Индивидуальных предпринимателей</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KO_NAME" type="ReqPUI:String1024Type">
+        <xs:annotation>
+          <xs:documentation>Наименование контролирующего органа, проводящего или проводившего проверку</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="REQUEST_NUM" type="ReqPUI:String64Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер заявления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="REQUEST_DATE" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата заявления. От 1992-01-01 по 2030-12-31</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="START_DATE" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Согласованная дата начала проведения. От 1992-01-01 по 2030-12-31</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="END_DATE" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Согласованная дата окончания проведения. От 1992-01-01 по 2030-12-31</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DECISION_DATE" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата вынесения решения о согласовании/отказе. От 1992-01-01 по 2030-12-31</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ORDER_NUM" type="ReqPUI:String64Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер приказа о согласовании/отказе в проведении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ORDER_DATE" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата приказа о согласовании/отказе в проведении. От 1992-01-01 по 2030-12-31</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="REASON_SEC_I_DENY" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Причина отказа подпункт 1</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="REASON_SEC_II_DENY" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Причина отказа подпункт 2</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="REASON_SEC_III_DENY" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Причина отказа подпункт 3</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="REASON_SEC_IV_DENY" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Причина отказа подпункт 4</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="REASON_SEC_V_DENY" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Причина отказа подпункт 5</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="REASON_SEC_VI_DENY" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Причина отказа подпункт 6</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="REASON_SEC_VII_DENY" type="ReqPUI:String512Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Причина отказа по дополнительной мотивировке</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INSP_TARGET" type="ReqPUI:String4096Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Предмет проверки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="REASON_SEC_I" type="ReqPUI:String4096Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Правовое основание проведения проверки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KIND_OF_INSP" type="ReqPUI:KindOfInspType">
+        <xs:annotation>
+          <xs:documentation>Тип проверки (выездная, документарная,  выездная/документарная). Принимаемое значение:
+1.Выездная
+2.Документарная
+3.Документарная/выездная
+4.Не установленно</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SIGNER_TITLE" type="ReqPUI:String256Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Должность подписанта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SIGNER_NAME" type="ReqPUI:String256Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ФИО подписанта</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KO_ADDRESS" type="ReqPUI:String1024Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Адрес контролирующего органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KO_RECIPIENT_TITLE" type="ReqPUI:String256Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Кому адресовано (должность получателя со стороны КО)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KO_RECIPIENT_TITLE_DC" type="ReqPUI:String256Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Кому адресовано (должность получателя со стороны КО) дательный падеж</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KO_RECIPIENT_NAME" type="ReqPUI:String256Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ФИО получателя со стороны КО</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KO_RECIPIENT_NAME_DC" type="ReqPUI:String256Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>(ФИО получателя со стороны КО) дательный падеж</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DECISION_PLACE" type="ReqPUI:String64Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Место вынесения решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="YEAR" type="clt_ru:DateYearCustType">
+        <xs:annotation>
+          <xs:documentation>Год проведения проверки. Годы сводных планов проверок
+от 2000 по 2030.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FRGU_NUM" type="ReqPUI:String128Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Реестровый номер функции ФРГУ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NOTICE_DATE" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата уведомления о проведении проверки. От 1992-01-01 по 2030-12-31</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NOTICE_WAY" type="ReqPUI:String256Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Способы уведомления о проведении проверки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="USER_NOTE" type="ReqPUI:String1024Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Коментарий контролирующего органа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TYPE_OF_INSP" type="ReqPUI:TypOfInspType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вид внеплановой проверки:
+1. "Заявление КО" - требует согласования с прокурором
+2. "Уведомление" - НЕ требует согласования с прокурором
+3. "Требование прокуратуры" - НЕ требует согласования с прокурором (т.к. инициатором является прокуратура)
+4. "Без уведомления" - НЕ требует согласования с прокурором (эти проверки проводятся для проверки выполнения ранее выписанных ЮЛ/ИП предписаний)
+</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="UplanUnregular294InitializationType">
+    <xs:annotation>
+      <xs:documentation>Внеплановая проверка 294 ФЗ (Первичное размещение)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ReqPUI:UplanUnregular294Type">
+        <xs:sequence>
+          <xs:element name="UinspectionUnregular294Initialization" type="ReqPUI:UinspectionUnregular294InitializationType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Место проведения внеплановой проверки 294 ФЗ (первичное размещение)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="UplanUnregular294CorrectionType">
+    <xs:annotation>
+      <xs:documentation>Внеплановая проверка 294 ФЗ (Размещение корректировки)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ReqPUI:UplanUnregular294Type">
+        <xs:sequence>
+          <xs:element name="UinspectionUnregular294Correction" type="ReqPUI:UinspectionUnregular294CorrectionType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Место проведения внеплановой проверки 294 ФЗ (размещение корректировки)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="KPI_ALL_I" type="CategoryCust:IntegerCategoriesCust" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>KPI 1.1 Административная ответственность (ВСЕГО)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="KPI_ALL_II" type="CategoryCust:IntegerCategoriesCust" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>KPI 2.1 Дисциплинарная ответственность (ВСЕГО)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="KPI_ALL_III" type="CategoryCust:IntegerCategoriesCust" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>KPI 3.1  Отзыв лицензии (ВСЕГО)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="KPI_ALL_IV" type="CategoryCust:IntegerCategoriesCust" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>KPI 4.1 Приостановление деятельности (ВСЕГО)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="KPI_ALL_V" type="CategoryCust:IntegerCategoriesCust" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>KPI 5.1 Предписание на устранение нарушений (ВСЕГО)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="KPI_ALL_VI" type="CategoryCust:IntegerCategoriesCust" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>KPI 6.1 Иное (ВСЕГО)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="KPI_I" type="CategoryCust:IntegerCategoriesCust" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>KPI 1.2 Административная ответственность (Согласовано)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="KPI_II" type="CategoryCust:IntegerCategoriesCust" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>KPI 2.2 Дисциплинарная ответственность (Согласовано)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="KPI_III" type="CategoryCust:IntegerCategoriesCust" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>KPI 3.2  Отзыв лицензии (Согласовано)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="KPI_IV" type="CategoryCust:IntegerCategoriesCust" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>KPI 4.2 Приостановление деятельности (Согласовано)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="KPI_V" type="CategoryCust:IntegerCategoriesCust" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>KPI 5.2 Предписание на устранение нарушений (Согласовано)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="KPI_VI" type="CategoryCust:IntegerCategoriesCust" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>KPI 6.2 Иное (Согласовано)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Простые локальные прикладные типы </xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="IDType">
+    <xs:annotation>
+      <xs:documentation>ИД внеплановой проверки. Целое положительное число от 2000000000 до 2030999999</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:IntegerCategoriesCust">
+      <xs:totalDigits value="10" />
+      <xs:minInclusive value="2000000000" />
+      <xs:maxInclusive value="2030999999" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PositiveIntegerType32000">
+    <xs:annotation>
+      <xs:documentation>Перечислитель целых положительных чисел до 32000</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:IntegerCategoriesCust">
+      <xs:minInclusive value="1" fixed="true" />
+      <xs:maxInclusive value="32000" fixed="true" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="IDUserType">
+    <xs:annotation>
+      <xs:documentation>ИД потребителя. Целое положительное число от 0 до 9x10*18</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:IntegerCategoriesCust">
+      <xs:totalDigits value="19" />
+      <xs:minInclusive value="0" />
+      <xs:maxInclusive value="9000000000000000000" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="InfoModelType">
+    <xs:annotation>
+      <xs:documentation>Фиксированное значение = 20150201 </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:IntegerCategoriesCust">
+      <xs:enumeration value="20150201" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="LawFormulationType">
+    <xs:annotation>
+      <xs:documentation>Формулировка федерального закона</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="100" />
+      <xs:enumeration value="Проверки: 294ФЗ в отношении ЮЛ/ИП" />
+      <xs:enumeration value="Проверки: 136ФЗ (Земельный кодекс) в отношении ЮЛ/ИП" />
+      <xs:enumeration value="Проверки: 136ФЗ (Земельный кодекс) в отношении ОГВ" />
+      <xs:enumeration value="Проверки: 131ФЗ в отношении ОМС" />
+      <xs:enumeration value="Проверки: 136ФЗ (Земельный кодекс) в отношении ОМС" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Law_BaseType">
+    <xs:annotation>
+      <xs:documentation>Номер федерального закона</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:IntegerCategoriesCust">
+      <xs:enumeration value="131" />
+      <xs:enumeration value="136" />
+      <xs:enumeration value="294" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PreviousInfoModelType">
+    <xs:annotation>
+      <xs:documentation>Фиксированное значение = 0 </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:IntegerCategoriesCust">
+      <xs:enumeration value="0" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ProsecutorCodeType">
+    <xs:annotation>
+      <xs:documentation>Код прокуратуры. 10 символов. Первый символ = 1</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:length value="10" />
+      <xs:pattern value="[1]{1}[0-9]{9}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="String4096Type">
+    <xs:annotation>
+      <xs:documentation>Текст от 1 до 4096 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="4096" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="String2048Type">
+    <xs:annotation>
+      <xs:documentation>Текст от 1 до 2048 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="2048" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="String1024Type">
+    <xs:annotation>
+      <xs:documentation>Текст от 1 до 1024 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="1024" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="String256Type">
+    <xs:annotation>
+      <xs:documentation>Текст от 1 до 256 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="256" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="String512Type">
+    <xs:annotation>
+      <xs:documentation>Текст от 1 до 512 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="512" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="String128Type">
+    <xs:annotation>
+      <xs:documentation>Текст от 1 до 128 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="128" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="String64Type">
+    <xs:annotation>
+      <xs:documentation>Текст от 1 до 64 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="64" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="KindOfInspType">
+    <xs:annotation>
+      <xs:documentation>Форма проведения (документарная, выездная, документарная и выездная)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="25" />
+      <xs:enumeration value="выездная" />
+      <xs:enumeration value="документарная" />
+      <xs:enumeration value="документарная/выездная" />
+      <xs:enumeration value="не установленно" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TypOfInspType">
+    <xs:annotation>
+      <xs:documentation>Вид внеплановой проверки (Заявление КО, Уведомление, Требование прокуратуры, Без уведомления)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="25" />
+      <xs:enumeration value="Заявление КО" />
+      <xs:enumeration value="Уведомление" />
+      <xs:enumeration value="Требование прокуратуры" />
+      <xs:enumeration value="Без уведомления" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

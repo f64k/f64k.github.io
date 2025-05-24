@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:rskmsgadd="urn:customs.ru:Information:CustomsDocuments:RiskMSGAddInfo:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:RiskMSGAddInfo:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Дополнительная информация для сообщений о выявленных рисках</xs:documentation>
+  </xs:annotation>
+  <xs:element name="RiskMSGAddInfo" type="rskmsgadd:RiskMSGAddInfoType">
+    <xs:annotation>
+      <xs:documentation>Дополнительная информация для сообщений о выявленных рисках</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RiskMSGAddInfoType">
+    <xs:annotation>
+      <xs:documentation>Тип, описывающий доп. информацию для записей ЕБВР</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="AddInformation" type="rskmsgadd:AddInformationType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Выгруженные данные в ЕБВР</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006214E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AddInfoType">
+    <xs:annotation>
+      <xs:documentation>Доп. информация в привязке к товару ДТ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ClassDecisionID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Идентификатор решения в Тарифы-Библиотека</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ClassDecisionDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата принятия решения в Тарифы-Библиотека</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Status" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Статус класс. решения в Тарифы-Библиотека. Кодификация статусов класс. решений в Тарифы-Библиотека:
+“03” - отменено по результатам ведомственного контроля;
+“04” - отменено по решению суда;
+"05" - отменено по результатам проверки;
+“06” - отменено по иным обстоятельствам;
+“10” – опубликовано;
+“19” - истек срок актуальности;
+“23” - отменено в связи с исключением кода из ТН ВЭД ЕАЭС;
+“24” - отменено в связи с обжалованием;
+“26” - отменено в связи с несогласием таможенных органов;
+“27” - отменено в связи с принятием решения ЕЭК;
+“28” - отменено в связи с принятием решения ВТамО; 
+"30" - изменены дополнительные сведения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StatusDateTime" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата и время присвоения статуса</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ClassifSign" type="clt_ru:Text3MB" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Классификационные признаки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustInspect" type="clt_ru:Text3MB" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Характеристики товара в акте таможенного досмотра</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExpertQuestions" type="clt_ru:Text3MB" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Вопросы эксперту</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KeyWords" type="clt_ru:Text3MB" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Ключевые слова</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SearchCriterionType">
+    <xs:annotation>
+      <xs:documentation>Тип, описывающий критерии поиска записей в ЕБВР</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocNumber" type="cat_ru:GTDIDType">
+        <xs:annotation>
+          <xs:documentation>Регистрационный номер документа, на котором выявлен риск</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TNVEDCode" type="clt_ru:CUGoodsNomenclatuerCodeType">
+        <xs:annotation>
+          <xs:documentation>Заявленный код ТН ВЭД ЕАЭС. Гр. 33 первый раздел</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AddTNVEDCode" type="clt_ru:GoodsNomenclatuerAddCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Заявленный код товара в соответствии с Классификатором дополнительной таможенной информации для РФ и РК</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CorrectedTNVEDCode" type="clt_ru:CUGoodsNomenclatuerCodeType">
+        <xs:annotation>
+          <xs:documentation>Откорректированный код ТН ВЭД ЕАЭС</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CorrectedAddTNVEDCode" type="clt_ru:GoodsNomenclatuerAddCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Откорректированный код товара в соответствии с Классификатором дополнительной таможенной информации для РФ и РК</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ClassDecision" type="rskmsgadd:RegistrationNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер решения о класс. товаров либо о стране происх. Формат рег. номера РКТ: РКТ-XXXXXXXX-YY/ZZZZZZ, где
+РКТ – аббревиатура «Решение по классификации товара»,
+XXXXXXXX – код таможенного органа, принявшего решение,
+YY – последние цифры года принятия решения,
+ZZZZZZ – порядковый номер решения по журналу регистрации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AddInformationType">
+    <xs:annotation>
+      <xs:documentation>Выгруженные данные в ЕБВР</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SearchCriterion" type="rskmsgadd:SearchCriterionType">
+        <xs:annotation>
+          <xs:documentation>Критерии сопоставления с записями ЕБВР</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AddInfo" type="rskmsgadd:AddInfoType">
+        <xs:annotation>
+          <xs:documentation>Добавляемая информация</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RegistrationNumberType">
+    <xs:annotation>
+      <xs:documentation>Регистрационный номер решения о классификации товара</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, зарегистрировавшего документ.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RegistrationDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата регистрации документа.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Number" type="clt_ru:CodeVariable10Type">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

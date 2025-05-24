@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:catESAD_ru="urn:customs.ru:RUCommonAggregateTypes:5.24.0" xmlns:tmp_req="urn:customs.ru:Information:SQDocuments:TransportMeansPassportRequest:5.24.0" targetNamespace="urn:customs.ru:Information:SQDocuments:TransportMeansPassportRequest:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:RUCommonAggregateTypes:5.24.0" schemaLocation="RUESADCommonAggregateTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Запрос универсальных сведений о транспортном средстве</xs:documentation>
+	</xs:annotation>
+	<xs:element name="TransportMeansPassportRequest" type="tmp_req:TransportMeansPassportRequestType">
+		<xs:annotation>
+			<xs:documentation>Запрос универсальных сведений о транспортном средстве</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="TransportMeansPassportRequestType">
+		<xs:annotation>
+			<xs:documentation>Запрос универсальных сведений о транспортном средстве</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="InitiatorMnemonic" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Мнемоника контрагента</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ReasonRequest" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Основание запроса</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RegSign" type="clt_ru:TransportStateSignIDType" minOccurs="0" maxOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Государственный регистрационный знак</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="VIN" type="clt_ru:VINIDType" minOccurs="0" maxOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Идентификационный номер (VIN)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ChassisNumber" type="clt_ru:VINIDType" minOccurs="0" maxOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Номер шасси</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="BodyNumber" type="clt_ru:VINIDType" minOccurs="0" maxOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Номер кузова</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RegDocNumber" type="tmp_req:TransportMeansRegType" minOccurs="0" maxOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Серия, номер регистрационного документа</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PTSNumber" type="cat_ru:TransportMeansPassportType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Серия, номер паспорта ТС</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TransportMeansOwner" type="catESAD_ru:TransportOwnerType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Сведения о собственнике транспортного средства (адрес, наименование организации или фамилия физического лица)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009408E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="TransportMeansRegType">
+		<xs:annotation>
+			<xs:documentation>Серия и номер регистрационного документа транспортного средства</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RegSeries" type="clt_ru:SeriesCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Серия регистрационного документа транспортного средства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegNumber" type="clt_ru:TransportPassportIDType">
+				<xs:annotation>
+					<xs:documentation>Номер регистрационного документа транспортного средства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegionCode" type="clt_ru:RegionCodeType">
+				<xs:annotation>
+					<xs:documentation>Код региона</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

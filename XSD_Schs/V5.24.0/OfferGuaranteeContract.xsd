@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Приказ Минфина России № 125н от 14 августа 2019 года "Об утверждении типовых форм договоров поручительства, обеспечивающих исполнение обязанности по уплате таможенных пошлин, налогов, таможенных сборов, специальных, антидемпинговых, компенсационных пошлин, обязанностей юридического лица, осуществляющего деятельность в сфере таможенного дела, обязанностей уполномоченного экономического оператора" -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" xmlns:ogc="urn:customs.ru:Information:CommercialFinanceDocuments:OfferGuaranteeContract:5.24.0" targetNamespace="urn:customs.ru:Information:CommercialFinanceDocuments:OfferGuaranteeContract:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.24.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Предложение о заключении договора поручительства (о внесении изменений в договор поручительства, о расторжении договора поручительства)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="OfferGuaranteeContract" type="ogc:OfferGuaranteeContractType">
+    <xs:annotation>
+      <xs:documentation>Предложение о заключении договора поручительства (о внесении изменений в договор поручительства, о расторжении договора поручительства)</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="OfferGuaranteeContractType">
+    <xs:annotation>
+      <xs:documentation>Предложение о заключении договора поручительства (о внесении изменений в договор поручительства, о расторжении договора поручительства)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="TargetOffer" type="clt_ru:LetterIndicatorType">
+            <xs:annotation>
+              <xs:documentation>Цель направления предложения: 1 -заключение договора поручительства, 2 - внесение изменений в договор поручительства, 3 - расторжение договора поручительства </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ContractNumber" type="cat_ru:DocumentBaseType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Реквизиты договора поручительства (в случае предложения о внесении изменений или расторжении договора)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Guarantor" type="ogc:GuarantorType">
+            <xs:annotation>
+              <xs:documentation>Сведения о лице, имеющем намерение стать поручителем/поручителем </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsDetails" type="cat_ru:CustomsType">
+            <xs:annotation>
+              <xs:documentation>Сведения о таможенном органе, в который направлено предложение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OfferContents" type="clt_ru:Text3MB" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Текст предложения о внесении изменений в договор поручительства: содержание вносимых изменений </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1004147E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="GuarantorType">
+    <xs:annotation>
+      <xs:documentation>Сведения о поручителе</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:OrganizationBaseType">
+        <xs:sequence>
+          <xs:element name="Address" type="RUScat_ru:RUAddressType">
+            <xs:annotation>
+              <xs:documentation>Адрес </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AuthorizedPerson" type="cat_ru:PersonBaseType">
+            <xs:annotation>
+              <xs:documentation>ФИО лица, подписавшего предложение</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ConfirmingDocument" type="cat_ru:DocumentBaseType">
+            <xs:annotation>
+              <xs:documentation>Документ, подтверждающий полномочия лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

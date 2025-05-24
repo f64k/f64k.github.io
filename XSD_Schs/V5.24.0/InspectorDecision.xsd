@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:ispd="urn:customs.ru:Information:CustomsDocuments:InspectorDecision:5.24.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:InspectorDecision:5.24.0" elementFormDefault="qualified" version="5.24.0.0">
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Решение должностного лица</xs:documentation>
+  </xs:annotation>
+  <xs:element name="InspectorDecision" type="ispd:InspectorDecisionType">
+    <xs:annotation>
+      <xs:documentation>Решение должностного лица</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="InspectorDecisionType">
+    <xs:annotation>
+      <xs:documentation>Решение должностного лица</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="DecisionDescription" type="ispd:DecisionDescriptionType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Описание решения должностного лица</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006175E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="DecisionDescriptionType">
+    <xs:annotation>
+      <xs:documentation>Описание решения должностного лица</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DecisionDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата решения </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DecisionTime" type="clt_ru:TimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Время решения </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DecisionText" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание решения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentInfo" type="ispd:DocumentInfoType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о документе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsPerson" type="cat_ru:CustomsPersonType">
+        <xs:annotation>
+          <xs:documentation>Должностное лицо</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Customs" type="cat_ru:CustomsType">
+        <xs:annotation>
+          <xs:documentation>Таможенный орган</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GoodsCustoms" type="cat_ru:CustomsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Таможенный орган, в регионе деятельности которого находятся товары</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocumentInfoType">
+    <xs:annotation>
+      <xs:documentation>Сведения о документе</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:DocumentBaseType">
+        <xs:sequence>
+          <xs:element name="DocumentModeCode" type="clt_ru:CustomsDocumentCodeType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код вида документа в соответствии с классификатором</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

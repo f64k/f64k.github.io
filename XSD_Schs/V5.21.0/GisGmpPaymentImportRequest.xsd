@@ -1,0 +1,1043 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Схемы ГИС ГМП -  аналог документа - SQ.05010 -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:ggpi_req="urn:customs.ru:Information:SQDocuments:GisGmpPaymentImportRequest:5.21.0" targetNamespace="urn:customs.ru:Information:SQDocuments:GisGmpPaymentImportRequest:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Прием необходимой для уплаты информации (начисления) (запрос)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="GisGmpPaymentImportRequest" type="ggpi_req:GisGmpPaymentImportRequestType">
+    <xs:annotation>
+      <xs:documentation>Прием необходимой для уплаты информации (начисления) (запрос)</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GisGmpPaymentImportRequestType">
+    <xs:annotation>
+      <xs:documentation>Прием необходимой для уплаты информации (начисления) (запрос)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:choice>
+            <xs:element name="ChargeTemplate" type="ggpi_req:ChargeTemplateType" maxOccurs="100">
+              <xs:annotation>
+                <xs:documentation>Направляемое начисление</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="ChangeTemplate" type="ggpi_req:ChangeTemplateType" maxOccurs="100">
+              <xs:annotation>
+                <xs:documentation>Направляемые изменения в извещение о начислении</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009173E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="AdditionalDataType">
+    <xs:annotation>
+      <xs:documentation>Дополнительные поля начисления</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Name" type="ggpi_req:TextVariable100Type">
+        <xs:annotation>
+          <xs:documentation>Наименование поля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Value" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Значение поля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AdditionalOffenseType">
+    <xs:annotation>
+      <xs:documentation>Блок дополнительной информации об административном правонарушении</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OffenseDate" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата и время нарушения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OffensePlace" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Место нарушения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LegalAct" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Статья нарушения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DigitalLink" type="ggpi_req:TextVariable2000Type">
+        <xs:annotation>
+          <xs:documentation>Ссылка на фото (видео) материалов нарушения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DepartmentName" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Данные о подразделении, вынесшем постановление</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="BankType">
+    <xs:annotation>
+      <xs:documentation>Данные банка, в котором открыт счет</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Name" type="ggpi_req:TextVariable200Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование структурного подразделения кредитной организации или подразделения Банка России, в котором открыт счет</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BIK" type="clt_ru:BICIDType">
+        <xs:annotation>
+          <xs:documentation>БИК структурного подразделения кредитной организации или подразделения Банка России, в котором открыт счет</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CorrespondentBankAccount" type="clt_ru:AccountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер корреспондентского счета кредитной организации, открытый в подразделении Банка России</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="BudgetIndexType">
+    <xs:annotation>
+      <xs:documentation>Реквизиты платежа 101, 106-109</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Status" type="clt_ru:Code2Type">
+        <xs:annotation>
+          <xs:documentation>Статус плательщика — реквизит 101 Распоряжения.
+                        До 01.07.2021 реквизит платежа 101 «Статус плательщика» блока данных «Дополнительные реквизиты платежа» может принимать значение из диапазонов "01"-"13", "15"-"28".
+                        C 01.07.2021 реквизит платежа 101 «Статус плательщика» блока данных «Дополнительные реквизиты платежа» может принимать значение из диапазонов "01"-"13", "15-29".
+                        С 01.10.2021 реквизит платежа 101 «Статус плательщика» блока данных «Дополнительные реквизиты платежа» может принимать значение из диапазонов "01"-"08", "13","15"-"17", "19"-"20", "23"-"24", "27"-"30".
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaytReason" type="clt_ru:CodeVariable2Type">
+        <xs:annotation>
+          <xs:documentation>Показатель основания платежа — реквизит 106 Распоряжения.
+                        С 01.01.2021 реквизит 106 «Показатель основания платежа» блока данных «Дополнительные реквизиты платежа» может содержать значение "0" или одно из следующих значений: ТП, ЗД, БФ, ТР, РС, ОТ, РТ, ПБ, ПР, АП, АР, ИН, ТЛ, БД, ПК, КВ, УВ, ИЛ, ТГ, ТБ, ТД, ПВ, ЗТ, 00.
+                        С 01.10.2021 реквизит 106 «Показатель основания платежа» блока данных «Дополнительные реквизиты платежа» может содержать значение "0" или одно из следующих значений: ТП, ЗД, РС, ОТ, РТ, ПБ, ИН, ТЛ, ЗТ, ПК, КЭ, УВ, ИЛ, ТГ, ТБ, ТД, ПВ, 00.
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TaxPeriod" type="ggpi_req:TaxPeriodType">
+        <xs:annotation>
+          <xs:documentation>
+                        Показатель налогового периода или код таможенного органа, осуществляющего в соответствии с
+                        законодательством РФ функции по выработке государственной политики и нормативному регулированию,
+                        контролю и надзору в области таможенного дела – реквизит 107 Распоряжения.
+                        Если длина значения в поле 10 символов, то:
+                        символы 1-й и 2-й могут принимать значение: МС, КВ, ПЛ, ГД;
+                        символы 4-й и 5-й могут принимать значение: для месячных платежей ‑ номер месяца текущего отчетного года, для квартальных платежей - номер квартала, для полугодовых - номер полугодия;
+                        символы с 7-го по 10-й могут принимать значение: год, за который производится уплата налога;
+                        символы 3-й и 6-й используются в качестве разделительных знаков, в них проставляется точка (".").
+                        Если длина поля 8 символов, то все они должны быть цифрами.
+                        Допускается указывать дату в формате "день.месяц.год".</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TaxDocNumber" type="ggpi_req:TextVariable15Type">
+        <xs:annotation>
+          <xs:documentation>Показатель номера документа – реквизит 108 Распоряжения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TaxDocDate" type="ggpi_req:TaxDocDateType">
+        <xs:annotation>
+          <xs:documentation>Показатель даты документа – реквизит 109 Распоряжения. Особенности заполнения:
+                        первые два символа обозначают календарный день (могут принимать значения от 01 до 31);
+                        4-й и 5-й символы - месяц (значения от 01 до 12);
+                        с 7-го по 10-й   год;
+                        в 3-м и 6-м символах в качестве разделительных знаков проставляется точка (".");
+                        Значение «00» может быть указано в случае указания значения «00» в поле номер 106: Показатель основания платежа — реквизит 106 Распоряжения.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ChangeStatusType">
+    <xs:annotation>
+      <xs:documentation>Сведения о статусе и основаниях его изменения</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Meaning" type="ggpi_req:MeaningType">
+        <xs:annotation>
+          <xs:documentation>Статус, отражающий изменение данных: 2 – уточнение; 3 – уточнение об аннулировании; 4 – уточнение о деаннулировании (отмена аннулирования).</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Reason" type="clt_ru:FreeText500Type">
+        <xs:annotation>
+          <xs:documentation>Основание изменения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ChangeDate" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата, а также сведения о периоде времени, в который осуществлено уточнение необходимой для уплаты информации (до 21 часа или после 21 часа по местному времени), либо время уточнения необходимой для уплаты информации. При указании сведений о периоде времени, в который осуществлено уточнение необходимой для уплаты информации, для обозначения периода времени до 21 часа по местному времени используется значение «20:59:59», после 21 часа по местному времени – «21:01:00»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ChangeTemplateType">
+    <xs:annotation>
+      <xs:documentation>Направляемые изменения в извещение о начислении</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OriginatorID" type="ggpi_req:URNType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>УРН участника косвенного взаимодействия, сформировавшего сущность</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SupplierBillID" type="ggpi_req:SupplierBillIDType">
+        <xs:annotation>
+          <xs:documentation>УИН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Change" type="ggpi_req:ChangeType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Измененяемые поля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ChangeStatus" type="ggpi_req:ChangeStatusType">
+        <xs:annotation>
+          <xs:documentation>Сведения о статусе и основаниях его изменения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ChangeType">
+    <xs:annotation>
+      <xs:documentation>Измененяемые поля</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FieldNum" type="ggpi_req:FieldNumType">
+        <xs:annotation>
+          <xs:documentation>Номер поля, в которое вносятся изменения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ChangeValue" type="ggpi_req:ChangeValueType" maxOccurs="10">
+        <xs:annotation>
+          <xs:documentation>Новое значение поля</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ChangeValueType">
+    <xs:annotation>
+      <xs:documentation>Новое значение поля</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Name" type="ggpi_req:TextVariable100Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование дополнительного поля. Используется только для отдельных контейнеров -AdditionalData, (поле номер 202), DiscountFixed (поле номер 1020), DiscountSize (поле номер 1021), MultiplierSize (поле номер 1022)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Value" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Значение изменяемого поля. Если требуется не изменить, а удалить переданное ранее значение поля, то в поле следует указать значение NULL.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ChargeTemplateType">
+    <xs:annotation>
+      <xs:documentation>Данные для формирования необходимой для уплаты информации</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OriginatorID" type="ggpi_req:URNType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>УРН участника косвенного взаимодействия, сформировавшего запрос</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SupplierBillID" type="ggpi_req:SupplierBillIDType">
+        <xs:annotation>
+          <xs:documentation>УИН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BillDate" type="clt_ru:DateTimeCustType">
+        <xs:annotation>
+          <xs:documentation>Дата начисления суммы, подлежащей уплате плательщиком</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ValidUntil" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата, до которой (включительно) актуально выставленное начисление</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TotalAmount" type="ggpi_req:LongIntegerType">
+        <xs:annotation>
+          <xs:documentation>Сумма начисления (Целое число, показывающее сумму в копейках)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Purpose" type="ggpi_req:PurposeType">
+        <xs:annotation>
+          <xs:documentation>Назначение платежа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KBK" type="ggpi_req:KBKType">
+        <xs:annotation>
+          <xs:documentation>КБК. В случае отсутствия следует указывать значение «0». Все символы одновременно не должны принимать значение ноль («0»)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OKTMO" type="ggpi_req:OKTMOType">
+        <xs:annotation>
+          <xs:documentation>Код ОКТМО. Значение «0» в случае отсутствия кода ОКТМО может указываться, если первые цифры номера банковского счета получателя средств (AccountNumber) равны «03100» и КБК начинается на «153» или если первые цифры номера банковского счета получателя средств (AccountNumber) не равны «03100»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DeliveryDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата отсылки (вручения) плательщику документа с начислением в случае, если этот документ был отослан (вручен) получателем средств плательщику
+                        (Заполняется в случае, если документ был вручен плательщику получателем средств)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LegalAct" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация о нормативном правовом (правовом) акте, являющемся основанием для исчисления суммы денежных средств, подлежащих уплате</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PaymentTerm" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Срок оплаты начисления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Origin" type="ggpi_req:OriginType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак предварительного начисления. Возможные значения:
+                        PRIOR – признак указывается участником в начислениях при направлении дела на рассмотрение в суд и  в начислениях, сформированных ФССП России. При указании данного признака, в начислении возможно указать только нулевую сумму.
+                        TEMP – для предварительных начислений, сформированных ГИС ГМП по запросу участника и имеющих срок действия. Допускается указывать для извещений со статусом, отражающим изменение данных: 2 – уточнение; 3 – уточнение об аннулировании; 4 – уточнение о деаннулировании.
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NoticeTerm" type="CategoryCust:IntegerCategoriesCust" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Количество дней от даты начисления, подлежащей уплате плательщиком, по истечении которых необходимо повторно предоставлять уведомление о начислении по подписке в случае, если оно не оплачено или сумма платежей меньше суммы к оплате, указанной в начислении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OKVED" type="ggpi_req:OkvedType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код по ОКВЭД</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ChargeOffense" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак административного правонарушения, зафиксированного специальными техническими средствами, работающими в автоматическом режиме</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LinkedChargesIdentifiers" type="ggpi_req:LinkedChargesIdentifiersType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификаторы начислений, на основании которых выставлено данное начисление. Может быть указано до 10 УИН</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Payee" type="ggpi_req:PayeeType">
+        <xs:annotation>
+          <xs:documentation>Данные организации, являющейся получателем средств</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Payer" type="ggpi_req:PayerType">
+        <xs:annotation>
+          <xs:documentation>Сведения о плательщике</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BudgetIndex" type="ggpi_req:BudgetIndexType">
+        <xs:annotation>
+          <xs:documentation>Реквизиты платежа 101, 106 - 109</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExecutiveProcedureInfo" type="ggpi_req:ExecutiveProcedureInfoType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дополнительная информация, необходимая для осуществления исполнительного производства</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AdditionalOffense" type="ggpi_req:AdditionalOffenseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Блок дополнительной информации об административном правонарушении</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Discount" type="ggpi_req:DiscountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дополнительные условия оплаты</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AdditionalData" type="ggpi_req:AdditionalDataType" minOccurs="0" maxOccurs="10">
+        <xs:annotation>
+          <xs:documentation>Дополнительные поля начисления</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DebtorType">
+    <xs:annotation>
+      <xs:documentation>Сведения о должнике</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DebtorType" type="clt_ru:CodeVariable4Type">
+        <xs:annotation>
+          <xs:documentation>Поле номер 1121: Тип должника</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DebtorAdr" type="ggpi_req:TextVariable1000Type">
+        <xs:annotation>
+          <xs:documentation>Поле номер 1122: Адрес должника</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DebtorAdrFakt" type="ggpi_req:TextVariable200Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Поле номер 1123: Адрес должника фактический</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DebtorCountryCode" type="clt_ru:CountryN3CodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Поле номер 1124: Код страны принадлежности должника по Общероссийскому классификатору стран мира</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Person" type="ggpi_req:PersonType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Данные индивидуального предпринимателя или физического лица</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeedInfoType">
+    <xs:annotation>
+      <xs:documentation>Данные исполнительного документа</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="IDType" type="ggpi_req:IDTypeType">
+        <xs:annotation>
+          <xs:documentation>Поле номер 1109: Код вида исполнительного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdDocNo" type="clt_ru:IdentityCardNumberType">
+        <xs:annotation>
+          <xs:documentation>Поле номер 1110: Номер исполнительного документа, присвоенный органом, выдавшим исполнительный документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdDocDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Поле номер 1111: Дата выдачи исполнительного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SubjCode" type="ggpi_req:Code7Type">
+        <xs:annotation>
+          <xs:documentation>Поле номер 1112: Код предмета исполнения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SubjName" type="ggpi_req:TextVariable1000Type">
+        <xs:annotation>
+          <xs:documentation>Поле номер 1113: Предмет исполнения</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DiscountFixedType">
+    <xs:annotation>
+      <xs:documentation>Условия оплаты с фиксированной суммой скидки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Value" type="ggpi_req:ValueType">
+        <xs:annotation>
+          <xs:documentation>Сумма скидки от полной суммы начисления. Целое положительное число</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Expiry" type="ggpi_req:DiscountDateType">
+        <xs:annotation>
+          <xs:documentation>Срок действия скидки. Возможные значения:
+                        - дата окончания скидки в формате «ГГГГ-ММ-ДД»;
+                        - при отсутствии срока действия указывается значение «0».</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DiscountSizeType">
+    <xs:annotation>
+      <xs:documentation>Условия оплаты со скидкой (процент)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Value" type="ggpi_req:ProcentValueType">
+        <xs:annotation>
+          <xs:documentation>Процент скидки от суммы начисления. Целое положительное число от 1 до 100</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Expiry" type="ggpi_req:DiscountDateType">
+        <xs:annotation>
+          <xs:documentation>Срок действия скидки. Возможные значения:
+                        - дата окончания скидки в формате «ГГГГ-ММ-ДД»;
+                        - при отсутствии срока действия указывается значение «0».</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DiscountType">
+    <xs:annotation>
+      <xs:documentation>Дополнительные условия оплаты</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="DiscountFixed" type="ggpi_req:DiscountFixedType">
+          <xs:annotation>
+            <xs:documentation>Условия оплаты с фиксированной суммой скидки</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="DiscountSize" type="ggpi_req:DiscountSizeType">
+          <xs:annotation>
+            <xs:documentation>Условия оплаты со скидкой (процент)</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="MultiplierSize" type="ggpi_req:MultiplierSizeType">
+          <xs:annotation>
+            <xs:documentation>Условия оплаты с применением понижающего размер коэффициента</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ExecutiveProcedureInfoType">
+    <xs:annotation>
+      <xs:documentation>Дополнительная информация, необходимая для осуществления исполнительного производства</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="IdDeloNo" type="clt_ru:IdentityCardNumberType">
+        <xs:annotation>
+          <xs:documentation>Поле номер 1101: Номер дела или материалов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DeloPlace" type="clt_ru:Text150Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Поле номер 1102: Место рассмотрения дела</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IdDesDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Поле номер 1103: Дата принятия решения по делу</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AktDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Поле номер 1104: Дата вступления решения в законную силу</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SrokPrIsp" type="CategoryCust:IntegerCategoriesCust">
+        <xs:annotation>
+          <xs:documentation>Поле номер 1105: Срок предъявления исполнительного документа к исполнению</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SrokPrIspType" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Поле номер 1106: Тип периода срока предъявления исполнительного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ClaimerAdr" type="ggpi_req:TextVariable200Type">
+        <xs:annotation>
+          <xs:documentation>Поле номер 1107: Адрес взыскателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NotifFSSPDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Поле номер 1108: Дата уведомления ФССП России о неуплате штрафа в установленный законом</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DeedInfo" type="ggpi_req:DeedInfoType">
+        <xs:annotation>
+          <xs:documentation>Данные исполнительного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ExecutOrgan" type="ggpi_req:ExecutOrganType">
+        <xs:annotation>
+          <xs:documentation>Данные органа, выдавшего исполнительный документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Debtor" type="ggpi_req:DebtorType">
+        <xs:annotation>
+          <xs:documentation>Сведения о должнике</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ExecutOrganType">
+    <xs:annotation>
+      <xs:documentation>Данные органа, выдавшего исполнительный документ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OrganOkogu" type="ggpi_req:Code7Type">
+        <xs:annotation>
+          <xs:documentation>Поле номер 1114: Код по Общероссийскому классификатору органов государственной власти и управления (ОКОГУ) органа, выдавшего исполнительный документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrganCode" type="clt_ru:CodeVariable10Type">
+        <xs:annotation>
+          <xs:documentation>Поле номер 1115: Код подразделения органа, выдавшего исполнительный документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Organ" type="ggpi_req:TextVariable1000Type">
+        <xs:annotation>
+          <xs:documentation>Поле номер 1116: Наименование подразделения уполномоченного органа, выдавшего исполнительный документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrganAdr" type="ggpi_req:TextVariable200Type">
+        <xs:annotation>
+          <xs:documentation>Поле номер 1117: Адрес органа, выдавшего исполнительный документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrganSignCodePost" type="clt_ru:IdentityCardNumberType">
+        <xs:annotation>
+          <xs:documentation>Поле номер 1118: Код должности лица, выдавшего исполнительный документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrganSign" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Поле номер 1119: Должность лица, выдавшего исполнительный документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrganSignFIO" type="ggpi_req:TextVariable1000Type">
+        <xs:annotation>
+          <xs:documentation>Поле номер 1120: Фамилия, имя, отчество должностного лица, выдавшего исполнительный документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LinkedChargesIdentifiersType">
+    <xs:annotation>
+      <xs:documentation>Идентификаторы начислений, на основании которых выставлено данное начисление. Может быть указано до 10 УИН.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SupplierBillID" type="ggpi_req:SupplierBillIDType" maxOccurs="10">
+        <xs:annotation>
+          <xs:documentation>УИН, на основании которого выставлено данное начисление (связанное начисление)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MultiplierSizeType">
+    <xs:annotation>
+      <xs:documentation>Условия оплаты с применением понижающего размер коэффициента</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Value" type="clt_ru:ProcentNumericType">
+        <xs:annotation>
+          <xs:documentation>Коэффициент, понижающий размер начисления. Указывается значение коэффициента в формате «Х.Х» либо «Х.ХX»</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Expiry" type="ggpi_req:DiscountDateType">
+        <xs:annotation>
+          <xs:documentation>Срок действия учета коэффициента, понижающего размер начисления. Возможные значения:
+                        - дата окончания скидки в формате «ГГГГ-ММ-ДД»;
+                        - при отсутствии срока действия указывается значение «0».</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OrgAccountType">
+    <xs:annotation>
+      <xs:documentation>Реквизиты счета организации</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="AccountNumber" type="clt_ru:AccountType">
+        <xs:annotation>
+          <xs:documentation>Номер банковского счета</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Bank" type="ggpi_req:BankType">
+        <xs:annotation>
+          <xs:documentation>Данные банка, в котором открыт счет</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PayeeType">
+    <xs:annotation>
+      <xs:documentation>Данные организации, являющейся получателем средств</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Name" type="ggpi_req:OrgNameType">
+        <xs:annotation>
+          <xs:documentation>Наименование организации (Указывается сокращенное наименование органа
+                        Федерального казначейства или сокращенное наименование финансового органа и в скобках - сокращенное наименование организации)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="INN" type="ggpi_req:INNType">
+        <xs:annotation>
+          <xs:documentation>ИНН организации (первый и второй знаки (цифры) не могут одновременно принимать значение ноль). 10 цифр</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KPP" type="ggpi_req:KPPType">
+        <xs:annotation>
+          <xs:documentation>КПП организации (пятый и шестой из которых могут быть прописными (заглавными) латинскими буквами или цифрами,
+                        а все остальные только цифрами, и при этом первый и второй знаки (цифры) не могут одновременно принимать значение ноль). 9 символов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OGRN" type="ggpi_req:OGRNType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ОГРН организации. 13 цифр</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrgAccount" type="ggpi_req:OrgAccountType">
+        <xs:annotation>
+          <xs:documentation>Реквизиты счета организации</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PayerType">
+    <xs:annotation>
+      <xs:documentation>Сведения о плательщике</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PayerName" type="ggpi_req:OrgNameType">
+        <xs:annotation>
+          <xs:documentation>Плательщик</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PayerIdentifier" type="ggpi_req:PayerIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Основной идентификатор плательщика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AdditionalPayerIdentifier" type="ggpi_req:AdditionalPayerIdentifierType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дополнительный идентификатор плательщика</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PersonType">
+    <xs:annotation>
+      <xs:documentation>Данные индивидуального предпринимателя или физического лица</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DebtorRegPlace" type="clt_ru:Text150Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Поле номер 1125: Место регистрации должника - индивидуального предпринимателя</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DebtorBirthDate" type="clt_ru:DateCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Поле номер 1126: Дата рождения должника</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DebtorGender" type="ggpi_req:GenderType">
+        <xs:annotation>
+          <xs:documentation>Поле номер 1127: Пол должника</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DebtorBirthPlace" type="ggpi_req:TextVariable100Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Поле номер 1128: Место рождения должника</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="AdditionalPayerIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Дополнительный идентификатор плательщика</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="ggpi_req:PayerIdentifierType">
+      <xs:pattern value="(1((0[1-9])|(1[0-5])|(2[1245689])|(3[0]))[0-9a-zA-Zа-яА-Я]{19})|(200\d{14}[A-Z0-9]{2}\d{3})|300[0-9a-zA-Zа-яА-Я]{19}|(4[0]{9}\d{12})" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Code7Type">
+    <xs:annotation>
+      <xs:documentation>Код предмета исполнения</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:pattern value="\d{7}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DiscountDateType">
+    <xs:annotation>
+      <xs:documentation>Срок действия скидки.
+                Возможные значения:
+                - дата окончания скидки в формате «ГГГГ-ММ-ДД»;
+                - при отсутствии срока действия	указывается значение «0».</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:pattern value="(\d{4}-\d{2}-\d{2})|0" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FieldNumType">
+    <xs:annotation>
+      <xs:documentation>Номер поля, в которое вносятся изменения</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="4" />
+      <xs:minLength value="1" />
+      <xs:pattern value="\d+" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="GenderType">
+    <xs:annotation>
+      <xs:documentation>Пол</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:enumeration value="мужской" />
+      <xs:enumeration value="женский" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="IDTypeType">
+    <xs:annotation>
+      <xs:documentation>Код вида исполнительного документа</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:IntegerCategoriesCust">
+      <xs:enumeration value="1" />
+      <xs:enumeration value="3" />
+      <xs:enumeration value="4" />
+      <xs:enumeration value="5" />
+      <xs:enumeration value="7" />
+      <xs:enumeration value="10" />
+      <xs:enumeration value="11" />
+      <xs:enumeration value="13" />
+      <xs:enumeration value="16" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="INNType">
+    <xs:annotation>
+      <xs:documentation>ИНН юр. лица. 10 цифр, при этом первый и второй знаки (цифры) не могут одновременно принимать значение ноль</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:IdentifierCategoriesCust">
+      <xs:pattern value="([^0^\D]\d|\d[^0^\D])\d{8}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="KBKType">
+    <xs:annotation>
+      <xs:documentation>КБК. Значение «0» или 20 символов, среди которых допускаются русские и латинские буквы и цифры</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:IdentifierCategoriesCust">
+      <xs:pattern value="[0-9a-zA-Zа-яА-Я]{20}" />
+      <xs:pattern value="0" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="KPPType">
+    <xs:annotation>
+      <xs:documentation>КПП юр. лица. 9 символов, пятый и шестой из которых могут быть прописными (заглавными) латинскими буквами или цифрами,
+                а все остальные только цифрами, и при этом первый и второй знаки (цифры) не могут одновременно принимать значение ноль («0»)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:IdentifierCategoriesCust">
+      <xs:pattern value="([^0^\D]\d|\d[^0^\D])\d{2}[A-Z0-9]{2}\d{3}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="LongIntegerType">
+    <xs:annotation>
+      <xs:documentation>Целое неотрицательное число от 0 до 18446744073709551615</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:IntegerCategoriesCust">
+      <xs:minInclusive value="0" />
+      <xs:maxInclusive value="18446744073709551615" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MeaningType">
+    <xs:annotation>
+      <xs:documentation>Статус, отражающий изменение данных: 2 – уточнение; 3 – уточнение об аннулировании; 4 – уточнение о деаннулировании (отмена аннулирования).</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:maxLength value="1" />
+      <xs:enumeration value="2" />
+      <xs:enumeration value="3" />
+      <xs:enumeration value="4" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="OGRNType">
+    <xs:annotation>
+      <xs:documentation>ОГРН юридического лица. 13 цифр</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:IdentifierCategoriesCust">
+      <xs:length value="13" />
+      <xs:pattern value="\d{13}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="OKTMOType">
+    <xs:annotation>
+      <xs:documentation>Код ОКТМО. Значение «0», 8 или 11 цифр</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:maxLength value="11" />
+      <xs:minLength value="1" />
+      <xs:pattern value="\d{8}" />
+      <xs:pattern value="0" />
+      <xs:pattern value="\d{11}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="OkvedType">
+    <xs:annotation>
+      <xs:documentation>Код по ОКВЭД</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:pattern value="\d{2}\.\d{2}" />
+      <xs:pattern value="\d{2}\.\d{2}\.\d{1}" />
+      <xs:pattern value="\d{2}\.\d{2}\.\d{2}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="OrgNameType">
+    <xs:annotation>
+      <xs:documentation>Строка длиной до 160 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="160" />
+      <xs:pattern value="\S+[\S\s]*\S+" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="OriginType">
+    <xs:annotation>
+      <xs:documentation>Признак предварительного начисления. Возможные значения:
+                PRIOR – для предварительных начислений, загруженных в ГИС ГМП участником (используется при направлении дела на рассмотрение в суд);
+                TEMP – для предварительных начислений, сформированных ГИС ГМП по запросу участника и имеющих срок действия.
+            </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:enumeration value="PRIOR">
+        <xs:annotation>
+          <xs:documentation>признак предварительных начислений, загруженных в ГИС ГМП участником (используется при направлении дела на рассмотрение в суд)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="TEMP">
+        <xs:annotation>
+          <xs:documentation>признак предварительного начисления, сформированного ГИС ГМП по запросу участника</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PayerIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Идентификатор плательщика. 22 символа</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:pattern value="1((0[1-9])|(1[0-5])|(2[12456789])|(3[0]))[0-9a-zA-Zа-яА-Я]{19}">
+        <xs:annotation>
+          <xs:documentation>Идентификатор ФЛ</xs:documentation>
+        </xs:annotation>
+      </xs:pattern>
+      <xs:pattern value="200\d{14}[A-Z0-9]{2}\d{3}">
+        <xs:annotation>
+          <xs:documentation>Идентификатор ЮЛ или ИП</xs:documentation>
+        </xs:annotation>
+      </xs:pattern>
+      <xs:pattern value="300[0-9a-zA-Zа-яА-Я]{19}" />
+      <xs:pattern value="4[0]{9}\d{12}" />
+      <xs:pattern value="0" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ProcentValueType">
+    <xs:annotation>
+      <xs:documentation>Процент скидки от суммы начисления. Целое положительное число от 1 до 100</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:IntegerCategoriesCust">
+      <xs:minInclusive value="1" />
+      <xs:maxInclusive value="100" />
+      <xs:totalDigits value="3" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PurposeType">
+    <xs:annotation>
+      <xs:documentation>Строка длиной до 210 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:maxLength value="210" />
+      <xs:pattern value="\S+[\S\s]*\S+" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SupplierBillIDType">
+    <xs:annotation>
+      <xs:documentation>УИН. 20 символов или 25 цифр</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:pattern value="\w{20}" />
+      <xs:pattern value="\d{25}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TaxDocDateType">
+    <xs:annotation>
+      <xs:documentation>Значение «0», «00» или строка длиной 10 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:pattern value="(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.\d{4}" />
+      <xs:pattern value="00" />
+      <xs:pattern value="0" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TaxPeriodType">
+    <xs:annotation>
+      <xs:documentation>Значение «0» или строка длиной 10 или 8 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:pattern value="МС\.(0[0-9]|1[012])\.\d{4}" />
+      <xs:pattern value="КВ\.0[1-4]\.\d{4}" />
+      <xs:pattern value="ПЛ\.0[1-2]\.\d{4}" />
+      <xs:pattern value="ГД\.00\.\d{4}" />
+      <xs:pattern value="(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.\d{4}" />
+      <xs:pattern value="\d{8}" />
+      <xs:pattern value="0" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TextVariable1000Type">
+    <xs:annotation>
+      <xs:documentation>Строка длиной от 1 до 1000 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="1000" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TextVariable100Type">
+    <xs:annotation>
+      <xs:documentation>Строка длиной от 1 до 100 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="100" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TextVariable15Type">
+    <xs:annotation>
+      <xs:documentation>Строка длиной от 1 до 15 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="15" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TextVariable2000Type">
+    <xs:annotation>
+      <xs:documentation>Строка длиной от 1 до 2000 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="2000" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TextVariable200Type">
+    <xs:annotation>
+      <xs:documentation>Строка длиной от 1 до 200 символов</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:TextCategoriesCust">
+      <xs:minLength value="1" />
+      <xs:maxLength value="200" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="URNType">
+    <xs:annotation>
+      <xs:documentation>УРН. Содержит 6 латинских букв и цифр</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:CodeCategoriesCust">
+      <xs:pattern value="[0-9a-fA-F]{6}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ValueType">
+    <xs:annotation>
+      <xs:documentation>Сумма скидки от полной суммы начисления. Целое положительное число</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="CategoryCust:NumericCategoriesCust">
+      <xs:pattern value="\d+" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

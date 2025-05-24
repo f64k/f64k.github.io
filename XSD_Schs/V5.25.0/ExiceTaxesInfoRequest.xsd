@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CategoryCust="urn:customs.ru:Categories:3.0.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.24.0" xmlns:eti_req="urn:customs.ru:Information:SQDocuments:ExiceTaxesInfoRequest:5.25.0" targetNamespace="urn:customs.ru:Information:SQDocuments:ExiceTaxesInfoRequest:5.25.0" elementFormDefault="qualified" version="5.25.0.0">
+	<xs:import namespace="urn:customs.ru:Categories:3.0.0" schemaLocation="CategoriesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd"/>
+	<xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.24.0" schemaLocation="CommonAggregateTypesCust.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Запрос сведений о свидетельствах по акцизам</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ExiceTaxesInfoRequest" type="eti_req:ExiceTaxesInfoRequestType">
+		<xs:annotation>
+			<xs:documentation>Запрос сведений о свидетельствах по акцизам</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ExiceTaxesInfoRequestType">
+		<xs:annotation>
+			<xs:documentation>Запрос сведений о свидетельствах по акцизам</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:BaseDocType">
+				<xs:sequence>
+					<xs:element name="GUID" type="clt_ru:DocumentIDType" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Идентификатор сведений, сформированный поставщиком</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="StatementDateTime" type="clt_ru:DateTimeCustType" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Дата и время формирования сведений</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TaxExcisesInfo" type="eti_req:TaxExcisesInfoType" minOccurs="1" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Сведения о выданных свидетельствах по акцизам и их статусам</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1009413E">
+					<xs:annotation>
+						<xs:documentation>Идентификатор вида документа</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Локальные прикладные типы</xs:documentation>
+	</xs:annotation>	
+	<xs:complexType name="TaxExcisesInfoType">
+		<xs:annotation>
+			<xs:documentation>Сведения о выданных свидетельствах по акцизам и их статусам</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TaxAuthorityCode" type="eti_req:Text4TypePattern" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Код налогового органа выдавшего свидетельства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="KND" type="eti_req:Text7TypePattern" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>КНД свидетельства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CertificateType" type="eti_req:Text1-1000Type" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Вид свидетельства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CertificateRegNumber" type="eti_req:Text1-48Type" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Регистрационный номер свидетельства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CertificateIssueDate" type="clt_ru:DateCustType" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Дата выдачи свидетельства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CertificateStatus" type="eti_req:Text1TypeEnum" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Статус свидетельства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CertificateDateModifiedStatus" type="clt_ru:DateCustType" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Дата изменения статуса свидетельства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CertificateStartDate" type="clt_ru:DateCustType" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Дата начала действия свидетельства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CertificateSuspensionDate" type="clt_ru:DateCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата приостановления действия свидетельства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CertificateRenewalDate" type="clt_ru:DateCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата возобновления действия свидетельства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CertificateEndDate" type="clt_ru:DateCustType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата аннулирования свидетельства</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="LegalTaxPayer" type="eti_req:LegalTaxPayerType" minOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Сведения об организации</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="IndividualTaxPayer" type="eti_req:IndividualTaxPayerType" minOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Сведения о физическом лице, зарегистрированном в качестве индивидуального предпринимателя</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LegalTaxPayerType">
+		<xs:annotation>
+			<xs:documentation>Сведения об организации</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="INN" type="clt_ru:INNIDType" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>ИНН организации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OrgName" type="eti_req:Text1-1000Type" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Полное наименование организации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IndividualTaxPayerType">
+		<xs:annotation>
+			<xs:documentation>Сведения о физическом лице, зарегистрированном в качестве индивидуального предпринимателя</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cat_ru:PersonBaseType">
+				<xs:sequence>
+					<xs:element name="INN" type="clt_ru:INNIDType" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation>ИНН физического лица</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="Text4TypePattern">
+		<xs:annotation>
+			<xs:documentation>Формат кода налогового органа (паттерн 4 цифры)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:TextCategoriesCust">
+			<xs:pattern value="[0-9]{4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Text7TypePattern">
+		<xs:annotation>
+			<xs:documentation>Формат КНД свидетельства (энумерации)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:TextCategoriesCust">
+			<xs:pattern value="[0-9]{7}"/>
+			<xs:enumeration value="1120021"/>
+			<xs:enumeration value="1120035"/>
+			<xs:enumeration value="1120037"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Text1-1000Type">
+		<xs:annotation>
+			<xs:documentation>Текстовая строка от 1 до 1000 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:TextCategoriesCust">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="1000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Text1-48Type">
+		<xs:annotation>
+			<xs:documentation>Текстовая строка от 1 до 48 символов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:TextCategoriesCust">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="48"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Text1TypeEnum">
+		<xs:annotation>
+			<xs:documentation>Формат статуса свидетельства</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CategoryCust:TextCategoriesCust">
+			<xs:length value="1"/>
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>действующее</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>приостановленное</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>аннулированное</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

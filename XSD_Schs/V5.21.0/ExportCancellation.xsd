@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:catSCVV="urn:customs.ru:SCVVCommonAggregateTypesCust:5.21.0" xmlns:ExCnc="urn:customs.ru:Information:CustomsDocuments:ExportCancellation:5.21.0" xmlns:RUScat_ru="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" targetNamespace="urn:customs.ru:Information:CustomsDocuments:ExportCancellation:5.21.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:SCVVCommonAggregateTypesCust:5.21.0" schemaLocation="SCVVCommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:RUSCommonAggregateTypes:5.21.0" schemaLocation="RUSCommonAggregateTypes.xsd" />
+  <xs:annotation>
+    <xs:documentation>Уведомление об аннулировании фактического вывоза товаров.</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ExportCancellation" type="ExCnc:ExportCancellationType" />
+  <xs:complexType name="ExportCancellationType">
+    <xs:annotation>
+      <xs:documentation>Уведомление об аннулировании фактического вывоза товаров.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="EECEDocHeaderAddInfo" type="RUScat_ru:EECEDocHeaderAddInfoType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дополнительные технологические реквизиты электронного документа (сведений)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ExportCancelDate" type="clt_ru:DateCustType">
+            <xs:annotation>
+              <xs:documentation>Дата аннулирования фактического вывоза товаров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AddInfo" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Примечания</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ProcessNumber" type="clt_ru:DocumentIDType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Уникальный идентификатор процесса.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsOffice" type="cat_ru:CustomsType">
+            <xs:annotation>
+              <xs:documentation>Таможенный орган, оформивший аннулирование товаров</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CustomsOfficial" type="cat_ru:CustomsPersonType">
+            <xs:annotation>
+              <xs:documentation>Сведения о должностном лице, оформившем аннулирование вывоза</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ShipmentInfo" type="catSCVV:ShipmentBaseInfoType" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Информация о товарной партии, вывоз по которой аннулирован</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" default="1020008E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

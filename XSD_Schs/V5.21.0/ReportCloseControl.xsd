@@ -1,0 +1,415 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:cat_ru="urn:customs.ru:CommonAggregateTypes:5.21.0" xmlns:cltESAD_ru="urn:customs.ru:RUCommonLeafTypes:5.4.0" xmlns:clt_ru="urn:customs.ru:CommonLeafTypes:5.10.0" xmlns:rcc="urn:customs.ru:Information:CustomsDocuments:ReportCloseControl:5.21.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:customs.ru:Information:CustomsDocuments:ReportCloseControl:5.21.0" elementFormDefault="qualified" version="5.21.0.0">
+  <xs:import namespace="urn:customs.ru:RUCommonLeafTypes:5.4.0" schemaLocation="RUESADCommonLeafTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonAggregateTypes:5.21.0" schemaLocation="CommonAggregateTypesCust.xsd" />
+  <xs:import namespace="urn:customs.ru:CommonLeafTypes:5.10.0" schemaLocation="CommonLeafTypesCust.xsd" />
+  <xs:annotation>
+    <xs:documentation>Протокол завершения контроля декларации на товары.(ДТ)</xs:documentation>
+  </xs:annotation>
+  <xs:element name="ReportCloseControl" type="rcc:ReportCloseControlType">
+    <xs:annotation>
+      <xs:documentation>Протокол завершения контроля декларации на товары.(ДТ)</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ReportCloseControlType">
+    <xs:annotation>
+      <xs:documentation>Протокол завершения контроля декларации на товары.(ДТ)</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cat_ru:BaseDocType">
+        <xs:sequence>
+          <xs:element name="CheckDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата проведения проверки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CheckTime" type="clt_ru:TimeCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Время проведения проверки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="EndCheckDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата, на которую выполнена проверка. Указывается, если отлична от даты составления документа или даты проверки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DBFVersion" type="clt_ru:Text10Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Версия структуры внутреннего формата электронной копии ДТ (формат DBF)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ErrorCount" type="clt_ru:Quantity5Type">
+            <xs:annotation>
+              <xs:documentation>Общее количество ошибок ПЗК</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ReasonCode" type="clt_ru:Code2Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Код причины повторной передачи электронной копии ДТ после ее возврата с вышестоящего уровня системы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Explanation" type="clt_ru:FreeText250Type" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Объяснение инспектора о несвоевременности или неполноте представления информации по результатам ФЛК</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ExplanationDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата внесения объяснения инспектором о несвоевременности или неполноте представления информации по результатам ФЛК</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Document" type="rcc:DocumentType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Проверенный электронный таможенный документ</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PSCheck" type="rcc:PSCheckType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Программное средство, выполнившее проверку</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DocumentModeID" type="clt_ru:DocumentModeIDType" use="required" fixed="1006080E">
+          <xs:annotation>
+            <xs:documentation>Идентификатор вида документа</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:annotation>
+    <xs:documentation>Локальные прикладные типы.</xs:documentation>
+  </xs:annotation>
+  <xs:complexType name="CheckNormativeDocumentType">
+    <xs:annotation>
+      <xs:documentation>Нормативный документ, в соответствии с которым выполняется контроль</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="rcc:NormativeDocumentType">
+        <xs:sequence>
+          <xs:element name="BeginDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата начала действия документа для данного контроля</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="EndDate" type="clt_ru:DateCustType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Дата окончания действия документа для данного контроля</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CloseReasonType">
+    <xs:annotation>
+      <xs:documentation>Причины закрытия</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ReasonCode" type="clt_ru:CodeVariable3Type">
+        <xs:annotation>
+          <xs:documentation>Код причины закрытия в соответствии со Справочником причин закрытия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InspectorNotice" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Примечания инспектора</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CloseNormativeDoc" type="rcc:NormativeDocumentType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Нормативный документ, в соответствии с которым выполняется закрытие</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocumentType">
+    <xs:annotation>
+      <xs:documentation>Проверенный электронный таможенный документ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="DocID" type="clt_ru:DocumentIDType">
+        <xs:annotation>
+          <xs:documentation>Уникальный идентификатор документа с ошибками.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocModeID" type="clt_ru:DocumentModeIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код вида ошибочного документа  (значение атрибута DocumentModeID).</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocName" type="clt_ru:DocumentNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Название документа с ошибками</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EDCode" type="clt_ru:CodeVariable2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код типа электронного таможенного документа (1-ДТ)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KDTNumber" type="clt_ru:Count2Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер КДТ/ДТС по порядку</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocTime" type="clt_ru:DateTimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата и время проверенного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PZKErrors" type="rcc:PZKErrorsType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Ошибки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DocsContentType">
+    <xs:annotation>
+      <xs:documentation>Сверяемые значения документов</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Document" type="cat_ru:DocumentBaseType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Сведения о документе</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ModeID" type="clt_ru:DocumentModeIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код документа в альбоме форматов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocCode" type="clt_ru:Code5Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код вида документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="XPath" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>XPath к сравниваемому элементу в документах</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocContent" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Значение из документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ErrorType">
+    <xs:annotation>
+      <xs:documentation>Описание ошибки.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="NumPP" type="clt_ru:Count5Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Порядковый номер в списке</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ErrorCode" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Код ошибки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ErrorLevel" type="clt_ru:LetterIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Уровень ошибки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ErrorText" type="clt_ru:FreeText250Type">
+        <xs:annotation>
+          <xs:documentation>Текст сообщения об ошибке</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ErrorDescription" type="clt_ru:FreeText250Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Описание ошибки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ErrElement" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Путь к ошибочному узлу/элементу/атрибуту </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ErrField" type="clt_ru:Text10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер графы ДТ/ДТС/КДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TrueValue" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Правильное значение</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocValue" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Значение из главного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocsContent" type="rcc:DocsContentType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Значение из документов</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Result" type="clt_ru:Numeric1Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Результат сравнения документов: 0 - полное совпадние, 1 - не совпадение , 2 - частичное совпадение, 3- не совпадение допустимо</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ErrElementDesc" type="clt_ru:FreeText500Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Описание поля в котором найдена ошибка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CriterionGroup" type="clt_ru:CodeVariable4Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Группа критериев</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CriterionNum" type="clt_ru:CodeVariable4Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код критерия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Stage" type="clt_ru:CodeVariable20Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Этапы контроля, к которым относится ошибка</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Actual" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак наличия ошибки в актуальной версии документа (1 - ошибка присутствует, 0 - ошибка была в предыдущих версиях проверяемого документа)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GTDinTableType">
+    <xs:annotation>
+      <xs:documentation>Информация в таблице внутреннего формата электронной копии ДТ (формат DBF)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="TableName" type="cltESAD_ru:TableNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Имя таблицы внутреннего формата электронной копии ДТ (формат DBF)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AttributeName" type="cltESAD_ru:TableNameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование атрибута таблицы</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RecordNumber" type="clt_ru:Quantity8Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер записи, соответствующий значению поля NZP в таблице</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="NormativeDocumentType">
+    <xs:annotation>
+      <xs:documentation>Нормативный документ</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="CodeOrder" type="clt_ru:CodeVariable20Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код нормативного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentType" type="cltESAD_ru:NormativeDocCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Ссылка на тип нормативного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrganizationName" type="clt_ru:NameType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Орган, принявший нормативный документ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentDate" type="clt_ru:DateCustType">
+        <xs:annotation>
+          <xs:documentation>Дата принятия нормативного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DocumentNumber" type="clt_ru:DocumentNumberType">
+        <xs:annotation>
+          <xs:documentation>Номер нормативного документа</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PSCheckType">
+    <xs:annotation>
+      <xs:documentation>Программное средство, выполнившее проверку</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PSID" type="cltESAD_ru:PSIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Идентификатор ПС, выполнившего проверку</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PSVersion" type="clt_ru:Text10Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Версия ПС, выполнившего проверку</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PSName" type="clt_ru:FreeText250Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Наименование ПС, выполнившего проверку</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PZKErrorsType">
+    <xs:annotation>
+      <xs:documentation>Ошибки</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GTDGoodsNumber" type="clt_ru:Quantity5Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Номер товара по ДТ</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GTDinTable" type="rcc:GTDinTableType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Информация в таблице внутреннего формата электронной копии ДТ (формат DBF)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Error" type="rcc:ErrorType">
+        <xs:annotation>
+          <xs:documentation>Ошибка ПЗК</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CheckNormativeDoc" type="rcc:CheckNormativeDocumentType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Нормативный документ, в соответствии с которым выполняется контроль</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CloseInd" type="clt_ru:IndicatorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Признак закрытия ошибки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LNP" type="clt_ru:LNPIDType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>ЛНП инспектора, закрывшего ошибку</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CustomsCode" type="clt_ru:CustomsCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Код таможенного органа, указанный на оттиске ЛНП</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CloseDate" type="clt_ru:DateTimeCustType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата и время закрытия ошибки</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CloseReason" type="rcc:CloseReasonType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Причина закрытия</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
