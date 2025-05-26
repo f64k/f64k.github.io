@@ -10,6 +10,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!--<script src="https://unpkg.com/markdown-it"></script>-->
     <script src="https://cdn.jsdelivr.net/npm/markdown-it@14.1.0/dist/markdown-it.min.js"></script>
+
+    <script src="my_open_router_api.js"></script>
 </head>
 
 <body class="flex flex-col h-screen">
@@ -65,13 +67,15 @@
 
     <!-- Логика JavaScript -->
     <script>
+        const myOpenRouter = new MyOpenRouter();
+
         const MD = window.markdownit();
 
         const inputKey = document.getElementById("key-input");
         if (!inputKey || !inputKey.value) {
             inputKey.value = localStorage.getItem("k_openrouter");
         }
-        //if (!inputKey || !inputKey.value) { inputKey.value = "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"; } // ключ из видео
+
 
         const chatForm = document.getElementById("chat-form");
         const chatInput = document.getElementById("chat-input");
@@ -83,111 +87,52 @@
         // Добавление сообщения на страницу
         function appendMessage(role, text) {
             const messageDiv = document.createElement("div");
-            messageDiv.className = `flex ${role === "user" ? "justify-end" : "justify-start"}`;
+            messageDiv.className = `flex ${role === "user" ? "ml-48 justify-end" : "mr-48 justify-start"}`;
 
             const bubble = document.createElement("div");
-            bubble.className = `max-w-xs md:max-w-md lg:max-w-lg p-3 rounded-lg ${role === "user"
-                ? "bg-blue-500 text-white"
-                : "bg-white text-gray-800 border border-gray-300"
+            // было max-w-xs md:max-w-md lg:max-w-lg
+            bubble.className = `p-3 rounded-lg ${role === "user"
+                ? "bg-slate-500 text-slate-50 border border-slate-900"
+                : "bg-zinc-50 text-zinc-800 border border-zinc-300"
                 }`;
 
-            bubble.textContent = text;
+            bubble.innerHTML = MD.render(text);
             messageDiv.appendChild(bubble);
             chatBox.appendChild(messageDiv);
             chatBox.scrollTop = chatBox.scrollHeight;
         }
 
+        //appendMessage("user", "👋 Добро пожаловать в чат с OpenRouter! 🤖 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.");
+        //appendMessage("model", "И вам привет! 👋 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.");
+
+        // Обработка отправки сообщения
         chatForm.addEventListener("submit", async (event) => {
             event.preventDefault();
-
-            let userInput = chatInput.value;
-            chatInput.value = "";
-
-            let API_KEY = inputKey.value;
-            if (!API_KEY && userInput.startsWith("sk-or-v1-")) {
-                API_KEY = userInput;
-                userInput = "";
-            }
-            // meta-llama/llama-3-8b-instruct:nitro
-            const arrModels = [
-                { name: "mistralai/mixtral-8x7b-instruct:free", label: "такой нет, или ошибка или и не было", dateOfLastAnswer: "" },
-                { name: "mistralai/devstral-small:free", label: "mistralai/devstral-small:free", dateOfLastAnswer: "" },
-                { name: "tngtech/deepseek-r1t-chimera:free", label: "tngtech/deepseek-r1t-chimera:free" },
-                { name: "deepseek/deepseek-r1:free", label: "deepseek/deepseek-r1:free" },
-            ];
-            const MODEL_NUM = 3;
-
-            // Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day user_2xRJbZGkaQF4thZ1yODkLOm3PSn
-
-            if (userInput == " ") {
-                userInput = "полезный совет";
-            }
-
-            const questionElement = document.createElement("div");
-            questionElement.classList.add("bg-white", "p-4", "rounded-lg", "text-gray-600", "bg-gray-50");
-            questionElement.textContent = userInput;
-            chatBox.appendChild(questionElement);
-            chatBox.scrollTop = chatBox.scrollHeight;
-
-            let responseMessage;
-            if (API_KEY) {
-                submitButton.querySelector(".icon-stand").classList.add("hidden");
-                submitButton.querySelector(".icon-spin").classList.remove("hidden");
+            submitButton.querySelector(".icon-stand").classList.add("hidden");
+            submitButton.querySelector(".icon-spin").classList.remove("hidden");
+            try{
+                const strUserInput = chatInput.value;
+                chatInput.value = "";
+                //addMessageToChat(strUserInput);
+                appendMessage("user", strUserInput);
                 try {
-                    const response2 = await fetch('https://openrouter.ai/api/v1/auth/key', {
-                        method: 'GET',
-                        headers: { Authorization: `Bearer ${API_KEY}` },
-                    });
-                    const data2 = await response2.json();
-                    console.log(data2);
-                    debugger;
-
-                    const apiURL = "https://openrouter.ai/api/v1/chat/completions"
-                    const objBody = {
-                        model: arrModels[MODEL_NUM].name,
-                        messages: [{ role: "user", content: userInput }]
-                    };
-                    const objQuery = {
-                        method: "POST",
-                        headers: { "Authorization": `Bearer ${API_KEY}`, "Content-Type": "application/json" },
-                        body: JSON.stringify(objBody)
-                    };
-                    // Запрос к OpenRouter
-                    chatBox.classList.add("bg-rose-300");
-                    const response = await fetch(apiURL, objQuery);
-                    chatBox.classList.remove("bg-rose-300");
                     chatBox.classList.add("bg-pink-300");
-                    const data = await response.json();
+                    responseMessage = await myOpenRouter.AskSelectedModelAsync(strUserInput);
                     chatBox.classList.remove("bg-pink-300");
-                    debugger;
-                    if (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) {
-                        responseMessage = data.choices[0].message.content;
-                        if (localStorage.getItem("k_openrouter") !== API_KEY) {
-                            debugger;
-                            localStorage.setItem("k_openrouter", API_KEY);
-                        }
-                    } else if (data.error) {
-                        //responseMessage = `Ответ OpenRouter: ${data.error.message} ${data.user_id}`;
-                        responseMessage = JSON.stringify(data, null, 2);
-                    } else {
-                        responseMessage = JSON.stringify(data, null, 2);
-                    }
-                } catch (error) {
-                    responseMessage = "CATCH error.message = " + error.message;
+                } catch(errAsk) {
+                    chatBox.classList.remove("bg-pink-300");
+                    responseMessage = JSON.stringify(errAsk, Object.getOwnPropertyNames(errAsk), 2);
                 }
-                submitButton.querySelector(".icon-stand").classList.remove("hidden");
-                submitButton.querySelector(".icon-spin").classList.add("hidden");
+                //addAnswerToChat(responseMessage);
+                appendMessage("model", responseMessage);
+            } catch(errSubmit) {
+                debugger;
+                console.error(errSubmit);
             }
-            else {
-                responseMessage = "API_KEY не задан";
-            }
-
-            const messageElement = document.createElement("div");
-            messageElement.classList.add("whitespace-pre-wrap", "p-4", "rounded-lg", "border", "border-gray-300", "bg-gray-50");
-            messageElement.innerHTML = MD.render(responseMessage);
-            chatBox.appendChild(messageElement);
-            chatBox.scrollTop = chatBox.scrollHeight;
+            submitButton.querySelector(".icon-stand").classList.remove("hidden");
+            submitButton.querySelector(".icon-spin").classList.add("hidden");
         });
+
     </script>
 </body>
 
