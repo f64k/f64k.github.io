@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Чат через REST API</title>
+</head>
+<body>
+  <div id="chat-container">
+    <div id="chat-messages"></div>
+    <input type="text" id="message-input" placeholder="Введите сообщение">
+    <button onclick="sendMessage()">Отправить</button>
+  </div>
+
+  <script>
+    const chatContainer = document.getElementById('chat-messages');
+    const messageInput = document.getElementById('message-input');
+    const apiUrl = 'https://text.pollinations.ai/'; // Замените на ваш URL
+
+    // Функция для отображения сообщения в чате
+    function displayMessage(message, isUser = false) {
+      const messageElement = document.createElement('div');
+      messageElement.textContent = message;
+      messageElement.style.textAlign = isUser ? 'right' : 'left';
+      chatContainer.appendChild(messageElement);
+      chatContainer.scrollTop = chatContainer.scrollHeight; // Автопрокрутка вниз
+    }
+
+    // Функция для отправки сообщения
+    async function sendMessage() {
+      const message = messageInput.value.trim();
+      if (message) {
+        displayMessage(message, true); // Отображаем сообщение пользователя
+        messageInput.value = '';
+
+        try {
+          const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ message: message }),
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            displayMessage(data.response); // Отображаем ответ API
+          } else {
+            displayMessage('Ошибка: ' + response.status);
+          }
+        } catch (error) {
+          displayMessage('Ошибка: ' + error.message);
+        }
+      }
+    }
+
+    // Пример начальной загрузки сообщений (если нужно)
+    async function loadInitialMessages() {
+      try {
+          const response = await fetch(apiUrl + '?initial=true'); // Предполагается, что API поддерживает запрос начальных сообщений
+          if(response.ok){
+             const data = await response.json();
+             data.forEach(msg => displayMessage(msg.message, msg.user));
+          }
+
+      } catch (error){
+          console.error("Ошибка при загрузке начальных сообщений:", error);
+      }
+    }
+
+    // Загрузка начальных сообщений при загрузке страницы
+    // loadInitialMessages();
+
+    // Обработчик нажатия Enter
+    messageInput.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            sendMessage();
+        }
+    });
+
+  </script>
+</body>
+</html>
