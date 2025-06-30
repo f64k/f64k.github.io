@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pollinations ai api</title>
+    <link href="https://unpkg.com/tabulator-tables @5.0.7/dist/css/tabulator.min.css" rel="stylesheet">
     <style>
         html,
         body {
@@ -28,6 +29,8 @@
 </head>
 
 <body>
+    <div id="example-table"></div>
+
     <pre class="panel1" id="pre1">
 
     </pre>
@@ -119,6 +122,28 @@
 
     const tableString = jsonToTable(jsonData);
     //document.body.innerHTML = tableString; // Вставляем таблицу в HTML    
+</script>
+
+<script src="https://unpkg.com/tabulator-tables @5.0.7/dist/js/tabulator.min.js"></script>
+
+<script>
+  // Пример данных
+  const data = [
+    {id:1, name:"Alice", age:25},
+    {id:2, name:"Bob"},
+    {id:3, age:30, city:"Moscow"},
+    {id:4, name:"John", age:22, city:"SPb"}
+  ];
+
+  // Инициализация таблицы
+  const table = new Tabulator("#example-table", {
+    data: data,
+    layout: "fitColumns",
+    columns: Object.keys(data[0] || {}).map(key => ({
+      title: key.charAt(0).toUpperCase() + key.slice(1),
+      field: key
+    }))
+  });    
 </script>
 
 </html>
