@@ -28,6 +28,10 @@
 </head>
 
 <body>
+    <pre class="panel1" id="pre1">
+
+    </pre>
+
     <div class="panel1" id="div1">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus eveniet culpa iure, deserunt, temporibus,
         laboriosam necessitatibus quasi repellendus debitis sit praesentium similique cumque aperiam voluptas rerum
@@ -69,10 +73,52 @@
 
     document.addEventListener("DOMContentLoaded", async (event) => {
         const resp1 = await fetch(url_models);
-        const jsonData = await resp1.json();        
+        const jsonData = await resp1.json();
         const div1 = document.getElementById("div1");
-        div1.innerText = jsonData;
+        pre1.innerText = JSON.stringify(jsonData,2);
     });
+</script>
+
+<script>
+
+    function jsonToTable(jsonData) {
+        if (!jsonData) {
+            return '<p>Нет данных для отображения</p>';
+        }
+
+        let tableHTML = '<table>';
+
+        // Получаем ключи (заголовки)
+        const headers = Object.keys(jsonData[0]);
+        tableHTML += '<thead><tr>';
+        headers.forEach(header => {
+            tableHTML += `<th>${header}</th>`;
+        });
+        tableHTML += '</tr></thead>';
+
+        // Заполняем строки данными
+        tableHTML += '<tbody>';
+        jsonData.forEach(row => {
+            tableHTML += '<tr>';
+            headers.forEach(header => {
+                tableHTML += `<td>${row[header]}</td>`;
+            });
+            tableHTML += '</tr>';
+        });
+        tableHTML += '</tbody>';
+
+        tableHTML += '</table>';
+        return tableHTML;
+    }
+
+    // Пример использования:
+    const jsonData = [
+        { "name": "Иван", "age": 30, "city": "Москва" },
+        { "name": "Мария", "age": 25, "city": "Санкт-Петербург" }
+    ];
+
+    const tableString = jsonToTable(jsonData);
+    //document.body.innerHTML = tableString; // Вставляем таблицу в HTML    
 </script>
 
 </html>
