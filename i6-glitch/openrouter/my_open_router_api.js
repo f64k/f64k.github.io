@@ -3,25 +3,42 @@ class MyOpenRouter {
     constructor() {
         //super('openrouter');
         this.ApiKey = localStorage.getItem('k_openrouter');
+        this.selectedModelName = localStorage.getItem('m_openrouter');
+
         this.arrAllMessages = [];
 
+        const api_base = "https://openrouter.ai/api/v1";
         this.dictOpenRouterApiUrls = {
-            "getAuthKey": "https://openrouter.ai/api/v1/auth/key",
-            "getModels": "https://openrouter.ai/api/v1/models",
-            "postChatCompletions": "https://openrouter.ai/api/v1/chat/completions",
+            "getModels": api_base + "/models",
+            "getAuthKey": api_base + "/auth/key",
+            "postChatCompletions": api_base + "/chat/completions",
         }
-
-        this.arrModels = [
-            { name: "mistralai/mixtral-8x7b-instruct:free", label: "такой нет, или ошибка или и не было", dateOfLastAnswer: "" },
-            { name: "mistralai/devstral-small:free", label: "mistralai/devstral-small:free", dateOfLastAnswer: "" },
-            { name: "tngtech/deepseek-r1t-chimera:free", label: "tngtech/deepseek-r1t-chimera:free" },
-            { name: "deepseek/deepseek-r1:free", label: "deepseek/deepseek-r1:free" },
-        ];
-        this.MODEL_NUM = 3;
-        // thisarrModels[MODEL_NUM].name
-        this.selectedModelName = this.arrModels[this.MODEL_NUM].name;
     }
 
+    GetSelectedModel() {
+        return this.selectedModelName;
+    }
+    SetSelectedModel(strModelName) {
+        const arrModels = this.arrLoadedModels.filter((m) => m.id === strModelName);
+        if (arrModels.length > 0) {
+            this.selectedModelName = arrModels[0].id;
+            localStorage.setItem('m_openrouter', this.selectedModelName);
+        } else {
+            this.selectedModelName = null;
+        }
+    }
+
+    async GetModels() {
+        if(this.arrLoadedModels) { return this.arrLoadedModels; }
+        const objQueryGet = { method: "GET", headers: { Authorization: `Bearer ${this.ApiKey}` } };
+        const response = await fetch(this.dictOpenRouterApiUrls.getModels, objQueryGet);
+        const data = await response.json();
+        this.arrLoadedModels = data.data;
+        //const arrFreeModels = this.arrLoadedModels.filter((model) => model.id.endsWith(":free"));
+        const arrFreeModels = this.arrLoadedModels.filter((model) => Object.values(model.pricing).map(v => +v).reduce((a, b) => a + b, 0) === 0);
+        const arrSortedModels = arrFreeModels.sort((a, b) => a.name.localeCompare(b.name));
+        return arrSortedModels;
+    }
 
     async AskSelectedModelAsync(strQuestion) {
         if (!strQuestion || strQuestion.trim() === "") {

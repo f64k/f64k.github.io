@@ -43,6 +43,9 @@
 
         <span class="text-white p-1 text-xl font-bold"> Чат с OpenRouter</span>
         <hr class="flex-1 mx-3 border-slate-700" />
+        <select id="model-select">
+            <option value="..." selected> . . . </option>
+        </select>
         <span>🤖</span>
         <!-- https://openrouter.ai/settings/keys -->
     </header>
@@ -63,6 +66,11 @@
                 <div class="icon-spin hidden animate-spin">🌀</div>
             </button>
         </div>
+        <div id="loader" class='hidden flex space-x-2 justify-center items-center bg-white dark:invert'>
+            <div class='h-8 w-8 bg-black rounded-full animate-bounce [animation-delay:-0.3s]'></div>
+            <div class='h-8 w-8 bg-black rounded-full animate-bounce [animation-delay:-0.15s]'></div>
+            <div class='h-8 w-8 bg-black rounded-full animate-bounce'></div>
+        </div>
     </form>
 
     <!-- Логика JavaScript -->
@@ -76,12 +84,38 @@
             inputKey.value = localStorage.getItem("k_openrouter");
         }
 
-
         const chatForm = document.getElementById("chat-form");
         const chatInput = document.getElementById("chat-input");
         const chatBox = document.getElementById("chat-box");
 
         const submitButton = document.getElementById("idSubmitButton");
+
+        const modelSelect = document.getElementById("model-select");
+        modelSelect.addEventListener("change", async () => {
+            if (modelSelect.value === "...") {
+
+            } else {
+                myOpenRouter.SetSelectedModel(modelSelect.value);
+                if(self.arrLoadedModels && self.arrLoadedModels.length > 0) {
+                    const selectedModel = self.arrLoadedModels.find((model) => model.id === modelSelect.value);
+                    if (selectedModel) {
+                        appendMessage("model", JSON.stringify(selectedModel, null, 2));
+                    }
+                }
+            }
+        });
+
+        async function fillModelSelect() {
+            const arrModels = await myOpenRouter.GetModels();
+            self.arrLoadedModels = arrModels;
+            arrModels.forEach((model) => {
+                const option = document.createElement("option");
+                option.value = model.id;
+                option.textContent = `${model.name} | ${model.architecture.modality}`;
+                modelSelect.appendChild(option);
+            });
+            modelSelect.value = myOpenRouter.GetSelectedModel();
+        }
 
 
         // Добавление сообщения на страницу
@@ -110,7 +144,7 @@
             event.preventDefault();
             submitButton.querySelector(".icon-stand").classList.add("hidden");
             submitButton.querySelector(".icon-spin").classList.remove("hidden");
-            try{
+            try {
                 const strUserInput = chatInput.value;
                 chatInput.value = "";
                 //addMessageToChat(strUserInput);
@@ -119,13 +153,13 @@
                     chatBox.classList.add("bg-pink-300");
                     responseMessage = await myOpenRouter.AskSelectedModelAsync(strUserInput);
                     chatBox.classList.remove("bg-pink-300");
-                } catch(errAsk) {
+                } catch (errAsk) {
                     chatBox.classList.remove("bg-pink-300");
                     responseMessage = JSON.stringify(errAsk, Object.getOwnPropertyNames(errAsk), 2);
                 }
                 //addAnswerToChat(responseMessage);
                 appendMessage("model", responseMessage);
-            } catch(errSubmit) {
+            } catch (errSubmit) {
                 debugger;
                 console.error(errSubmit);
             }
@@ -133,6 +167,9 @@
             submitButton.querySelector(".icon-spin").classList.add("hidden");
         });
 
+        document.addEventListener("DOMContentLoaded", async (event) => {
+            await fillModelSelect();
+        });
     </script>
 </body>
 

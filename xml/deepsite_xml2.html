@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XML Viewer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .xml-container {
+            background-color: #1e293b;
+            color: #f8fafc;
+            font-family: 'Courier New', monospace;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            overflow-x: auto;
+            max-height: 500px;
+        }
+        .xml-node {
+            margin-left: 1.5rem;
+            position: relative;
+        }
+        .xml-node::before {
+            content: "";
+            position: absolute;
+            left: -1rem;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background-color: #334155;
+        }
+        .xml-tag {
+            color: #38bdf8;
+            font-weight: bold;
+        }
+        .xml-attr-name {
+            color: #f472b6;
+        }
+        .xml-attr-value {
+            color: #86efac;
+        }
+        .xml-text {
+            color: #f8fafc;
+            margin-left: 0.5rem;
+        }
+        .xml-comment {
+            color: #64748b;
+            font-style: italic;
+        }
+        .xml-cdata {
+            color: #fbbf24;
+        }
+        .dropzone {
+            border: 2px dashed #94a3b8;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        .dropzone.active {
+            border-color: #3b82f6;
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+        .toggle-btn {
+            cursor: pointer;
+            margin-right: 0.5rem;
+            color: #64748b;
+        }
+        .collapsed > .xml-children {
+            display: none;
+        }
+        .collapsed::after {
+            content: " ...";
+            color: #64748b;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-slate-800 mb-2">XML Viewer</h1>
+            <p class="text-slate-600">Загрузите XML файл для просмотра его содержимого</p>
+        </div>
+
+        <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-md overflow-hidden p-6 mb-8">
+            <div 
+                id="dropzone" 
+                class="dropzone p-12 text-center cursor-pointer"
+                ondragover="handleDragOver(event)"
+                ondragleave="handleDragLeave(event)"
+                ondrop="handleDrop(event)"
+            >
+                <div class="flex flex-col items-center justify-center">
+                    <i class="fas fa-file-code text-4xl text-blue-500 mb-4"></i>
+                    <h3 class="text-lg font-medium text-slate-700 mb-2">Перетащите XML файл сюда</h3>
+                    <p class="text-slate-500 mb-4">или</p>
+                    <label for="fileInput" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition cursor-pointer">
+                        <i class="fas fa-upload mr-2"></i>Выберите файл
+                    </label>
+                    <input id="fileInput" type="file" accept=".xml" class="hidden" onchange="handleFileSelect(event)">
+                </div>
+            </div>
+        </div>
+
+        <div id="fileInfo" class="max-w-3xl mx-auto bg-white rounded-xl shadow-md overflow-hidden p-6 mb-8 hidden">
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <h3 class="text-lg font-medium text-slate-700" id="fileName">Файл: example.xml</h3>
+                    <p class="text-slate-500 text-sm" id="fileSize">Размер: 12 KB</p>
+                </div>
+                <div>
+                    <button 
+                        id="copyBtn" 
+                        class="px-3 py-1 bg-slate-100 text-slate-700 rounded hover:bg-slate-200 transition flex items-center mr-2"
+                        onclick="copyToClipboard()"
+                    >
+                        <i class="fas fa-copy mr-2"></i>Копировать
+                    </button>
+                    <button 
+                        id="expandAllBtn" 
+                        class="px-3 py-1 bg-slate-100 text-slate-700 rounded hover:bg-slate-200 transition flex items-center"
+                        onclick="toggleAllNodes(true)"
+                    >
+                        <i class="fas fa-expand mr-2"></i>Развернуть все
+                    </button>
+                    <button 
+                        id="collapseAllBtn" 
+                        class="px-3 py-1 bg-slate-100 text-slate-700 rounded hover:bg-slate-200 transition flex items-center ml-2"
+                        onclick="toggleAllNodes(false)"
+                    >
+                        <i class="fas fa-compress mr-2"></i>Свернуть все
+                    </button>
+                </div>
+            </div>
+            <div id="xmlContent" class="xml-container"></div>
+        </div>
+
+        <div id="errorMessage" class="max-w-3xl mx-auto bg-red-50 border border-red-200 rounded-xl p-4 mb-8 hidden">
+            <div class="flex items-start">
+                <div class="flex-shrink-0">
+                    <i class="fas fa-exclamation-circle text-red-500 mt-1 mr-3"></i>
+                </div>
+                <div>
+                    <h3 class="text-sm font-medium text-red-800">Ошибка</h3>
+                    <p id="errorText" class="text-sm text-red-700 mt-1">Неверный формат файла. Пожалуйста, загрузите файл в формате XML.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Обработчики drag and drop
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            document.getElementById('dropzone').classList.add('active');
+        }
+
+        function handleDragLeave(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            document.getElementById('dropzone').classList.remove('active');
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            document.getElementById('dropzone').classList.remove('active');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                processFile(files[0]);
+            }
+        }
+
+        // Обработчик выбора файла через кнопку
+        function handleFileSelect(e) {
+            const files = e.target.files;
+            if (files.length > 0) {
+                processFile(files[0]);
+            }
+        }
+
+        // Основная функция обработки файла
+        function processFile(file) {
+            // Проверка расширения файла
+            if (!file.name.toLowerCase().endsWith('.xml')) {
+                showError('Файл должен иметь расширение .xml');
+                return;
+            }
+
+            // Скрываем сообщение об ошибке, если оно было показано
+            document.getElementById('errorMessage').classList.add('hidden');
+
+            // Показываем информацию о файле
+            document.getElementById('fileName').textContent = `Файл: ${file.name}`;
+            document.getElementById('fileSize').textContent = `Размер: ${formatFileSize(file.size)}`;
+            
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                try {
+                    const content = e.target.result;
+                    displayXmlContent(content);
+                    document.getElementById('fileInfo').classList.remove('hidden');
+                } catch (error) {
+                    showError('Ошибка при чтении XML файла: ' + error.message);
+                }
+            };
+            
+            reader.onerror = function() {
+                showError('Ошибка при чтении файла');
+            };
+            
+            reader.readAsText(file);
+        }
+
+        // Форматирование размера файла
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // Отображение содержимого XML с подсветкой синтаксиса
+        function displayXmlContent(xmlString) {
+            try {
+                // Парсим XML в DOM
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(xmlString, "text/xml");
+                
+                // Проверка на ошибки парсинга
+                if (xmlDoc.getElementsByTagName("parsererror").length > 0) {
+                    throw new Error("Неверный формат XML");
+                }
+                
+                // Очищаем контейнер
+                const container = document.getElementById('xmlContent');
+                container.innerHTML = '';
+                
+                // Рекурсивно обрабатываем узлы
+                processNode(xmlDoc.documentElement, container, 0);
+                
+                // Добавляем обработчики клика для сворачивания/разворачивания
+                addToggleHandlers();
+                
+            } catch (e) {
+                // Если не удалось распарсить, показываем как есть
+                document.getElementById('xmlContent').textContent = xmlString;
+                showError('Ошибка при обработке XML: ' + e.message);
+            }
+        }
+
+        // Рекурсивная обработка узлов XML
+        function processNode(node, parentElement, level) {
+            // Создаем контейнер для узла
+            const nodeElement = document.createElement('div');
+            nodeElement.className = 'xml-node';
+            nodeElement.style.marginLeft = `${level * 1.5}rem`;
+            
+            // Обработка текстовых узлов
+            if (node.nodeType === Node.TEXT_NODE) {
+                const text = node.nodeValue.trim();
+                if (text) {
+                    const textElement = document.createElement('span');
+                    textElement.className = 'xml-text';
+                    textElement.textContent = text;
+                    nodeElement.appendChild(textElement);
+                    parentElement.appendChild(nodeElement);
+                }
+                return;
+            }
+            
+            // Обработка комментариев
+            if (node.nodeType === Node.COMMENT_NODE) {
+                const commentElement = document.createElement('div');
+                commentElement.className = 'xml-comment';
+                commentElement.textContent = `<!--${node.nodeValue}-->`;
+                nodeElement.appendChild(commentElement);
+                parentElement.appendChild(nodeElement);
+                return;
+            }
+            
+            // Обработка CDATA
+            if (node.nodeType === Node.CDATA_SECTION_NODE) {
+                const cdataElement = document.createElement('div');
+                cdataElement.className = 'xml-cdata';
+                cdataElement.textContent = `<![CDATA[${node.nodeValue}]]>`;
+                nodeElement.appendChild(cdataElement);
+                parentElement.appendChild(nodeElement);
+                return;
+            }
+            
+            // Обработка элементов
+            if (node.nodeType === Node.ELEMENT_NODE) {
+                // Создаем кнопку для сворачивания/разворачивания
+                const toggleBtn = document.createElement('span');
+                toggleBtn.className = 'toggle-btn';
+                toggleBtn.innerHTML = '<i class="fas fa-caret-right"></i>';
+                nodeElement.appendChild(toggleBtn);
+                
+                // Создаем имя тега
+                const tagName = document.createElement('span');
+                tagName.className = 'xml-tag';
+                tagName.textContent = node.nodeName;
+                nodeElement.appendChild(tagName);
+                
+                // Обработка атрибутов
+                if (node.attributes && node.attributes.length > 0) {
+                    for (let i = 0; i < node.attributes.length; i++) {
+                        const attr = node.attributes[i];
+                        const attrName = document.createElement('span');
+                        attrName.className = 'xml-attr-name';
+                        attrName.textContent = ` ${attr.name}=`;
+                        
+                        const attrValue = document.createElement('span');
+                        attrValue.className = 'xml-attr-value';
+                        attrValue.textContent = `"${attr.value}"`;
+                        
+                        nodeElement.appendChild(attrName);
+                        nodeElement.appendChild(attrValue);
+                    }
+                }
+                
+                // Добавляем узел в родительский элемент
+                parentElement.appendChild(nodeElement);
+                
+                // Создаем контейнер для дочерних элементов
+                const childrenContainer = document.createElement('div');
+                childrenContainer.className = 'xml-children';
+                nodeElement.appendChild(childrenContainer);
+                
+                // Проверяем, есть ли дочерние элементы (кроме текста)
+                const hasElementChildren = Array.from(node.childNodes).some(
+                    child => child.nodeType !== Node.TEXT_NODE || (child.nodeValue && child.nodeValue.trim() !== '')
+                );
+                
+                // Если есть дочерние элементы, обрабатываем их
+                if (hasElementChildren) {
+                    for (let i = 0; i < node.childNodes.length; i++) {
+                        processNode(node.childNodes[i], childrenContainer, level + 1);
+                    }
+                } else {
+                    // Если нет дочерних элементов, скрываем кнопку
+                    toggleBtn.style.visibility = 'hidden';
+                }
+            }
+        }
+
+        // Добавляем обработчики для сворачивания/разворачивания узлов
+        function addToggleHandlers() {
+            document.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const nodeElement = this.parentNode;
+                    nodeElement.classList.toggle('collapsed');
+                    
+                    const icon = this.querySelector('i');
+                    if (nodeElement.classList.contains('collapsed')) {
+                        icon.className = 'fas fa-caret-right';
+                    } else {
+                        icon.className = 'fas fa-caret-down';
+                    }
+                });
+            });
+        }
+
+        // Сворачивание/разворачивание всех узлов
+        function toggleAllNodes(expand) {
+            document.querySelectorAll('.xml-node').forEach(node => {
+                const toggleBtn = node.querySelector('.toggle-btn');
+                if (toggleBtn && toggleBtn.style.visibility !== 'hidden') {
+                    const icon = toggleBtn.querySelector('i');
+                    if (expand) {
+                        node.classList.remove('collapsed');
+                        icon.className = 'fas fa-caret-down';
+                    } else {
+                        node.classList.add('collapsed');
+                        icon.className = 'fas fa-caret-right';
+                    }
+                }
+            });
+        }
+
+        // Показать сообщение об ошибке
+        function showError(message) {
+            document.getElementById('errorText').textContent = message;
+            document.getElementById('errorMessage').classList.remove('hidden');
+            document.getElementById('fileInfo').classList.add('hidden');
+        }
+
+        // Копирование в буфер обмена
+        function copyToClipboard() {
+            const xmlContent = document.getElementById('xmlContent').textContent;
+            navigator.clipboard.writeText(xmlContent).then(() => {
+                const copyBtn = document.getElementById('copyBtn');
+                copyBtn.innerHTML = '<i class="fas fa-check mr-2"></i>Скопировано!';
+                copyBtn.classList.remove('bg-slate-100', 'text-slate-700');
+                copyBtn.classList.add('bg-green-100', 'text-green-800');
+                
+                setTimeout(() => {
+                    copyBtn.innerHTML = '<i class="fas fa-copy mr-2"></i>Копировать';
+                    copyBtn.classList.remove('bg-green-100', 'text-green-800');
+                    copyBtn.classList.add('bg-slate-100', 'text-slate-700');
+                }, 2000);
+            }).catch(err => {
+                showError('Не удалось скопировать текст: ' + err);
+            });
+        }
+    </script>
+</body>
+</html>
